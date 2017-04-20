@@ -10,7 +10,7 @@ The connected factory preconfigured solution illustrates how you can get started
 
 ## Documentation
 
-  * [IoT Suite documentation](https://azure.microsoft.com/documentation/suites/iot-suite/):
+  * [IoT Suite documentation](https://azure.microsoft.com/documentation/suites/iot-suite/)
   * [Frequently asked questions for IoT Suite](https://azure.microsoft.com/documentation/articles/iot-suite-faq/)
   * [Permissions on the azureiotsuite.com site](https://azure.microsoft.com/documentation/articles/iot-suite-permissions/). This includes instructions for adding co-administrators to your preconfigured solution.
   
