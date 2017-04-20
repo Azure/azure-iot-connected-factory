@@ -1,0 +1,153 @@
+﻿@using System.Threading;
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
+@using GlobalResources
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    @* Adjust the viewport width as per device width *@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="~/Content/favicon.ico" type="image/x-icon" />
+    <title>@Strings.DefaultSolutionName</title>
+    <script type="text/javascript">
+        var cultureInfo = '@Culture';
+        var cultureInfoShort = '@Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName'
+    </script>
+
+    @* Load scripts bundles *@
+    @Scripts.Render("~/bundles/scripts")
+
+    @* Load page specific scripts *@
+    @RenderSection("scripts", required: false)
+
+    @* Load style sheets bundles *@
+    @Styles.Render("~/Content/css")
+
+</head>
+<body>
+    @Html.AntiForgeryToken();
+    <header>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand collapse navbar-collapse" href="#">@Strings.MicrosoftAzureIoTSuite - @Strings.DefaultSolutionName</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#accountMenu">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="accountMenu" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="masthead_language_icon"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="account-menu">
+                                @foreach (var language in CultureHelper.GetLanguages())
+                                {
+                                    if (language.IsCurrent)
+                                    {
+                                        <li role="presentation" class="active">
+                                            <a>@language.Name</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li role="presentation">
+                                            <a href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })">@language.Name</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle masthead_account_container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="masthead_account_avatar"></span>
+                                <span class="masthead_account">
+                                    <span class="masthead_account_name overflow">@PrincipalHelper.GetEmailAddress(User)</span>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <span class="masthead_account_subtitle overflow">@Strings.AdministratorRole</span>
+                                    }
+                                    else if (User.IsInRole("ReadOnly"))
+                                    {
+                                        <span class="masthead_account_subtitle overflow">@Strings.ReadOnlyRole</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="masthead_account_subtitle overflow">@Strings.ImplicitReadOnlyRole</span>
+                                    }
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu masthead_account_menu" role="menu" aria-labelledby="account-menu">
+                                <li role="presentation">
+                                    <a href="@Url.Action("SignOut", "Account")" role="menuitem">@Strings.SignOut</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li role="presentation">
+                                    <a href="https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade" target="_blank" role="menuitem">@Strings.LinkLabelHelpAndSupport</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="http://feedback.azure.com/forums/321918-azure-iot" target="_blank" role="menuitem">@Strings.LinkLabelHelpGiveFeedback</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="page">
+
+        @Html.Action("NavigationMenu", "Navigation")
+
+        <main class="container-fluid">
+            <div id="pushPanel">
+                @RenderBody()
+            </div>
+        </main>
+
+        <div id="loadingElement" class="loader_container">
+            <div class="loader_container__loader"></div>
+        </div>
+
+        <div id="dashboardContextPanelLeft" class="overlay"></div>
+
+    </section>
+
+    <script>
+        $("#hamburger").click(function () { toggleContextPanelHamburger(); });
+
+        function toggleContextPanelHamburger() {
+            if ($('.push_left').length) {
+                $("#dashboardContextPanelLeft").addClass("overlay-close");
+                $("#pushPanel").removeClass("push_left");
+                $('.navigation_link').removeClass("navigation_link_text");
+            }
+            else {
+                $("#dashboardContextPanelLeft").removeClass("overlay-close").addClass("overlay-left-open");
+                $("#pushPanel").addClass("push_left");
+                $('.navigation_link').addClass("navigation_link_text");
+            }
+        }
+
+        $(document).on('mouseenter', ".overflow", function () {
+            var $this = $(this);
+            if (this.offsetWidth < this.scrollWidth && !$this.attr('title')) {
+                $this.tooltip({
+                    title: $this.text(),
+                    placement: "top",
+                    container: 'body'
+                });
+                $this.tooltip('show');
+            }
+        });
+
+    </script>
+</body>
+</html>

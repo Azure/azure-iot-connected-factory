@@ -1,0 +1,62 @@
+﻿@using GlobalResources
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models;
+
+@model DashboardModel
+
+<div class="dashboard_alerts_container_header row">
+    <p class="dashboard_alerts_container_header_text overflow">@Strings.AlertsContainerHeader</p>
+    <div class="dashboard_alerts_container_header_filter" hidden>v</div>
+    <p id="allIconAlert" class="dashboard_alerts_container_header_text_glyph">@Strings.NoFilterApplied
+        <a id="openFromUnfiltered" class="glyphicon glyphicon-menu-down" href="javascript:openFilterAlertsContextPanel();"></a>
+    </p>
+    <p id="filterIconAlert" class="dashboard_alerts_container_header_text_glyph" hidden>
+        <a id="openFromFiltered" href="javascript:openFilterAlertsContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" src="/Content/img/filter.svg"></a>
+    </p>
+</div>
+<div class="dashboard_alerts_list_container row">
+    <div id="dashboardAlertsList" class="col-xs-12">
+        @foreach (var alert in Model.Alerts)
+        {
+            var alertStatusClass = "";
+            if (alert.Status == ContosoAlertStatus.AlertStatusAcknowledged)
+            {
+                alertStatusClass = "alert_status_acknowledged";
+            }
+            else
+            {
+                alertStatusClass = "alert_status_active";
+            }
+            <div class="dashboard_alerts_listitem_container @alertStatusClass row" onclick="openContextPanelFromAlert(@alert.AlertId)">
+                <div class="col-xs-12">
+                    @if (alert.Occurences == 1)
+                    {
+                        <div class="dashboard_alerts_listitem_source overflow row">@alert.CauseDescription</div>
+                    }
+                    else
+                    {
+                        <div class="dashboard_alerts_listitem_source overflow row">@alert.CauseDescription (@alert.Occurences)</div>
+
+                    }
+                    <div class="dashboard_alerts_listitem_source_details_container row">
+                        <div class="dashboard_alerts_listitem_source_details overflow col-xs-7">
+                            @{ int i = 0;}
+                            @foreach (var detail in alert.TopologyDetails)
+                            {
+                                if (detail != null)
+                                {
+                                    if (i++ != 0)
+                                    {
+                                        <span>, </span>
+                                    }
+                                    <span class="dashboard_alerts_details@(i)">@detail</span>
+                                }
+                            }
+                        </div>
+                        <div id="alertsSourceDetailsTime" class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">@alert.UxTime</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

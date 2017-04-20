@@ -1,0 +1,17 @@
+## Factory simulation specific files to ignore
+
+Factory/buildOutput
+Factory/Logs
+*.der
+*.pfx
+OPC\ Foundation
+*.log.txt
+*.tar
+*.bz2
+*.NodeSet*.xml
+*.PredefinedNodes.xml
+*.Types.?sd
+runsimulation
+initsimulation
+stopsimulation
+simulation

@@ -1,0 +1,56 @@
+﻿@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
+@using GlobalResources
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="~/Content/favicon.ico" type="image/x-icon" />
+    <title>@Strings.Error</title>
+    @Styles.Render("~/Content/css")
+
+</head>
+<body>
+
+    <header class="signin_masthead_container">
+        <div>
+            <span class="signin_masthead_suitename">@Strings.MicrosoftAzureIoTSuite</span>
+            <a target="_blank" href="@Strings.InfoIconLink">
+                <img class="signin_masthead_infoimage" src="~/Content/img/icon_info_white.svg" alt="@Strings.Information" id="infoLinkImg" />
+            </a>
+            <span class="signin_masthead_solutionname">@HeaderHelper.GetHeaderTitle()</span>
+        </div>
+    </header>
+
+    <section class="page">
+
+        <main>
+
+            <div class="content_container">
+                <div class="content_inner content_inner_container">
+
+                    <p class="content_inner_message">
+                        @Strings.Error
+                    </p>
+
+                    <p class="content_inner_message">
+                        @Strings.AnErrorOccurred
+                    </p>
+
+                </div>
+
+                <input action="action" type="button" value="@Strings.GoBack" onclick="history.go(-1);" class="btn btn-default btn_account" />
+
+            </div>
+
+
+        </main>
+    </section>
+
+</body>
+</html>

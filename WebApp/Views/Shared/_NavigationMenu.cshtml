@@ -1,0 +1,38 @@
+﻿@using System.Collections.Generic
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
+@using GlobalResources
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
+
+@model List<Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation.NavigationMenuItem>
+<nav class="navigation">
+    @foreach (var navigationMenuItem in Model)
+    {
+        var multipleClasses = "navigation_link " + navigationMenuItem.Class;
+
+        if (navigationMenuItem.Class == "navigation_link_hamburger")
+        {
+            <div id="hamburger" class="navigation_link @navigationMenuItem.Class"></div>
+        }
+        else
+        {
+           @Html.ActionLink(navigationMenuItem.Text, navigationMenuItem.Action, navigationMenuItem.Controller, null, new { @class = multipleClasses })
+        }
+    }
+</nav>
+
+@foreach (var navigationMenuItem in Model.Where(navigationMenuItem => navigationMenuItem.Selected && navigationMenuItem.Children != null))
+{
+    <nav class="navigation">
+        @foreach (var childNavigationItem in navigationMenuItem.Children)
+        {
+            if (childNavigationItem.Selected)
+            {
+                <a class="@childNavigationItem.Class">@childNavigationItem.Text</a>
+            }
+            else
+            {
+                @Html.ActionLink(childNavigationItem.Text, childNavigationItem.Action, childNavigationItem.Controller, null, new { @class = childNavigationItem.Class })
+            }
+        }
+    </nav>
+}

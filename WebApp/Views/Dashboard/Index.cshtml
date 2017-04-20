@@ -1,0 +1,1502 @@
+﻿@using GlobalResources
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
+
+@model DashboardModel
+
+@{
+    ViewBag.Title = @Strings.Dashboard;
+}
+
+@section scripts {
+    <script src="~/Scripts/d3.js" charset="utf-8"></script>
+    <script src="~/Scripts/c3.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script>'use strict';</script>
+}
+
+<div class="dashboard_container container-fluid">
+    <div class="row dashboard_top_container">
+        <div class="dashboard_children_container col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            @{
+                Html.RenderPartial("_ChildrenList", Model);
+            }
+        </div>
+        <div id="factoryMap" class="dashboard_map_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            @if (Model.TopNode.Parent == null && !Model.MapApiQueryKey.IsEmpty())
+            {
+                Html.RenderPartial("_ChildrenMap", Model);
+            }
+            else
+            {
+                <img class="dashboard_map_container_image" src="@Model.TopNode.ImagePath" />
+            }
+        </div>
+            <div class="row dashboard_alerts_container col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                @{
+                    Html.RenderPartial("_Alerts", Model);
+                }
+            </div>
+    </div>
+   
+    <div class="dashboard_bottom_container row">
+        <div class="dashboard_oee_container col-xs-12 col-sm-12 col-md-8">
+            <div id="oeeHeaderLabel" class="dashboard_oee_header overflow row">@Strings.OeeHeaderLabel</div>
+            <div class="dashboard_oee_details_group_container row">
+                <div id="oeeOverallContainer" class="dashboard_oee_overall_container col-xs-12 col-sm-6 col-md-3" onclick="openChartContextPanel('@Strings.OeeOverallLabel', '@ContosoPerformanceRelevance.OeeOverall');">
+                    <div id="oeeOverallLabel" class="dashboard_oee_overall_header overflow row">@Strings.OeeOverallLabel</div>
+                    <div id="oeeOverallChart" class="dashboard_oee_overall_chart_control row"></div>
+                </div>
+                <div class="dashboard_oee_factor_container col-xs-12 col-sm-6 col-md-3" onclick="openChartContextPanel('@Strings.OeeAvailabilityLabel', '@ContosoPerformanceRelevance.OeeAvailability');">
+                    <div id="oeeAvailabilityLabel" class="dashboard_oee_factor_header overflow row">@Strings.OeeAvailabilityLabel</div>
+                    <div id="oeeAvailabilityChart" class="dashboard_oee_factor_chart_control row"></div>
+                </div>
+                <div class="clearfix visible-sm-block"></div>
+                <div class="dashboard_oee_factor_container col-xs-12 col-sm-6 col-md-3" onclick="openChartContextPanel('@Strings.OeePerformanceLabel', '@ContosoPerformanceRelevance.OeePerformance');">
+                    <div id="oeePerformanceLabel" class="dashboard_oee_factor_header overflow row">@Strings.OeePerformanceLabel</div>
+                    <div id="oeePerformanceChart" class="dashboard_oee_factor_chart_control row"></div>
+                </div>
+                <div class="dashboard_oee_factor_container col-xs-12 col-sm-6 col-md-3" onclick="openChartContextPanel('@Strings.OeeQualityLabel', '@ContosoPerformanceRelevance.OeeQuality');">
+                    <div id="oeeQualityLabel" class="dashboard_oee_factor_header overflow row">@Strings.OeeQualityLabel</div>
+                    <div id="oeeQualityChart" class="dashboard_oee_factor_chart_control row"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+        <div class="dashboard_oee_kpi_separator"></div>
+            -->
+
+        <div class="dashboard_kpi_container col-xs-12 col-sm-12 col-md-4">
+            <div class="dashboard_kpi_header row">@Strings.KpiContainerLabel</div>
+            <div class="dashboard_kpi_details_group_container row">
+                <div id="kpi1Container" class="dashboard_kpi_details_container col-xs-12 col-sm-6" data-toggle="tooltip" onclick="openChartContextPanel('@Strings.Kpi1Label', '@ContosoPerformanceRelevance.Kpi1');">
+                    <div id="kpi1Label" class="dashboard_kpi_details_header overflow row">@Strings.Kpi1Label</div>
+                    <div id="kpi1Chart" class="dashboard_kpi_details_chart_control row"></div>
+                </div>
+                <div id="kpi2Container" class="dashboard_kpi_details_container col-xs-12 col-sm-6" onclick="openChartContextPanel('@Strings.Kpi2Label', '@ContosoPerformanceRelevance.Kpi2');">
+                    <div id="kpi2Label" class="dashboard_kpi_details_header overflow row">@Strings.Kpi2Label</div>
+                    <div id="kpi2Chart" class="dashboard_kpi_details_chart_control row"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboardContextpanel" class="overlay">
+        <div class="dashboard_contextpanel_header-big">
+            <div id="dashboardContextpanelGraphHeader" class="dashboard_contextpanel_header_text"></div>
+        </div>
+        <a href="#" class="closebtn" onclick="closeChartContextPanel();">&times;</a>
+        <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
+        <div id="nodeMsg" class="msg-container"></div>
+        <div id="graphHeader" class="graph-header">@Strings.GraphRDXLinkHeader</div>
+        <div id="graph1" class="graph-container" onclick="openRDXExplorerLink(rdxExplorerHourLink);">
+            <div class="dashboard-graph-header-text">@Strings.GraphLastHour</div>
+            <div id="dashboardContextpanelOnehourHistory" class="row"></div>
+        </div>
+        <div id="graph2" class="graph-container" onclick="openRDXExplorerLink(rdxExplorerDayLink);">
+            <div class="dashboard-graph-header-text">@Strings.GraphLastDay</div>
+            <div id="dashboardContextpanelOnedayHistory" class="row"></div>
+        </div>
+        <div id="graph3" class="graph-container" onclick="openRDXExplorerLink(rdxExplorerWeekLink);">
+            <div class="dashboard-graph-header-text">@Strings.GraphLastWeek</div>
+            <div id="dashboardContextpanelOneweekHistory" class="row"></div>
+        </div>
+    </div>
+
+    <div id="alertContextpanel" class="overlay">
+        <div class="dashboard_contextpanel_header-big">
+            <div id="alertContextpanelHeader" class="alert_contextpanel_header_text"></div>
+        </div>
+        <a href="#" class="closebtn" onclick="closeAlertContextPanel();">&times;</a>
+        <div class="alert_contextpanel_details_container">
+            <p id="alertDetailAlertId" hidden></p>
+            <div id="alertDetailDescriptionHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsDescriptionHeader</div>
+            <div id="alertDetailDescription" class="alert_contextpanel_details_value"></div>
+            <div id="alertDetailTimeHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsTimeHeader</div>
+            <div id="alertDetailTime" class="alert_contextpanel_details_value"></div>
+            <div id="alertDetailLocationHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsLocationHeader</div>
+            <div id="alertDetailLocation" class="alert_contextpanel_details_value"></div>
+            <div id="alertDetailOccurencesHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsOccurencesHeader</div>
+            <div id="alertDetailOccurences" class="alert_contextpanel_details_value"></div>
+        </div>
+        <div id="timeSeriesLoadingContainer">
+            <div id="timeSeriesLoadingText" class="alert_contextpanel_timeseries_loading">@Strings.AnimationTimeSeriesLoading</div>
+        </div>
+        <div id="alertDetailNoTimeSeriesContainer">
+            <div id="alertDetailNoTimeSeriesHeader" class="alert_contextpanel_notimeseries_label">@Strings.NoDataSeries</div>
+            <div id="alertDetailNoTimeSeriesValue" class="alert_contextpanel_notimeseries_value"></div>
+        </div>
+        <div id="alertDetailTimeSeriesContainer">
+            <div id="alertDetailChartHeader" class="alert_contextpanel_chart_header">@Strings.GraphRDXLinkHeader</div>
+            <div id="alertDetailChartContainer" class="alert_contextpanel_chart_container" onclick="openRDXExplorerLink(alertDetailRdxUrl);">
+                <div class="alert_contextpanel_chart_label">@Strings.GraphLastHour</div>
+                <div id="alertDetailChart" class="row"></div>
+            </div>
+        </div>
+        @if (PermsChecker.HasPermission(Permission.ActionAlerts))
+        {
+            <div id="alertDetailActionContainer" class="alert_contextpanel_details_container">
+                <div class="alert_contextpanel_details_label">@Strings.AlertSelectAction</div>
+                <div>
+                    <select id="alertContextpanelActionPicker" class="selectpicker form-control">
+                        <option selected="selected" value="empty">@Strings.AlertDetailsNoActionAvailable</option>
+                    </select>
+                </div>
+                <div class="alert_contextpanel_execute_action_button">
+                    <input id="alertDetailExecuteActionButton" class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="alertExecuteAction($('#alertDetailAlertId').text(), $('#alertContextpanelActionPicker').val())" value="@Strings.AlertActionExecute">
+                </div>
+                <div id="alertDetailActionResultHeader" class="alert_contextpanel_details_label" display="none"> @Strings.AlertDetailsActionResultHeader</div>
+                <div id="alertDetailActionResult" class="alert_contextpanel_details_value" display="none">@Strings.ActionDetailResultExecuting</div>
+            </div>
+        }
+
+    </div>
+
+    <div id="dashboardFilterContextpanel" class="overlay">
+        <div class="dashboard_contextpanel_header">
+            <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
+        </div>
+        <a href="#" class="closebtn" onclick="closeFilterPanel()">&times;</a>
+        @for (int i = 0; i < 3; i++)
+        {
+            <div class="dashboard_contextpanel_list_container">
+                <label id="filterLabel@(i)" class="dashboard_contextpanel_select_list_label" for="topologySelector@(i)"></label>
+                <div>
+                    <select id="topologySelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
+                        <option selected value="empty">@Strings.NoFilterApplied</option>
+                    </select>
+                </div>
+            </div>
+        }
+        <div class="dashboard_contextpanel_select_filter_button">
+            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="applyFilter(topologyListInformation)" value="@Strings.FilterApply">
+        </div>
+        <div class="dashboard_contextpanel_clear_filter_button">
+            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(topologyListInformation)" value="@Strings.FilterClear">
+        </div>
+    </div>
+
+    <div id="dashboardFilterAlertContextpanel" class="overlay">
+        <div class="dashboard_contextpanel_header">
+            <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
+        </div>
+        <a href="#" class="closebtn" onclick="closeFilterAlertsPanel()">&times;</a>
+        @for (int i = 0; i < 5; i++)
+        {
+            <div class="dashboard_contextpanel_list_container">
+                <label id="filterAlertLabel@(i)" class="dashboard_contextpanel_select_list_label" for="alertSelector@(i)"></label>
+                <div>
+                    <select id="alertSelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
+                        <option selected value="empty">@Strings.NoFilterApplied</option>
+                    </select>
+                </div>
+            </div>
+        }
+        <div class="dashboard_contextpanel_select_filter_alert_button">
+            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="applyFilter(alertListInformation)" value="@Strings.FilterApply">
+        </div>
+        <div class="dashboard_contextpanel_clear_filter_alert_button">
+            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(alertListInformation)" value="@Strings.FilterClear">
+        </div>
+    </div>
+
+</div>
+
+<script>
+    //
+    // OEE charts creation.
+    //
+    var oeeOverall = c3.generate({
+        bindto: '#oeeOverallChart',
+        interaction: {
+            enabled: false,
+        },
+        data: {
+            columns: [
+                ['Actual', @Model.TopNode.OeeOverallLast.OeeOverall]
+            ],
+            type: 'gauge',
+        },
+        gauge: {
+            label: {
+                show: false
+            },
+            width: 27,
+            expand: false,
+        },
+        color: {
+            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            threshold: {
+                values: [ @Model.TopNode.OeeOverallPerformanceSetting.Minimum,
+                    @Model.TopNode.OeeOverallPerformanceSetting.Target,
+                    @Model.TopNode.OeeOverallPerformanceSetting.Maximum ],
+                max: @Model.TopNode.OeeOverallPerformanceSetting.Maximum,
+            }
+        },
+        size: {
+            height: 100
+        }
+    });
+
+    var oeeAvailability = c3.generate({
+        bindto: '#oeeAvailabilityChart',
+        interaction: {
+            enabled: false,
+        },
+        data: {
+            columns: [
+                ['Actual', @Model.TopNode.OeeAvailabilityLast.OeeAvailability]
+            ],
+            type: 'gauge',
+        },
+        gauge: {
+            label: {
+                show: false
+            },
+            width: 27,
+            expand: false,
+        },
+        color: {
+            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            threshold: {
+                values: [ @Model.TopNode.OeeAvailabilityPerformanceSetting.Minimum,
+                    @Model.TopNode.OeeAvailabilityPerformanceSetting.Target,
+                    @Model.TopNode.OeeAvailabilityPerformanceSetting.Maximum ],
+                max: @Model.TopNode.OeeAvailabilityPerformanceSetting.Maximum,
+            }
+        },
+        size: {
+            height: 100
+        }
+    });
+
+    var oeePerformance = c3.generate({
+        bindto: '#oeePerformanceChart',
+        interaction: {
+            enabled: false,
+        },
+        data: {
+            columns: [
+                ['Actual', @Model.TopNode.OeePerformanceLast.OeePerformance]
+            ],
+            type: 'gauge',
+        },
+        gauge: {
+            label: {
+                show: false
+            },
+            width: 27,
+            expand: false,
+        },
+        color: {
+            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            threshold: {
+                values: [ @Model.TopNode.OeePerformancePerformanceSetting.Minimum,
+                    @Model.TopNode.OeePerformancePerformanceSetting.Target,
+                    @Model.TopNode.OeePerformancePerformanceSetting.Maximum ],
+                max: @Model.TopNode.OeePerformancePerformanceSetting.Maximum,
+            }
+        },
+        size: {
+            height: 100
+        }
+    });
+
+    var oeeQuality = c3.generate({
+        bindto: '#oeeQualityChart',
+        interaction: {
+            enabled: false,
+        },
+        data: {
+            columns: [
+                ['Actual', @Model.TopNode.OeeQualityLast.OeeQuality]
+            ],
+            type: 'gauge',
+        },
+        gauge: {
+            label: {
+                show: false
+            },
+            width: 27,
+            expand: false,
+        },
+        color: {
+            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            threshold: {
+                values: [ @Model.TopNode.OeeQualityPerformanceSetting.Minimum,
+                    @Model.TopNode.OeeQualityPerformanceSetting.Target,
+                    @Model.TopNode.OeeQualityPerformanceSetting.Maximum ],
+                max: @Model.TopNode.OeeQualityPerformanceSetting.Maximum,
+            }
+        },
+        size: {
+            height: 100
+        }
+    });
+
+    //
+    // KPI charts creation.
+    //
+    function Kpi1Tooltip(node) {
+        return ('Minimum: ' + @Model.TopNode.Kpi1PerformanceSetting.Minimum + ', Target: ' + @Model.TopNode.Kpi1PerformanceSetting.Target + ', Maximum: ' + @Model.TopNode.Kpi1PerformanceSetting.Maximum);
+    }
+
+    function Kpi2Tooltip(node) {
+        return ('Minimum: ' + @Model.TopNode.Kpi2PerformanceSetting.Minimum + ', Target: ' + @Model.TopNode.Kpi2PerformanceSetting.Target + ', Maximum: ' + @Model.TopNode.Kpi2PerformanceSetting.Maximum);
+    }
+
+    $('#kpi1Chart').tooltip({
+        title: Kpi1Tooltip
+    })
+
+    $('#kpi2Chart').tooltip({
+        title: Kpi2Tooltip
+    })
+
+    var kpi1 = c3.generate({
+        bindto: '#kpi1Chart',
+        interaction: {
+            enabled: false,
+        },
+        data: {
+            columns: [
+                    ['Actual', @Model.TopNode.Kpi1Last.Kpi ]
+            ],
+            type: 'gauge',
+        },
+        gauge: {
+            label: {
+                show: false,
+                format: function(value, ratio) {
+                    return value;
+                },
+            },
+            width: 27,
+            expand: false,
+            max: @Model.TopNode.Kpi1PerformanceSetting.Maximum,
+        },
+        color: {
+            // red: #FF2339, orange: #FF9C23 green: #65CB99
+            // the more units the better  (red/orange/green)
+            pattern: ['#FF2339', '#FF9C23', '#65CB99'],
+            threshold: {
+                unit: 'value',
+                max: @Model.TopNode.Kpi1PerformanceSetting.Maximum,
+                values: [
+                    @Model.TopNode.Kpi1PerformanceSetting.Minimum,
+                    @Model.TopNode.Kpi1PerformanceSetting.Target,
+                    @Model.TopNode.Kpi1PerformanceSetting.Maximum ]
+            }
+        },
+        size: {
+            height: 100
+        }
+    });
+
+    var kpi2 = c3.generate({
+        bindto: '#kpi2Chart',
+        interaction: {
+            enabled: false,
+        },
+        data: {
+            columns: [
+                ['Actual', @Model.TopNode.Kpi2Last.Kpi ]
+            ],
+            type: 'gauge',
+        },
+        gauge: {
+            label: {
+                show: false,
+                format: function(value, ratio) {
+                    return Math.round(value*10)/10;
+                },
+            },
+            width: 27,
+            expand: false,
+            max: @Model.TopNode.Kpi2PerformanceSetting.Maximum,
+        },
+        color: {
+            // red: #FF2339, orange: #FF9C23 green: #65CB99
+            // the more power the worse  (red/green/orange)
+            pattern: ['#FF2339', '#65CB99', '#FF9C23'],
+            threshold: {
+                unit: 'value',
+                max: @Model.TopNode.Kpi2PerformanceSetting.Maximum,
+                values: [
+                    @Model.TopNode.Kpi2PerformanceSetting.Minimum,
+                    @Model.TopNode.Kpi2PerformanceSetting.Target,
+                    @Model.TopNode.Kpi2PerformanceSetting.Maximum ]
+            }
+
+        },
+        size: {
+            height: 100
+        }
+    });
+
+    //
+    // Graph Context panel
+    //
+    var nodeName;
+    var rdxExplorerHourLink;
+    var rdxExplorerDayLink;
+    var rdxExplorerWeekLink;
+    var alertDetailRdxUrl;
+
+    function openChartContextPanel(label, relevance) {
+        getOeeKpiData("@Model.TopNode.Key", "@ContosoTopologyNode.AggregationView.Hour", relevance, chart1);
+        getOeeKpiData("@Model.TopNode.Key", "@ContosoTopologyNode.AggregationView.Day", relevance, chart2);
+        getOeeKpiData("@Model.TopNode.Key", "@ContosoTopologyNode.AggregationView.Week", relevance, chart3);
+        $("#graphHeader").show();
+        $("#graph1").show();
+        $("#graph2").show();
+        $("#graph3").show();
+        $("#nodeMsgHeader").hide();
+        $("#nodeMsg").hide();
+
+        $("#dashboardContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
+        setLabel(label);
+
+        $("#dashboardContextpanelGraphHeader").text(label);
+
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
+            rdxExplorerHourLink = rdxUrl;
+        });
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Day").done(function(rdxUrl) {
+            rdxExplorerDayLink = rdxUrl;
+        });
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Week").done(function(rdxUrl) {
+            rdxExplorerWeekLink = rdxUrl;
+        });
+    }
+
+    // Context panel opened from node.
+    function openContextPanelFromNode(name, nodeId) {
+        nodeName = name;
+        getDataForOpcUaNode("@Model.TopNode.Key", nodeId, "@ContosoTopologyNode.AggregationView.Hour", chart1);
+        getDataForOpcUaNode("@Model.TopNode.Key", nodeId, "@ContosoTopologyNode.AggregationView.Day", chart2);
+        getDataForOpcUaNode("@Model.TopNode.Key", nodeId, "@ContosoTopologyNode.AggregationView.Week", chart3);
+        $("#graphHeader").show();
+        $("#graph1").show();
+        $("#graph2").show();
+        $("#graph3").show();
+        $("#nodeMsgHeader").hide();
+        $("#nodeMsg").hide();
+
+        $("#dashboardContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
+        setLabel(name);
+
+        $("#dashboardContextpanelGraphHeader").text(name);
+
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
+            rdxExplorerHourLink = rdxUrl;
+        });
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Day").done(function(rdxUrl) {
+            rdxExplorerDayLink = rdxUrl;
+        });
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Week").done(function(rdxUrl) {
+            rdxExplorerWeekLink = rdxUrl;
+        });
+    }
+
+    function closeChartContextPanel() {
+        $("#dashboardContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big")
+    }
+
+    function openRDXExplorerLink(url) {
+        window.open(url);
+    }
+
+    // Alert details.
+    function openContextPanelFromAlert(alertId) {
+        $('#alertDetailActionResultHeader').hide();
+        $('#alertDetailActionResult').hide();
+        $('#alertDetailActionResult').text('@Strings.ActionDetailResultExecuting');
+        $("#alertContextpanelHeader").text('@Strings.AlertDetails');
+        $("#alertDetailTimeSeriesContainer").hide();
+        $("#alertDetailNoTimeSeriesContainer").hide();
+        $("#timeSeriesLoadingContainer").show();
+        $('#alertDetailExecuteActionButton').removeClass('disabled');
+        $('#alertDetailExecuteActionButton').addClass('enabled');
+
+        var i = 0
+        for (i = 0; i < alertInformation.length; i++) {
+            if (alertInformation[i].AlertId == alertId) {
+                break;
+            }
+        }
+
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
+            alertDetailRdxUrl = rdxUrl;
+        });
+
+        if (i == alertInformation.length) {
+            $("#alertDetailAlertId").text('');
+            $("#alertDetailDescription").text('@Strings.AlertDetailsUnknown');
+            $("#alertDetailTime").text('@Strings.AlertDetailsUnknown');
+            $("#alertDetailLocation").text('@Strings.AlertDetailsUnknown');
+            $("#alertDetailOccurences").text('@Strings.AlertDetailsUnknown');
+            $("#alertContextpanelActionPicker").children().remove();
+            $("#alertContextpanelActionPicker").text('@Strings.AlertDetailsNoActionAvailable');
+        } else {
+            if (alertInformation[i].SubKey == "null") {
+                var relevance = @((Int16)ContosoPerformanceRelevance.NotRelevant);
+                switch (alertInformation[i].Cause) {
+                    case @((Int16)ContosoAlertCause.AlertCauseOeeOverallBelowMinimum):
+                    case @((Int16)ContosoAlertCause.AlertCauseOeeOverallAboveMaximum):
+                        relevance = @((Int16)ContosoPerformanceRelevance.OeeOverall);
+                        break;
+                    case @((Int16)ContosoAlertCause.AlertCauseOeeAvailabilityBelowMinimum):
+                    case @((Int16)ContosoAlertCause.AlertCauseOeeAvailabilityAboveMaximum):
+                        relevance = @((Int16)ContosoPerformanceRelevance.OeeAvailability);
+                        break;
+                    case @((Int16)ContosoAlertCause.AlertCauseOeePerformanceBelowMinimum):
+                    case @((Int16)ContosoAlertCause.AlertCauseOeePerformanceAboveMaximum):
+                        relevance = @((Int16)ContosoPerformanceRelevance.OeePerformance);
+                        break;
+                    case @((Int16)ContosoAlertCause.AlertCauseOeeQualityBelowMinimum):
+                    case @((Int16)ContosoAlertCause.AlertCauseOeeQualityAboveMaximum):
+                        relevance = @((Int16)ContosoPerformanceRelevance.OeeQuality);
+                        break;
+                    case @((Int16)ContosoAlertCause.AlertCauseKpi1BelowMinimum):
+                    case @((Int16)ContosoAlertCause.AlertCauseKpi1AboveMaximum):
+                        relevance = @((Int16)ContosoPerformanceRelevance.Kpi1);
+                        break;
+                    case @((Int16)ContosoAlertCause.AlertCauseKpi2BelowMinimum):
+                    case @((Int16)ContosoAlertCause.AlertCauseKpi2AboveMaximum):
+                        relevance = @((Int16)ContosoPerformanceRelevance.Kpi2);
+                        break;
+                }
+                getOeeKpiData(alertInformation[i].Key, "@ContosoTopologyNode.AggregationView.Hour", relevance, alertDetailChart);
+            } else {
+                getDataForOpcUaNode(alertInformation[i].Key, alertInformation[i].SubKey, "@ContosoTopologyNode.AggregationView.Hour", alertDetailChart);
+            }
+
+            $("#alertDetailAlertId").text(alertInformation[i].AlertId);
+            $("#alertDetailDescription").text(alertInformation[i].CauseDescription);
+            $("#alertDetailTime").text(alertInformation[i].UxTime);
+            var alertLocation = alertInformation[i].TopologyDetails.reduce(function(acc, val) {
+                if (val) {
+                    if (acc) {
+                        return acc + ', ' + val;
+                    } else {
+                        return val;
+                    }
+                }
+                return acc;
+            }, '');
+            $("#alertDetailLocation").text(alertLocation);
+            $("#alertDetailOccurences").text(alertInformation[i].Occurences);
+            $("#alertContextpanelActionPicker").children().remove();
+            $("#alertContextpanelActionPicker").selectpicker('refresh');
+            if (alertInformation[i].AlertActionInfo && alertInformation[i].AlertActionInfo.length > 0) {
+                for (var j = 0; j < alertInformation[i].AlertActionInfo.length; j++) {
+                    // Acknowledge and close are treated special.
+                    if ((alertInformation[i].AlertActionInfo[j].Type ==  @((Int16)ContosoAlertActionType.AcknowledgeAlert)) && (alertInformation[i].Status == @((Int16)ContosoAlertStatus.AlertStatusAcknowledged))) {
+                        continue;
+                    }
+                    if ((alertInformation[i].AlertActionInfo[j].Type ==  @((Int16)ContosoAlertActionType.CloseAlert)) && (alertInformation[i].Status == @((Int16)ContosoAlertStatus.AlertStatusActive))) {
+                        continue;
+                    }
+                    $("#alertContextpanelActionPicker").append($('<option>', {
+                        value: alertInformation[i].AlertActionInfo[j].Id,
+                        text: alertInformation[i].AlertActionInfo[j].Description
+                    }));
+                }
+                $("#alertContextpanelActionPicker").selectpicker('val', alertInformation[i].AlertActionInfo[0].Description);
+                $("#alertContextpanelActionPicker").selectpicker('refresh');
+                $("#alertDetailActionContainer").show();
+            } else {
+                $("#alertDetailActionContainer").hide();
+            }
+        }
+        $("#alertContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
+    }
+    function closeAlertContextPanel() {
+        $("#alertContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big");
+    }
+
+    function alertExecuteAction(alertId, alertActionId) {
+        $('#alertDetailActionResult').text('@Strings.ActionDetailResultExecuting');
+        $('#alertDetailActionResultHeader').show();
+        $('#alertDetailActionResult').show();
+        $('#alertDetailExecuteActionButton').addClass('disabled');
+        $.post({
+            url: "/WebMethod/AlertActionExecute",
+            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), alertId: alertId, alertActionId: alertActionId },
+            success: function onSuccess(response) {
+                var result = JSON.parse(response);
+                switch (result[0].actionType) {
+                    case @((Int16)ContosoAlertActionType.AcknowledgeAlert):
+                        $('#alertDetailActionResult').text('@Strings.AlertActionAcknowledgeSuccessful');
+                        // Close context panel after a short pause.
+                        setTimeout(function() {
+                            closeAlertContextPanel();
+                        }, 1500);
+                        break;
+                    case @((Int16)ContosoAlertActionType.CloseAlert):
+                        $('#alertDetailActionResult').text('@Strings.AlertActionCloseSuccessful');
+                        // Close context panel after a short pause.
+                        setTimeout(function() {
+                            closeAlertContextPanel();
+                        }, 1500);
+                        break;
+                    case @((Int16)ContosoAlertActionType.OpenWebPage):
+                        // Open a new web page.
+                        window.open(result[1].url);
+                        $('#alertDetailActionResult').text('@Strings.AlertActionWebPageOpened');
+                        break;
+                }
+            },
+            error: function(response) {
+                if (response.status == 403) {
+                    $('#alertDetailActionResult').text('@Strings.ErrorInsufficientPermissions');
+                } else {
+                    $('#alertDetailActionResult').text('@Strings.ErrorAccessProblem');
+                }
+            },
+            complete: function() {
+                $('#alertDetailExecuteActionButton').removeClass('disabled');
+                $('#alertDetailExecuteActionButton').addClass('enabled');
+            }
+        });
+
+    }
+
+
+    var widthGraph = 390;
+    var heightGraph = 195;
+    var paddingTop = 10;
+    var paddingLeft = 90;
+    var colorGraph1 = '#65CB99';
+    var colorGraph2 = '#ecee14';
+    var colorGraph3 = '#6490A9';
+    var colorAlertDetailChart = '#65CB99';
+    var gridGraph1 = initGridArray(2,60,3);
+    var gridGraph2 = initGridArray(1,24,2);
+    var gridGraph3 = initGridArray(0,7.5,0.5);
+    var gridAlertDetailChart = initGridArray(2,60,3);
+
+
+    function initGridArray(initValue, maxValue, step) {
+        var line = [];
+        for (var i = initValue; i < maxValue; i=i+step) {
+            line.push({value: i});
+        }
+        return line;
+    }
+
+
+    var chart1 = c3.generate({
+        bindto: '#dashboardContextpanelOnehourHistory',
+        size: {
+            width: widthGraph,
+            height: heightGraph
+        },
+        data: {
+            x: 'x',
+            columns: [
+              ['x', "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+              ['data', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ],
+            colors: {
+                data: colorGraph1
+            },
+            type: 'bar'
+        },
+        axis: {
+            y: {
+                label: {
+                    text: '',
+                    position: 'outer-middle'
+                },
+                tick: {
+                    outer: false
+                }
+            },
+            x: {
+                label: {
+                    text: '@Strings.LastHourHistoryGraphXlabel',
+                    position: 'outer-center'
+                },
+                show: true,
+                type: 'category',
+                height: 60,
+                tick: {
+                    rotate: 40,
+                    culling: true,
+                    multiline: false,
+                    outer: false
+                }
+            },
+        },
+        grid:{
+            x: {
+                lines: gridGraph1
+            }
+        },
+        padding: {
+            top: paddingTop,
+            left: paddingLeft
+        },
+        point: {
+            show: false
+        },
+        tooltip: {
+            grouped: false
+        },
+        legend: {
+            show: false
+        }
+    });
+
+    var chart2 = c3.generate({
+        bindto: '#dashboardContextpanelOnedayHistory',
+        size: {
+            width: widthGraph,
+            height: heightGraph
+        },
+        data: {
+            x: 'x',
+            columns: [
+              ['x', "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+              ['data', 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            ],
+            colors: {
+                data: colorGraph2
+
+            },
+            type: 'bar'
+        },
+        axis: {
+            y: {
+                label: {
+                    text: '',
+                    position: 'outer-middle'
+                },
+                tick: {
+                    outer: false
+                }
+            },
+            x: {
+                label: {
+                    text: '@Strings.LastDayHistoryGraphXlabel',
+                    position: 'outer-center'
+                },
+                show: true,
+                type: 'category',
+                height: 60,
+                tick: {
+                    rotate: 40,
+                    culling: true,
+                    multiline: false,
+                    outer: false
+                }
+            },
+        },
+        grid:{
+            x: {
+                lines: gridGraph2
+            }
+        },
+        padding: {
+            top: paddingTop,
+            left: paddingLeft
+        },
+        point: {
+            show: false
+        },
+        tooltip: {
+            grouped: false
+        },
+        legend: {
+            show: false
+        }
+    });
+
+    var chart3 = c3.generate({
+        bindto: '#dashboardContextpanelOneweekHistory',
+        size: {
+            width: widthGraph,
+            height: heightGraph
+        },
+        data: {
+            x: 'x',
+            columns: [
+              ['x', "0", "0", "0", "0", "0", "0", "0"],
+              ['data', 0, 0, 0, 0, 0, 0, 0]
+            ],
+            colors: {
+                pattern: [colorGraph3]
+            },
+            type: 'bar'
+        },
+        axis: {
+            y: {
+                label: {
+                    text: '',
+                    position: 'outer-middle'
+                },
+                tick: {
+                    outer: false
+                }
+            },
+            x: {
+                label: {
+                    text: '@Strings.LastWeekHistoryGraphXlabel',
+                    position: 'outer-center'
+                },
+                show: true,
+                type: 'category',
+                height: 65,
+                tick: {
+                    rotate: 40,
+                    culling: true,
+                    multiline: true,
+                    outer: false
+                }
+            },
+        },
+        grid:{
+            x: {
+                lines: gridGraph3
+            }
+        },
+        padding: {
+            top: paddingTop,
+            left: paddingLeft
+        },
+        point: {
+            show: false
+        },
+        tooltip: {
+            grouped: false,
+            color: '#fff'
+        },
+        legend: {
+            show: false
+        }
+    });
+
+    var alertDetailChart = c3.generate({
+        bindto: '#alertDetailChart',
+        size: {
+            width: widthGraph,
+            height: heightGraph
+        },
+        data: {
+            x: 'x',
+            columns: [
+              ['x', "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+              ['data', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ],
+            colors: {
+                data: colorAlertDetailChart
+            },
+            type: 'bar'
+        },
+        axis: {
+            y: {
+                label: {
+                    text: '',
+                    position: 'outer-middle'
+                },
+                tick: {
+                    outer: false
+                }
+            },
+            x: {
+                label: {
+                    text: '@Strings.LastHourHistoryGraphXlabel',
+                    position: 'outer-center'
+                },
+                show: true,
+                type: 'category',
+                height: 60,
+                tick: {
+                    rotate: 40,
+                    culling: true,
+                    multiline: false,
+                    outer: false
+                }
+            },
+        },
+        grid:{
+            x: {
+                lines: gridAlertDetailChart
+            }
+        },
+        padding: {
+            top: paddingTop,
+            left: paddingLeft
+        },
+        point: {
+            show: false
+        },
+        tooltip: {
+            show :false
+        },
+        legend: {
+            show: false
+        }
+    });
+
+    // Set the Y lable for the 3 graphs
+    function setLabel(ylabel) {
+        chart1.axis.labels({ y: ylabel });
+        chart2.axis.labels({ y: ylabel });
+        chart3.axis.labels({ y: ylabel });
+    }
+
+    function getOeeKpiData(key, aggregationView, performanceRelevance, chart) {
+        progressCount = 0;
+        var intervalId = setInterval(function() {
+            progressCount = ++progressCount % 10;
+            $("#timeSeriesLoadingText").text("@Strings.AnimationTimeSeriesLoading " + Array(progressCount+1).join("."));
+        }, 800);
+        $.post({
+            url: "/WebMethod/GetOeeKpiData",
+            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), key: key, view: aggregationView, relevance: performanceRelevance },
+            success: function onSuccess(response) {
+                clearInterval(intervalId);
+                var obj = JSON.parse(response);
+                var data = $.trim(obj.YValues).split(",");
+                var xdata = $.trim(obj.XTime).split(",");
+                var xlabel = [];
+                for (var i = 0; i < xdata.length; ++i) {
+                    if (xdata.length < 12) {
+                        if (xdata[i].slice(0,4) != "0001") {
+                            xlabel.push(xdata[i].slice(0,10));
+                        }
+                        else {
+                            xlabel.push(xdata[i].slice(0,9) + i.toString());
+                        }
+                    }
+                    else {
+                        xlabel.push(xdata[i].slice(11,16));
+                    }
+                }
+                xlabel.unshift("x");
+                
+                if (data[0] != "Error") {
+                    $("#timeSeriesLoadingContainer").hide();
+                    $("#alertDetailTimeSeriesContainer").show();
+                    $("#alertDetailNoTimeSeriesContainer").hide();
+                    data.unshift("data");
+                    chart.load({columns: [xlabel, data]});
+                } else {
+                    $("#graphHeader").hide();
+                    $("#graph1").hide();
+                    $("#graph2").hide();
+                    $("#graph3").hide();
+                    $("#nodeMsgHeader").show();
+                    $("#nodeMsg").show();
+                    $("#nodeMsg").text('@Strings.ErrorGetOeeKpiData');
+                    $("#timeSeriesLoadingContainer").hide();
+                    $("#alertDetailTimeSeriesContainer").hide();
+                    $("#alertDetailNoTimeSeriesContainer").show();
+                    $("#alertDetailNoTimeSeriesValue").text('@Strings.ErrorGetOeeKpiData');
+                }
+            },
+            error: function(response) {
+                console.error("error getting Oee/Kpi data: ", response.d, response.responseText);
+            },
+            complete: function() {
+                clearInterval(intervalId);
+            }
+        });
+    }
+
+    function getDataForOpcUaNode(key, nodeId, aggregationView, chart) {
+        progressCount = 0;
+        var intervalId = setInterval(function() {
+            progressCount = ++progressCount % 10;
+            $("#timeSeriesLoadingText").text("@Strings.AnimationTimeSeriesLoading " + Array(progressCount+1).join("."));
+        }, 800);
+        $.post({
+            url: "/WebMethod/GetDataForOpcUaNode",
+            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), key: key, nodeId: nodeId, view: aggregationView },
+            success: function onSuccess(response) {
+                clearInterval(intervalId);
+                var obj = JSON.parse(response);
+                var data = $.trim(obj.YValues).split(",");
+                var xdata = $.trim(obj.XTime).split(",");
+                var xlabel = [];
+                for (var i = 0; i < xdata.length; ++i) {
+                    if (xdata.length < 12) {
+                        if (xdata[i].slice(0,4) != "0001") {
+                            xlabel.push(xdata[i].slice(0,10));
+                        }
+                        else {
+                            xlabel.push(xdata[i].slice(0,9) + i.toString());
+                        }
+                    }
+                    else {
+                        xlabel.push(xdata[i].slice(11,16));
+                    }
+                }
+                xlabel.unshift("x");
+
+                if ((data[0] != "Error") && (data[0] != "NoTimeSeries")) {
+                    $("#timeSeriesLoadingContainer").hide();
+                    $("#alertDetailTimeSeriesContainer").show();
+                    $("#alertDetailNoTimeSeriesContainer").hide();
+                    data.unshift("data");
+                    chart.load({columns: [xlabel, data]});
+                } else {
+                    $("#graphHeader").hide();
+                    $("#graph1").hide();
+                    $("#graph2").hide();
+                    $("#graph3").hide();
+                    $("#nodeMsgHeader").show();
+                    $("#nodeMsg").show();
+                    $("#timeSeriesLoadingContainer").hide();
+                    $("#alertDetailTimeSeriesContainer").hide();
+                    $("#alertDetailNoTimeSeriesContainer").show();
+                    if (data[0] == "Error") {
+                        $("#nodeMsg").text('@Strings.ErrorGetDataForOpcUaNode');
+                        $("#alertDetailNoTimeSeriesValue").text('@Strings.ErrorGetDataForOpcUaNode');
+                    } else {
+                        $("#nodeMsg").text(nodeName + ' = ' + data[1] + data[2]);
+                        $("#alertDetailNoTimeSeriesValue").text(nodeName + ' = ' + data[1] + data[2]);
+                    }
+                }
+            },
+            error: function(response) {
+                console.error("error getting data of OPC UA node: ", response.d, response.responseText);
+            },
+            complete: function() {
+                clearInterval(intervalId);
+            }
+        });
+    }
+
+    function linkRDXExplorer(aggregationView) {
+        // Variable which is still available in deferred done promise for this function.
+        var rdxUrl;
+        return $.post({
+            url: "/WebMethod/RDXLink",
+            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), key: "@Model.TopNode.Key", view: aggregationView },
+            success: function onSuccess(response) {
+                rdxUrl = response;
+            },
+            error: function(response) {
+                console.error("error getting Rdx link: ", response.d, response.responseText);
+            }
+        });
+    }
+
+    // SignalR hub client.
+    var telemetry = $.connection.telemetryHub;
+
+    // Alert information
+    @{   var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+        var jsonAlerts = serializer.Serialize(Model.Alerts);
+    }
+    var alertInformation = JSON.parse('@Html.Raw(jsonAlerts)');
+
+    //
+    // SignalR hub callback.
+    //
+    $(function () {
+        //
+        // Enable SignalR debugging and logging
+        //
+        $.connection.hub.logging = true;
+
+        $.connection.hub.connectionSlow(function () {
+            console.log("SignalR connection is slow");
+        });
+
+        $.connection.hub.reconnecting(function () {
+            tryingToReconnect = true;
+        });
+
+        $.connection.hub.reconnected(function () {
+            console.log("SignalR is reconnected");
+        });
+
+        $.connection.hub.disconnected(function () {
+            console.log("SignalR is disconnected");
+        });
+
+        //
+        // Children update
+        //
+        telemetry.client.updateSessionChildrenData = function (sessionUpdateJson) {
+            sessionUpdate = JSON.parse(sessionUpdateJson);
+            if (sessionUpdate != undefined) {
+                for (i = 0; i < sessionUpdate.length; i++) {
+                    var session = sessionUpdate[i];
+                    if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
+                        if (session.Children != undefined) {
+                            for (j = 0; j < session.Children.length; j++)
+                            {
+                            }
+                        }
+                    };
+                };
+            };
+        }
+
+        //
+        // OEE/KPI data update
+        //
+        telemetry.client.updateSessionOeeKpiData = function (sessionUpdateJson) {
+            sessionUpdate = JSON.parse(sessionUpdateJson);
+            if (sessionUpdate != undefined) {
+                for (i = 0; i < sessionUpdate.length; i++) {
+                    var session = sessionUpdate[i];
+                    if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
+                        if (session.OeeOverallLast != undefined && session.OeeOverallLast.OeeOverall != null) {
+                            oeeOverall.load({
+                                columns: [['Actual', session.OeeOverallLast.OeeOverall]]
+                            });
+                        }
+                        if (session.OeeAvailabilityLast != undefined && session.OeeAvailabilityLast.OeeAvailability != null) {
+                            oeeAvailability.load({
+                                columns: [['Actual', session.OeeAvailabilityLast.OeeAvailability]]
+                            });
+                        }
+                        if (session.OeePerformanceLast != undefined && session.OeePerformanceLast.OeePerformance != null) {
+                            oeePerformance.load({
+                                columns: [['Actual', session.OeePerformanceLast.OeePerformance]]
+                            });
+                        }
+                        if (session.OeeQualityLast != undefined && session.OeeQualityLast.OeeQuality != null) {
+                            oeeQuality.load({
+                                columns: [['Actual', session.OeeQualityLast.OeeQuality]]
+                            });
+                        }
+                        if (session.Kpi1Last != undefined && session.Kpi1Last.Kpi != null) {
+                            kpi1.load({
+                                columns: [['Actual', session.Kpi1Last.Kpi]]
+                            });
+                        }
+                        if (session.Kpi2Last != undefined && session.Kpi2Last.Kpi != null) {
+                            kpi2.load({
+                                columns: [['Actual', session.Kpi2Last.Kpi]]
+                            });
+                        };
+                    };
+                };
+            };
+        }
+
+        //
+        // Alert data updates
+        //
+        telemetry.client.updateSessionAlertData = function (sessionUpdateJson) {
+            sessionUpdate = JSON.parse(sessionUpdateJson);
+            if (sessionUpdate != undefined) {
+                for (var i = 0; i < sessionUpdate.length; i++) {
+                    var session = sessionUpdate[i];
+                    if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
+                        // Only update if the alerts filter panel is closed.
+                        if ($("#dashboardFilterAlertContextpanel").hasClass('overlay-close') && session.Alerts != undefined) {
+                            var alertsList = '';
+                            for (var j = 0; j < session.Alerts.length; j++) {
+                                // Update the alert list
+                                if (session.Alerts[j].Status == (@((ushort)ContosoAlertStatus.AlertStatusAcknowledged))) {
+                                    alertsList += '<div class="dashboard_alerts_listitem_container alert_status_acknowledged row" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')">';
+                                } else {
+                                    alertsList += '<div class="dashboard_alerts_listitem_container alert_status_active row" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')">';
+                                }
+                                alertsList += '<div class="col-xs-12">';
+                                alertsList += '<div class="dashboard_alerts_listitem_source overflow row">' + session.Alerts[j].CauseDescription + '</div>';
+                                alertsList += '<div class="dashboard_alerts_listitem_source_details_container row">';
+                                alertsList += '<div class="dashboard_alerts_listitem_source_details overflow col-xs-7">';
+                                var detailsIndex = 1;
+                                var alertLocation = session.Alerts[j].TopologyDetails.reduce(function(acc, val) {
+                                    var result = acc;
+                                    if (val) {
+                                        if (acc) {
+                                            result = acc + '<span>, </span>' + '<span class="dashboard_alerts_details' + detailsIndex + '">' + val + '</span>';
+                                        } else {
+                                            result = '<span class="dashboard_alerts_details' + detailsIndex + '">' + val + '</span>';
+                                        }
+                                    }
+                                    detailsIndex++;
+                                    return result;
+                                }, '');
+                                alertsList += alertLocation;
+                                alertsList += '</div>';
+                                alertsList += '<div id="alertsSourceDetailsTime" class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">' + session.Alerts[j].UxTime + '</div>';
+                                alertsList += '</div>';
+                                alertsList += '</div>';
+                                alertsList += '</div>';
+                            }
+                            // update the session alert information
+                            alertInformation = session.Alerts;
+                            // update the list and the alert filter information
+                            $('#dashboardAlertsList').html(alertsList);
+                            updateAlertListInformation();
+                            // check if alert filters are active and apply them
+                            if ($(alertListInformation.idFilter).is(":visible")) {
+                                applyFilter(alertListInformation);
+                            }
+                        } else {
+                            console.log('ignore the alert update, since filtering is in active');
+                        }
+                    };
+                }
+            }
+        }
+
+        // Start/update the connection
+        $(function () {
+            // Start/update the connection
+            $.connection.hub.start().done(function () { });
+        });
+    });
+
+    //
+    //filter
+    //
+
+    var topologyListInformation = {
+        listItemContainer: $(".dashboard_children_listitem_container"),
+        idAll: $("#allIcon"),
+        idFilter: $("#filterIcon"),
+        filter: [],
+        filterLabels: ['@Model.ChildrenListHeaderStatus', '@Model.ChildrenListHeaderLocation', '@Model.ChildrenListHeaderDetails'],
+
+        listItemDetails:[
+        {
+            elementClass: $(".dashboard_children_listitem_status_text"),
+            selector: $("#topologySelector0"),
+            cookieName: "cookieTopologySelector0",
+            filterSelection: null
+        },
+        {
+            elementClass: $(".dashboard_children_listitem_location"),
+            selector: $("#topologySelector1"),
+            cookieName: "cookieTopologySelector1",
+            filterSelection: null
+        },
+        {
+            elementClass: $(".dashboard_children_listitem_details"),
+            selector: $("#topologySelector2"),
+            cookieName: "cookieTopologySelector2",
+            filterSelection: null
+        }]
+    };
+
+    var alertListInformation = {
+        listItemContainer: $(".dashboard_alerts_listitem_container"),
+        idAll: $("#allIconAlert"),
+        idFilter: $("#filterIconAlert"),
+        filter: [],
+        filterLabels: ['@Strings.AlertDescription','@Model.ChildrenListHeaderLocation', '@Strings.AlertProductionLine', '@Strings.AlertStation', '@Strings.AlertNode'],
+
+        listItemDetails:[
+        {
+            elementClass: $(".dashboard_alerts_listitem_source"),
+            selector: $("#alertSelector0"),
+            cookieName: "cookieAlertSelector0",
+            filterSelection: null
+        },
+        {
+            elementClass: $(".dashboard_alerts_details1"),
+            selector: $("#alertSelector1"),
+            cookieName: "cookieAlertSelector1",
+            filterSelection: null
+        },
+        {
+            elementClass: $(".dashboard_alerts_details2"),
+            selector: $("#alertSelector2"),
+            cookieName: "cookieAlertSelector2",
+            filterSelection: null
+        },
+        {
+            elementClass: $(".dashboard_alerts_details3"),
+            selector: $("#alertSelector3"),
+            cookieName: "cookieAlertSelector3",
+            filterSelection: null
+        },
+        {
+            elementClass: $(".dashboard_alerts_details4"),
+            selector: $("#alertSelector4"),
+            cookieName: "cookieAlertSelector4",
+            filterSelection: null
+        }]
+    };
+
+    $(document).ready(function () {
+        // initialize all context panels to default state closed
+        $("#dashboardContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big");
+        $("#dashboardFilterContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big");
+        $("#dashboardFilterAlertContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big");
+        $("#alertContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big");
+
+        // update filter panel information
+        getCookies(topologyListInformation);
+        getCookies(alertListInformation);
+
+        createListItems(topologyListInformation);
+        createListItems(alertListInformation);
+
+        applyFilter(topologyListInformation);
+        applyFilter(alertListInformation);
+    });
+
+    function updateAlertListInformation() {
+        alertListInformation.listItemContainer = $(".dashboard_alerts_listitem_container");
+        alertListInformation.listItemDetails[0].elementClass = $(".dashboard_alerts_listitem_source");
+        alertListInformation.listItemDetails[1].elementClass = $(".dashboard_alerts_details1");
+        alertListInformation.listItemDetails[2].elementClass = $(".dashboard_alerts_details2");
+        alertListInformation.listItemDetails[3].elementClass = $(".dashboard_alerts_details3");
+        alertListInformation.listItemDetails[4].elementClass = $(".dashboard_alerts_details4");
+    }
+
+    function getCookies(listObject) {
+
+        //cookies for Factory, productionLine, Station, node filters
+        var cookieSelector = [];
+
+        for (var i = 0; i < listObject.listItemDetails.length; i++) {
+            cookieSelector[i] = Cookies.get(listObject.listItemDetails[i].cookieName + document.URL);
+
+            if (cookieSelector[i] != undefined) {
+                listObject.listItemDetails[i].filterSelection = cookieSelector[i];
+            }
+        }
+    }
+
+    function setCookies(listObject) {
+        for (var i = 0; i < listObject.listItemDetails.length; i++) {
+            Cookies.set(listObject.listItemDetails[i].cookieName + document.URL, listObject.listItemDetails[i].filterSelection);
+        }
+    }
+
+    function openFilterContextPanel() {
+        createListItems(topologyListInformation);
+
+        $("#openFromUnfiltered").blur();
+        $("#openFromFiltered").blur();
+        for (var i = 0; i < topologyListInformation.filterLabels.length; i++) {
+            $("#filterLabel" + i).html(topologyListInformation.filterLabels[i]);
+        }
+
+        $("#dashboardFilterContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
+    }
+
+    function openFilterAlertsContextPanel() {
+        updateAlertListInformation();
+        createListItems(alertListInformation);
+
+        $("#openFromUnfiltered").blur();
+        $("#openFromFiltered").blur();
+        for (var i = 0; i < alertListInformation.filterLabels.length; i++) {
+            $("#filterAlertLabel" + i).html(alertListInformation.filterLabels[i]);
+        }
+
+        $("#dashboardFilterAlertContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
+    }
+
+    function closeFilterPanel() {
+        $("#dashboardFilterContextpanel").addClass("overlay-close");
+    }
+
+    function closeFilterAlertsPanel() {
+        $("#dashboardFilterAlertContextpanel").addClass("overlay-close");
+    }
+
+    function createListItems(listObject) {
+
+        for (var i = 0; i < listObject.listItemDetails.length; i++) {
+
+            var countItems = [];
+            var keys = [];
+
+            listObject.listItemDetails[i].selector.children('option:not(:first)').remove();
+            listObject.listItemDetails[i].selector.selectpicker('refresh');
+
+            listObject.listItemDetails[i].elementClass.each(function (index) { countItems.push($(this).text()); });
+            keys = countItems.filter(function (elem, index, array) { return array.indexOf(elem) === index; });
+
+            for (var j = 0; j < keys.length; j++) {
+                listObject.listItemDetails[i].selector.append($('<option>', {
+                    value: keys[j],
+                    text: keys[j]
+                }));
+                listObject.listItemDetails[i].selector.selectpicker('refresh');
+            }
+
+            //display on the listbox the selected filter
+            if ((listObject.listItemDetails[i].filterSelection != null) && (keys.indexOf(listObject.listItemDetails[i].filterSelection) != -1)) {
+                listObject.listItemDetails[i].selector.selectpicker('val', listObject.listItemDetails[i].filterSelection);
+            }
+            else {
+                listObject.listItemDetails[i].selector.selectpicker('val','empty');
+            }
+
+        }
+    }
+
+    function applyFilter(listObject) {
+
+        for (var i = 0; i < listObject.listItemDetails.length; i++) {
+            listObject.filter[i] = listObject.listItemDetails[i].selector.val();
+        }
+
+        //clear all filter before applying a new one
+        for (var i = 0; i < listObject.listItemContainer.length; i++) {
+            listObject.listItemContainer[i].style.display = "";
+        }
+
+        for (var i = 0; i < listObject.filter.length; i++) {
+            listObject.listItemDetails[i].filterSelection = listObject.filter[i];
+        }
+
+        for (var j = 0; j < listObject.filter.length; j++) {
+            if (listObject.filter[j] != "empty") {
+                for (var i = 0; i < listObject.listItemContainer.length; i++) {
+                    if (listObject.listItemContainer[i].innerHTML.indexOf(listObject.filter[j]) > -1) {
+                        if (listObject.listItemContainer[i].style.display != "none") {
+                            listObject.listItemContainer[i].style.display = "";
+                        }
+                    } else {
+                        listObject.listItemContainer[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        //show/hide filter icon
+        if (listObject.filter.some(function (filt) { return filt != "empty" })) {
+            listObject.idAll.hide();
+            listObject.idFilter.show();
+        }
+
+        if (listObject.filter.every(function (filt) { return filt == "empty" })) {
+            listObject.idAll.show();
+            listObject.idFilter.hide();
+        }
+        setCookies(listObject);
+        closeFilterPanel();
+        closeFilterAlertsPanel();
+    }
+
+    function clearFilter(listObject) {
+
+        //hide filter icon
+        listObject.idAll.show();
+        listObject.idFilter.hide();
+
+        //show all data in the list
+        for (var i = 0; i < listObject.listItemContainer.length; i++) {
+            listObject.listItemContainer[i].style.display = "";
+        }
+
+        for (var i = 0; i < listObject.listItemDetails.length; i++) {
+            listObject.listItemDetails[i].selector.selectpicker('val','empty');
+            listObject.listItemDetails[i].filterSelection = "empty";
+        }
+        setCookies(listObject);
+        closeFilterPanel();
+        closeFilterAlertsPanel();
+    }
+</script>

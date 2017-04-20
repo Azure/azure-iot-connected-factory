@@ -1,0 +1,10 @@
+{
+  "projects": [
+	"Simulation/Factory/Station",
+	"Simulation/Factory/MES", 
+	"Simulation/Factory/IoTHubCredentialTools", 
+	"Simulation/Factory/NetCoreConsolePublisher", 
+	"Simulation/Factory/CreateCerts" 
+	],
+  "sdk": { "version": "1.0.0-preview2-003131" }
+}

@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "OPCFoundation.NetStandard.Opc.Ua.SDK": "0.2.3"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {}
+  },
+
+  "publishOptions": {
+    "include": [
+      "Opc.Ua.MES.Config.xml",
+      "Opc.Ua.MES.Endpoints.xml"
+    ]
+  }
+}

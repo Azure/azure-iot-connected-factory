@@ -1,0 +1,19 @@
+﻿@import "../variables.less";
+@import "../bootstrap/variables.less";
+
+/* 
+ *  tooltip
+*/
+
+.tooltip > .tooltip-inner {
+    background-color: @content-background-color;
+    color: @text-color;
+}
+.tooltip.top .tooltip-arrow {
+      border-top-color: @content-background-color;
+}
+.tooltip.in {
+    opacity: 1;
+    filter:alpha(opacity=100);
+    z-index: 99999;
+}

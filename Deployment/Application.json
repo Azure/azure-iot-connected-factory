@@ -1,0 +1,51 @@
+﻿{
+  "odata.type": "Microsoft.DirectoryServices.Application",
+  "displayName": "{1}",
+  "homepage": "{0}",
+  "availableToOtherTenants": false,
+  "identifierUris@odata.type": "Collection(Edm.String)",
+  "identifierUris": [ "{2}" ],
+  "replyUrls@odata.type": "Collection(Edm.String)",
+  "replyUrls": [ "{0}" ],
+  "appRoles": [
+    {
+      "allowedMemberTypes@odata.type": "Collection(Edm.String)",
+      "allowedMemberTypes": [ "User" ],
+      "description": "Read only access to device information",
+      "displayName": "Read Only",
+      "id": "e5bbd0f5-128e-4362-9dd1-8f253c6082d7",
+      "isEnabled": true,
+      "value": "ReadOnly"
+    },
+    {
+      "allowedMemberTypes@odata.type": "Collection(Edm.String)",
+      "allowedMemberTypes": [ "User" ],
+      "description": "Administrator access to the application",
+      "displayName": "Admin",
+      "id": "a400a00b-f67c-42b7-ba9a-f73d8c67e433",
+      "isEnabled": true,
+      "value": "Admin"
+    }
+  ],
+  "passwordCredentials@odata.type": "Collection(Microsoft.DirectoryServices.PasswordCredential)",
+  "passwordCredentials": [
+    {
+      "customKeyIdentifier": "cgBkAHgAYQBjAGMAZQBzAHMA",
+      "endDate": "2299-12-30T00:00:00Z",
+      "keyId": "a26a23aa-3b9f-4e58-9bcf-48c65f127248",
+      "startDate": "2017-01-01T00:00:00Z",
+      "value": "Passw0rd"
+    }
+  ],
+  "requiredResourceAccess": [
+    {
+      "resourceAppId": "00000002-0000-0000-c000-000000000000",
+      "resourceAccess": [
+        {
+          "id": "311a71cc-e848-46a1-bdf8-97ff7156d8e6",
+          "type": "Scope"
+        }
+      ]
+    }
+  ]
+}

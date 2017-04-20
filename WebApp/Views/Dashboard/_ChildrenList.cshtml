@@ -1,0 +1,86 @@
+﻿@using GlobalResources
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
+
+@model DashboardModel
+
+<div class="dashboard_children_container_header row">
+    <p id="backIcon" class="dashboard_children_back_icon col-xs-1 " hidden>
+        <a class="glyphicon glyphicon-menu-left" href="#" onclick="javascript: gotoParentNode();"></a>
+    </p>
+    <p id="headerText" class="dashboard_children_container_header_text col-xs-8 col-md-8 col-lg-8 overflow">@Model.ChildrenContainerHeader</p>
+    <p id="allIcon" class="dashboard_children_container_header_text_glyph" align="right">@Strings.NoFilterApplied 
+        <a id="openFromUnfiltered" class="glyphicon glyphicon-menu-down" href="javascript:openFilterContextPanel();"></a>
+    </p>
+
+    <p id="filterIcon" class="dashboard_filter_icon" hidden>
+        <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" src="/Content/img/filter.svg"></a>
+    </p>
+</div>
+<div class="dashboard_children_list_header row">
+    <div class="dashboard_children_list_header_status col-xs-3 col-lg-3 overflow">@Model.ChildrenListHeaderStatus</div>
+    <div class="dashboard_children_list_header_location col-xs-4 col-lg-4 overflow">@Model.ChildrenListHeaderLocation</div>
+    <div class="dashboard_children_list_header_details col-xs-5 col-lg-5 overflow">@Model.ChildrenListHeaderDetails</div>
+</div>
+<div class="dashboard_children_list_container row">
+    <div class="col-xs-12">
+       
+        @foreach (var child in Model.Children)
+        {
+            var statusMessage = Strings.Normal;
+            var dashboardStatusClass = "dashboard_status_good";
+            if (child.Status == ContosoPerformanceStatus.Poor.ToString())
+            {
+                statusMessage = Strings.Error;
+                dashboardStatusClass = "dashboard_status_poor";
+            }
+            RouteValueDictionary valueDictionary = new RouteValueDictionary { { "topNode", child.Key } };
+            var dashboardUrl = @Url.Action("Index", "Dashboard", valueDictionary);
+            <div >
+                @if (Model.ChildrenType == typeof(ContosoOpcUaNode).ToString())
+                {
+                    if (child.Visible == true)
+                    {
+                        <div class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');">
+                            <p id="childKey" hidden>@child.Key</p>
+                            <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
+                            <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:gotoChildrenNode('@dashboardUrl');">
+                        <p id="childKey" hidden>@child.Key</p>
+                        <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
+                        <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
+                        <div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">@child.Description</div>
+                    </div>
+                }
+             </div>
+         }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        @if (Model.ChildrenType != typeof(Factory).ToString())
+        {
+             @: $("#backIcon").show();
+             @: $("#headerText").addClass("dashboard_children_container_header_text_left_margin");
+        }
+        else
+        {
+             @: $("#headerText").removeClass("dashboard_children_container_header_text_left_margin");
+        }
+    })
+
+    function gotoChildrenNode(dashboardUrl) {
+        window.location.href = dashboardUrl;
+    }
+
+    function gotoParentNode() {
+        var parentUrl = '@Url.Action("Index", "Dashboard", new { topNode = Model.TopNode.Parent})';
+        window.location.href = parentUrl;
+    }
+</script>
