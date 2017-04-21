@@ -134,7 +134,7 @@
     <comment>Error message.</comment>
   </data>
   <data name="YourSessionMayHaveExpired" xml:space="preserve">
-    <value>If you were signed in, your session has expired.</value>
+    <value>Açtığınız oturumun süresi doldu.</value>
     <comment>Error message.</comment>
   </data>
   <data name="IoTSuite" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Informational text block. {StrContains="JavaScript"}</comment>
   </data>
   <data name="DefaultSolutionName" xml:space="preserve">
-    <value>Connected factory</value>
+    <value>Bağlı fabrika</value>
     <comment>Section heading.</comment>
   </data>
   <data name="AdministratorRole" xml:space="preserve">
@@ -174,7 +174,7 @@
     <comment>Hyperlink label.</comment>
   </data>
   <data name="NavigationMenuAddServer" xml:space="preserve">
-    <value>Add my OPC Server</value>
+    <value>OPC Sunucuma ekle</value>
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="NavigationMenuDashboard" xml:space="preserve">
@@ -186,19 +186,19 @@
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="NavigationMenuSidebarSizeToggle" xml:space="preserve">
-    <value>Toggle Menu Size</value>
+    <value>Geçiş Menüsü Boyutu</value>
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="KpiContainerLabel" xml:space="preserve">
-    <value>Key Performance Indicators</value>
+    <value>Temel Performans Göstergeleri</value>
     <comment>Label</comment>
   </data>
   <data name="Kpi1Label" xml:space="preserve">
-    <value>Units per hour</value>
+    <value>Saat başına birim</value>
     <comment>Label</comment>
   </data>
   <data name="Kpi2Label" xml:space="preserve">
-    <value>kWh per hour</value>
+    <value>Saat başına kWh</value>
     <comment>Label</comment>
   </data>
   <data name="OeeAvailabilityLabel" xml:space="preserve">
@@ -206,7 +206,7 @@
     <comment>Label</comment>
   </data>
   <data name="OeeHeaderLabel" xml:space="preserve">
-    <value>Overall Equipment Efficiency</value>
+    <value>Genel Donanım Verimliliği</value>
     <comment>Label</comment>
   </data>
   <data name="OeePerformanceLabel" xml:space="preserve">
@@ -214,11 +214,11 @@
     <comment>Label</comment>
   </data>
   <data name="OeeQualityLabel" xml:space="preserve">
-    <value>Quality</value>
+    <value>Kalite</value>
     <comment>Label</comment>
   </data>
   <data name="OeeOverallLabel" xml:space="preserve">
-    <value>Overall Efficiency</value>
+    <value>Genel Verimlilik</value>
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
-    <value>Factory Locations</value>
+    <value>Fabrika Konumları</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListListHeaderDetails" xml:space="preserve">
@@ -246,7 +246,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserConnectedTo" xml:space="preserve">
-    <value>Connected to OPC server</value>
+    <value>OPC sunucusuna bağlanıldı</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
@@ -254,15 +254,15 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
-    <value>Select a server from the preconfigured list:</value>
+    <value>Önceden yapılandırılmış listeden bir sunucu seçin:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserSelectServer" xml:space="preserve">
-    <value>Select an OPC UA server</value>
+    <value>Bir OPC UA sunucusu seçin</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserCommunicationStatusMessageLabel" xml:space="preserve">
-    <value>Connection status:</value>
+    <value>Bağlantı durumu:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserConnect" xml:space="preserve">
@@ -302,11 +302,11 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>GEÇERLİ YAPILANDIRMA</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderLocation" xml:space="preserve">
-    <value>LINE</value>
+    <value>SATIR</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderStatus" xml:space="preserve">
@@ -318,11 +318,11 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>GEÇERLİ YAPILANDIRMA</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderLocation" xml:space="preserve">
-    <value>STATION</value>
+    <value>İSTASYON</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderStatus" xml:space="preserve">
@@ -330,15 +330,15 @@
     <comment>Label</comment>
   </data>
   <data name="LastDayHistoryGraphXlabel" xml:space="preserve">
-    <value>Last day (hours)</value>
+    <value>Son gün (saat)</value>
     <comment>Label</comment>
   </data>
   <data name="LastHourHistoryGraphXlabel" xml:space="preserve">
-    <value>Last hour (minutes)</value>
+    <value>Son saat (dakika)</value>
     <comment>Label</comment>
   </data>
   <data name="LastWeekHistoryGraphXlabel" xml:space="preserve">
-    <value>Last week (days)</value>
+    <value>Son hafta (gün)</value>
     <comment>Label</comment>
   </data>
   <data name="Error" xml:space="preserve">
@@ -365,11 +365,11 @@
     <comment>Button label</comment>
   </data>
   <data name="NodeAttribute" xml:space="preserve">
-    <value>Attribute of</value>
+    <value>Şu öğenin özniteliği:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeAttributeRead" xml:space="preserve">
-    <value>Attributes...</value>
+    <value>Öznitelikler...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeButtonCall" xml:space="preserve">
@@ -381,23 +381,23 @@
     <comment>Button label</comment>
   </data>
   <data name="NodeCall" xml:space="preserve">
-    <value>Call...</value>
+    <value>Çağrı...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeCallingMethod" xml:space="preserve">
-    <value>Calling method</value>
+    <value>Metot çağrılıyor</value>
     <comment>Label</comment>
   </data>
   <data name="NodeCallInProgress" xml:space="preserve">
-    <value>Call in progress ...</value>
+    <value>Çağrı devam ediyor ...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeInfo" xml:space="preserve">
-    <value>Info on</value>
+    <value>Şu öğe hakkında bilgi:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelAccess" xml:space="preserve">
-    <value>Access:</value>
+    <value>Erişim:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelDescription" xml:space="preserve">
@@ -405,11 +405,11 @@
     <comment>Label</comment>
   </data>
   <data name="NodeLabelMisc" xml:space="preserve">
-    <value>Miscellaneous:</value>
+    <value>Çeşitli:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelNodeDetails" xml:space="preserve">
-    <value>Node details:</value>
+    <value>Düğüm ayrıntıları:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelValue" xml:space="preserve">
@@ -417,7 +417,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeMethodMessage" xml:space="preserve">
-    <value>Parameter are not supported yet.</value>
+    <value>Parametre henüz desteklenmiyor.</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeMethodName" xml:space="preserve">
@@ -425,23 +425,23 @@
     <comment>Label</comment>
   </data>
   <data name="NodeMethodNoParameter" xml:space="preserve">
-    <value>Method has no parameter.</value>
+    <value>Metot parametre içermiyor.</value>
     <comment>Message</comment>
   </data>
   <data name="NodeMethodResult" xml:space="preserve">
-    <value>Result of calling method</value>
+    <value>Metot çağrısının sonucu</value>
     <comment>Label</comment>
   </data>
   <data name="NodePressButton" xml:space="preserve">
-    <value>Press button to call method.</value>
+    <value>Metodu çağırmak için düğmeye basın.</value>
     <comment>Message</comment>
   </data>
   <data name="NodeRead" xml:space="preserve">
-    <value>Read...</value>
+    <value>Oku...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeReadInProgress" xml:space="preserve">
-    <value>Read in progress ...</value>
+    <value>Okuma devam ediyor ...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeUpdate" xml:space="preserve">
@@ -453,7 +453,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWrite" xml:space="preserve">
-    <value>Write...</value>
+    <value>Yaz...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeWriteCurrentValue" xml:space="preserve">
@@ -461,7 +461,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWriteInProgress" xml:space="preserve">
-    <value>Write in progress ...</value>
+    <value>Yazma devam ediyor ...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeWriteNewValue" xml:space="preserve">
@@ -469,7 +469,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWriteResult" xml:space="preserve">
-    <value>Result of writing</value>
+    <value>Yazma sonucu</value>
     <comment>Label</comment>
   </data>
   <data name="Ok" xml:space="preserve">
@@ -481,22 +481,22 @@
     <comment>User role name.</comment>
   </data>
   <data name="BrowserConnectException" xml:space="preserve">
-    <value>Exception while trying to connect to the OPC UA server.
-Exceptionmessage:
+    <value>OPC UA sunucusuna bağlanmaya çalışırken özel durum oluştu.
+Özel durum iletisi:
 {0}
-Inner Message:
+İç İleti:
 {1}
-Stack trace:
+Yığın izleme:
 {2}</value>
     <comment>Error</comment>
   </data>
   <data name="BrowserDisconnectException" xml:space="preserve">
-    <value>Exception while trying to disconnect to the OPC UA server.
-Exceptionmessage:
+    <value>OPC UA sunucusunun bağlantısı kesilmeye çalışırken özel durum oluştu.
+Özel durum iletisi:
 {0}
-Inner Message:
+İç İleti:
 {1}
-Stack trace:
+Yığın izleme:
 {2}</value>
     <comment>Error</comment>
   </data>
@@ -505,29 +505,29 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserConnectErrorHeader" xml:space="preserve">
-    <value>Error while connecting to the OPC UA server</value>
+    <value>OPC UA sunucusuna bağlanırken hata oluştu</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcErrorHeader" xml:space="preserve">
-    <value>Error while accessing the OPC UA server</value>
+    <value>OPC UA sunucusuna erişirken hata oluştu</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcException" xml:space="preserve">
-    <value>An exception occured while trying to access the OPC UA server.
-Exceptionmessage:
+    <value>OPC UA sunucusuna erişmeye çalışırken özel durum oluştu.
+Özel durum iletisi:
 {0}
-Inner message:
+İç ileti:
 {1}
-Stack trace:
+Yığın izleme:
 {2}</value>
     <comment>Error message</comment>
   </data>
   <data name="BrowserOpcDataServerTimestampLabel" xml:space="preserve">
-    <value>Server timestamp</value>
+    <value>Sunucu zaman damgası</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcDataSourceTimestampLabel" xml:space="preserve">
-    <value>Source timestamp</value>
+    <value>Kaynak zaman damgası</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcDataStatusLabel" xml:space="preserve">
@@ -539,23 +539,23 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcWriteConversionProblem" xml:space="preserve">
-    <value>&lt;font color="red"&gt;Error: Conversion of the value '{0}' to type '{1}' is not possible. (Details: {2})&lt;/font&gt;</value>
+    <value>&lt;font color="red"&gt;Hata: '{0}' değerinin '{1}' türüne dönüştürülmesi mümkün değildir. (Ayrıntılar: {2})&lt;/font&gt;</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcDataDiagnosticInfoLabel" xml:space="preserve">
-    <value>Diagnostic info</value>
+    <value>Tanılama bilgileri</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcMethodCallFailed" xml:space="preserve">
-    <value>Method call failed</value>
+    <value>Metot çağrısı başarısız oldu</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcMethodCallSucceeded" xml:space="preserve">
-    <value>Method call succeeded</value>
+    <value>Metot çağrısı başarılı oldu</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcMethodCallSucceededWithResults" xml:space="preserve">
-    <value>Method call succeeded and returned the following results:</value>
+    <value>Metot çağrısı başarılı oldu ve şu sonuçları döndürdü:</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcMethodStatusCode" xml:space="preserve">
@@ -571,7 +571,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcValueHistoryUpdate" xml:space="preserve">
-    <value>History Update</value>
+    <value>Geçmiş Güncelleştirmesi</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcValueIndeterminate" xml:space="preserve">
@@ -643,7 +643,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertDescription" xml:space="preserve">
-    <value>Alert cause</value>
+    <value>Uyarı nedeni</value>
     <comment>Label</comment>
   </data>
   <data name="AlertNode" xml:space="preserve">
@@ -651,11 +651,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertProductionLine" xml:space="preserve">
-    <value>Production line</value>
+    <value>Üretim emri satırı</value>
     <comment>Label</comment>
   </data>
   <data name="AlertStation" xml:space="preserve">
-    <value>Station</value>
+    <value>İstasyon</value>
     <comment>Label</comment>
   </data>
   <data name="GraphFriday" xml:space="preserve">
@@ -663,15 +663,15 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="GraphLastDay" xml:space="preserve">
-    <value>LAST 24 HOURS</value>
+    <value>SON 24 SAAT</value>
     <comment>Label</comment>
   </data>
   <data name="GraphLastHour" xml:space="preserve">
-    <value>LAST HOUR</value>
+    <value>SON SAAT</value>
     <comment>Label</comment>
   </data>
   <data name="GraphLastWeek" xml:space="preserve">
-    <value>LAST 7 DAYS</value>
+    <value>SON 7 GÜN</value>
     <comment>Label</comment>
   </data>
   <data name="GraphMonday" xml:space="preserve">
@@ -703,7 +703,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserCertDownloadError" xml:space="preserve">
-    <value>Error accessing certificate for download</value>
+    <value>İndirilecek sertifikaya erişirken hata oluştu</value>
     <comment>Error message</comment>
   </data>
   <data name="BrowserDownload" xml:space="preserve">
@@ -711,7 +711,7 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="BrowserDownloadText" xml:space="preserve">
-    <value>Should your OPC UA server require a manual installation of client certificates, you can download this website's OPC UA certificate here:</value>
+    <value>OPC UA sunucunuz, istemci sertifikalarının el ile yüklenmesini gerektiriyorsa bu web sitesinin OPC UA sertifikasını buradan indirebilirsiniz:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserErrorContinueButton" xml:space="preserve">
@@ -719,11 +719,11 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="NodePublish" xml:space="preserve">
-    <value>Publish...</value>
+    <value>Yayımla...</value>
     <comment>Label</comment>
   </data>
   <data name="NodePublishInProgress" xml:space="preserve">
-    <value>Publish in progress...</value>
+    <value>Yayımlama devam ediyor...</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserDontTrustButton" xml:space="preserve">
@@ -731,7 +731,7 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="BrowserTrust" xml:space="preserve">
-    <value>This might mean that someone's trying to fool you or steal information you send to the server. You should proceed only if you expected this issue, e.g. because you are using self-signed certificates with your server (not recommended).</value>
+    <value>Bu, birinin sizi kandırmaya veya sunucunuza gönderdiğiniz bilgileri çalmaya çalıştığı anlamına gelebilir. Yalnızca, bu sorunu bekliyorsanız (yani sunucunuzda otomatik olarak imzalanan sertifika kullanıyorsanız) devam edin (önerilmez).</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserTrustButton" xml:space="preserve">
@@ -739,91 +739,91 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="SessionNull" xml:space="preserve">
-    <value>Could not establish connection to Publisher</value>
+    <value>Yayımcı ile bağlantı kurulamadı</value>
     <comment>Error message.</comment>
   </data>
   <data name="OpcStackInitError" xml:space="preserve">
-    <value>Exception while initializing OPC UA stack. Error: {0} Inner: {1} Stack: {2}</value>
+    <value>OPC UA yığını başlatılırken özel durum oluştu. Hata: {0} İç: {1} Yığın: {2}</value>
     <comment>Error message.</comment>
   </data>
   <data name="ErrorGetDataForOpcUaNode" xml:space="preserve">
-    <value>Not a valid node or station</value>
+    <value>Geçerli bir düğüm veya istasyon değil</value>
     <comment>Error message</comment>
   </data>
   <data name="ErrorGetOeeKpiData" xml:space="preserve">
-    <value>Not a valid node</value>
+    <value>Geçerli bir düğüm değil</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="NoDataSeries" xml:space="preserve">
-    <value>No data series available for this item</value>
+    <value>Bu öğe için kullanılabilir veri serisi yok</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="BrowserTrustHeader" xml:space="preserve">
-    <value>The certificate of the server you want to connect to cannot be verified.</value>
+    <value>Bağlanmaya çalıştığınız sunucunun sertifikası doğrulanamıyor.</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="GraphRDXLinkHeader" xml:space="preserve">
-    <value>Click on graph to explore in Azure Time Series Insights</value>
+    <value>Azure Zaman Serisi Öngörülerinde keşif yapmak için grafiğe tıklayın</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionAcknowledge" xml:space="preserve">
-    <value>Acknowledge alert</value>
+    <value>Uyarıyı kabul et</value>
     <comment>Label</comment>
   </data>
   <data name="AlertKpi1AboveMaximum" xml:space="preserve">
-    <value>Number of products above maximum</value>
+    <value>Ürün sayısı üst sınırın üzerinde</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi1BelowMinimum" xml:space="preserve">
-    <value>Number of products below minimum</value>
+    <value>Ürün sayısı alt sınırın altında</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi2AboveMaximum" xml:space="preserve">
-    <value>Energy consumption above maximum</value>
+    <value>Enerji tüketimi üst sınırın üzerinde</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi2BelowMinimum" xml:space="preserve">
-    <value>Energy consumption below minimum</value>
+    <value>Enerji tüketimi alt sınırın altında</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeAvailabilityAboveMaximum" xml:space="preserve">
-    <value>OEE Availability above maximum</value>
+    <value>OEE Kullanılabilirliği üst sınırın üzerinde</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeAvailabilityBelowMinimum" xml:space="preserve">
-    <value>OEE Availability below minimum</value>
+    <value>OEE Kullanılabilirliği alt sınırın altında</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeOverallAboveMaximum" xml:space="preserve">
-    <value>OEE Overall above maximum</value>
+    <value>OEE Toplamı üst sınırın üzerinde</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeOverallBelowMinimum" xml:space="preserve">
-    <value>OEE Overall below minimum</value>
+    <value>OEE Toplamı alt sınırın altında</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeePerformanceAboveMaximum" xml:space="preserve">
-    <value>OEE Performance above maximum</value>
+    <value>OEE Performansı üst sınırın üzerinde</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeePerformanceBelowMinimum" xml:space="preserve">
-    <value>OEE Performance below minimum</value>
+    <value>OEE Performansı alt sınırın altında</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeQualityAboveMaximum" xml:space="preserve">
-    <value>OEE Quality above maximum</value>
+    <value>OEE Kalitesi üst sınırın üzerinde</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeQualityBelowMinimum" xml:space="preserve">
-    <value>OEE Qualty below minimum</value>
+    <value>OEE Kalitesi alt sınırın altında</value>
     <comment>Message</comment>
   </data>
   <data name="AlertValueAboveMaximum" xml:space="preserve">
-    <value>Value above maximum</value>
+    <value>Değer üst sınırın üzerinde</value>
     <comment>Message</comment>
   </data>
   <data name="AlertValueBelowMinimum" xml:space="preserve">
-    <value>Value below minimum</value>
+    <value>Değer alt sınırın altında</value>
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsDescriptionHeader" xml:space="preserve">
@@ -835,11 +835,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsNoActionAvailable" xml:space="preserve">
-    <value>No Action defined</value>
+    <value>Tanımlı Eylem yok</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsOccurencesHeader" xml:space="preserve">
-    <value>Occurences:</value>
+    <value>Oluşumlar:</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsTimeHeader" xml:space="preserve">
@@ -847,7 +847,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertIdUnknown" xml:space="preserve">
-    <value>The alert information is no longer available.</value>
+    <value>Uyarı bilgileri artık kullanılamıyor.</value>
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
@@ -855,7 +855,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
-    <value>Choose action:</value>
+    <value>Eylem seçin:</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsUnknown" xml:space="preserve">
@@ -863,39 +863,39 @@ Stack trace:
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsActionResultHeader" xml:space="preserve">
-    <value>Action result:</value>
+    <value>Eylem sonucu:</value>
     <comment>Label</comment>
   </data>
   <data name="ActionDetailResultExecuting" xml:space="preserve">
-    <value>Action has executed...</value>
+    <value>Eylem yürütüldü...</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionWebPageOpened" xml:space="preserve">
-    <value>Please check content in a new browser tab/window.</value>
+    <value>Lütfen içeriği yeni bir tarayıcı sekmesi/penceresinde gözden geçirin.</value>
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsRdxLinkHeader" xml:space="preserve">
-    <value>Click chart to explore in Azure Time Series Insights</value>
+    <value>Azure Zaman Serisi Öngörülerinde keşif yapmak için grafiğe tıklayın</value>
     <comment>Message</comment>
   </data>
   <data name="AnimationTimeSeriesLoading" xml:space="preserve">
-    <value>Loading data from Azure Time Series Insights</value>
+    <value>Azure Zaman Serisi Öngörülerinden veri yükleniyor</value>
     <comment>Message</comment>
   </data>
   <data name="ErrorAccessProblem" xml:space="preserve">
-    <value>An error occured while accessing the website.</value>
+    <value>Web sitesine erişmeye çalışırken bir hata oluştu.</value>
     <comment>Error message.</comment>
   </data>
   <data name="ErrorInsufficientPermissions" xml:space="preserve">
-    <value>You have insufficient permissions for this operation. Please check with the administrator of this site.</value>
+    <value>Bu işlem için yeterli izniniz yok. Lütfen bu sitenin yöneticisine başvurun.</value>
     <comment>Error message.</comment>
   </data>
   <data name="BrowserError" xml:space="preserve">
-    <value>Browser error:</value>
+    <value>Tarayıcı hatası:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserErrorUnknown" xml:space="preserve">
-    <value>An error occured during browsing.</value>
+    <value>Gözatma sırasında bir hata oluştu.</value>
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionClose" xml:space="preserve">
@@ -903,11 +903,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertActionAcknowledgeSuccessful" xml:space="preserve">
-    <value>Alert successfully acknowledged.</value>
+    <value>Uyarı başarıyla kabul edildi.</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionCloseSuccessful" xml:space="preserve">
-    <value>Alert successfully closed.</value>
+    <value>Uyarı başarıyla kapatıldı.</value>
     <comment>Message</comment>
   </data>
   <data name="NavigationMenuAddGateway" xml:space="preserve">
@@ -915,12 +915,12 @@ Stack trace:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;li&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/li&gt;</value>
+    <value>&lt;li&gt;Windows yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/li&gt;
+&lt;li&gt;Linux yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/li&gt; &lt;li&gt;Derleme satırı bilgilerini düzenlemeye yönelik yönergelere &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/li&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
-    <value>Connect your own gateway</value>
+    <value>Kendi ağ geçidinizi bağlayın</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderAttributes" xml:space="preserve">
@@ -928,7 +928,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderMethod" xml:space="preserve">
-    <value>Method call</value>
+    <value>Metot çağrısı</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderPublish" xml:space="preserve">
@@ -936,15 +936,15 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderRead" xml:space="preserve">
-    <value>Read variable</value>
+    <value>Okuma değişkeni</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderWrite" xml:space="preserve">
-    <value>Write variable</value>
+    <value>Yazma değişkeni</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserSelectNewServer" xml:space="preserve">
-    <value>Connect your own OPC UA server</value>
+    <value>Kendi OPC UA sunucunuzu bağlayın</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserConnecting" xml:space="preserve">

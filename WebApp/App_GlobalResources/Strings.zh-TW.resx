@@ -134,7 +134,7 @@
     <comment>Error message.</comment>
   </data>
   <data name="YourSessionMayHaveExpired" xml:space="preserve">
-    <value>If you were signed in, your session has expired.</value>
+    <value>若您早先就已登入，您的工作階段已過期。</value>
     <comment>Error message.</comment>
   </data>
   <data name="IoTSuite" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Informational text block. {StrContains="JavaScript"}</comment>
   </data>
   <data name="DefaultSolutionName" xml:space="preserve">
-    <value>Connected factory</value>
+    <value>連線的工廠</value>
     <comment>Section heading.</comment>
   </data>
   <data name="AdministratorRole" xml:space="preserve">
@@ -174,7 +174,7 @@
     <comment>Hyperlink label.</comment>
   </data>
   <data name="NavigationMenuAddServer" xml:space="preserve">
-    <value>Add my OPC Server</value>
+    <value>新增我的 OPC 伺服器</value>
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="NavigationMenuDashboard" xml:space="preserve">
@@ -186,19 +186,19 @@
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="NavigationMenuSidebarSizeToggle" xml:space="preserve">
-    <value>Toggle Menu Size</value>
+    <value>切換功能表大小</value>
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="KpiContainerLabel" xml:space="preserve">
-    <value>Key Performance Indicators</value>
+    <value>關鍵效能指標</value>
     <comment>Label</comment>
   </data>
   <data name="Kpi1Label" xml:space="preserve">
-    <value>Units per hour</value>
+    <value>每小時的單位數</value>
     <comment>Label</comment>
   </data>
   <data name="Kpi2Label" xml:space="preserve">
-    <value>kWh per hour</value>
+    <value>每小時的 kWh</value>
     <comment>Label</comment>
   </data>
   <data name="OeeAvailabilityLabel" xml:space="preserve">
@@ -206,7 +206,7 @@
     <comment>Label</comment>
   </data>
   <data name="OeeHeaderLabel" xml:space="preserve">
-    <value>Overall Equipment Efficiency</value>
+    <value>設備綜合效率</value>
     <comment>Label</comment>
   </data>
   <data name="OeePerformanceLabel" xml:space="preserve">
@@ -214,11 +214,11 @@
     <comment>Label</comment>
   </data>
   <data name="OeeQualityLabel" xml:space="preserve">
-    <value>Quality</value>
+    <value>品質</value>
     <comment>Label</comment>
   </data>
   <data name="OeeOverallLabel" xml:space="preserve">
-    <value>Overall Efficiency</value>
+    <value>綜合效率</value>
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
-    <value>Factory Locations</value>
+    <value>工廠位置</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListListHeaderDetails" xml:space="preserve">
@@ -246,7 +246,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserConnectedTo" xml:space="preserve">
-    <value>Connected to OPC server</value>
+    <value>已連線到 OPC 伺服器</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
@@ -254,15 +254,15 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
-    <value>Select a server from the preconfigured list:</value>
+    <value>請從預先設定的清單中選取伺服器:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserSelectServer" xml:space="preserve">
-    <value>Select an OPC UA server</value>
+    <value>選取 OPC UA 伺服器</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserCommunicationStatusMessageLabel" xml:space="preserve">
-    <value>Connection status:</value>
+    <value>連線狀態:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserConnect" xml:space="preserve">
@@ -302,11 +302,11 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>目前的設定</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderLocation" xml:space="preserve">
-    <value>LINE</value>
+    <value>產品線 </value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderStatus" xml:space="preserve">
@@ -318,11 +318,11 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>目前的設定</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderLocation" xml:space="preserve">
-    <value>STATION</value>
+    <value>站台</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderStatus" xml:space="preserve">
@@ -330,15 +330,15 @@
     <comment>Label</comment>
   </data>
   <data name="LastDayHistoryGraphXlabel" xml:space="preserve">
-    <value>Last day (hours)</value>
+    <value>過去一天 (小時)</value>
     <comment>Label</comment>
   </data>
   <data name="LastHourHistoryGraphXlabel" xml:space="preserve">
-    <value>Last hour (minutes)</value>
+    <value>過去一小時 (分鐘)</value>
     <comment>Label</comment>
   </data>
   <data name="LastWeekHistoryGraphXlabel" xml:space="preserve">
-    <value>Last week (days)</value>
+    <value>過去一週 (天)</value>
     <comment>Label</comment>
   </data>
   <data name="Error" xml:space="preserve">
@@ -365,11 +365,11 @@
     <comment>Button label</comment>
   </data>
   <data name="NodeAttribute" xml:space="preserve">
-    <value>Attribute of</value>
+    <value>下列節點的屬性:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeAttributeRead" xml:space="preserve">
-    <value>Attributes...</value>
+    <value>屬性...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeButtonCall" xml:space="preserve">
@@ -381,23 +381,23 @@
     <comment>Button label</comment>
   </data>
   <data name="NodeCall" xml:space="preserve">
-    <value>Call...</value>
+    <value>呼叫...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeCallingMethod" xml:space="preserve">
-    <value>Calling method</value>
+    <value>正在呼叫方法</value>
     <comment>Label</comment>
   </data>
   <data name="NodeCallInProgress" xml:space="preserve">
-    <value>Call in progress ...</value>
+    <value>正在呼叫...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeInfo" xml:space="preserve">
-    <value>Info on</value>
+    <value>下列節點的資訊:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelAccess" xml:space="preserve">
-    <value>Access:</value>
+    <value>存取:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelDescription" xml:space="preserve">
@@ -405,11 +405,11 @@
     <comment>Label</comment>
   </data>
   <data name="NodeLabelMisc" xml:space="preserve">
-    <value>Miscellaneous:</value>
+    <value>其他:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelNodeDetails" xml:space="preserve">
-    <value>Node details:</value>
+    <value>節點詳細資料:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelValue" xml:space="preserve">
@@ -417,7 +417,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeMethodMessage" xml:space="preserve">
-    <value>Parameter are not supported yet.</value>
+    <value>目前尚不支援的參數。</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeMethodName" xml:space="preserve">
@@ -425,23 +425,23 @@
     <comment>Label</comment>
   </data>
   <data name="NodeMethodNoParameter" xml:space="preserve">
-    <value>Method has no parameter.</value>
+    <value>方法沒有參數。</value>
     <comment>Message</comment>
   </data>
   <data name="NodeMethodResult" xml:space="preserve">
-    <value>Result of calling method</value>
+    <value>呼叫方法的結果</value>
     <comment>Label</comment>
   </data>
   <data name="NodePressButton" xml:space="preserve">
-    <value>Press button to call method.</value>
+    <value>按下按鈕即可呼叫方法。</value>
     <comment>Message</comment>
   </data>
   <data name="NodeRead" xml:space="preserve">
-    <value>Read...</value>
+    <value>讀取...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeReadInProgress" xml:space="preserve">
-    <value>Read in progress ...</value>
+    <value>正在讀取...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeUpdate" xml:space="preserve">
@@ -453,7 +453,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWrite" xml:space="preserve">
-    <value>Write...</value>
+    <value>寫入...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeWriteCurrentValue" xml:space="preserve">
@@ -461,7 +461,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWriteInProgress" xml:space="preserve">
-    <value>Write in progress ...</value>
+    <value>正在寫入...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeWriteNewValue" xml:space="preserve">
@@ -469,7 +469,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWriteResult" xml:space="preserve">
-    <value>Result of writing</value>
+    <value>寫入的結果</value>
     <comment>Label</comment>
   </data>
   <data name="Ok" xml:space="preserve">
@@ -481,22 +481,22 @@
     <comment>User role name.</comment>
   </data>
   <data name="BrowserConnectException" xml:space="preserve">
-    <value>Exception while trying to connect to the OPC UA server.
-Exceptionmessage:
+    <value>嘗試連線到 OPC UA 伺服器時發生例外狀況。
+例外狀況訊息:
 {0}
-Inner Message:
+內部訊息:
 {1}
-Stack trace:
+堆疊追蹤:
 {2}</value>
     <comment>Error</comment>
   </data>
   <data name="BrowserDisconnectException" xml:space="preserve">
-    <value>Exception while trying to disconnect to the OPC UA server.
-Exceptionmessage:
+    <value>嘗試中斷對 OPC UA 伺服器的連線時發生例外狀況。
+例外狀況訊息:
 {0}
-Inner Message:
+內部訊息:
 {1}
-Stack trace:
+堆疊追蹤:
 {2}</value>
     <comment>Error</comment>
   </data>
@@ -505,29 +505,29 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserConnectErrorHeader" xml:space="preserve">
-    <value>Error while connecting to the OPC UA server</value>
+    <value>連線到 OPC UA 伺服器時發生錯誤</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcErrorHeader" xml:space="preserve">
-    <value>Error while accessing the OPC UA server</value>
+    <value>存取 OPC UA 伺服器時發生錯誤</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcException" xml:space="preserve">
-    <value>An exception occured while trying to access the OPC UA server.
-Exceptionmessage:
+    <value>嘗試存取 OPC UA 伺服器時發生例外狀況。
+例外狀況訊息:
 {0}
-Inner message:
+內部訊息:
 {1}
-Stack trace:
+堆疊追蹤:
 {2}</value>
     <comment>Error message</comment>
   </data>
   <data name="BrowserOpcDataServerTimestampLabel" xml:space="preserve">
-    <value>Server timestamp</value>
+    <value>伺服器時間戳記</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcDataSourceTimestampLabel" xml:space="preserve">
-    <value>Source timestamp</value>
+    <value>來源時間戳記</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcDataStatusLabel" xml:space="preserve">
@@ -539,23 +539,23 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcWriteConversionProblem" xml:space="preserve">
-    <value>&lt;font color="red"&gt;Error: Conversion of the value '{0}' to type '{1}' is not possible. (Details: {2})&lt;/font&gt;</value>
+    <value>&lt;font color="red"&gt;錯誤: 無法將值 '{0}' 轉換成類型 '{1}'。(詳細資料: {2})&lt;/font&gt;</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcDataDiagnosticInfoLabel" xml:space="preserve">
-    <value>Diagnostic info</value>
+    <value>診斷資訊</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcMethodCallFailed" xml:space="preserve">
-    <value>Method call failed</value>
+    <value>方法呼叫失敗</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcMethodCallSucceeded" xml:space="preserve">
-    <value>Method call succeeded</value>
+    <value>方法呼叫成功</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcMethodCallSucceededWithResults" xml:space="preserve">
-    <value>Method call succeeded and returned the following results:</value>
+    <value>方法呼叫成功，並傳回了下列結果:</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcMethodStatusCode" xml:space="preserve">
@@ -571,7 +571,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcValueHistoryUpdate" xml:space="preserve">
-    <value>History Update</value>
+    <value>歷程記錄更新</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcValueIndeterminate" xml:space="preserve">
@@ -643,7 +643,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertDescription" xml:space="preserve">
-    <value>Alert cause</value>
+    <value>警示原因</value>
     <comment>Label</comment>
   </data>
   <data name="AlertNode" xml:space="preserve">
@@ -651,11 +651,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertProductionLine" xml:space="preserve">
-    <value>Production line</value>
+    <value>產品線</value>
     <comment>Label</comment>
   </data>
   <data name="AlertStation" xml:space="preserve">
-    <value>Station</value>
+    <value>站台</value>
     <comment>Label</comment>
   </data>
   <data name="GraphFriday" xml:space="preserve">
@@ -663,15 +663,15 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="GraphLastDay" xml:space="preserve">
-    <value>LAST 24 HOURS</value>
+    <value>過去 24 小時</value>
     <comment>Label</comment>
   </data>
   <data name="GraphLastHour" xml:space="preserve">
-    <value>LAST HOUR</value>
+    <value>過去 1 小時</value>
     <comment>Label</comment>
   </data>
   <data name="GraphLastWeek" xml:space="preserve">
-    <value>LAST 7 DAYS</value>
+    <value>過去 7 天</value>
     <comment>Label</comment>
   </data>
   <data name="GraphMonday" xml:space="preserve">
@@ -703,7 +703,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserCertDownloadError" xml:space="preserve">
-    <value>Error accessing certificate for download</value>
+    <value>存取憑證進行下載時發生錯誤</value>
     <comment>Error message</comment>
   </data>
   <data name="BrowserDownload" xml:space="preserve">
@@ -711,7 +711,7 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="BrowserDownloadText" xml:space="preserve">
-    <value>Should your OPC UA server require a manual installation of client certificates, you can download this website's OPC UA certificate here:</value>
+    <value>您的 OPC UA 伺服器如需手動安裝用戶端憑證，可以從下列位置下載此網站的 OPC UA 憑證:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserErrorContinueButton" xml:space="preserve">
@@ -719,11 +719,11 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="NodePublish" xml:space="preserve">
-    <value>Publish...</value>
+    <value>發行...</value>
     <comment>Label</comment>
   </data>
   <data name="NodePublishInProgress" xml:space="preserve">
-    <value>Publish in progress...</value>
+    <value>正在發行...</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserDontTrustButton" xml:space="preserve">
@@ -731,7 +731,7 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="BrowserTrust" xml:space="preserve">
-    <value>This might mean that someone's trying to fool you or steal information you send to the server. You should proceed only if you expected this issue, e.g. because you are using self-signed certificates with your server (not recommended).</value>
+    <value>這可能表示有人嘗試欺騙您或竊取您傳送到伺服器的資訊。僅當此問題 (例如因為您的伺服器要使用自我簽署的憑證 (不建議使用)) 為預料中事時才繼續。</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserTrustButton" xml:space="preserve">
@@ -739,91 +739,91 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="SessionNull" xml:space="preserve">
-    <value>Could not establish connection to Publisher</value>
+    <value>無法建立對發行者的連線</value>
     <comment>Error message.</comment>
   </data>
   <data name="OpcStackInitError" xml:space="preserve">
-    <value>Exception while initializing OPC UA stack. Error: {0} Inner: {1} Stack: {2}</value>
+    <value>初始化 OPC UA 堆疊時發生例外狀況。錯誤: {0} 內部: {1} 堆疊: {2}</value>
     <comment>Error message.</comment>
   </data>
   <data name="ErrorGetDataForOpcUaNode" xml:space="preserve">
-    <value>Not a valid node or station</value>
+    <value>沒有有效的節點或站台</value>
     <comment>Error message</comment>
   </data>
   <data name="ErrorGetOeeKpiData" xml:space="preserve">
-    <value>Not a valid node</value>
+    <value>不是有效的站台</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="NoDataSeries" xml:space="preserve">
-    <value>No data series available for this item</value>
+    <value>此項目沒有資料數列</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="BrowserTrustHeader" xml:space="preserve">
-    <value>The certificate of the server you want to connect to cannot be verified.</value>
+    <value>無法驗證您要連線之伺服器的憑證。</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="GraphRDXLinkHeader" xml:space="preserve">
-    <value>Click on graph to explore in Azure Time Series Insights</value>
+    <value>按一下圖表可探索 Azure Time Series Insights</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionAcknowledge" xml:space="preserve">
-    <value>Acknowledge alert</value>
+    <value>確認警示</value>
     <comment>Label</comment>
   </data>
   <data name="AlertKpi1AboveMaximum" xml:space="preserve">
-    <value>Number of products above maximum</value>
+    <value>產品數超過上限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi1BelowMinimum" xml:space="preserve">
-    <value>Number of products below minimum</value>
+    <value>產品數低於下限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi2AboveMaximum" xml:space="preserve">
-    <value>Energy consumption above maximum</value>
+    <value>能源消耗超過上限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi2BelowMinimum" xml:space="preserve">
-    <value>Energy consumption below minimum</value>
+    <value>能源消耗低於下限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeAvailabilityAboveMaximum" xml:space="preserve">
-    <value>OEE Availability above maximum</value>
+    <value>OEE 可用性超過上限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeAvailabilityBelowMinimum" xml:space="preserve">
-    <value>OEE Availability below minimum</value>
+    <value>OEE 可用性低於下限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeOverallAboveMaximum" xml:space="preserve">
-    <value>OEE Overall above maximum</value>
+    <value>整體 OEE 超過上限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeOverallBelowMinimum" xml:space="preserve">
-    <value>OEE Overall below minimum</value>
+    <value>整體 OEE 低於下限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeePerformanceAboveMaximum" xml:space="preserve">
-    <value>OEE Performance above maximum</value>
+    <value>OEE 效能超過上限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeePerformanceBelowMinimum" xml:space="preserve">
-    <value>OEE Performance below minimum</value>
+    <value>OEE 效能低於下限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeQualityAboveMaximum" xml:space="preserve">
-    <value>OEE Quality above maximum</value>
+    <value>OEE 品質超過上限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeQualityBelowMinimum" xml:space="preserve">
-    <value>OEE Qualty below minimum</value>
+    <value>OEE 品質低於下限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertValueAboveMaximum" xml:space="preserve">
-    <value>Value above maximum</value>
+    <value>值超過上限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertValueBelowMinimum" xml:space="preserve">
-    <value>Value below minimum</value>
+    <value>值低於下限</value>
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsDescriptionHeader" xml:space="preserve">
@@ -835,11 +835,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsNoActionAvailable" xml:space="preserve">
-    <value>No Action defined</value>
+    <value>未定義任何動作</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsOccurencesHeader" xml:space="preserve">
-    <value>Occurences:</value>
+    <value>發生次數:</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsTimeHeader" xml:space="preserve">
@@ -847,7 +847,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertIdUnknown" xml:space="preserve">
-    <value>The alert information is no longer available.</value>
+    <value>此警示資訊已無法再使用。</value>
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
@@ -855,7 +855,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
-    <value>Choose action:</value>
+    <value>選擇動作:</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsUnknown" xml:space="preserve">
@@ -863,39 +863,39 @@ Stack trace:
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsActionResultHeader" xml:space="preserve">
-    <value>Action result:</value>
+    <value>動作結果:</value>
     <comment>Label</comment>
   </data>
   <data name="ActionDetailResultExecuting" xml:space="preserve">
-    <value>Action has executed...</value>
+    <value>動作已執行...</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionWebPageOpened" xml:space="preserve">
-    <value>Please check content in a new browser tab/window.</value>
+    <value>請另在新瀏覽器索引標籤/視窗中檢查內容。</value>
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsRdxLinkHeader" xml:space="preserve">
-    <value>Click chart to explore in Azure Time Series Insights</value>
+    <value>按一下圖表可探索 Azure Time Series Insights</value>
     <comment>Message</comment>
   </data>
   <data name="AnimationTimeSeriesLoading" xml:space="preserve">
-    <value>Loading data from Azure Time Series Insights</value>
+    <value>正在從 Azure Time Series Insights 載入資料</value>
     <comment>Message</comment>
   </data>
   <data name="ErrorAccessProblem" xml:space="preserve">
-    <value>An error occured while accessing the website.</value>
+    <value>存取網站時發生錯誤。</value>
     <comment>Error message.</comment>
   </data>
   <data name="ErrorInsufficientPermissions" xml:space="preserve">
-    <value>You have insufficient permissions for this operation. Please check with the administrator of this site.</value>
+    <value>您的權限不足，無法執行此作業。請連絡此網站的系統管理員。</value>
     <comment>Error message.</comment>
   </data>
   <data name="BrowserError" xml:space="preserve">
-    <value>Browser error:</value>
+    <value>瀏覽器錯誤:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserErrorUnknown" xml:space="preserve">
-    <value>An error occured during browsing.</value>
+    <value>瀏覽期間發生錯誤。</value>
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionClose" xml:space="preserve">
@@ -903,11 +903,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertActionAcknowledgeSuccessful" xml:space="preserve">
-    <value>Alert successfully acknowledged.</value>
+    <value>警示確認成功。</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionCloseSuccessful" xml:space="preserve">
-    <value>Alert successfully closed.</value>
+    <value>警示已成功關閉。</value>
     <comment>Message</comment>
   </data>
   <data name="NavigationMenuAddGateway" xml:space="preserve">
@@ -915,12 +915,12 @@ Stack trace:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;li&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/li&gt;</value>
+    <value>&lt;li&gt;&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;這裡&lt;/a&gt;備有 Windows 的指示。&lt;/li&gt;
+&lt;li&gt;&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;這裡&lt;/a&gt;備有 Linux 的指示。&lt;/li&gt; &lt;li&gt;&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;這裡&lt;/a&gt;備有編輯生產線資訊的指示。&lt;/li&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
-    <value>Connect your own gateway</value>
+    <value>連接您自己的閘道</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderAttributes" xml:space="preserve">
@@ -928,7 +928,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderMethod" xml:space="preserve">
-    <value>Method call</value>
+    <value>方法呼叫</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderPublish" xml:space="preserve">
@@ -936,15 +936,15 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderRead" xml:space="preserve">
-    <value>Read variable</value>
+    <value>讀取變數</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderWrite" xml:space="preserve">
-    <value>Write variable</value>
+    <value>寫入變數</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserSelectNewServer" xml:space="preserve">
-    <value>Connect your own OPC UA server</value>
+    <value>連接您自己的 OPC UA 伺服器</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserConnecting" xml:space="preserve">
