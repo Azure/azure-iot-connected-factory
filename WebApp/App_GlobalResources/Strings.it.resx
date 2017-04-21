@@ -134,7 +134,7 @@
     <comment>Error message.</comment>
   </data>
   <data name="YourSessionMayHaveExpired" xml:space="preserve">
-    <value>If you were signed in, your session has expired.</value>
+    <value>Se l'utente ha eseguito l'accesso, la sessione è scaduta.</value>
     <comment>Error message.</comment>
   </data>
   <data name="IoTSuite" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Informational text block. {StrContains="JavaScript"}</comment>
   </data>
   <data name="DefaultSolutionName" xml:space="preserve">
-    <value>Connected factory</value>
+    <value>Fabbrica connessa</value>
     <comment>Section heading.</comment>
   </data>
   <data name="AdministratorRole" xml:space="preserve">
@@ -174,7 +174,7 @@
     <comment>Hyperlink label.</comment>
   </data>
   <data name="NavigationMenuAddServer" xml:space="preserve">
-    <value>Add my OPC Server</value>
+    <value>Aggiungi server OPC personale</value>
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="NavigationMenuDashboard" xml:space="preserve">
@@ -186,19 +186,19 @@
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="NavigationMenuSidebarSizeToggle" xml:space="preserve">
-    <value>Toggle Menu Size</value>
+    <value>Alterna dimensioni del menu</value>
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="KpiContainerLabel" xml:space="preserve">
-    <value>Key Performance Indicators</value>
+    <value>Indicatori di prestazioni chiave</value>
     <comment>Label</comment>
   </data>
   <data name="Kpi1Label" xml:space="preserve">
-    <value>Units per hour</value>
+    <value>Unità all'ora</value>
     <comment>Label</comment>
   </data>
   <data name="Kpi2Label" xml:space="preserve">
-    <value>kWh per hour</value>
+    <value>kWh all'ora</value>
     <comment>Label</comment>
   </data>
   <data name="OeeAvailabilityLabel" xml:space="preserve">
@@ -206,7 +206,7 @@
     <comment>Label</comment>
   </data>
   <data name="OeeHeaderLabel" xml:space="preserve">
-    <value>Overall Equipment Efficiency</value>
+    <value>Efficienza complessiva delle attrezzature</value>
     <comment>Label</comment>
   </data>
   <data name="OeePerformanceLabel" xml:space="preserve">
@@ -214,11 +214,11 @@
     <comment>Label</comment>
   </data>
   <data name="OeeQualityLabel" xml:space="preserve">
-    <value>Quality</value>
+    <value>Qualità</value>
     <comment>Label</comment>
   </data>
   <data name="OeeOverallLabel" xml:space="preserve">
-    <value>Overall Efficiency</value>
+    <value>Efficienza complessiva</value>
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
-    <value>Factory Locations</value>
+    <value>Località della fabbrica</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListListHeaderDetails" xml:space="preserve">
@@ -246,7 +246,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserConnectedTo" xml:space="preserve">
-    <value>Connected to OPC server</value>
+    <value>Connesso al server OPC</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
@@ -254,15 +254,15 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
-    <value>Select a server from the preconfigured list:</value>
+    <value>Selezionare un server dall'elenco preconfigurato:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserSelectServer" xml:space="preserve">
-    <value>Select an OPC UA server</value>
+    <value>Selezionare un server OPC UA</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserCommunicationStatusMessageLabel" xml:space="preserve">
-    <value>Connection status:</value>
+    <value>Stato connessione:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserConnect" xml:space="preserve">
@@ -302,11 +302,11 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>CONFIGURAZIONE CORRENTE</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderLocation" xml:space="preserve">
-    <value>LINE</value>
+    <value>LINEA</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderStatus" xml:space="preserve">
@@ -318,11 +318,11 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>CONFIGURAZIONE CORRENTE</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderLocation" xml:space="preserve">
-    <value>STATION</value>
+    <value>STAZIONE</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderStatus" xml:space="preserve">
@@ -330,15 +330,15 @@
     <comment>Label</comment>
   </data>
   <data name="LastDayHistoryGraphXlabel" xml:space="preserve">
-    <value>Last day (hours)</value>
+    <value>Ultimo giorno (ore)</value>
     <comment>Label</comment>
   </data>
   <data name="LastHourHistoryGraphXlabel" xml:space="preserve">
-    <value>Last hour (minutes)</value>
+    <value>Ultima ora (minuti)</value>
     <comment>Label</comment>
   </data>
   <data name="LastWeekHistoryGraphXlabel" xml:space="preserve">
-    <value>Last week (days)</value>
+    <value>Ultima settimana (giorni)</value>
     <comment>Label</comment>
   </data>
   <data name="Error" xml:space="preserve">
@@ -365,11 +365,11 @@
     <comment>Button label</comment>
   </data>
   <data name="NodeAttribute" xml:space="preserve">
-    <value>Attribute of</value>
+    <value>Attributo di</value>
     <comment>Label</comment>
   </data>
   <data name="NodeAttributeRead" xml:space="preserve">
-    <value>Attributes...</value>
+    <value>Attributi...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeButtonCall" xml:space="preserve">
@@ -381,23 +381,23 @@
     <comment>Button label</comment>
   </data>
   <data name="NodeCall" xml:space="preserve">
-    <value>Call...</value>
+    <value>Chiamata...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeCallingMethod" xml:space="preserve">
-    <value>Calling method</value>
+    <value>Chiamata al metodo</value>
     <comment>Label</comment>
   </data>
   <data name="NodeCallInProgress" xml:space="preserve">
-    <value>Call in progress ...</value>
+    <value>Chiamata in corso...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeInfo" xml:space="preserve">
-    <value>Info on</value>
+    <value>Informazioni su</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelAccess" xml:space="preserve">
-    <value>Access:</value>
+    <value>Accesso:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelDescription" xml:space="preserve">
@@ -405,11 +405,11 @@
     <comment>Label</comment>
   </data>
   <data name="NodeLabelMisc" xml:space="preserve">
-    <value>Miscellaneous:</value>
+    <value>Varie:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelNodeDetails" xml:space="preserve">
-    <value>Node details:</value>
+    <value>Dettagli nodo:</value>
     <comment>Label</comment>
   </data>
   <data name="NodeLabelValue" xml:space="preserve">
@@ -417,31 +417,31 @@
     <comment>Label</comment>
   </data>
   <data name="NodeMethodMessage" xml:space="preserve">
-    <value>Parameter are not supported yet.</value>
+    <value>I parametri non sono ancora supportati.</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeMethodName" xml:space="preserve">
-    <value>MethodName</value>
+    <value>Nome del metodo</value>
     <comment>Label</comment>
   </data>
   <data name="NodeMethodNoParameter" xml:space="preserve">
-    <value>Method has no parameter.</value>
+    <value>Il metodo non ha parametri.</value>
     <comment>Message</comment>
   </data>
   <data name="NodeMethodResult" xml:space="preserve">
-    <value>Result of calling method</value>
+    <value>Risultato della chiamata al metodo</value>
     <comment>Label</comment>
   </data>
   <data name="NodePressButton" xml:space="preserve">
-    <value>Press button to call method.</value>
+    <value>Premere il pulsante per chiamare il metodo.</value>
     <comment>Message</comment>
   </data>
   <data name="NodeRead" xml:space="preserve">
-    <value>Read...</value>
+    <value>Lettura...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeReadInProgress" xml:space="preserve">
-    <value>Read in progress ...</value>
+    <value>Lettura in corso...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeUpdate" xml:space="preserve">
@@ -449,11 +449,11 @@
     <comment>Label</comment>
   </data>
   <data name="NodeVariableName" xml:space="preserve">
-    <value>VariableName</value>
+    <value>Nome della variabile</value>
     <comment>Label</comment>
   </data>
   <data name="NodeWrite" xml:space="preserve">
-    <value>Write...</value>
+    <value>Scrittura...</value>
     <comment>Message</comment>
   </data>
   <data name="NodeWriteCurrentValue" xml:space="preserve">
@@ -461,7 +461,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWriteInProgress" xml:space="preserve">
-    <value>Write in progress ...</value>
+    <value>Scrittura in corso...</value>
     <comment>Information message</comment>
   </data>
   <data name="NodeWriteNewValue" xml:space="preserve">
@@ -469,7 +469,7 @@
     <comment>Label</comment>
   </data>
   <data name="NodeWriteResult" xml:space="preserve">
-    <value>Result of writing</value>
+    <value>Risultato della scrittura</value>
     <comment>Label</comment>
   </data>
   <data name="Ok" xml:space="preserve">
@@ -481,22 +481,22 @@
     <comment>User role name.</comment>
   </data>
   <data name="BrowserConnectException" xml:space="preserve">
-    <value>Exception while trying to connect to the OPC UA server.
-Exceptionmessage:
+    <value>Si è verificata un'eccezione durante il tentativo di connessione al server OPC UA.
+Messaggio eccezione:
 {0}
-Inner Message:
+Messaggio interno:
 {1}
-Stack trace:
+Analisi dello stack:
 {2}</value>
     <comment>Error</comment>
   </data>
   <data name="BrowserDisconnectException" xml:space="preserve">
-    <value>Exception while trying to disconnect to the OPC UA server.
-Exceptionmessage:
+    <value>Si è verificata un'eccezione durante il tentativo di disconnessione dal server OPC UA.
+Messaggio eccezione:
 {0}
-Inner Message:
+Messaggio interno:
 {1}
-Stack trace:
+Analisi dello stack:
 {2}</value>
     <comment>Error</comment>
   </data>
@@ -505,29 +505,29 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserConnectErrorHeader" xml:space="preserve">
-    <value>Error while connecting to the OPC UA server</value>
+    <value>Si è verificato un errore durante la connessione al server OPC UA</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcErrorHeader" xml:space="preserve">
-    <value>Error while accessing the OPC UA server</value>
+    <value>Si è verificato un errore durante l'accesso al server OPC UA</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcException" xml:space="preserve">
-    <value>An exception occured while trying to access the OPC UA server.
-Exceptionmessage:
+    <value>Si è verificata un'eccezione durante il tentativo di accesso al server OPC UA.
+Messaggio eccezione:
 {0}
-Inner message:
+Messaggio interno:
 {1}
-Stack trace:
+Analisi dello stack:
 {2}</value>
     <comment>Error message</comment>
   </data>
   <data name="BrowserOpcDataServerTimestampLabel" xml:space="preserve">
-    <value>Server timestamp</value>
+    <value>Timestamp server</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcDataSourceTimestampLabel" xml:space="preserve">
-    <value>Source timestamp</value>
+    <value>Timestamp origine</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcDataStatusLabel" xml:space="preserve">
@@ -539,23 +539,23 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcWriteConversionProblem" xml:space="preserve">
-    <value>&lt;font color="red"&gt;Error: Conversion of the value '{0}' to type '{1}' is not possible. (Details: {2})&lt;/font&gt;</value>
+    <value>&lt;font color="red"&gt;Errore: non è possibile convertire il valore '{0}' nel tipo '{1}'. Dettagli: {2}&lt;/font&gt;</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcDataDiagnosticInfoLabel" xml:space="preserve">
-    <value>Diagnostic info</value>
+    <value>Informazioni di diagnostica</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcMethodCallFailed" xml:space="preserve">
-    <value>Method call failed</value>
+    <value>La chiamata al metodo non è riuscita</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcMethodCallSucceeded" xml:space="preserve">
-    <value>Method call succeeded</value>
+    <value>La chiamata al metodo è riuscita</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcMethodCallSucceededWithResults" xml:space="preserve">
-    <value>Method call succeeded and returned the following results:</value>
+    <value>La chiamata al metodo è riuscita e ha restituito i risultati seguenti:</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcMethodStatusCode" xml:space="preserve">
@@ -571,7 +571,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcValueHistoryUpdate" xml:space="preserve">
-    <value>History Update</value>
+    <value>Aggiornamento della cronologia</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcValueIndeterminate" xml:space="preserve">
@@ -607,11 +607,11 @@ Stack trace:
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcAttributesOneDimension" xml:space="preserve">
-    <value>OneDimension</value>
+    <value>Una dimensione</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcAttributesOneOrMoreDimensions" xml:space="preserve">
-    <value>OneOrMoreDimensions</value>
+    <value>Una o più dimensioni</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcAttributesScalar" xml:space="preserve">
@@ -619,11 +619,11 @@ Stack trace:
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcAttributesScalarOrOneDimension" xml:space="preserve">
-    <value>ScalarOrOneDimension</value>
+    <value>Scalare o una dimensione</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcAttributesTwoDimensions" xml:space="preserve">
-    <value>TwoDimensions</value>
+    <value>Due dimensioni</value>
     <comment>Message</comment>
   </data>
   <data name="NoFilterApplied" xml:space="preserve">
@@ -643,7 +643,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertDescription" xml:space="preserve">
-    <value>Alert cause</value>
+    <value>Causa dell'avviso</value>
     <comment>Label</comment>
   </data>
   <data name="AlertNode" xml:space="preserve">
@@ -651,11 +651,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertProductionLine" xml:space="preserve">
-    <value>Production line</value>
+    <value>Linea di produzione</value>
     <comment>Label</comment>
   </data>
   <data name="AlertStation" xml:space="preserve">
-    <value>Station</value>
+    <value>Stazione</value>
     <comment>Label</comment>
   </data>
   <data name="GraphFriday" xml:space="preserve">
@@ -663,15 +663,15 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="GraphLastDay" xml:space="preserve">
-    <value>LAST 24 HOURS</value>
+    <value>ULTIME 24 ORE</value>
     <comment>Label</comment>
   </data>
   <data name="GraphLastHour" xml:space="preserve">
-    <value>LAST HOUR</value>
+    <value>ULTIMA ORA</value>
     <comment>Label</comment>
   </data>
   <data name="GraphLastWeek" xml:space="preserve">
-    <value>LAST 7 DAYS</value>
+    <value>ULTIMI 7 GIORNI</value>
     <comment>Label</comment>
   </data>
   <data name="GraphMonday" xml:space="preserve">
@@ -703,7 +703,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserCertDownloadError" xml:space="preserve">
-    <value>Error accessing certificate for download</value>
+    <value>Errore di accesso al certificato per il download</value>
     <comment>Error message</comment>
   </data>
   <data name="BrowserDownload" xml:space="preserve">
@@ -711,7 +711,7 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="BrowserDownloadText" xml:space="preserve">
-    <value>Should your OPC UA server require a manual installation of client certificates, you can download this website's OPC UA certificate here:</value>
+    <value>Se il server OPC UA richiede l'installazione manuale dei certificati client, è possibile scaricare il certificato OPC UA di questo sito Web da qui:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserErrorContinueButton" xml:space="preserve">
@@ -719,11 +719,11 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="NodePublish" xml:space="preserve">
-    <value>Publish...</value>
+    <value>Pubblica...</value>
     <comment>Label</comment>
   </data>
   <data name="NodePublishInProgress" xml:space="preserve">
-    <value>Publish in progress...</value>
+    <value>Pubblicazione in corso...</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserDontTrustButton" xml:space="preserve">
@@ -731,7 +731,7 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="BrowserTrust" xml:space="preserve">
-    <value>This might mean that someone's trying to fool you or steal information you send to the server. You should proceed only if you expected this issue, e.g. because you are using self-signed certificates with your server (not recommended).</value>
+    <value>Potrebbe indicare un tentativo di ingannare l'utente o di sottrarre le informazioni inviate al server. Procedere unicamente se il problema era previsto, ad esempio perché si usano certificati autofirmati con il server (non consigliato).</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserTrustButton" xml:space="preserve">
@@ -739,91 +739,91 @@ Stack trace:
     <comment>Button label</comment>
   </data>
   <data name="SessionNull" xml:space="preserve">
-    <value>Could not establish connection to Publisher</value>
+    <value>Non è stato possibile stabilire una connessione al server di pubblicazione</value>
     <comment>Error message.</comment>
   </data>
   <data name="OpcStackInitError" xml:space="preserve">
-    <value>Exception while initializing OPC UA stack. Error: {0} Inner: {1} Stack: {2}</value>
+    <value>Si è verificata un'eccezione durante l'inizializzazione dello stack OPC UA. Errore: {0}. Interno: {1}. Stack: {2}</value>
     <comment>Error message.</comment>
   </data>
   <data name="ErrorGetDataForOpcUaNode" xml:space="preserve">
-    <value>Not a valid node or station</value>
+    <value>Il nodo o la stazione non sono validi</value>
     <comment>Error message</comment>
   </data>
   <data name="ErrorGetOeeKpiData" xml:space="preserve">
-    <value>Not a valid node</value>
+    <value>Il nodo non è valido</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="NoDataSeries" xml:space="preserve">
-    <value>No data series available for this item</value>
+    <value>Non sono disponibili serie di dati per questo elemento</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="BrowserTrustHeader" xml:space="preserve">
-    <value>The certificate of the server you want to connect to cannot be verified.</value>
+    <value>Non è possibile verificare il certificato del server a cui ci si vuole connettere.</value>
     <comment>ErrorMessage</comment>
   </data>
   <data name="GraphRDXLinkHeader" xml:space="preserve">
-    <value>Click on graph to explore in Azure Time Series Insights</value>
+    <value>Fare clic sul grafico per esplorare in Azure Time Series Insights</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionAcknowledge" xml:space="preserve">
-    <value>Acknowledge alert</value>
+    <value>Conferma avviso</value>
     <comment>Label</comment>
   </data>
   <data name="AlertKpi1AboveMaximum" xml:space="preserve">
-    <value>Number of products above maximum</value>
+    <value>Il numero di prodotti è superiore al massimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi1BelowMinimum" xml:space="preserve">
-    <value>Number of products below minimum</value>
+    <value>Il numero di prodotti è inferiore al minimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi2AboveMaximum" xml:space="preserve">
-    <value>Energy consumption above maximum</value>
+    <value>Il consumo energetico è superiore al massimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertKpi2BelowMinimum" xml:space="preserve">
-    <value>Energy consumption below minimum</value>
+    <value>Il consumo energetico è inferiore al minimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeAvailabilityAboveMaximum" xml:space="preserve">
-    <value>OEE Availability above maximum</value>
+    <value>La disponibilità OEE è superiore al massimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeAvailabilityBelowMinimum" xml:space="preserve">
-    <value>OEE Availability below minimum</value>
+    <value>La disponibilità OEE è inferiore al minimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeOverallAboveMaximum" xml:space="preserve">
-    <value>OEE Overall above maximum</value>
+    <value>Il totale OEE è superiore al massimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeOverallBelowMinimum" xml:space="preserve">
-    <value>OEE Overall below minimum</value>
+    <value>Il totale OEE è inferiore al minimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeePerformanceAboveMaximum" xml:space="preserve">
-    <value>OEE Performance above maximum</value>
+    <value>Le prestazioni OEE sono superiori al massimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeePerformanceBelowMinimum" xml:space="preserve">
-    <value>OEE Performance below minimum</value>
+    <value>Le prestazioni OEE sono inferiori al minimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeQualityAboveMaximum" xml:space="preserve">
-    <value>OEE Quality above maximum</value>
+    <value>La qualità OEE è superiore al massimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertOeeQualityBelowMinimum" xml:space="preserve">
-    <value>OEE Qualty below minimum</value>
+    <value>La qualità OEE è inferiore al minimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertValueAboveMaximum" xml:space="preserve">
-    <value>Value above maximum</value>
+    <value>Il valore è superiore al massimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertValueBelowMinimum" xml:space="preserve">
-    <value>Value below minimum</value>
+    <value>Il valore è inferiore al minimo</value>
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsDescriptionHeader" xml:space="preserve">
@@ -835,11 +835,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsNoActionAvailable" xml:space="preserve">
-    <value>No Action defined</value>
+    <value>Non è stata definita alcuna azione</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsOccurencesHeader" xml:space="preserve">
-    <value>Occurences:</value>
+    <value>Occorrenze:</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsTimeHeader" xml:space="preserve">
@@ -847,7 +847,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertIdUnknown" xml:space="preserve">
-    <value>The alert information is no longer available.</value>
+    <value>Le informazioni sull'avviso non sono più disponibili.</value>
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
@@ -855,7 +855,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
-    <value>Choose action:</value>
+    <value>Scegliere un'azione:</value>
     <comment>Label</comment>
   </data>
   <data name="AlertDetailsUnknown" xml:space="preserve">
@@ -863,39 +863,39 @@ Stack trace:
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsActionResultHeader" xml:space="preserve">
-    <value>Action result:</value>
+    <value>Risultato dell'azione:</value>
     <comment>Label</comment>
   </data>
   <data name="ActionDetailResultExecuting" xml:space="preserve">
-    <value>Action has executed...</value>
+    <value>L'azione è stata eseguita...</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionWebPageOpened" xml:space="preserve">
-    <value>Please check content in a new browser tab/window.</value>
+    <value>Controllare il contenuto in una nuova scheda o finestra del browser.</value>
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsRdxLinkHeader" xml:space="preserve">
-    <value>Click chart to explore in Azure Time Series Insights</value>
+    <value>Fare clic sul grafico per esplorare in Azure Time Series Insights</value>
     <comment>Message</comment>
   </data>
   <data name="AnimationTimeSeriesLoading" xml:space="preserve">
-    <value>Loading data from Azure Time Series Insights</value>
+    <value>Caricamento dei dati da Azure Time Series Insights</value>
     <comment>Message</comment>
   </data>
   <data name="ErrorAccessProblem" xml:space="preserve">
-    <value>An error occured while accessing the website.</value>
+    <value>Si è verificato un errore durante l'accesso al sito Web.</value>
     <comment>Error message.</comment>
   </data>
   <data name="ErrorInsufficientPermissions" xml:space="preserve">
-    <value>You have insufficient permissions for this operation. Please check with the administrator of this site.</value>
+    <value>Le autorizzazioni non sono sufficienti per eseguire questa operazione. Rivolgersi all'amministratore del sito.</value>
     <comment>Error message.</comment>
   </data>
   <data name="BrowserError" xml:space="preserve">
-    <value>Browser error:</value>
+    <value>Errore del browser:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserErrorUnknown" xml:space="preserve">
-    <value>An error occured during browsing.</value>
+    <value>Si è verificato un errore durante l'esplorazione.</value>
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionClose" xml:space="preserve">
@@ -903,11 +903,11 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="AlertActionAcknowledgeSuccessful" xml:space="preserve">
-    <value>Alert successfully acknowledged.</value>
+    <value>L'avviso è stato confermato.</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionCloseSuccessful" xml:space="preserve">
-    <value>Alert successfully closed.</value>
+    <value>L'avviso è stato chiuso.</value>
     <comment>Message</comment>
   </data>
   <data name="NavigationMenuAddGateway" xml:space="preserve">
@@ -915,12 +915,12 @@ Stack trace:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;li&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/li&gt;</value>
+    <value>&lt;li&gt;Per le istruzioni relative a Windows, fare clic &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;qui&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Per le istruzioni relative a Linux, fare clic &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;qui&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;Per le istruzioni relative alla modifica delle informazioni sulla catena di montaggio, fare clic &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;qui&lt;/a&gt;.&lt;/li&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
-    <value>Connect your own gateway</value>
+    <value>Connettere il gateway personale</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderAttributes" xml:space="preserve">
@@ -928,7 +928,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderMethod" xml:space="preserve">
-    <value>Method call</value>
+    <value>Chiamata al metodo</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderPublish" xml:space="preserve">
@@ -936,15 +936,15 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderRead" xml:space="preserve">
-    <value>Read variable</value>
+    <value>Variabile di lettura</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderWrite" xml:space="preserve">
-    <value>Write variable</value>
+    <value>Variabile di scrittura</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserSelectNewServer" xml:space="preserve">
-    <value>Connect your own OPC UA server</value>
+    <value>Connettere il server OPC UA personale</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserConnecting" xml:space="preserve">

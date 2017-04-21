@@ -213,3 +213,4 @@ OPC\ Foundation/
 *.der
 *.pfx
 **/OPC.Ua.Browser.Endpoints.xml
+/private
