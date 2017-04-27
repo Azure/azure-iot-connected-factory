@@ -82,7 +82,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             if (OpcSessionHelper.Instance.InitResult != "Good")
             {
                 sessionModel.ErrorMessage = OpcSessionHelper.Instance.InitResult;
-                return View("Error", sessionModel);
+                return View("Error", sessionModel);  
             }
             
             OpcSessionCacheData entry = null;
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 ErrorMessage = HttpUtility.HtmlDecode(errorMessage)
             };
 
-            return View("Error", sessionModel);
+            return Json(sessionModel);
         }
 
         /// <summary>
@@ -140,15 +140,14 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                     return Json(sessionModel);
                 }
 
-                // Generate an error to be shown in the error view.
-                string errorMessage = string.Format(Strings.BrowserConnectException, exception.Message,
-                exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--");
-                Trace.TraceError(errorMessage);
-                errorMessage = errorMessage.Replace("\r\n", "<br/>");
+                // Generate an error to be shown in the error view and trace.
+                string errorMessageTrace = string.Format(Strings.BrowserConnectException, exception.Message,
+                exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--"); 
+                Trace.TraceError(errorMessageTrace);
+                sessionModel.ErrorMessage = exception.Message.Replace("\r\n", "<br/>");
                 sessionModel.ErrorHeader = Strings.BrowserConnectErrorHeader;
-                sessionModel.ErrorMessage = errorMessage;
 
-                return View("Error", sessionModel);
+                return Json(sessionModel);
             }
 
             Session["EndpointUrl"] = endpointUrl;
@@ -192,7 +191,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             sessionModel.ErrorHeader = Strings.BrowserConnectErrorHeader;
             sessionModel.ErrorMessage = Strings.BrowserConnectErrorHeader;
 
-            return View("Error", sessionModel);
+            return Json(sessionModel);
         }
 
         /// <summary>
@@ -240,7 +239,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 {
                     OpcSessionModel sessionModel = new OpcSessionModel();
                     sessionModel.PrepopulatedEndpoints = new SelectList(_prepopulatedEndpoints, "Value", "Text");
-                    return View("Index", sessionModel);                 
+                    return View("Index", sessionModel);
                 }
             }
         }

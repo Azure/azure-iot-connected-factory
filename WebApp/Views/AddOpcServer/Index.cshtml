@@ -64,11 +64,21 @@
                     <span class="browser_error_details_info_black">@Strings.BrowserTrust</span>
                 </div>
             </div>
+            <div id="addOpcServerErrorContextPanel" class="overlay-content">
+                <div class="browser_error_contextpanel_container">
+                    <span class="browser_error_contextpanel_header">@Strings.BrowserErrorMessage</span>
+                    <div id="addOpcServerErrorHeader" class="browser_error_contextpanel_message"></div>
+                    <br />
+                    <span class="browser_error_contextpanel_header">@Strings.AlertDetailsDescriptionHeader</span>
+                    <div id="addOpcServerErrorMessage" class="browser_error_contextpanel_message"></div>
+                </div>
+            </div>
+
             <div id="waitingForConnect" class="browser_error_details_container">@Strings.BrowserConnecting</div>
             <div id="connectNewOpcServerLoader" class="loader"></div>
 
             <div id="proceedButton" class="dashboard_contextpanel_select_filter_button">
-                @using (Html.BeginForm("ConnectWithTrust", "Browser"))
+                @using (Ajax.BeginForm("ConnectWithTrust", "Browser", new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
                 {
                     @Html.AntiForgeryToken();
                     @Html.HiddenFor(model => model.EndpointUrl, new { id = "hiddenEndpointUrl" })
@@ -88,8 +98,10 @@
 
 <script>
     $(document).ready(function () {
-        $("#connectAddOpcServerButton").attr("enabled", "enabled");
+        $("#connectAddOpcServerButton").prop("disabled", false);
     });
+
+    var addOpcServerDisconnect = false;
 
     function onSuccess(sessionModel) {
         $("#hiddenEndpointUrl").val(sessionModel.EndpointUrl);
@@ -99,8 +111,17 @@
             $("#waitingForConnect").hide();
             $("#addOpcServerBodyContextPanel").show();
             $("#addOpcServerContextpanelHeader").text("Security Warning");
+            $("#addOpcServerErrorContextPanel").hide();
             $("#proceedButton").show();
             $("#cancelButton").show();
+        } else if (sessionModel.ErrorHeader != null) {
+            $("#connectNewOpcServerLoader").hide();
+            $("#waitingForConnect").hide();
+            $("#addOpcServerContextpanelHeader").text("Error");
+            $("#addOpcServerErrorContextPanel").show();
+            $("#addOpcServerErrorHeader").html(sessionModel.ErrorHeader);
+            $("#addOpcServerErrorMessage").html(sessionModel.ErrorMessage);
+            addOpcServerDisconnect = true;
         } else {
             var baseUrl = '@Url.Content("~")';
             window.location.href = baseUrl + "Browser/Index";
@@ -109,8 +130,12 @@
 
     function onFailure(response) {
         $("#connectNewOpcServerLoader").hide();
-        var baseUrl = '@Url.Content("~")';
-        window.location.href = baseUrl + "AddOpcServer/Error";
+        $("#waitingForConnect").hide();
+        $("#addOpcServerContextpanelHeader").text("Error");
+        $("#addOpcServerErrorContextPanel").show();
+        $("#addOpcServerErrorHeader").html(sessionModel.ErrorHeader);
+        $("#addOpcServerErrorMessage").html(sessionModel.ErrorMessage);
+        addOpcServerDisconnect = true;
     }
 
     function openConnectContextPanel() {
@@ -119,6 +144,7 @@
         }
 
         $("#addOpcServerBodyContextPanel").hide();
+        $("#addOpcServerErrorContextPanel").hide();
         $("#addOpcServerContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
         $("#addOpcServerContextpanelHeader").text("Connect");
         $("#proceedButton").hide();
@@ -128,7 +154,7 @@
     }
 
     $('form').submit(function () {
-        $("#connectAddOpcServerButton").attr("disabled", "disabled");
+        $("#connectAddOpcServerButton").prop("disabled", true);
     })
 
     function connecting() {
@@ -142,7 +168,21 @@
 
     function closeAddOpcServerContextPanel() {
         $("#addOpcServerContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
-        $("#connectAddOpcServerButton").attr("enabled", "enabled");
+
+        if (addOpcServerDisconnect == true) {
+            $.post({
+                url: "/Browser/Disconnect",
+                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), backUrl: window.location.href },
+                success: function onSuccess(response) {
+                    console.log("success");
+                },
+                error: function (response) {
+                    console.error("error connecting to an OPC UA node: ", response.d, response.responseText);
+                }
+            });
+        }
+        $("#connectAddOpcServerButton").prop("disabled", false);
+        addOpcServerDisconnect = false;
     }
 
 </script>
