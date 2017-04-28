@@ -665,8 +665,16 @@
 
     }
 
+    var widthGraph;
+    if(window.matchMedia('(max-width: 480px)').matches) {
+        // the width of browser is less or equal then 480px
+        var widthGraph = 320;
+    } else {
+        // the width of browser is greater then 480px
+        var widthGraph = 390;
+    }
+    console.log("widthGraph = ",widthGraph);
 
-    var widthGraph = 390;
     var heightGraph = 195;
     var paddingTop = 10;
     var paddingLeft = 90;
@@ -979,7 +987,7 @@
                     }
                 }
                 xlabel.unshift("x");
-                
+
                 if (data[0] != "Error") {
                     $("#timeSeriesLoadingContainer").hide();
                     $("#alertDetailTimeSeriesContainer").show();
@@ -1397,11 +1405,11 @@
     }
 
     function closeFilterPanel() {
-        $("#dashboardFilterContextpanel").addClass("overlay-close");
+        $("#dashboardFilterContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
     }
 
     function closeFilterAlertsPanel() {
-        $("#dashboardFilterAlertContextpanel").addClass("overlay-close");
+        $("#dashboardFilterAlertContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
     }
 
     function createListItems(listObject) {
