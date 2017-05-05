@@ -35,7 +35,7 @@ Get your Bing Maps API for Enterprise QueryKey from the Azure portal:
   * [Frequently asked questions for IoT Suite](https://azure.microsoft.com/documentation/articles/iot-suite-faq/)
   * [Permissions on the azureiotsuite.com site](https://azure.microsoft.com/documentation/articles/iot-suite-permissions/). This includes instructions for adding co-administrators to your preconfigured solution.
   
-### Visual Studio Solution:
+### Visual Studio Solution
   * **Connectedfactory:** contains the source code for the complete preconfigured solution, including the solution portal web app and the simulated factories.
   
 ## Feedback
