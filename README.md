@@ -8,6 +8,27 @@ Each preconfigured solution implements a common IoT scenario and is a complete, 
 ## Connected factory preconfigured solution
 The connected factory preconfigured solution illustrates how you can get started with your Industrie 4.0 digital transformation. It brings together key Azure IoT services to enable the following features: OPC UA data ingestion, OPC UA server management, rules and actions and Azure Time Series Insights.
 
+## Release Notes
+
+#### Deployment names
+When using the build.ps1 script for deployment, it is recommended that you use a new deployment name each time you deploy the connected factory solution.
+
+#### Connected factory deployment time
+It takes approximately 14 minutes to complete the deployment.
+
+#### Connected factory telemetry flow
+After you have successfully deployed the solution and the web application launches the first time it takes approximately 3 minutes for data to show in the solution dashboard.
+
+#### Bing Maps
+If you don't have a Bing Maps API for Enterprise account, create one in the [Azure portal](https://portal.azure.com) by clicking + New, search for Bing Maps API for Enterprise and follow prompts to create. 
+
+Get your Bing Maps API for Enterprise QueryKey from the Azure portal: 
+1.	Navigate to the Resource Group where your Bing Maps API for Enterprise is in the Azure portal.
+2.	Click All Settings, then Key Management. 
+3.	You will see two keys: MasterKey and QueryKey. Copy the value for QueryKey.
+4.	To have the key picked up by the build.ps1 script, set the environment variable "$env:MapApiQueryKey" in your PowerShell environment to a valid BingMaps license key and it will be picked up by the build script and automatically added to the settings of the App Service.
+5.	Run a local or cloud deployment using build.ps1.
+
 ## Documentation
 
   * [IoT Suite documentation](https://azure.microsoft.com/documentation/suites/iot-suite/)
