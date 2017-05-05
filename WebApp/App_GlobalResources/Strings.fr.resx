@@ -1,0 +1,966 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnErrorOccurred" xml:space="preserve">
+    <value>Une erreur s'est produite lors du traitement de votre demande.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="MicrosoftAzureIoTSuite" xml:space="preserve">
+    <value>Microsoft Azure IoT Suite</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Se connecter</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="YouMustBeSignedIn" xml:space="preserve">
+    <value>Vous devez être connecté pour continuer.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="YourSessionMayHaveExpired" xml:space="preserve">
+    <value>Si vous étiez connecté, votre session a expiré.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="IoTSuite" xml:space="preserve">
+    <value>IoT Suite</value>
+    <comment>(Unused)</comment>
+  </data>
+  <data name="NoJScriptHeader" xml:space="preserve">
+    <value>JavaScript obligatoire</value>
+    <comment>Error message. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="NoJScriptInfo1" xml:space="preserve">
+    <value>Votre navigateur est actuellement configuré pour bloquer JavaScript. Vous devez autoriser JavaScript pour utiliser ce service.</value>
+    <comment>Error message. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="NoJScriptInfo2" xml:space="preserve">
+    <value>Pour savoir comment autoriser JavaScript ou pour savoir si votre navigateur prend en charge JavaScript, consultez l'aide en ligne de votre navigateur web.</value>
+    <comment>Informational text block. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="DefaultSolutionName" xml:space="preserve">
+    <value>Usine connectée</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="AdministratorRole" xml:space="preserve">
+    <value>Administrateur</value>
+    <comment>User role name.</comment>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Se déconnecter</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="LinkLabelHelpAndSupport" xml:space="preserve">
+    <value>Aide et support</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="LinkLabelHelpGiveFeedback" xml:space="preserve">
+    <value>Envoyer des commentaires</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="NavigationMenuAddServer" xml:space="preserve">
+    <value>Ajouter mon serveur OPC</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuDashboard" xml:space="preserve">
+    <value>Accueil</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuBrowser" xml:space="preserve">
+    <value>Navigateur</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuSidebarSizeToggle" xml:space="preserve">
+    <value>Basculer la taille du menu</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="KpiContainerLabel" xml:space="preserve">
+    <value>Indicateurs de performance clés</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Kpi1Label" xml:space="preserve">
+    <value>Unités par heure</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Kpi2Label" xml:space="preserve">
+    <value>kWh par heure</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeAvailabilityLabel" xml:space="preserve">
+    <value>Disponibilité</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeHeaderLabel" xml:space="preserve">
+    <value>Taux de rendement global (TRG)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeePerformanceLabel" xml:space="preserve">
+    <value>Performances</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeQualityLabel" xml:space="preserve">
+    <value>Qualité</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeOverallLabel" xml:space="preserve">
+    <value>Rendement global</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertsContainerHeader" xml:space="preserve">
+    <value>Alertes</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
+    <value>Emplacements des usines</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderDetails" xml:space="preserve">
+    <value>PRODUCTION ACTUELLE</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderLocation" xml:space="preserve">
+    <value>EMPLACEMENT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderStatus" xml:space="preserve">
+    <value>ÉTAT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Tableau de bord</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnectedTo" xml:space="preserve">
+    <value>Connecté au serveur OPC</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserEnterOwn" xml:space="preserve">
+    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
+    <value>Sélectionnez un serveur dans la liste préconfigurée :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSelectServer" xml:space="preserve">
+    <value>Sélectionner un serveur OPC UA</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserCommunicationStatusMessageLabel" xml:space="preserve">
+    <value>État de la connexion :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnect" xml:space="preserve">
+    <value>Connexion</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorMessage" xml:space="preserve">
+    <value>Message d'erreur :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorServer" xml:space="preserve">
+    <value>Serveur :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normale</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListContainerHeaderPostfix" xml:space="preserve">
+    <value>détails</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
+    <value>DESCRIPTION</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
+    <value>NOM</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderStatus" xml:space="preserve">
+    <value>ÉTAT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListContainerHeaderPostfix" xml:space="preserve">
+    <value>détails</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderDetails" xml:space="preserve">
+    <value>CONFIGURATION ACTUELLE</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderLocation" xml:space="preserve">
+    <value>CHAÎNE</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderStatus" xml:space="preserve">
+    <value>ÉTAT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListContainerHeaderPostfix" xml:space="preserve">
+    <value>détails</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderDetails" xml:space="preserve">
+    <value>CONFIGURATION ACTUELLE</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderLocation" xml:space="preserve">
+    <value>STATION</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderStatus" xml:space="preserve">
+    <value>ÉTAT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastDayHistoryGraphXlabel" xml:space="preserve">
+    <value>Dernier jour (heures)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastHourHistoryGraphXlabel" xml:space="preserve">
+    <value>Dernière heure (minutes)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastWeekHistoryGraphXlabel" xml:space="preserve">
+    <value>Dernière semaine (jours)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+    <comment>Page title.</comment>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Revenir en arrière</value>
+    <comment>Button label.</comment>
+  </data>
+  <data name="ImplicitReadOnlyRole" xml:space="preserve">
+    <value>En lecture seule implicitement</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="InfoIconLink" xml:space="preserve">
+    <value>https://azure.microsoft.com/solutions/iot-suite/</value>
+    <comment>Link to a documentation.</comment>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Informations</value>
+  </data>
+  <data name="BrowserDisconnectButton" xml:space="preserve">
+    <value>Déconnecter</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeAttribute" xml:space="preserve">
+    <value>Attribut de</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeAttributeRead" xml:space="preserve">
+    <value>Attributs...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeButtonCall" xml:space="preserve">
+    <value>Appeler</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeButtonWrite" xml:space="preserve">
+    <value>Écriture</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeCall" xml:space="preserve">
+    <value>Appeler...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeCallingMethod" xml:space="preserve">
+    <value>Méthode d'appel</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeCallInProgress" xml:space="preserve">
+    <value>Appel en cours...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeInfo" xml:space="preserve">
+    <value>Informations sur</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelAccess" xml:space="preserve">
+    <value>Accès :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelDescription" xml:space="preserve">
+    <value>Description :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelMisc" xml:space="preserve">
+    <value>Divers :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelNodeDetails" xml:space="preserve">
+    <value>Détails du nœud :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelValue" xml:space="preserve">
+    <value>Valeur :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeMethodMessage" xml:space="preserve">
+    <value>Les paramètres ne sont pas encore pris en charge.</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeMethodName" xml:space="preserve">
+    <value>MethodName</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeMethodNoParameter" xml:space="preserve">
+    <value>La méthode ne comprend aucun paramètre.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeMethodResult" xml:space="preserve">
+    <value>Résultat de l'appel de la méthode</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodePressButton" xml:space="preserve">
+    <value>Appuyez sur le bouton pour appeler la méthode.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeRead" xml:space="preserve">
+    <value>Lire...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeReadInProgress" xml:space="preserve">
+    <value>Lecture en cours...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeUpdate" xml:space="preserve">
+    <value>Mettre à jour</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeVariableName" xml:space="preserve">
+    <value>VariableName</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWrite" xml:space="preserve">
+    <value>Écrire...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeWriteCurrentValue" xml:space="preserve">
+    <value>Valeur actuelle :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWriteInProgress" xml:space="preserve">
+    <value>Écriture en cours...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeWriteNewValue" xml:space="preserve">
+    <value>Nouvelle valeur :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWriteResult" xml:space="preserve">
+    <value>Résultat de l'écriture</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+    <comment>Success message.</comment>
+  </data>
+  <data name="ReadOnlyRole" xml:space="preserve">
+    <value>En lecture seule</value>
+    <comment>User role name.</comment>
+  </data>
+  <data name="BrowserConnectException" xml:space="preserve">
+    <value>Une exception s'est produite durant la tentative de connexion au serveur OPC UA.
+Message d'exception :
+{0}
+Message interne :
+{1}
+Trace de la pile :
+{2}</value>
+    <comment>Error</comment>
+  </data>
+  <data name="BrowserDisconnectException" xml:space="preserve">
+    <value>Une exception s'est produite durant la tentative de déconnexion du serveur OPC UA.
+Message d'exception :
+{0}
+Message interne :
+{1}
+Trace de la pile :
+{2}</value>
+    <comment>Error</comment>
+  </data>
+  <data name="BrowserRootNodeName" xml:space="preserve">
+    <value>Racine</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnectErrorHeader" xml:space="preserve">
+    <value>Erreur de connexion au serveur OPC UA</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcErrorHeader" xml:space="preserve">
+    <value>Erreur d'accès au serveur OPC UA</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcException" xml:space="preserve">
+    <value>Une exception s'est produite durant la tentative d'accès au serveur OPC UA.
+Message d'exception :
+{0}
+Message interne :
+{1}
+Trace de la pile :
+{2}</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="BrowserOpcDataServerTimestampLabel" xml:space="preserve">
+    <value>Timestamp du serveur</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataSourceTimestampLabel" xml:space="preserve">
+    <value>Timestamp source</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataStatusLabel" xml:space="preserve">
+    <value>État</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataValueLabel" xml:space="preserve">
+    <value>Valeur</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcWriteConversionProblem" xml:space="preserve">
+    <value>&lt;font color="red"&gt;Erreur : Impossible de convertir la valeur « {0} » en type « {1} ». (Détails : {2})&lt;/font&gt;</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcDataDiagnosticInfoLabel" xml:space="preserve">
+    <value>Informations de diagnostic</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcMethodCallFailed" xml:space="preserve">
+    <value>Échec de l'appel de méthode</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcMethodCallSucceeded" xml:space="preserve">
+    <value>Appel de méthode réussi</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcMethodCallSucceededWithResults" xml:space="preserve">
+    <value>L'appel de méthode a réussi et a retourné les résultats suivants :</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcMethodStatusCode" xml:space="preserve">
+    <value>Code d'état</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueContinuous" xml:space="preserve">
+    <value>Continu</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueHistory" xml:space="preserve">
+    <value>Historique</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueHistoryUpdate" xml:space="preserve">
+    <value>Mise à jour de l'historique</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueIndeterminate" xml:space="preserve">
+    <value>Indéterminé</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueNoAccess" xml:space="preserve">
+    <value>Aucun accès</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueReadable" xml:space="preserve">
+    <value>En lecture</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueSubscribe" xml:space="preserve">
+    <value>S'abonner</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueUnknown" xml:space="preserve">
+    <value>Inconnu</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueWriteable" xml:space="preserve">
+    <value>En écriture</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelType" xml:space="preserve">
+    <value>Type</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcAttributesAny" xml:space="preserve">
+    <value>Tous</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesOneDimension" xml:space="preserve">
+    <value>OneDimension</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesOneOrMoreDimensions" xml:space="preserve">
+    <value>OneOrMoreDimensions</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesScalar" xml:space="preserve">
+    <value>Scalaire</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesScalarOrOneDimension" xml:space="preserve">
+    <value>ScalarOrOneDimension</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesTwoDimensions" xml:space="preserve">
+    <value>TwoDimensions</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NoFilterApplied" xml:space="preserve">
+    <value>Toutes</value>
+    <comment>Label</comment>
+  </data>
+  <data name="FilterApply" xml:space="preserve">
+    <value>Appliquer un filtre</value>
+    <comment>ButtonLabel</comment>
+  </data>
+  <data name="FilterClear" xml:space="preserve">
+    <value>Effacer le filtre</value>
+    <comment>ButtonLabel</comment>
+  </data>
+  <data name="FilterLabel" xml:space="preserve">
+    <value>Filtrer</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDescription" xml:space="preserve">
+    <value>Cause de l'alerte</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertNode" xml:space="preserve">
+    <value>Nœud</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertProductionLine" xml:space="preserve">
+    <value>Chaîne de production</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertStation" xml:space="preserve">
+    <value>Station</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphFriday" xml:space="preserve">
+    <value>F</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastDay" xml:space="preserve">
+    <value>DERNIÈRES 24 HEURES</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastHour" xml:space="preserve">
+    <value>DERNIÈRE HEURE</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastWeek" xml:space="preserve">
+    <value>7 DERNIERS JOURS</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMonday" xml:space="preserve">
+    <value>M</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphSaturday" xml:space="preserve">
+    <value>Sa</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphSunday" xml:space="preserve">
+    <value>Di</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphThursday" xml:space="preserve">
+    <value>Je</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphTuesday" xml:space="preserve">
+    <value>T</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphWednesday" xml:space="preserve">
+    <value>W</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetails" xml:space="preserve">
+    <value>Détails de l'alerte</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserCertDownloadError" xml:space="preserve">
+    <value>Erreur d'accès au certificat pour téléchargement</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="BrowserDownload" xml:space="preserve">
+    <value>Télécharger le certificat</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="BrowserDownloadText" xml:space="preserve">
+    <value>Si votre serveur OPC UA nécessite une installation manuelle des certificats clients, vous pouvez télécharger le certificat OPC UA de ce site web ici :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorContinueButton" xml:space="preserve">
+    <value>Continuer</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodePublish" xml:space="preserve">
+    <value>Publier...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodePublishInProgress" xml:space="preserve">
+    <value>Publication en cours...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserDontTrustButton" xml:space="preserve">
+    <value>Annuler</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="BrowserTrust" xml:space="preserve">
+    <value>Cela peut signifier que quelqu'un essaie de vous duper ou de voler les informations que vous envoyez au serveur. Ne procédez que si ce problème est attendu, par exemple parce que vous utilisez des certificats auto-signés avec votre serveur (non recommandé).</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserTrustButton" xml:space="preserve">
+    <value>Continuer</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="SessionNull" xml:space="preserve">
+    <value>Impossible d'établir une connexion au serveur de publication</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="OpcStackInitError" xml:space="preserve">
+    <value>Une exception s'est produite durant l'initialisation de la pile OPC UA. Erreur : {0} Interne : {1} Pile : {2}</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="ErrorGetDataForOpcUaNode" xml:space="preserve">
+    <value>N'est pas un nœud ou une station valide</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="ErrorGetOeeKpiData" xml:space="preserve">
+    <value>N'est pas un nœud valide</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="NoDataSeries" xml:space="preserve">
+    <value>Aucune série de données n'est disponible pour cet élément</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="BrowserTrustHeader" xml:space="preserve">
+    <value>Impossible de vérifier le certificat du serveur auquel vous souhaitez vous connecter.</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="GraphRDXLinkHeader" xml:space="preserve">
+    <value>Cliquez sur le graphique pour explorer les données dans Azure Time Series Insights</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionAcknowledge" xml:space="preserve">
+    <value>Confirmer la réception de l'alerte</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertKpi1AboveMaximum" xml:space="preserve">
+    <value>Nombre de produits au-dessus du maximum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi1BelowMinimum" xml:space="preserve">
+    <value>Nombre de produits en dessous du minimum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi2AboveMaximum" xml:space="preserve">
+    <value>Consommation d'énergie au-dessus du maximum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi2BelowMinimum" xml:space="preserve">
+    <value>Consommation d'énergie en dessous du minimum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeAvailabilityAboveMaximum" xml:space="preserve">
+    <value>Disponibilité (TRG) au-dessus du maximum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeAvailabilityBelowMinimum" xml:space="preserve">
+    <value>Disponibilité (TRG) en dessous du minimum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeOverallAboveMaximum" xml:space="preserve">
+    <value>Valeur globale (TRG) au-dessus du maximum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeOverallBelowMinimum" xml:space="preserve">
+    <value>Valeur globale (TRG) en dessous du minimum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeePerformanceAboveMaximum" xml:space="preserve">
+    <value>Performances (TRG) au-dessus du maximum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeePerformanceBelowMinimum" xml:space="preserve">
+    <value>Performances (TRG) en dessous du minimum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeQualityAboveMaximum" xml:space="preserve">
+    <value>Qualité (TRG) au-dessus du maximum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeQualityBelowMinimum" xml:space="preserve">
+    <value>Qualité (TRG) en dessous du minimum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertValueAboveMaximum" xml:space="preserve">
+    <value>Valeur au-dessus du maximum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertValueBelowMinimum" xml:space="preserve">
+    <value>Valeur en dessous du minimum</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsDescriptionHeader" xml:space="preserve">
+    <value>Description :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsLocationHeader" xml:space="preserve">
+    <value>Emplacement :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsNoActionAvailable" xml:space="preserve">
+    <value>Aucune action définie</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsOccurencesHeader" xml:space="preserve">
+    <value>Occurrences :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsTimeHeader" xml:space="preserve">
+    <value>Durée :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertIdUnknown" xml:space="preserve">
+    <value>Les informations sur l'alerte ne sont plus disponibles.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="AlertActionExecute" xml:space="preserve">
+    <value>Exécuter une action</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertSelectAction" xml:space="preserve">
+    <value>Choisissez une action :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsUnknown" xml:space="preserve">
+    <value>Inconnu</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsActionResultHeader" xml:space="preserve">
+    <value>Résultat de l'action :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ActionDetailResultExecuting" xml:space="preserve">
+    <value>L'action a été exécutée...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionWebPageOpened" xml:space="preserve">
+    <value>Vérifiez le contenu dans un nouvel onglet ou une nouvelle fenêtre du navigateur.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsRdxLinkHeader" xml:space="preserve">
+    <value>Cliquez sur le graphique pour explorer les données dans Azure Time Series Insights</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AnimationTimeSeriesLoading" xml:space="preserve">
+    <value>Chargement des données à partir d'Azure Time Series Insights</value>
+    <comment>Message</comment>
+  </data>
+  <data name="ErrorAccessProblem" xml:space="preserve">
+    <value>Une erreur s'est produite pendant l'accès au site web.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="ErrorInsufficientPermissions" xml:space="preserve">
+    <value>Vous ne disposez pas d'autorisations suffisantes pour effectuer cette opération. Contactez l'administrateur de ce site.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="BrowserError" xml:space="preserve">
+    <value>Erreur du navigateur :</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorUnknown" xml:space="preserve">
+    <value>Une erreur s'est produite pendant la navigation.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="AlertActionClose" xml:space="preserve">
+    <value>Fermer l'alerte</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertActionAcknowledgeSuccessful" xml:space="preserve">
+    <value>Réception de l'alerte confirmée.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionCloseSuccessful" xml:space="preserve">
+    <value>L'alerte a été fermée.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NavigationMenuAddGateway" xml:space="preserve">
+    <value>Ajouter la passerelle</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="AddGatewayBodyPoint1" xml:space="preserve">
+    <value>&lt;li&gt;Les instructions pour Windows sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;ici&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Les instructions pour Linux sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;ici&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;Les instructions pour modifier les informations de la chaîne de montage sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;ici&lt;/a&gt;.&lt;/li&gt;</value>
+    <comment>AddGatewayBodyPoint1</comment>
+  </data>
+  <data name="AddGatewayTitle" xml:space="preserve">
+    <value>Connectez votre propre passerelle</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderAttributes" xml:space="preserve">
+    <value>Attributs</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderMethod" xml:space="preserve">
+    <value>Appel de méthode</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderPublish" xml:space="preserve">
+    <value>Publier</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderRead" xml:space="preserve">
+    <value>Lire la variable</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderWrite" xml:space="preserve">
+    <value>Écrire la variable</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSelectNewServer" xml:space="preserve">
+    <value>Connectez votre propre serveur OPC UA</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnecting" xml:space="preserve">
+    <value>Connexion en cours...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSecutityWarning" xml:space="preserve">
+    <value>Avertissement de sécurité</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NavigationMenuItemActions" xml:space="preserve">
+    <value>Actions</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="BrowserContextPanelPublishing" xml:space="preserve">
+    <value>Publication...</value>
+    <comment>Label</comment>
+  </data>
+</root>

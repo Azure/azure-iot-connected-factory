@@ -1,0 +1,966 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnErrorOccurred" xml:space="preserve">
+    <value>Hiba történt a kérelem feldolgozása közben.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="MicrosoftAzureIoTSuite" xml:space="preserve">
+    <value>Microsoft Azure IoT Suite</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Bejelentkezés</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="YouMustBeSignedIn" xml:space="preserve">
+    <value>A folytatáshoz be kell jelentkeznie.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="YourSessionMayHaveExpired" xml:space="preserve">
+    <value>Ha be volt jelentkezve, lejárt a munkamenete.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="IoTSuite" xml:space="preserve">
+    <value>IoT Suite</value>
+    <comment>(Unused)</comment>
+  </data>
+  <data name="NoJScriptHeader" xml:space="preserve">
+    <value>JavaScript szükséges</value>
+    <comment>Error message. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="NoJScriptInfo1" xml:space="preserve">
+    <value>A böngésző jelenleg a JavaScript blokkolására van beállítva. A szolgáltatás használatához engedélyeznie kell a JavaScript működését.</value>
+    <comment>Error message. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="NoJScriptInfo2" xml:space="preserve">
+    <value>A webböngésző online súgójában talál információt a JavaScript engedélyezéséről, illetve arról, hogy a böngésző támogatja-e a JavaScript használatát.</value>
+    <comment>Informational text block. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="DefaultSolutionName" xml:space="preserve">
+    <value>Csatlakoztatott gyár</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="AdministratorRole" xml:space="preserve">
+    <value>Rendszergazda</value>
+    <comment>User role name.</comment>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Kijelentkezés</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="LinkLabelHelpAndSupport" xml:space="preserve">
+    <value>Súgó és támogatás</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="LinkLabelHelpGiveFeedback" xml:space="preserve">
+    <value>Visszajelzés küldése</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="NavigationMenuAddServer" xml:space="preserve">
+    <value>Saját OPC-kiszolgáló hozzáadása</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuDashboard" xml:space="preserve">
+    <value>Kezdőlap</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuBrowser" xml:space="preserve">
+    <value>Böngésző</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuSidebarSizeToggle" xml:space="preserve">
+    <value>Menüméret váltása</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="KpiContainerLabel" xml:space="preserve">
+    <value>Fő teljesítménymutatók</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Kpi1Label" xml:space="preserve">
+    <value>Egység per óra</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Kpi2Label" xml:space="preserve">
+    <value>kWh per óra</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeAvailabilityLabel" xml:space="preserve">
+    <value>Elérhetőség</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeHeaderLabel" xml:space="preserve">
+    <value>Teljes eszközhatékonyság</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeePerformanceLabel" xml:space="preserve">
+    <value>Teljesítmény</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeQualityLabel" xml:space="preserve">
+    <value>Minőség</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeOverallLabel" xml:space="preserve">
+    <value>Teljes hatékonyság</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertsContainerHeader" xml:space="preserve">
+    <value>Riasztások</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
+    <value>Gyári telephelyek</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderDetails" xml:space="preserve">
+    <value>JELENLEGI ÉLES ÜZEMI PÉLDÁNY</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderLocation" xml:space="preserve">
+    <value>HELY</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderStatus" xml:space="preserve">
+    <value>ÁLLAPOT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Irányítópult</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnectedTo" xml:space="preserve">
+    <value>Létrejött a kapcsolat az OPC-kiszolgálóval</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserEnterOwn" xml:space="preserve">
+    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
+    <value>Válasszon egy kiszolgálót az előre konfigurált listából:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSelectServer" xml:space="preserve">
+    <value>OPC UA-kiszolgáló kiválasztása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserCommunicationStatusMessageLabel" xml:space="preserve">
+    <value>Kapcsolat állapota:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnect" xml:space="preserve">
+    <value>Kapcsolódás</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorMessage" xml:space="preserve">
+    <value>Hibaüzenet:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorServer" xml:space="preserve">
+    <value>Kiszolgáló:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normál</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListContainerHeaderPostfix" xml:space="preserve">
+    <value>részletek</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
+    <value>LEÍRÁS</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
+    <value>NÉV</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderStatus" xml:space="preserve">
+    <value>ÁLLAPOT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListContainerHeaderPostfix" xml:space="preserve">
+    <value>részletek</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderDetails" xml:space="preserve">
+    <value>AKTUÁLIS KONFIGURÁCIÓ</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderLocation" xml:space="preserve">
+    <value>SOR</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderStatus" xml:space="preserve">
+    <value>ÁLLAPOT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListContainerHeaderPostfix" xml:space="preserve">
+    <value>részletek</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderDetails" xml:space="preserve">
+    <value>AKTUÁLIS KONFIGURÁCIÓ</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderLocation" xml:space="preserve">
+    <value>ÁLLOMÁS</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderStatus" xml:space="preserve">
+    <value>ÁLLAPOT</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastDayHistoryGraphXlabel" xml:space="preserve">
+    <value>Elmúlt nap (óra)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastHourHistoryGraphXlabel" xml:space="preserve">
+    <value>Elmúlt óra (perc)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastWeekHistoryGraphXlabel" xml:space="preserve">
+    <value>Elmúlt hét (nap)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hiba</value>
+    <comment>Page title.</comment>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Visszalépés</value>
+    <comment>Button label.</comment>
+  </data>
+  <data name="ImplicitReadOnlyRole" xml:space="preserve">
+    <value>Implicit írásvédett</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="InfoIconLink" xml:space="preserve">
+    <value>https://azure.microsoft.com/solutions/iot-suite/</value>
+    <comment>Link to a documentation.</comment>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Információ</value>
+  </data>
+  <data name="BrowserDisconnectButton" xml:space="preserve">
+    <value>Leválasztás</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeAttribute" xml:space="preserve">
+    <value>Ennek az attribútuma:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeAttributeRead" xml:space="preserve">
+    <value>Attribútumok...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeButtonCall" xml:space="preserve">
+    <value>Hívás</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeButtonWrite" xml:space="preserve">
+    <value>Írás</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeCall" xml:space="preserve">
+    <value>Hívás...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeCallingMethod" xml:space="preserve">
+    <value>Metódus hívása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeCallInProgress" xml:space="preserve">
+    <value>Hívás folyamatban...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeInfo" xml:space="preserve">
+    <value>Infó erről:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelAccess" xml:space="preserve">
+    <value>Hozzáférés:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelDescription" xml:space="preserve">
+    <value>Leírás:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelMisc" xml:space="preserve">
+    <value>Egyéb:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelNodeDetails" xml:space="preserve">
+    <value>Csomópont részletei:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelValue" xml:space="preserve">
+    <value>Érték:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeMethodMessage" xml:space="preserve">
+    <value>A paraméter még nem támogatott.</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeMethodName" xml:space="preserve">
+    <value>Metódus neve</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeMethodNoParameter" xml:space="preserve">
+    <value>A metódus nem rendelkezik paraméterrel.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeMethodResult" xml:space="preserve">
+    <value>A metódushívás eredménye</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodePressButton" xml:space="preserve">
+    <value>Nyomja meg a gombot a metódus meghívásához.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeRead" xml:space="preserve">
+    <value>Olvasás...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeReadInProgress" xml:space="preserve">
+    <value>Olvasás folyamatban...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeUpdate" xml:space="preserve">
+    <value>Frissítés</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeVariableName" xml:space="preserve">
+    <value>Változó neve</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWrite" xml:space="preserve">
+    <value>Írás...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeWriteCurrentValue" xml:space="preserve">
+    <value>Jelenlegi érték:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWriteInProgress" xml:space="preserve">
+    <value>Írás folyamatban...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeWriteNewValue" xml:space="preserve">
+    <value>Új érték:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWriteResult" xml:space="preserve">
+    <value>Írás eredménye</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+    <comment>Success message.</comment>
+  </data>
+  <data name="ReadOnlyRole" xml:space="preserve">
+    <value>Csak olvasható</value>
+    <comment>User role name.</comment>
+  </data>
+  <data name="BrowserConnectException" xml:space="preserve">
+    <value>Kivétel állt elő az OPC UA-kiszolgálóhoz való csatlakozáskor.
+Kivételüzenet:
+{0}
+Belső üzenet:
+{1}
+Híváslánc:
+{2}</value>
+    <comment>Error</comment>
+  </data>
+  <data name="BrowserDisconnectException" xml:space="preserve">
+    <value>Kivétel állt elő az OPC UA-kiszolgálóval létesített kapcsolat bontásakor.
+Kivételüzenet:
+{0}
+Belső üzenet:
+{1}
+Híváslánc:
+{2}</value>
+    <comment>Error</comment>
+  </data>
+  <data name="BrowserRootNodeName" xml:space="preserve">
+    <value>Gyökér</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnectErrorHeader" xml:space="preserve">
+    <value>Hiba történt az OPC UA-kiszolgálóhoz való csatlakozáskor</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcErrorHeader" xml:space="preserve">
+    <value>Hiba történt az OPC UA-kiszolgálóhoz való hozzáféréskor</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcException" xml:space="preserve">
+    <value>Kivétel állt elő az OPC UA-kiszolgálóhoz való hozzáféréskor.
+Kivételüzenet:
+{0}
+Belső üzenet:
+{1}
+Híváslánc:
+{2}</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="BrowserOpcDataServerTimestampLabel" xml:space="preserve">
+    <value>Kiszolgáló időbélyege</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataSourceTimestampLabel" xml:space="preserve">
+    <value>Forrás időbélyege</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataStatusLabel" xml:space="preserve">
+    <value>Állapot</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataValueLabel" xml:space="preserve">
+    <value>Érték</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcWriteConversionProblem" xml:space="preserve">
+    <value>&lt;font color="red"&gt;Hiba: A(z) {0} érték {1} típusúvá alakítása nem lehetséges. (Részletek: {2})&lt;/font&gt;</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcDataDiagnosticInfoLabel" xml:space="preserve">
+    <value>Diagnosztikai infó</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcMethodCallFailed" xml:space="preserve">
+    <value>Sikertelen volt a metódushívás</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcMethodCallSucceeded" xml:space="preserve">
+    <value>Sikeres volt a metódushívás</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcMethodCallSucceededWithResults" xml:space="preserve">
+    <value>A metódushívás sikeres volt, és a következő eredményt adta vissza:</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcMethodStatusCode" xml:space="preserve">
+    <value>Állapotkód</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueContinuous" xml:space="preserve">
+    <value>Folyamatos</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueHistory" xml:space="preserve">
+    <value>Előzmények</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueHistoryUpdate" xml:space="preserve">
+    <value>Előzmények frissítése</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueIndeterminate" xml:space="preserve">
+    <value>Köztes</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueNoAccess" xml:space="preserve">
+    <value>Nincs hozzáférés</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueReadable" xml:space="preserve">
+    <value>Olvasható</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueSubscribe" xml:space="preserve">
+    <value>Előfizetés</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueUnknown" xml:space="preserve">
+    <value>Ismeretlen</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueWriteable" xml:space="preserve">
+    <value>Írható</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelType" xml:space="preserve">
+    <value>Típus</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcAttributesAny" xml:space="preserve">
+    <value>Bármely</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesOneDimension" xml:space="preserve">
+    <value>OneDimension</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesOneOrMoreDimensions" xml:space="preserve">
+    <value>OneOrMoreDimensions</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesScalar" xml:space="preserve">
+    <value>Scalar</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesScalarOrOneDimension" xml:space="preserve">
+    <value>ScalarOrOneDimension</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesTwoDimensions" xml:space="preserve">
+    <value>TwoDimensions</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NoFilterApplied" xml:space="preserve">
+    <value>Az összes</value>
+    <comment>Label</comment>
+  </data>
+  <data name="FilterApply" xml:space="preserve">
+    <value>Szűrő alkalmazása</value>
+    <comment>ButtonLabel</comment>
+  </data>
+  <data name="FilterClear" xml:space="preserve">
+    <value>Szűrő törlése</value>
+    <comment>ButtonLabel</comment>
+  </data>
+  <data name="FilterLabel" xml:space="preserve">
+    <value>Szűrő</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDescription" xml:space="preserve">
+    <value>Riasztás oka</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertNode" xml:space="preserve">
+    <value>Csomópont</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertProductionLine" xml:space="preserve">
+    <value>Gyártósor</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertStation" xml:space="preserve">
+    <value>Állomás</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphFriday" xml:space="preserve">
+    <value>F</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastDay" xml:space="preserve">
+    <value>ELMÚLT 24 ÓRA</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastHour" xml:space="preserve">
+    <value>ELMÚLT ÓRA</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastWeek" xml:space="preserve">
+    <value>ELMÚLT 7 NAP</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMonday" xml:space="preserve">
+    <value>M</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphSaturday" xml:space="preserve">
+    <value>Szo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphSunday" xml:space="preserve">
+    <value>V</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphThursday" xml:space="preserve">
+    <value>Cs</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphTuesday" xml:space="preserve">
+    <value>T</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphWednesday" xml:space="preserve">
+    <value>W</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetails" xml:space="preserve">
+    <value>Riasztás részletei</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserCertDownloadError" xml:space="preserve">
+    <value>Hiba történt a tanúsítvány letöltésekor</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="BrowserDownload" xml:space="preserve">
+    <value>Tanúsítvány letöltése</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="BrowserDownloadText" xml:space="preserve">
+    <value>Amennyiben az OPC UA-kiszolgáló az ügyféltanúsítványok manuális telepítését igényli, a webhely OPC UA-tanúsítványát itt töltheti le:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorContinueButton" xml:space="preserve">
+    <value>Folytatás</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodePublish" xml:space="preserve">
+    <value>Közzététel...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodePublishInProgress" xml:space="preserve">
+    <value>Közzététel folyamatban...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserDontTrustButton" xml:space="preserve">
+    <value>Mégse</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="BrowserTrust" xml:space="preserve">
+    <value>Ez arra utalhat, hogy valaki megpróbálja megtéveszteni Önt, vagy meg akarja szerezni a kiszolgálóra küldött adatokat. Csak akkor lépjen tovább, ha számított a problémára, például mert önaláírt tanúsítványokat használ a kiszolgálóhoz (nem ajánlott).</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserTrustButton" xml:space="preserve">
+    <value>Folytatás</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="SessionNull" xml:space="preserve">
+    <value>Nem létesíthető kapcsolat a Publisherrel</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="OpcStackInitError" xml:space="preserve">
+    <value>Kivétel állt elő az OPC UA-verem inicializálásakor. Hiba: {0} Belső: {1} Verem: {2}</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="ErrorGetDataForOpcUaNode" xml:space="preserve">
+    <value>Nem érvényes csomópont vagy állomás</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="ErrorGetOeeKpiData" xml:space="preserve">
+    <value>Nem érvényes csomópont</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="NoDataSeries" xml:space="preserve">
+    <value>Nem áll rendelkezésre adatsor ehhez az elemhez</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="BrowserTrustHeader" xml:space="preserve">
+    <value>Nem ellenőrizhető annak a kiszolgálónak a tanúsítványa, amelyhez csatlakozni próbál.</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="GraphRDXLinkHeader" xml:space="preserve">
+    <value>Kattintson a grafikonra az Azure Time Series Insightsban való megtekintéshez</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionAcknowledge" xml:space="preserve">
+    <value>Riasztás nyugtázása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertKpi1AboveMaximum" xml:space="preserve">
+    <value>A termékek száma túllépte a maximumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi1BelowMinimum" xml:space="preserve">
+    <value>A termékek száma nem éri el a minimumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi2AboveMaximum" xml:space="preserve">
+    <value>Az energiafogyasztás túllépte a maximumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi2BelowMinimum" xml:space="preserve">
+    <value>Az energiafogyasztás nem éri el a minimumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeAvailabilityAboveMaximum" xml:space="preserve">
+    <value>A rendelkezésre állás OEE-mutatója túllépte a maximumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeAvailabilityBelowMinimum" xml:space="preserve">
+    <value>A rendelkezésre állás OEE-mutatója nem éri el a minimumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeOverallAboveMaximum" xml:space="preserve">
+    <value>A teljes OEE-mutató túllépte a maximumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeOverallBelowMinimum" xml:space="preserve">
+    <value>A teljes OEE-mutató nem éri el a minimumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeePerformanceAboveMaximum" xml:space="preserve">
+    <value>A teljesítmény OEE-mutatója túllépte a maximumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeePerformanceBelowMinimum" xml:space="preserve">
+    <value>A teljesítmény OEE-mutatója nem éri el a minimumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeQualityAboveMaximum" xml:space="preserve">
+    <value>A minőség OEE-mutatója túllépte a maximumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeQualityBelowMinimum" xml:space="preserve">
+    <value>A minőség OEE-mutatója nem éri el a minimumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertValueAboveMaximum" xml:space="preserve">
+    <value>Az érték túllépte a maximumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertValueBelowMinimum" xml:space="preserve">
+    <value>Az érték nem éri el a minimumot</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsDescriptionHeader" xml:space="preserve">
+    <value>Leírás:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsLocationHeader" xml:space="preserve">
+    <value>Hely:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsNoActionAvailable" xml:space="preserve">
+    <value>Nincs művelet definiálva</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsOccurencesHeader" xml:space="preserve">
+    <value>Előfordulások:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsTimeHeader" xml:space="preserve">
+    <value>Idő:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertIdUnknown" xml:space="preserve">
+    <value>A riasztás adatai már nem állnak rendelkezésre.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="AlertActionExecute" xml:space="preserve">
+    <value>Művelet végrehajtása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertSelectAction" xml:space="preserve">
+    <value>Művelet kiválasztása:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsUnknown" xml:space="preserve">
+    <value>Ismeretlen</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsActionResultHeader" xml:space="preserve">
+    <value>Művelet eredménye:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ActionDetailResultExecuting" xml:space="preserve">
+    <value>A művelet elindult...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionWebPageOpened" xml:space="preserve">
+    <value>Tekintse meg az új böngészőlapon vagy -ablakban megjelenő tartalmat.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsRdxLinkHeader" xml:space="preserve">
+    <value>Kattintson a diagramra az Azure Time Series Insightsban való megtekintéshez</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AnimationTimeSeriesLoading" xml:space="preserve">
+    <value>Adatok betöltése az Azure Time Series Insightsból</value>
+    <comment>Message</comment>
+  </data>
+  <data name="ErrorAccessProblem" xml:space="preserve">
+    <value>Hiba történt a webhely elérésekor.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="ErrorInsufficientPermissions" xml:space="preserve">
+    <value>Nincs megfelelő jogosultsága ehhez a művelethez. Forduljon a webhely rendszergazdájához.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="BrowserError" xml:space="preserve">
+    <value>Böngészőhiba:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorUnknown" xml:space="preserve">
+    <value>Hiba történt a böngészés közben.</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="AlertActionClose" xml:space="preserve">
+    <value>A riasztás lezárása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertActionAcknowledgeSuccessful" xml:space="preserve">
+    <value>Sikeresen nyugtázta a riasztást.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionCloseSuccessful" xml:space="preserve">
+    <value>Sikeresen lezárta a riasztást.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NavigationMenuAddGateway" xml:space="preserve">
+    <value>Átjáró hozzáadása</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="AddGatewayBodyPoint1" xml:space="preserve">
+    <value>&lt;li&gt;A Windowsra vonatkozó tudnivalók &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;itt&lt;/a&gt; találhatók.&lt;/li&gt;
+&lt;li&gt;A Linuxra vonatkozó tudnivalók &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;itt&lt;/a&gt; találhatók.&lt;/li&gt; &lt;li&gt;A gyártósor adatainak szerkesztésére vonatkozó információk &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;itt&lt;/a&gt; találhatók.&lt;/li&gt;</value>
+    <comment>AddGatewayBodyPoint1</comment>
+  </data>
+  <data name="AddGatewayTitle" xml:space="preserve">
+    <value>Saját átjáró csatlakoztatása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderAttributes" xml:space="preserve">
+    <value>Attribútumok</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderMethod" xml:space="preserve">
+    <value>Metódushívás</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderPublish" xml:space="preserve">
+    <value>Közzététel</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderRead" xml:space="preserve">
+    <value>Változó értékének beolvasása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderWrite" xml:space="preserve">
+    <value>Változó értékének írása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSelectNewServer" xml:space="preserve">
+    <value>Saját OPC UA-kiszolgáló csatlakoztatása</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnecting" xml:space="preserve">
+    <value>Csatlakozás...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSecutityWarning" xml:space="preserve">
+    <value>Biztonsági figyelmeztetés</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NavigationMenuItemActions" xml:space="preserve">
+    <value>Műveletek</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="BrowserContextPanelPublishing" xml:space="preserve">
+    <value>Közzététel...</value>
+    <comment>Label</comment>
+  </data>
+</root>

@@ -1,0 +1,610 @@
+﻿@import "../../variables.less";
+@import "../../bootstrap/variables.less";
+@import "../../bootstrap/mixins/vendor-prefixes.less";
+@import "../root_styles.less";
+
+/*
+ *  mixins
+*/
+.dashboard-link-cursor {
+    cursor: pointer;
+}
+
+/* 
+ *  dashboard data areas
+*/
+.dashboard_container {
+    background-color: @secondary-color;
+    margin-left: @navigation-width;
+}
+
+.dashboard_top_container {
+    margin-top: @gutter;
+    margin-bottom: @gutter;
+}
+
+.dashboard_bottom_container {
+    background-color: @gauges-background-color; 
+    padding-bottom: 36px;
+}
+
+/* 
+ *  dashboard children list
+*/
+.dashboard_children_container {
+    background-color: @list-background-color;
+    .box-shadow(-4px 2px 20px 0 @list-box-shadow-color);
+    margin-bottom: 10px;
+}
+.dashboard_children_container_header {
+    background-color: @list-header-background-color;
+    font-size: @list-header-text-size;
+}
+.dashboard_children_container_header_text {
+    display: inline-block;
+    color: @list-header-color;
+    vertical-align: text-top;
+    margin-left: 0px;
+}
+.dashboard_children_container_header_text_left_margin {
+    margin-left: 0px;
+}
+
+p{
+    display:inline-block;
+}
+
+#dashboardChildrenContainerHeaderFilter {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    right: -15px;
+    bottom: 3px;
+    color: @list-header-color;
+    outline: none;
+}
+
+.dashboard_children_container_header_text_glyph {
+    color: @list-header-color;
+    font-size: @children-subheader-text-size;
+    margin-right: 30px;
+    float: right;
+    padding-top: 6px;
+}
+
+.dashboard_alerts_container_header_text_glyph {
+    color: @list-header-color;
+    font-size: @children-subheader-text-size;
+    margin-right: 30px;
+    float: right;
+    padding-top: 6px;
+}
+
+.glyphicon-menu-left {
+    display: inline-block;
+    /*margin-left: 10px;*/
+    color: @list-header-color;
+    font-size: 12px;
+    &:hover, :focus{
+        color: darken(@list-header-color, 20%);
+        outline: none;
+    }
+}
+
+.dashboard_children_back_icon {
+    margin-right: -15px !important;
+}
+
+.glyphicon-menu-down {
+    display: inline-block;
+    color: @list-header-color;
+    font-size: 12px;
+    &:hover, :focus{
+        color: darken(@list-header-color, 20%);
+        outline: none;
+    }
+}
+
+.dashboard_filter_icon {
+    margin-right: 30px;
+    float: right;
+}
+
+.dashboard_children_list_header {
+    background-color: @children-subheader-background-color;
+    color: @children-subheader-color;
+    font-size: @children-subheader-text-size;
+    font-family: 'Segoe UI Semibold';
+}
+.dashboard_children_list_header_status {
+    padding-left: 15px;
+    padding-right: 0px;
+}
+.dashboard_children_list_header_location {
+    padding-left: 5px;
+    padding-right: 0px;
+}
+.dashboard_children_list_header_details {
+    padding-left: 0px;
+    padding-right: 5px;
+}
+
+.dashboard_children_list_container {
+    overflow-y: scroll;
+    height: @container-height;
+    font-size: @children-listitem-text-size;
+    color: @children-listitem-text-color;
+}
+
+.dashboard_children_listitem_container {
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    &:hover{
+        cursor: pointer;
+        }
+}
+
+.dashboard_children_listitem_container.dashboard_status_poor {
+    border-left: 2px solid @list-status-severity2-color;
+    margin-top: 2px;
+}
+
+.dashboard_children_listitem_container.dashboard_status_good {
+    border-left: 2px solid @list-status-severity0-color;
+    margin-top: 2px;
+}
+
+.dashboard_children_listitem_status_text {
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 0px;
+}
+.dashboard_children_listitem_location {
+    padding-left: 8px;
+    padding-right: 0px;
+}
+
+.dashboard_children_listitem_details {
+    padding-left: 8px;
+    padding-right: 0px;
+}
+
+/* 
+ *  dashboard map
+*/
+.dashboard_map_container {
+    border: 10px solid @secondary-color;
+    border-top: none;
+    height: @map-container-height;
+}
+
+.dashboard_map_container_image {
+     width: 100%;
+     height: 100%;
+ }
+
+/* 
+ *  dashboard information area with alerts
+*/
+.dashboard_alerts_container {
+    background-color: @list-background-color;
+    .box-shadow(-4px 2px 20px 0 @list-box-shadow-color);
+    margin-bottom: 10px;
+    margin-left: 1px;
+}
+.dashboard_alerts_container_header {
+    background-color: @list-header-background-color;
+    color: @list-header-color;
+    font-size: @list-header-text-size;
+}
+.dashboard_alerts_container_header_text {
+    /*margin-right: -20px;*/
+    display: inline-block;
+    color: @list-header-color;
+    vertical-align: text-top;
+    margin-left: 15px;
+}
+.dashboard_alerts_container_header_filter {
+    text-align: right;
+}
+
+.dashboard_alerts_list_container {
+    overflow-y: scroll;
+    height: @container-height-alerts;
+}
+
+.dashboard_alerts_listitem_container {
+    .dashboard-link-cursor;
+    border-left: 2px solid @list-status-severity2-color;
+    margin-top: 2px;
+}
+
+.dashboard_alerts_listitem_container.alert_status_active {
+    border-left: 2px solid @list-status-severity2-color;
+    margin-top: 2px;
+}
+
+.dashboard_alerts_listitem_container.alert_status_acknowledged {
+    border-left: 2px solid @list-status-severity1-color;
+    margin-top: 2px;
+}
+
+
+.dashboard_alerts_listitem_source {
+    font-size: @alerts-listitem-text-size;
+    font-weight: 400;
+    margin-top: 4px;
+    margin-left:0;
+    margin-right: 0;
+    color: @children-listitem-text-color;
+}
+.dashboard_alerts_listitem_source_details_container {
+    font-size: @alerts-listitem-source-details-text-size;
+    font-weight: 400;
+    margin-bottom: 4px;
+    color: @children-listitem-text-color;
+}
+.dashboard_alerts_listitem_source_details {
+}
+.dashboard_alerts_listitem_source_details_time {
+    text-align: right;
+}
+
+/* 
+ *  dashboard OEE/KPI area
+*/
+
+.dashboard_oee_container {
+    color: @list-header-color;
+    font-size: @list-header-text-size;
+}
+
+.dashboard_oee_header {
+    padding-top:10px;
+    padding-left: 15px;
+}
+.dashboard_oee_details_group_container {
+    padding-top:10px;
+    padding-left: 15px;
+}
+.dashboard_oee_overall_header {
+    font-size: @children-subheader-text-size;
+}
+.dashboard_oee_factor_chart_control {
+    &:hover{
+        cursor: pointer;
+        }
+}
+.dashboard_oee_overall_chart_control {
+    &:hover{
+        cursor: pointer;
+        }
+}
+.dashboard_kpi_details_chart_control {
+    &:hover{
+        cursor: pointer;
+        }
+}
+.dashboard_kpi_details_chart_control {
+    &:hover{
+        cursor: pointer;
+        }
+}
+.dashboard_oee_overall_gauge_control {
+    margin-bottom:15px;
+}
+.c3-chart-arcs-background {
+    fill: @gauge-background-color;
+}
+.c3-gauge-value {
+    fill: @gauge-value-color;
+    /* Note: setting the fontsize requires modification in c3.js */
+    font-size: @gauge-value-font-size;
+}
+.dashboard_oee_factor_header {
+    font-size: @children-subheader-text-size;
+}
+/* dashboard kpi area */
+.dashboard_kpi_container {
+    color: @list-header-color;
+    font-size: @list-header-text-size;
+}
+
+.dashboard_kpi_header {
+    padding-top:10px;
+    padding-left: 15px;
+}
+.dashboard_kpi_details_group_container {
+    padding-top:10px;
+    padding-left: 15px;
+}
+.dashboard_kpi_details_header {
+    font-size: @children-subheader-text-size;
+}
+
+.dashboard_contextpanel_header {
+  background-color: @children-subheader-background-color;
+  line-height: 30px;
+  width: @contextpanel-right-width;
+  position: relative;
+  margin-top: 70px;
+}
+.dashboard_contextpanel_header-big {
+  background-color: @children-subheader-background-color;
+  line-height: 30px;
+  width: @contextpanel-right-width-big;
+  position: relative;
+  margin-top: 70px;
+}
+.dashboard_contextpanel_header_text, .alert_contextpanel_header_text{
+  color: @list-header-color;
+  font-size: @list-header-text-size;
+  text-align: left;
+  margin-left: 20px;
+}
+.dashboard_contextpanel_list_container {
+    position: relative;
+    margin-top: 60px;
+    margin-left: 50px;
+    font-size: @children-listitem-text-size;
+}
+
+.bootstrap-select {
+    max-width: @contextpanel-right-width - 100px;
+}
+
+.bootstrap-select .btn{
+    background: white;
+    width: @contextpanel-right-width - 100px;
+    font-size: @children-listitem-text-size;
+    color: black;
+    padding: 6px 6px;
+    display: block;
+}
+.bootstrap-select .dropdown-menu {
+  width: @contextpanel-right-width - 96px;
+  font-size: @children-listitem-text-size;
+  top: -3px;
+}
+.bootstrap-select .open {
+  width: @contextpanel-right-width - 95px;
+  margin-left: -2px;
+  white-space: nowrap;
+}
+.bootstrap-select .text {
+    white-space: normal;
+}
+
+.dashboard_contextpanel_select_list select {
+    width: 220px;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+}
+
+.dashboard_contextpanel_select_list select:focus {
+    outline: none;
+}
+
+.alert_contextpanel_margin_left {
+    margin-left: 30px;
+}
+
+.alert_contextpanel_details_container {
+    position: relative;
+    margin-top: 30px;
+    .alert_contextpanel_margin_left;
+    font-size: @children-listitem-text-size;
+}
+
+.alert_contextpanel_details_value {
+    font-size: @children-listitem-text-size;
+    font-weight: normal;
+}
+
+.contextpanel_label, .alert_contextpanel_details_label {
+    font-size: @children-listitem-text-size;
+    font-weight: bold;
+}
+
+.dashboard_contextpanel_select_list_label {
+    .contextpanel_label;
+    text-transform: lowercase;
+}
+
+.dashboard_contextpanel_select_list_label::first-letter {
+    text-transform: uppercase;
+}
+
+.dashboard_contextpanel_select_filter_button, .dashboard_contextpanel_select_filter_alert_button {
+    position: absolute;
+    left: 40px;
+    bottom: 50px;
+}
+
+.alert_contextpanel_execute_action_button {
+    top: 20px;
+    margin-bottom: 40px;
+}
+
+.dashboard_contextpanel_clear_filter_button, .dashboard_contextpanel_clear_filter_alert_button {
+    position: absolute;
+    left: 210px;
+    bottom: 50px;
+}
+
+.alert_contextpanel_timeseries_border {
+    .alert_contextpanel_margin_left;
+    top: 10px;
+}
+
+.alert_contextpanel_notimeseries_label {
+    font-size: @children-listitem-text-size;
+    font-weight: bold;
+    .alert_contextpanel_timeseries_border
+}
+
+.alert_contextpanel_notimeseries_value {
+    font-size: @children-listitem-text-size;
+    font-weight: normal;
+    .alert_contextpanel_timeseries_border;
+}
+
+.alert_contextpanel_timeseries_loading {
+    font-size: @children-listitem-text-size;
+    .alert_contextpanel_timeseries_border
+}
+
+.alert_contextpanel_chart_header {
+    font-size: @children-listitem-text-size;
+    .alert_contextpanel_timeseries_border
+}
+
+.alert_contextpanel_chart_container {
+    background: @gauges-background-color;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 400px;
+    height: 230px;
+    &:hover{
+        cursor: pointer;
+        }
+}
+
+.alert_contextpanel_chart_label {
+    font-size: 14px;
+    margin-left: 15px;
+    padding-top: 10px;
+    color: @list-header-color;
+}
+
+.msg-container-header {
+    font-size: @list-header-text-size;
+    left: 40px;
+    top: 50px;
+}
+
+.msg-container {
+    font-size: @children-listitem-text-size;
+    left: 40px;
+    top: 80px;
+}
+
+.graph-header {
+    font-size: @children-listitem-text-size;
+    left: 25px;
+    top: 10px;
+}
+
+.graph-container {
+    background: @gauges-background-color;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 400px;
+    height: 230px;
+    &:hover{
+        cursor: pointer;
+        }
+}
+
+.dashboard-graph-header-text {
+    font-size: 14px;
+    margin-left: 15px;
+    padding-top: 10px;
+    color: @list-header-color;
+}
+
+
+/* Large desktop (using definitions from bootstrap)*/
+@media (min-width: @screen-md) {
+  .dashboard_top_container {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+}
+ 
+/* Portrait tablet to landscape and desktop (using definitions from bootstrap)*/
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+  .dashboard_children_list_container,
+  .dashboard_alerts_list_container {
+        overflow-y: auto;
+        max-height: none;
+    }
+}
+ 
+/* Landscape phone to portrait tablet (using definitions from bootstrap)*/
+@media (max-width: @screen-xs-max) {
+  .dashboard_children_list_container,
+  .dashboard_alerts_list_container {
+        overflow-y: auto;
+        max-height: none;
+    }
+}
+ 
+/* Landscape phones and down (using definitions from bootstrap)*/
+@media (max-width: @screen-xs-min) {
+ .dashboard_children_list_container,
+ .dashboard_alerts_list_container {
+        overflow-y: auto;
+        max-height: none;
+    }
+ }
+
+@media (min-height: @screen-md-min) {
+ .dashboard_children_list_container {
+        overflow-y: scroll;
+        height: @container-height-large-screen;
+    }
+ .dashboard_alerts_list_container {
+        overflow-y: scroll;
+        height: @container-height-large-screen-alerts;
+    }
+ .dashboard_map_container {
+        height: @map-container-height-large-screen;
+    }
+}
+
+@media (max-height: @screen-sm-min)  {
+ .dashboard_children_list_container {
+        overflow-y: scroll;
+        height: @container-height-small-screen;
+    }
+ .dashboard_alerts_list_container {
+        overflow-y: scroll;
+        height: @container-height-small-screen-alerts;
+    }
+ .dashboard_map_container {
+        height: @map-container-height-small-screen;
+    }
+}
+
+@media (max-height: @screen-dim-filter)  {
+.dashboard_contextpanel_select_filter_button, .alert_contextpanel_execute_action_button {
+        position: relative;
+        top: 30px;
+    }
+.dashboard_contextpanel_clear_filter_button {
+        position: relative;
+        top: -8px;
+    }
+}
+
+@media (max-height: @screen-dim-filter-alert)  {
+.dashboard_contextpanel_select_filter_alert_button {
+        position: relative;
+        top: 30px;
+    }
+.dashboard_contextpanel_clear_filter_alert_button {
+        position: relative;
+        top: -8px;
+    }
+}

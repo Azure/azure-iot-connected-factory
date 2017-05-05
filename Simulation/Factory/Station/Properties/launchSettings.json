@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Station": {
+      "commandName": "Project",
+      "commandLineArgs": "Munich/ProductionLine0/Assembly opc.tcp://localhost:51210 200 yes"
+    }
+  }
+}

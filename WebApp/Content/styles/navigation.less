@@ -1,0 +1,71 @@
+﻿/*
+    Navigation styles
+*/
+
+@import "../variables.less";
+
+
+.navigation {
+  position: fixed;
+  top: @masthead-height;
+  left: 0;
+  width: @navigation-width;
+  height: 100%;
+  z-index: 300;
+  background-color:  @navigation-background-color;
+}
+
+.navigation_link {
+  display: block;
+  width: @navigation-width;
+  height: 48px;
+  font-size: 1.1em;
+  color: @navigation-link-color;
+  text-align: right;
+  line-height: 110px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-position: 16px 16px;
+}
+
+.navigation_link:hover {
+  /*background-color: @navigation-link-hover-background-color;*/
+  background-color: @masthead-hover-color;
+  text-decoration: none;
+  color: @text-mainhead-color;
+}
+
+.navigation_link_selected {
+  background-color: @navigation-link-selected-background-color;
+}
+
+.navigation_link_text {
+    line-height: 48px;
+    text-align: left;
+    text-indent: 48px;
+    color: @text-mainhead-color;
+    width: @contextpanel-left-width;
+}
+
+.navigation_link_hamburger {
+    background-image: url("/Content/img/icon_hamburger.svg");
+}
+
+.navigation_link_home {
+  background-image: url("/Content/img/icon_home.svg");
+}
+
+.navigation_link_browser {
+  background-image: url("/Content/img/icon_server.svg");
+}
+
+.navigation_link_add_opc_server {
+  background-image: url("/Content/img/icon_addserver.svg");
+}
+
+.navigation_link_addgateway {
+  background-image: url("/Content/img/icon_addgateway.svg");
+}

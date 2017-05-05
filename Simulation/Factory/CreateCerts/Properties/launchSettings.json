@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CreateCerts": {
+      "commandName": "Project",
+      "commandLineArgs": ". \"UA Web Client\" \"urn:localhost:Contoso:FactorySimulation:UA Web Client\""
+    }
+  }
+}

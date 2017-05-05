@@ -1,0 +1,49 @@
+﻿@using System.Runtime
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
+@using GlobalResources
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="~/Content/favicon.ico" type="image/x-icon" />
+    <title>@Strings.DefaultSolutionName - @Strings.SignIn</title>
+    @Styles.Render("~/Content/css")
+
+</head>
+<body>
+
+    <header class="signin_masthead_container">
+        <div>
+            <span class="signin_masthead_suitename">@Strings.MicrosoftAzureIoTSuite</span>
+            <a target="_blank" href="@Strings.InfoIconLink">
+                <img class="signin_masthead_infoimage" src="~/Content/img/icon_info_white.svg" alt="@Strings.Information" id="infoLinkImg" />
+            </a>
+            <span class="signin_masthead_solutionname">@HeaderHelper.GetHeaderTitle()</span> 
+        </div>
+    </header>
+
+    <section class="sign_in_page">
+        <main>
+            <noscript>
+                <div class="error_nojscript">
+                    <h1 class="error_nojscript_header">@Strings.NoJScriptHeader</h1>
+                    <p>@Strings.NoJScriptInfo1</p>
+                    <p>@Strings.NoJScriptInfo2</p>
+                </div>
+            </noscript>
+            <div class="content_container">
+                <div class="content_inner content_inner_container">
+                    <p class="content_inner_message">@Strings.YouMustBeSignedIn</p>
+                    <p class="content_inner_message">@Strings.YourSessionMayHaveExpired</p>
+                </div>
+                @Html.ActionLink(@Strings.SignIn, "Index", "Dashboard", null, new { @class = "btn btn-default btn_account" })
+            </div>
+        </main>
+    </section>
+</body>
+</html>

@@ -1,0 +1,212 @@
+﻿@import "../../variables.less";
+@import "../../bootstrap/variables.less";
+@import "../../bootstrap/mixins/vendor-prefixes.less";
+@import "../root_styles.less";
+
+/* 
+ *  browser connect area
+*/
+.browser_connect_container, .browser_error_container {
+    background-color: @secondary-color;
+    margin-left: @navigation-width;
+    margin-right: @navigation-width;
+    padding-top: 50px;
+    padding-left: 5*@gutter;
+}
+.browser_connect_selection_preconfigured_container {
+    padding-top: 20px;
+    margin-left: -30px;
+}
+.browser_connect_selection_dropdown, .browser_connect_selection_textbox, .browser_connect_selection_label {
+    margin-right: @gutter;
+    margin-left: -25px;
+    margin-top: @gutter;
+    padding-bottom: @gutter/2;
+    font-size: @browser-text-size;
+}
+.browser_connect_button {
+    height: 35px;
+    padding-top: @gutter/2;
+    max-width: 200px;
+}
+.browser_top_container {
+    background-color: @list-background-color;
+    .box-shadow(-4px 2px 20px 0 @list-box-shadow-color);
+    margin-bottom: 10px;
+}
+.browser_container_header, .browser_connect_header, .browser_error_header {
+    background-color: @list-header-background-color;
+}
+.browser_container_header_text, .browser_connect_header_text, .browser_error_header_text {
+    font-size: @browser-header-text-size;
+    color: @browser-header-color;
+    margin-right: 0px;
+    margin-left: 15px;
+}
+.browser_image_container {
+    border: 10px solid @secondary-color;
+    border-top: none;
+}
+.browser_browse_connect_button {
+    margin-left: -25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* 
+ *  Cert error
+*/
+.browser_cert_proceed_button {
+    left: 10px;
+    top: 20px;
+}
+.browser_cert_cancel_button {
+    left: 100px;
+    top: -16px;
+}
+
+.glyphicon-alert {
+    display: inline-block;
+    color: @error-color;
+    font-size: @browser-header-text-size;
+}
+
+/* 
+ *  browser error area
+*/
+.browser_error_details_container {
+    padding-top: 35px;
+    margin-left: 10px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    font-size: @browser-header-text-size;
+    word-wrap: break-word;
+}
+.browser_error_details_line_header {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: @error-color;
+    font-size: @browser-header-text-size;
+    text-align: justify;
+    text-justify: inter-word;
+}
+.browser_error_details_line {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    font-size: @browser-text-size;
+    text-align: justify;
+    text-justify: inter-word;
+}
+.browser_error_details_label {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-top: 25px;
+    font-size: @h3-font-size;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.browser_error_details_info_black {
+    color: @text-color; 
+}
+
+.browser_error_details_info {
+    color: @error-color; 
+    text-align: left;
+}
+.browser_error_disconnect_button {
+    padding-left: 35px;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
+/* 
+ *  browser area
+*/
+.browser_browse_container {
+    background-color: @secondary-color;
+    margin-left: @navigation-width;
+    margin-right: @navigation-width;
+    margin-bottom: 10px;
+    padding-top: 50px;
+    padding-left: 5*@gutter;
+}
+.browser_browse_nodetree_container, .browser_select_connect_container {
+    padding-left: 5*@gutter;
+}
+.browser_browse_disconnect_button {
+    padding-left: 65px;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+.browser_browse_status_message_container {
+    padding-top: 20px;
+    word-wrap: break-word;
+}
+.browser_browse_communication_error_container {
+    padding-top: 20px;
+}
+.browser_browse_errorlog_line {
+
+}
+.list-group {
+    font-size: @browser-text-size;
+}
+
+.list-group-item-heading{
+    font-weight: bold;
+}
+.list-group-item {
+    margin-left: 35px;
+}
+
+.node-contextPanel-button-position {
+    position: relative;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.browser_error_contextpanel_container {
+    position: relative;
+    margin-top: 30px;
+    margin-left: 30px;
+    text-align: left;
+    font-size: @browser-text-size;
+}
+
+.browser_error_contextpanel_header {
+    font-size: @browser-header-text-size;
+    font-weight: bold;
+}
+
+.browser_error_contextpanel_message {
+    font-size: @browser-text-size;
+    font-weight: normal;
+}
+
+@media only screen and (max-width: @screen-sm) {
+    .browser_browse_nodetree_container {
+        padding-left: 30px;
+    }
+    .browser_browse_container {
+        padding-left: 30px;
+    }
+    .browser_browse_disconnect_button  {
+        padding-left: 45px;
+    }
+}
+
+@media only screen and (max-device-width: @screen-sm) {
+    .browser_browse_nodetree_container {
+        padding-left: 30px;
+    }
+    .browser_browse_container {
+        padding-left: 30px;
+    }
+    .browser_browse_disconnect_button  {
+        padding-left: 45px;
+    }
+}

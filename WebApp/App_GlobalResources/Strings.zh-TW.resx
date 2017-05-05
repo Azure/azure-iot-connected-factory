@@ -1,0 +1,966 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnErrorOccurred" xml:space="preserve">
+    <value>處理您的要求時發生錯誤。</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="MicrosoftAzureIoTSuite" xml:space="preserve">
+    <value>Microsoft Azure IoT 套件</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>登入</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="YouMustBeSignedIn" xml:space="preserve">
+    <value>您必須登入才可繼續。</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="YourSessionMayHaveExpired" xml:space="preserve">
+    <value>若您早先就已登入，您的工作階段已過期。</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="IoTSuite" xml:space="preserve">
+    <value>IoT 套件</value>
+    <comment>(Unused)</comment>
+  </data>
+  <data name="NoJScriptHeader" xml:space="preserve">
+    <value>需要 JavaScript</value>
+    <comment>Error message. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="NoJScriptInfo1" xml:space="preserve">
+    <value>您的瀏覽器目前設定為封鎖 JavaScript。您必須允許 JavaScript 才可使用此服務。</value>
+    <comment>Error message. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="NoJScriptInfo2" xml:space="preserve">
+    <value>若要了解如何允許 JavaScript 或您的瀏覽器是否支援 JavaScript，請查看網頁瀏覽器中的線上說明。</value>
+    <comment>Informational text block. {StrContains="JavaScript"}</comment>
+  </data>
+  <data name="DefaultSolutionName" xml:space="preserve">
+    <value>連線的工廠</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="AdministratorRole" xml:space="preserve">
+    <value>系統管理員</value>
+    <comment>User role name.</comment>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>登出</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="LinkLabelHelpAndSupport" xml:space="preserve">
+    <value>說明及支援</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="LinkLabelHelpGiveFeedback" xml:space="preserve">
+    <value>提供意見反應</value>
+    <comment>Hyperlink label.</comment>
+  </data>
+  <data name="NavigationMenuAddServer" xml:space="preserve">
+    <value>新增我的 OPC 伺服器</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuDashboard" xml:space="preserve">
+    <value>首頁</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuBrowser" xml:space="preserve">
+    <value>瀏覽器</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="NavigationMenuSidebarSizeToggle" xml:space="preserve">
+    <value>切換功能表大小</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="KpiContainerLabel" xml:space="preserve">
+    <value>關鍵效能指標</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Kpi1Label" xml:space="preserve">
+    <value>每小時的單位數</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Kpi2Label" xml:space="preserve">
+    <value>每小時的 kWh</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeAvailabilityLabel" xml:space="preserve">
+    <value>可用性</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeHeaderLabel" xml:space="preserve">
+    <value>設備綜合效率</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeePerformanceLabel" xml:space="preserve">
+    <value>效能</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeQualityLabel" xml:space="preserve">
+    <value>品質</value>
+    <comment>Label</comment>
+  </data>
+  <data name="OeeOverallLabel" xml:space="preserve">
+    <value>綜合效率</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertsContainerHeader" xml:space="preserve">
+    <value>警示</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
+    <value>工廠位置</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderDetails" xml:space="preserve">
+    <value>目前的生產環境</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderLocation" xml:space="preserve">
+    <value>位置</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenFactoryListListHeaderStatus" xml:space="preserve">
+    <value>狀態</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>儀表板</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnectedTo" xml:space="preserve">
+    <value>已連線到 OPC 伺服器</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserEnterOwn" xml:space="preserve">
+    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
+    <value>請從預先設定的清單中選取伺服器:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSelectServer" xml:space="preserve">
+    <value>選取 OPC UA 伺服器</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserCommunicationStatusMessageLabel" xml:space="preserve">
+    <value>連線狀態:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnect" xml:space="preserve">
+    <value>連接</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorMessage" xml:space="preserve">
+    <value>錯誤訊息:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorServer" xml:space="preserve">
+    <value>伺服器:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>一般</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListContainerHeaderPostfix" xml:space="preserve">
+    <value>詳細資料</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
+    <value>描述</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
+    <value>名稱</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenOpcUaNodeListListHeaderStatus" xml:space="preserve">
+    <value>狀態</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListContainerHeaderPostfix" xml:space="preserve">
+    <value>詳細資料</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderDetails" xml:space="preserve">
+    <value>目前的設定</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderLocation" xml:space="preserve">
+    <value>產品線 </value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenProductionLineListListHeaderStatus" xml:space="preserve">
+    <value>狀態</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListContainerHeaderPostfix" xml:space="preserve">
+    <value>詳細資料</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderDetails" xml:space="preserve">
+    <value>目前的設定</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderLocation" xml:space="preserve">
+    <value>站台</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ChildrenStationListListHeaderStatus" xml:space="preserve">
+    <value>狀態</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastDayHistoryGraphXlabel" xml:space="preserve">
+    <value>過去一天 (小時)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastHourHistoryGraphXlabel" xml:space="preserve">
+    <value>過去一小時 (分鐘)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LastWeekHistoryGraphXlabel" xml:space="preserve">
+    <value>過去一週 (天)</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>錯誤</value>
+    <comment>Page title.</comment>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>返回</value>
+    <comment>Button label.</comment>
+  </data>
+  <data name="ImplicitReadOnlyRole" xml:space="preserve">
+    <value>隱含唯讀</value>
+    <comment>Section heading.</comment>
+  </data>
+  <data name="InfoIconLink" xml:space="preserve">
+    <value>https://azure.microsoft.com/solutions/iot-suite/</value>
+    <comment>Link to a documentation.</comment>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>資訊</value>
+  </data>
+  <data name="BrowserDisconnectButton" xml:space="preserve">
+    <value>中斷連接</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeAttribute" xml:space="preserve">
+    <value>下列節點的屬性:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeAttributeRead" xml:space="preserve">
+    <value>屬性...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeButtonCall" xml:space="preserve">
+    <value>呼叫</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeButtonWrite" xml:space="preserve">
+    <value>寫入</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodeCall" xml:space="preserve">
+    <value>呼叫...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeCallingMethod" xml:space="preserve">
+    <value>正在呼叫方法</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeCallInProgress" xml:space="preserve">
+    <value>正在呼叫...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeInfo" xml:space="preserve">
+    <value>下列節點的資訊:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelAccess" xml:space="preserve">
+    <value>存取:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelDescription" xml:space="preserve">
+    <value>描述:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelMisc" xml:space="preserve">
+    <value>其他:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelNodeDetails" xml:space="preserve">
+    <value>節點詳細資料:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelValue" xml:space="preserve">
+    <value>值:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeMethodMessage" xml:space="preserve">
+    <value>目前尚不支援的參數。</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeMethodName" xml:space="preserve">
+    <value>MethodName</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeMethodNoParameter" xml:space="preserve">
+    <value>方法沒有參數。</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeMethodResult" xml:space="preserve">
+    <value>呼叫方法的結果</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodePressButton" xml:space="preserve">
+    <value>按下按鈕即可呼叫方法。</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeRead" xml:space="preserve">
+    <value>讀取...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeReadInProgress" xml:space="preserve">
+    <value>正在讀取...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeUpdate" xml:space="preserve">
+    <value>更新</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeVariableName" xml:space="preserve">
+    <value>VariableName</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWrite" xml:space="preserve">
+    <value>寫入...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NodeWriteCurrentValue" xml:space="preserve">
+    <value>目前的值:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWriteInProgress" xml:space="preserve">
+    <value>正在寫入...</value>
+    <comment>Information message</comment>
+  </data>
+  <data name="NodeWriteNewValue" xml:space="preserve">
+    <value>新值:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeWriteResult" xml:space="preserve">
+    <value>寫入的結果</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>確定</value>
+    <comment>Success message.</comment>
+  </data>
+  <data name="ReadOnlyRole" xml:space="preserve">
+    <value>唯讀</value>
+    <comment>User role name.</comment>
+  </data>
+  <data name="BrowserConnectException" xml:space="preserve">
+    <value>嘗試連線到 OPC UA 伺服器時發生例外狀況。
+例外狀況訊息:
+{0}
+內部訊息:
+{1}
+堆疊追蹤:
+{2}</value>
+    <comment>Error</comment>
+  </data>
+  <data name="BrowserDisconnectException" xml:space="preserve">
+    <value>嘗試中斷對 OPC UA 伺服器的連線時發生例外狀況。
+例外狀況訊息:
+{0}
+內部訊息:
+{1}
+堆疊追蹤:
+{2}</value>
+    <comment>Error</comment>
+  </data>
+  <data name="BrowserRootNodeName" xml:space="preserve">
+    <value>根</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnectErrorHeader" xml:space="preserve">
+    <value>連線到 OPC UA 伺服器時發生錯誤</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcErrorHeader" xml:space="preserve">
+    <value>存取 OPC UA 伺服器時發生錯誤</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcException" xml:space="preserve">
+    <value>嘗試存取 OPC UA 伺服器時發生例外狀況。
+例外狀況訊息:
+{0}
+內部訊息:
+{1}
+堆疊追蹤:
+{2}</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="BrowserOpcDataServerTimestampLabel" xml:space="preserve">
+    <value>伺服器時間戳記</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataSourceTimestampLabel" xml:space="preserve">
+    <value>來源時間戳記</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataStatusLabel" xml:space="preserve">
+    <value>狀態</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcDataValueLabel" xml:space="preserve">
+    <value>值</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcWriteConversionProblem" xml:space="preserve">
+    <value>&lt;font color="red"&gt;錯誤: 無法將值 '{0}' 轉換成類型 '{1}'。(詳細資料: {2})&lt;/font&gt;</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcDataDiagnosticInfoLabel" xml:space="preserve">
+    <value>診斷資訊</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcMethodCallFailed" xml:space="preserve">
+    <value>方法呼叫失敗</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcMethodCallSucceeded" xml:space="preserve">
+    <value>方法呼叫成功</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcMethodCallSucceededWithResults" xml:space="preserve">
+    <value>方法呼叫成功，並傳回了下列結果:</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcMethodStatusCode" xml:space="preserve">
+    <value>狀態碼</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueContinuous" xml:space="preserve">
+    <value>連續</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueHistory" xml:space="preserve">
+    <value>歷程記錄</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueHistoryUpdate" xml:space="preserve">
+    <value>歷程記錄更新</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueIndeterminate" xml:space="preserve">
+    <value>不定</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueNoAccess" xml:space="preserve">
+    <value>沒有存取權</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueReadable" xml:space="preserve">
+    <value>可讀取</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueSubscribe" xml:space="preserve">
+    <value>訂閱</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueUnknown" xml:space="preserve">
+    <value>不明</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcValueWriteable" xml:space="preserve">
+    <value>可寫入</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeLabelType" xml:space="preserve">
+    <value>類型</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserOpcAttributesAny" xml:space="preserve">
+    <value>任何</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesOneDimension" xml:space="preserve">
+    <value>OneDimension</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesOneOrMoreDimensions" xml:space="preserve">
+    <value>OneOrMoreDimensions</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesScalar" xml:space="preserve">
+    <value>純量</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesScalarOrOneDimension" xml:space="preserve">
+    <value>ScalarOrOneDimension</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserOpcAttributesTwoDimensions" xml:space="preserve">
+    <value>TwoDimensions</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NoFilterApplied" xml:space="preserve">
+    <value>全部</value>
+    <comment>Label</comment>
+  </data>
+  <data name="FilterApply" xml:space="preserve">
+    <value>套用篩選</value>
+    <comment>ButtonLabel</comment>
+  </data>
+  <data name="FilterClear" xml:space="preserve">
+    <value>清除篩選器</value>
+    <comment>ButtonLabel</comment>
+  </data>
+  <data name="FilterLabel" xml:space="preserve">
+    <value>篩選</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDescription" xml:space="preserve">
+    <value>警示原因</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertNode" xml:space="preserve">
+    <value>節點</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertProductionLine" xml:space="preserve">
+    <value>產品線</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertStation" xml:space="preserve">
+    <value>站台</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphFriday" xml:space="preserve">
+    <value>F</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastDay" xml:space="preserve">
+    <value>過去 24 小時</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastHour" xml:space="preserve">
+    <value>過去 1 小時</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphLastWeek" xml:space="preserve">
+    <value>過去 7 天</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMonday" xml:space="preserve">
+    <value>M</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphSaturday" xml:space="preserve">
+    <value>六</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphSunday" xml:space="preserve">
+    <value>日</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphThursday" xml:space="preserve">
+    <value>四</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphTuesday" xml:space="preserve">
+    <value>T</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphWednesday" xml:space="preserve">
+    <value>W</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetails" xml:space="preserve">
+    <value>警示詳細資料</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserCertDownloadError" xml:space="preserve">
+    <value>存取憑證進行下載時發生錯誤</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="BrowserDownload" xml:space="preserve">
+    <value>下載憑證</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="BrowserDownloadText" xml:space="preserve">
+    <value>您的 OPC UA 伺服器如需手動安裝用戶端憑證，可以從下列位置下載此網站的 OPC UA 憑證:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorContinueButton" xml:space="preserve">
+    <value>繼續</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="NodePublish" xml:space="preserve">
+    <value>發行...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodePublishInProgress" xml:space="preserve">
+    <value>正在發行...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserDontTrustButton" xml:space="preserve">
+    <value>取消</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="BrowserTrust" xml:space="preserve">
+    <value>這可能表示有人嘗試欺騙您或竊取您傳送到伺服器的資訊。僅當此問題 (例如因為您的伺服器要使用自我簽署的憑證 (不建議使用)) 為預料中事時才繼續。</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserTrustButton" xml:space="preserve">
+    <value>繼續</value>
+    <comment>Button label</comment>
+  </data>
+  <data name="SessionNull" xml:space="preserve">
+    <value>無法建立對發行者的連線</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="OpcStackInitError" xml:space="preserve">
+    <value>初始化 OPC UA 堆疊時發生例外狀況。錯誤: {0} 內部: {1} 堆疊: {2}</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="ErrorGetDataForOpcUaNode" xml:space="preserve">
+    <value>沒有有效的節點或站台</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="ErrorGetOeeKpiData" xml:space="preserve">
+    <value>不是有效的站台</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="NoDataSeries" xml:space="preserve">
+    <value>此項目沒有資料數列</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="BrowserTrustHeader" xml:space="preserve">
+    <value>無法驗證您要連線之伺服器的憑證。</value>
+    <comment>ErrorMessage</comment>
+  </data>
+  <data name="GraphRDXLinkHeader" xml:space="preserve">
+    <value>按一下圖表可探索 Azure Time Series Insights</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionAcknowledge" xml:space="preserve">
+    <value>確認警示</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertKpi1AboveMaximum" xml:space="preserve">
+    <value>產品數超過上限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi1BelowMinimum" xml:space="preserve">
+    <value>產品數低於下限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi2AboveMaximum" xml:space="preserve">
+    <value>能源消耗超過上限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertKpi2BelowMinimum" xml:space="preserve">
+    <value>能源消耗低於下限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeAvailabilityAboveMaximum" xml:space="preserve">
+    <value>OEE 可用性超過上限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeAvailabilityBelowMinimum" xml:space="preserve">
+    <value>OEE 可用性低於下限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeOverallAboveMaximum" xml:space="preserve">
+    <value>整體 OEE 超過上限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeOverallBelowMinimum" xml:space="preserve">
+    <value>整體 OEE 低於下限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeePerformanceAboveMaximum" xml:space="preserve">
+    <value>OEE 效能超過上限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeePerformanceBelowMinimum" xml:space="preserve">
+    <value>OEE 效能低於下限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeQualityAboveMaximum" xml:space="preserve">
+    <value>OEE 品質超過上限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertOeeQualityBelowMinimum" xml:space="preserve">
+    <value>OEE 品質低於下限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertValueAboveMaximum" xml:space="preserve">
+    <value>值超過上限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertValueBelowMinimum" xml:space="preserve">
+    <value>值低於下限</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsDescriptionHeader" xml:space="preserve">
+    <value>描述:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsLocationHeader" xml:space="preserve">
+    <value>位置:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsNoActionAvailable" xml:space="preserve">
+    <value>未定義任何動作</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsOccurencesHeader" xml:space="preserve">
+    <value>發生次數:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsTimeHeader" xml:space="preserve">
+    <value>時間:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertIdUnknown" xml:space="preserve">
+    <value>此警示資訊已無法再使用。</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="AlertActionExecute" xml:space="preserve">
+    <value>執行動作</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertSelectAction" xml:space="preserve">
+    <value>選擇動作:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertDetailsUnknown" xml:space="preserve">
+    <value>不明</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsActionResultHeader" xml:space="preserve">
+    <value>動作結果:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ActionDetailResultExecuting" xml:space="preserve">
+    <value>動作已執行...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionWebPageOpened" xml:space="preserve">
+    <value>請另在新瀏覽器索引標籤/視窗中檢查內容。</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertDetailsRdxLinkHeader" xml:space="preserve">
+    <value>按一下圖表可探索 Azure Time Series Insights</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AnimationTimeSeriesLoading" xml:space="preserve">
+    <value>正在從 Azure Time Series Insights 載入資料</value>
+    <comment>Message</comment>
+  </data>
+  <data name="ErrorAccessProblem" xml:space="preserve">
+    <value>存取網站時發生錯誤。</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="ErrorInsufficientPermissions" xml:space="preserve">
+    <value>您的權限不足，無法執行此作業。請連絡此網站的系統管理員。</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="BrowserError" xml:space="preserve">
+    <value>瀏覽器錯誤:</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserErrorUnknown" xml:space="preserve">
+    <value>瀏覽期間發生錯誤。</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="AlertActionClose" xml:space="preserve">
+    <value>關閉警示</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AlertActionAcknowledgeSuccessful" xml:space="preserve">
+    <value>警示確認成功。</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AlertActionCloseSuccessful" xml:space="preserve">
+    <value>警示已成功關閉。</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NavigationMenuAddGateway" xml:space="preserve">
+    <value>新增閘道</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="AddGatewayBodyPoint1" xml:space="preserve">
+    <value>&lt;li&gt;&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;這裡&lt;/a&gt;備有 Windows 的指示。&lt;/li&gt;
+&lt;li&gt;&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;這裡&lt;/a&gt;備有 Linux 的指示。&lt;/li&gt; &lt;li&gt;&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;這裡&lt;/a&gt;備有編輯生產線資訊的指示。&lt;/li&gt;</value>
+    <comment>AddGatewayBodyPoint1</comment>
+  </data>
+  <data name="AddGatewayTitle" xml:space="preserve">
+    <value>連接您自己的閘道</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderAttributes" xml:space="preserve">
+    <value>屬性</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderMethod" xml:space="preserve">
+    <value>方法呼叫</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderPublish" xml:space="preserve">
+    <value>發行</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderRead" xml:space="preserve">
+    <value>讀取變數</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderWrite" xml:space="preserve">
+    <value>寫入變數</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSelectNewServer" xml:space="preserve">
+    <value>連接您自己的 OPC UA 伺服器</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserConnecting" xml:space="preserve">
+    <value>正在連接...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserSecutityWarning" xml:space="preserve">
+    <value>安全性警告</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NavigationMenuItemActions" xml:space="preserve">
+    <value>動作</value>
+    <comment>Navigation menu item label.</comment>
+  </data>
+  <data name="BrowserContextPanelPublishing" xml:space="preserve">
+    <value>發佈中...</value>
+    <comment>Label</comment>
+  </data>
+</root>

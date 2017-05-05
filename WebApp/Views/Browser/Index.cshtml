@@ -1,0 +1,121 @@
+﻿@using GlobalResources;
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
+
+@model OpcSessionModel
+
+<div class="container-fluid browser_connect_container">
+    <div class="row browser_connect_header">
+        <div class="browser_connect_header_text overflow">@Strings.BrowserSelectServer</div>
+    </div>
+    <div class="row browser_top_container">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row browser_select_connect_container">
+                @using (Ajax.BeginForm("Connect", "Browser", new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <div class="row browser_connect_selection_label">@Strings.BrowserPreconfiguredListLabel</div>
+                    <div class="row  browser_connect_selection_dropdown">
+                        <text>@Html.DropDownList("endpointUrl", @Model.PrepopulatedEndpoints, new { style = "width:100%" })</text>
+                    </div>
+                    <div class="row browser_browse_connect_button">
+                        <input id="connectButton" class="btn btn-default btn_browser" type="submit" onclick="openConnectContextPanel();" value=@Strings.BrowserConnect>
+                    </div>
+                }
+            </div>
+        </div>
+        <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            <img class="img-responsive" src="~/Content/img/assembly_station.jpg"/>
+        </div>
+    </div>
+
+    <div id="connectContextpanel" class="overlay">
+        <div class="dashboard_contextpanel_header">
+            <div id="connectContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecutityWarning</div>
+        </div>
+            <a href="#" class="closebtn" onclick="closeConnectContextPanel();">&times;</a>
+        <div id="connectBodyContextPanel" class="browser_error_details_container">
+            <div class="row browser_error_details_line_header" >
+                <span class="glyphicon glyphicon-alert"></span>
+                <span class="browser_error_details_label">@Strings.BrowserTrustHeader</span>
+             </div>
+            <div class="row browser_error_details_line">
+                <span class="browser_error_details_info_black">@Strings.BrowserTrust</span>
+            </div>
+        </div>
+        <div id="waitingForConnect" class="browser_error_details_container">@Strings.BrowserConnecting</div>
+        <div id="connectLoader" class="loader"></div>
+       
+        <div id="proceedButton" class="dashboard_contextpanel_select_filter_button">
+            @using (Html.BeginForm("ConnectWithTrust", "Browser"))
+            {
+                @Html.AntiForgeryToken();
+                @Html.HiddenFor(model => model.EndpointUrl, new { id = "hiddenEndpointUrl" })
+                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="connecting();" value="@Strings.BrowserTrustButton">
+            }
+        </div>
+        <div id="cancelButton" class="dashboard_contextpanel_clear_filter_button">
+            @using (Html.BeginForm("Disconnect", "Browser"))
+            {
+                @Html.AntiForgeryToken();
+                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="closeConnectContextPanel();" value="@Strings.BrowserDontTrustButton">
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#connectButton").attr("enabled", "enabled");
+    });
+
+    function onSuccess(sessionModel) {
+        $("#hiddenEndpointUrl").val(sessionModel.EndpointUrl);
+        $("#connectLoader").hide();
+
+        if (sessionModel.ErrorHeader == "UntrustedCertificate") {
+            $("#waitingForConnect").hide();
+            $("#connectBodyContextPanel").show();
+            $("#connectContextpanelHeader").text("Security Warning");
+            $("#proceedButton").show();
+            $("#cancelButton").show();
+        } else {
+            var baseUrl = '@Url.Content("~")';
+            window.location.href = baseUrl + "Browser/Index";
+        }
+    }
+
+    function onFailure(response) {
+        $("#connectLoader").hide();
+        var baseUrl = '@Url.Content("~")';
+        window.location.href = baseUrl + "Browser/Error";
+    }
+
+    function openConnectContextPanel() {
+        $("#connectBodyContextPanel").hide();
+        $("#connectContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
+        $("#connectContextpanelHeader").text("Connect");
+        $("#proceedButton").hide();
+        $("#cancelButton").hide();
+        $("#waitingForConnect").show();
+    }
+
+    $('form').submit(function () {
+        $("#connectButton").attr("disabled", "disabled");
+    })
+
+    function connecting() {
+        $("#connectContextpanelHeader").text("Connect");
+        $("#connectBodyContextPanel").hide();
+        $("#proceedButton").hide();
+        $("#cancelButton").hide();
+        $("#waitingForConnect").show();
+        $("#connectLoader").show();
+    }
+
+    function closeConnectContextPanel() {
+        $("#connectContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
+        $("#connectButton").attr("enabled", "enabled");
+    }
+
+</script>
+

@@ -1,0 +1,3012 @@
+{
+  "Image": "world.jpg",
+  "Factories": [
+    {
+      "Guid": "73B534AE-7C7E-4877-B826-F1C0EA339F65",
+      "Name": "Munich",
+      "Description": "Braking system",
+      "Location": {
+        "City": "Munich",
+        "Country": "Germany",
+        "Latitude": 48.13641,
+        "Longitude": 11.57754
+      },
+      "Image": "munich.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "E8260A1A-DA12-473E-9955-B220B3985356",
+          "Name": "Production Line 1",
+          "Description": "Brake pads",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "productionline0",
+            "Network": "munich0.corp.contoso",
+            "Mes": "Mes0254"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Brake pad assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:scada2194:ua:munich:productionline0:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "scada2194",
+                "Path": "Munich/ProductionLine0/AssemblyStation",
+                "Args": "200 25 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200,
+                "MinimumAlertActions": [
+                    {
+                        "Type": "None"
+                    }
+                ]
+              },
+              "OpcNodes": [
+                {
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                    "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 5000,
+                  "MaximumAlertActions": [
+                      {
+                          "Type": "CallOpcMethod",
+                          "Description": "Open valve",
+                          "Parameter": "ns=2;i=435, ns=2;i=424, opc.tcp://scada2194.munich0.corp.contoso:51210/UA/Munich/ProductionLine0/AssemblyStation"
+                      }
+                  ]
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 25000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test",
+              "Description": "Brake pad test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:scada1634:ua:munich:productionline0:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "scada1634",
+                "Path": "Munich/ProductionLine0/TestStation",
+                "Args": "100 28 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 28000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Brake pad packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:scada8344:ua:munich:productionline0:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "scada8344",
+                "Path": "Munich/ProductionLine0/PackagingStation",
+                "Port": "51214",
+                "Args": "100 14 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 14000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "CB1DBFA0-F520-46E1-85E1-97DCD67860D0",
+      "Name": "Cape Town",
+      "Description": "Fuel supply system",
+      "Location": {
+        "City": "Cape Town",
+        "Country": "South Africa",
+        "Latitude": -33.91909,
+        "Longitude": 18.42199
+      },
+      "Image": "CapeTown.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "82DEC939-540E-4519-BF7A-93FFD93DF300",
+          "Name": "Production Line 1",
+          "Description": "Carburetor",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "productionline0",
+            "Network": "capetown.corp.contoso",
+            "Mes": "Mes3221"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Carburetor assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:scadacp008:ua:capetown:productionline0:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "scadacp008",
+                "Path": "capetown/ProductionLine0/AssemblyStation",
+                "Args": "200 33 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 33000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test #1",
+              "Description": "Carburetor test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:cptw1634:ua:capetown:productionline0:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "cptw1634",
+                "Path": "capetown/ProductionLine0/TestStation",
+                "Args": "100 22 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 22000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging #1",
+              "Description": "Carburetor packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:scada1144:ua:capetown:productionline0:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "scada1144",
+                "Path": "capetown/ProductionLine0/PackagingStation",
+                "Port": "51214",
+                "Args": "100 28 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 28000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "9DEB6B9C-2358-464F-BE06-86F22E4D66B7",
+      "Name": "Mumbai",
+      "Description": "Exhaust system",
+      "Location": {
+        "City": "Mumbai",
+        "Country": "India",
+        "Latitude": 18.93016,
+        "Longitude": 72.83028
+      },
+      "Image": "Mumbai.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "D1DBB99C-9A08-4B8B-B94A-43A756A64F9D",
+          "Name": "Production Line 1",
+          "Description": "Gasket",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "line1",
+            "Network": "mumbai.corp.contoso",
+            "Mes": "Mes3221"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Gasket assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:scadacp008:ua:mumbai:line1:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "scadacp008",
+                "Path": "mumbai/line1/AssemblyStation",
+                "Args": "200 44 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 44000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test",
+              "Description": "Gasket test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:cptw1634:ua:mumbai:line1:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "cptw1634",
+                "Path": "mumbai/line1/TestStation",
+                "Args": "100 42 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 42000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Gasket packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:scada1144:ua:mumbai:line1:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "scada1144",
+                "Path": "mumbai/line1/PackagingStation",
+                "Port": "51214",
+                "Args": "100 33 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 33000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "17BB3DAB-C22A-4115-8BFE-038B9A5BC04C",
+      "Name": "Seattle",
+      "Description": "Bearings",
+      "Location": {
+        "City": "Seattle",
+        "Country": "United States",
+        "Latitude": 47.60357,
+        "Longitude": -122.3295
+      },
+      "Image": "Seattle.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "103A4B41-AFAE-4B5E-BAA0-18FF3FCCCB3B",
+          "Name": "Production Line 1",
+          "Description": "Needle bearing",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "line1",
+            "Network": "seattle.corp.contoso",
+            "Mes": "sea001"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Needle bearing assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:sea103:ua:seattle:line1:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "sea103",
+                "Path": "seattle/line1/AssemblyStation",
+                "Args": "200 23 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 23000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test #1",
+              "Description": "Needle bearing test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:sea102:ua:seattle:line1:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "sea102",
+                "Path": "seattle/line1/TestStation",
+                "Args": "100 24 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 24000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Needle bearing packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:sea101:ua:seattle:line1:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "sea101",
+                "Path": "seattle/line1/PackagingStation",
+                "Port": "51214",
+                "Args": "100 25 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 25000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "DA530CC7-AF95-45B3-9322-75E48A375A65",
+      "Name": "Beijing",
+      "Description": "Air conditioning system",
+      "Location": {
+        "City": "Beijing",
+        "Country": "China",
+        "Latitude": 39.90657,
+        "Longitude": 116.3876
+      },
+      "Image": "Beijing.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "ACF8783D-DFE4-4E93-8AF0-632592B52B75",
+          "Name": "Production Line 1",
+          "Description": "Condenser",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "line1",
+            "Network": "beijing.corp.contoso",
+            "Mes": "beijing001"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Condenser bearing assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:beijing103:ua:beijing:line1:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "beijing103",
+                "Path": "beijing/line1/AssemblyStation",
+                "Args": "200 36 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 36000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test #1",
+              "Description": "Condenser bearing test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:beijing102:ua:beijing:line1:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "beijing102",
+                "Path": "beijing/line1/TestStation",
+                "Args": "100 48 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 48000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging #1",
+              "Description": "Condenser bearing packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:beijing101:ua:beijing:line1:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "beijing101",
+                "Path": "beijing/line1/PackagingStation",
+                "Port": "51214",
+                "Args": "100 12 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 12000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Guid": "C51003AC-3DAE-4B60-A7BC-6E6A45782B9D",
+          "Name": "Production Line 2",
+          "Description": "Compressor",
+          "Image": "testing_floor.jpg",
+          "Simulation": {
+            "Id": "pl2",
+            "Network": "beijing.corp.contoso",
+            "Mes": "beijing002"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Compressor assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:beijing201:ua:beijing:pl2:assembly",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "beijing201",
+                "Path": "beijing/pl2/Assembly",
+                "Args": "200 31 yes"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 31000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test",
+              "Description": "Compressor test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:beijing202:ua:beijing:pl2:test",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "beijing202",
+                "Path": "beijing/pl2/Test",
+                "Args": "100 44 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 44000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Compressor packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:beijing203:ua:beijing:pl2:packaging",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "beijing203",
+                "Path": "beijing/pl2/Packaging",
+                "Port": "51214",
+                "Args": "100 11 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 11000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Guid": "1C2FFBE0-C0C8-4A2E-B789-7F217D2A8A87",
+          "Name": "Production Line 3",
+          "Description": "Cooler",
+          "Image": "packing_floor.jpg",
+          "Simulation": {
+            "Id": "prodline3",
+            "Network": "beijing.corp.contoso",
+            "Mes": "beijing003"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Cooler converter assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:beijing004:ua:beijing:prodline3:assembly",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "beijing004",
+                "Path": "beijing/prodline3/Assembly",
+                "Args": "200 12 yes"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 12000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test",
+              "Description": "Cooler converter test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:beijing005:ua:beijing:prodline3:test",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "beijing005",
+                "Path": "beijing/prodline3/Test",
+                "Args": "100 24 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 24000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Cooler converter packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:beijing006:ua:beijing:prodline3:packaging",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "beijing006",
+                "Path": "beijing/prodline3/Packaging",
+                "Port": "51214",
+                "Args": "100 18 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 18000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "7B33F5D0-7AE2-4F61-8F67-FBACBF72935F",
+      "Name": "Sydney",
+      "Description": "Transmission system",
+      "Location": {
+        "City": "Sydney",
+        "Country": "Australia",
+        "Latitude": -33.8696,
+        "Longitude": 151.207
+      },
+      "Image": "Sydney.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "D9914504-20E8-4F84-92AA-F983CC497B98",
+          "Name": "Production Line 1",
+          "Description": "Clutch cable",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "line1",
+            "Network": "sydney.corp.contoso",
+            "Mes": "sydney001"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Clutch cable assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:sydney103:ua:sydney:line1:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "sydney103",
+                "Path": "sydney/line1/AssemblyStation",
+                "Args": "200 22 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 22000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test",
+              "Description": "Clutch cable test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:sydney102:ua:sydney:line1:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "sydney102",
+                "Path": "sydney/line1/TestStation",
+                "Args": "100 18 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 18000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging #1",
+              "Description": "Clutch cable packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:sydney101:ua:sydney:line1:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "sydney101",
+                "Path": "sydney/line1/PackagingStation",
+                "Port": "51214",
+                "Args": "100 6 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 6000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "E4857C3A-DC28-4E8E-AA80-0CB890E8C9C0",
+      "Name": "Tokyo",
+      "Description": "Steering system",
+      "Location": {
+        "City": "Tokyo",
+        "Country": "Japan",
+        "Latitude": 35.68321,
+        "Longitude": 139.8089
+      },
+      "Image": "Tokyo.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "0173CA01-92CF-4A12-84DF-2F8EB5B01816",
+          "Name": "Production Line 1",
+          "Description": "Steering arm",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "line1",
+            "Network": "tokyo.corp.contoso",
+            "Mes": "mes001"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Steering arm assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:tokyo103:ua:tokyo:line1:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "tokyo103",
+                "Path": "tokyo/line1/AssemblyStation",
+                "Args": "200 8 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 8000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test #1",
+              "Description": "Steering arm test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:tokyo102:ua:tokyo:line1:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "tokyo102",
+                "Path": "tokyo/line1/TestStation",
+                "Args": "100 7 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 7000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Steering arm packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:tokyo101:ua:tokyo:line1:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "tokyo101",
+                "Path": "tokyo/line1/PackagingStation",
+                "Port": "51214",
+                "Args": "100 6 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 6000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "Guid": "FF05FD10-E358-48CB-83ED-F38A7CCB1FA3",
+      "Name": "Rio De Janeiro",
+      "Description": "Suspension system",
+      "Location": {
+        "City": "Rio De Janeiro",
+        "Country": "Brazil",
+        "Latitude": -22.91216,
+        "Longitude": -43.17501
+      },
+      "Image": "rio.jpg",
+      "ProductionLines": [
+        {
+          "Guid": "BF1644C7-30CF-4581-BE59-43992C681756",
+          "Name": "Production Line 1",
+          "Description": "Beam axle",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "line1",
+            "Network": "rio.corp.contoso",
+            "Mes": "rio001"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Beam axle assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:rio103:ua:rio:line1:assemblystation",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "rio103",
+                "Path": "rio/line1/AssemblyStation",
+                "Args": "200 45 yes"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 45000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test #1",
+              "Description": "Beam axle test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:rio102:ua:rio:line1:teststation",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "rio102",
+                "Path": "rio/line1/TestStation",
+                "Args": "100 33 no"
+              },
+              "Kpi1": {
+                "Minimum": 100,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 33000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging #1",
+              "Description": "Beam axle packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:rio101:ua:rio:line1:packagingstation",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "rio101",
+                "Path": "rio/line1/PackagingStation",
+                "Port": "51214",
+                "Args": "100 24 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 24000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "08D1CB10-7B08-4ABC-926F-EF3A1B6270E1",
+      "Name": "Milan",
+      "Description": "Ignition system",
+      "Location": {
+        "City": "Milan",
+        "Country": "Italy",
+        "Latitude": 45.46888,
+        "Longitude": 9.18109
+      },
+      "Image": "milan.jpg",
+      "OeeOverall": {
+        "Minimum": 50,
+        "Target": 80,
+        "Maximum": 100
+      },
+      "ProductionLines": [
+        {
+          "Guid": "A9DD2CEE-8B60-445C-AE10-525663349557",
+          "Name": "Production Line 1",
+          "Description": "Ignition box",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "milan_pl_a",
+            "Network": "milan.corp.contoso",
+            "Mes": "MesA374"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Ignition box assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:assemblya934:ua:milan:milan_pl_a:assembly",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "AssemblyA934",
+                "Path": "milan/milan_pl_a/Assembly",
+                "Args": "200 37 yes"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 6000
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 37000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test",
+              "Description": "Ignition box test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:testa346:ua:milan:milan_pl_a:test",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "TestA346",
+                "Path": "milan/milan_pl_a/Test",
+                "Args": "100 22 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 22000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Ignition box packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:packaginga963:ua:milan:milan_pl_a:packaging",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "PackagingA963",
+                "Path": "milan/milan_pl_a/Packaging",
+                "Port": "51214",
+                "Args": "100 12 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 12000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Guid": "BFF732D9-7267-4D68-87A7-23558E3361FE",
+      "Name": "Dublin",
+      "Description": "Oil system",
+      "Location": {
+        "City": "Dublin",
+        "Country": "Ireland",
+        "Latitude": 53.34807,
+        "Longitude": -6.24827
+      },
+      "Image": "dublin.jpg",
+      "OeeOverall": {
+        "Minimum": 50,
+        "Target": 85,
+        "Maximum": 100
+      },
+      "ProductionLines": [
+        {
+          "Guid": "88C47F73-A915-4822-87FB-DDB3E7959E02",
+          "Name": "Production Line 1",
+          "Description": "Oil pump",
+          "Image": "assembly_floor.jpg",
+          "Simulation": {
+            "Id": "pl_1",
+            "Network": "dublin.corp.contoso",
+            "Mes": "MesPL1556"
+          },
+          "Stations": [
+            {
+              "Name": "Assembly",
+              "Description": "Oil pump assembly station",
+              "Image": "assembly_station.jpg",
+              "OpcUri": "urn:scada011:ua:dublin:pl_1:assembly",
+              "Simulation": {
+                "Type": "Assembly",
+                "Id": "scada011",
+                "Path": "dublin/pl_1/Assembly",
+                "Args": "200 15 yes"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 50,
+                "Target": 100,
+                "Maximum": 200
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=434",
+                  "SymbolicName": "Pressure",
+                  "OpCode": "Avg",
+                  "Units": "mbar",
+                  "Maximum": 4500
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 15000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Test",
+              "Description": "Oil pump test station",
+              "Image": "testing_station.jpg",
+              "OpcUri": "urn:testa346:ua:dublin:pl_1:test",
+              "Simulation": {
+                "Type": "Test",
+                "Id": "TestA346",
+                "Path": "dublin/pl_1/Test",
+                "Args": "100 16 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 16000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            },
+            {
+              "Name": "Packaging",
+              "Description": "Oil pump packaging station",
+              "Image": "packing_station.jpg",
+              "OpcUri": "urn:packaginga222:ua:dublin:pl_1:packaging",
+              "Simulation": {
+                "Type": "Packaging",
+                "Id": "PackagingA222",
+                "Path": "dublin/pl_1/Packaging",
+                "Port": "51214",
+                "Args": "100 17 no"
+              },
+              "Kpi1": {
+                "Minimum": 400,
+                "Target": 700,
+                "Maximum": 800
+              },
+              "Kpi2": {
+                "Minimum": 25,
+                "Target": 50,
+                "Maximum": 100
+              },
+              "OpcNodes": [
+                {
+                  "NodeId": "ns=2;i=385",
+                  "SymbolicName": "NumberOfManufacturedProducts",
+                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=391",
+                  "SymbolicName": "NumberOfDiscardedProducts",
+                  "Relevance": [ "OeeQuality_Bad" ],
+                  "OpCode": "SubMaxMin"
+                },
+                {
+                  "NodeId": "ns=2;i=399",
+                  "SymbolicName": "FaultyTime",
+                  "Relevance": [ "OeeAvailability_Fault" ],
+                  "OpCode": "Sum",
+                  "Units": "ms"
+                },
+                {
+                  "SymbolicName": "RunningTime",
+                  "Relevance": [ "OeeAvailability_Running" ],
+                  "OpCode": "Timespan",
+                  "Visible": false,
+                  "Units": "ms"
+                },
+                {
+                  "NodeId": "ns=2;i=406",
+                  "SymbolicName": "EnergyConsumption",
+                  "Relevance": [ "Kpi2" ],
+                  "OpCode": "Sum",
+                  "Units": "kWh"
+                },
+                {
+                  "NodeId": "ns=2;i=418",
+                  "SymbolicName": "ActualCycleTime",
+                  "Relevance": [ "OeePerformance_Actual" ],
+                  "OpCode": "Avg",
+                  "Units": "ms"
+                },
+                {
+                  "ConstValue": 17000,
+                  "SymbolicName": "IdealCycleTime",
+                  "OpCode": "Const",
+                  "Visible": false,
+                  "Units": "ms",
+                  "Relevance": [ "OeePerformance_Ideal" ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
