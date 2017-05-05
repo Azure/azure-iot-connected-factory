@@ -2208,7 +2208,7 @@ $script:UaSecretThumbprint = $script:X509Collection.ThumbPrint
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - X509 certificate for OPC UA communication has thumbprint: $script:UaSecretThumbprint"
 $script:UaSecretForWebsiteEncoded = [System.Convert]::ToBase64String($script:X509Collection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12))
 $script:UaSecretForVmEncoded = [System.Convert]::ToBase64String($script:X509Collection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert, $script:UaSecretPassword))
-$script:WebSitesServicePrincipalObjectId = (Get-AzureRmADServicePrincipal -SearchString Microsoft.Azure.WebSites).Id
+$script:WebSitesServicePrincipalObjectId = (Get-AzureRmADServicePrincipal -ServicePrincipalName "abfa0a7c-a6b6-4736-8310-5855508787cd").Id
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Websites Service Principal Object Id: $script:WebSitesServicePrincipalObjectId"
 $script:RdxAccessPolicyPrincipalObjectId = (Get-AzureRmADServicePrincipal -ServicePrincipalName $script:AadClientId).Id
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - AAD Client Service Principal Object Id: $script:RdxAccessPolicyPrincipalObjectId"
