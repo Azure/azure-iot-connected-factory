@@ -951,7 +951,7 @@ Yığın izleme:
     <value>Bağlanıyor...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Güvenlik Uyarısı</value>
     <comment>Label</comment>
   </data>

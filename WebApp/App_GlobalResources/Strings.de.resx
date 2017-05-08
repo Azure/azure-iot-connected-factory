@@ -939,7 +939,7 @@ Stack trace:
     <value>Verbinden…</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Sicherheitswarnung</value>
     <comment>Label</comment>
   </data>

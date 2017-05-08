@@ -951,7 +951,7 @@ Wewnętrzny komunikat:
     <value>Trwa łączenie…</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Ostrzeżenie o zabezpieczeniach</value>
     <comment>Label</comment>
   </data>

@@ -937,9 +937,9 @@ namespace GlobalResources {
         /// <summary>
         ///   Looks up a localized string similar to Security Warning.
         /// </summary>
-        public static string BrowserSecutityWarning {
+        public static string BrowserSecurityWarning {
             get {
-                return ResourceManager.GetString("BrowserSecutityWarning", resourceCulture);
+                return ResourceManager.GetString("BrowserSecurityWarning", resourceCulture);
             }
         }
         

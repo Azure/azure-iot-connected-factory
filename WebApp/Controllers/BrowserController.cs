@@ -82,7 +82,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             if (OpcSessionHelper.Instance.InitResult != "Good")
             {
                 sessionModel.ErrorMessage = OpcSessionHelper.Instance.InitResult;
-                return View("Error", sessionModel);  
+                return View("Error", sessionModel);
             }
             
             OpcSessionCacheData entry = null;
@@ -135,7 +135,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 ServiceResultException ex = exception as ServiceResultException;
                 if ((ex != null) && (ex.InnerResult != null) && (ex.InnerResult.StatusCode == StatusCodes.BadCertificateUntrusted))
                 {
-                    sessionModel.ErrorMessage = ex.Message.Replace("\r\n", "<br/>");
                     sessionModel.ErrorHeader = "UntrustedCertificate";
                     return Json(sessionModel);
                 }
@@ -144,7 +143,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 string errorMessageTrace = string.Format(Strings.BrowserConnectException, exception.Message,
                 exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--"); 
                 Trace.TraceError(errorMessageTrace);
-                sessionModel.ErrorMessage = exception.Message.Replace("\r\n", "<br/>");
                 sessionModel.ErrorHeader = Strings.BrowserConnectErrorHeader;
 
                 return Json(sessionModel);
@@ -189,7 +187,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             // make the error generic so not to reveal too much about the internal workings of the site.
             Trace.TraceError(Strings.BrowserConnectErrorHeader);
             sessionModel.ErrorHeader = Strings.BrowserConnectErrorHeader;
-            sessionModel.ErrorMessage = Strings.BrowserConnectErrorHeader;
 
             return Json(sessionModel);
         }

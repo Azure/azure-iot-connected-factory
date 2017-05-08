@@ -30,7 +30,7 @@
 
     <div id="connectContextpanel" class="overlay">
         <div class="dashboard_contextpanel_header">
-            <div id="connectContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecutityWarning</div>
+            <div id="connectContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecurityWarning</div>
         </div>
             <a href="#" class="closebtn" onclick="closeConnectContextPanel();">&times;</a>
         <div id="connectBodyContextPanel" class="browser_error_details_container">
@@ -46,9 +46,6 @@
             <div  class="browser_error_contextpanel_container">
                 <span class="browser_error_contextpanel_header">@Strings.BrowserErrorMessage</span>
                 <div id="errorHeader" class="browser_error_contextpanel_message"></div>
-                <br />
-                <span class="browser_error_contextpanel_header">@Strings.AlertDetailsDescriptionHeader</span>
-                <div id="errorMessage" class="browser_error_contextpanel_message"></div>
             </div>
         </div>
 
@@ -87,7 +84,7 @@
         if (sessionModel.ErrorHeader == "UntrustedCertificate") {
             $("#waitingForConnect").hide();
             $("#connectBodyContextPanel").show();
-            $("#connectContextpanelHeader").text("Security Warning");
+            $("#connectContextpanelHeader").html("@Strings.BrowserSecurityWarning");
             $("#errorContextPanel").hide();
             $("#proceedButton").show();
             $("#cancelButton").show();
@@ -95,7 +92,7 @@
         } else if (sessionModel.ErrorHeader != null) {
             $("#connectLoader").hide();
             $("#waitingForConnect").hide();
-            $("#connectContextpanelHeader").text("Error");
+            $("#connectContextpanelHeader").html("@Strings.Error");
             $("#errorContextPanel").show();
             $("#errorHeader").html(sessionModel.ErrorHeader);
             $("#errorMessage").html(sessionModel.ErrorMessage);
@@ -110,7 +107,7 @@
     function onFailure(response) {
         $("#connectLoader").hide();
         $("#waitingForConnect").hide();
-        $("#connectContextpanelHeader").text("Error");
+        $("#connectContextpanelHeader").html("@Strings.Error");
         $("#errorContextPanel").show();
         $("#errorHeader").html(sessionModel.ErrorHeader);
         $("#errorMessage").html(sessionModel.ErrorMessage);
@@ -148,10 +145,9 @@
                 url: "/Browser/Disconnect",
                 data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), backUrl: window.location.href },
                 success: function onSuccess(response) {
-                    console.log("success");
                 },
                 error: function (response) {
-                    console.error("error connecting to an OPC UA node: ", response.d, response.responseText);
+                    console.error("error connecting to an OPC UA server: ", response.d, response.responseText);
                 }
             });
         }

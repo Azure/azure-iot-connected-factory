@@ -951,7 +951,7 @@ Stack trace:
     <value>Ansluter...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Säkerhetsvarning</value>
     <comment>Label</comment>
   </data>

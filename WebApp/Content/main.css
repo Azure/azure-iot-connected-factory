@@ -7348,12 +7348,12 @@ p {
   left: 40px;
   top: 80px;
 }
-.graph-header {
+.graph_header {
   font-size: 16px;
   left: 25px;
   top: 10px;
 }
-.graph-container {
+.graph_container {
   background: #30404D;
   margin-left: 25px;
   margin-right: 25px;
@@ -7362,7 +7362,7 @@ p {
   width: 400px;
   height: 230px;
 }
-.graph-container:hover {
+.graph_container:hover {
   cursor: pointer;
 }
 .dashboard-graph-header-text {
@@ -7409,12 +7409,10 @@ p {
   .dashboard_contextpanel_select_filter_alert_button {
     left: 20px;
   }
-  .graph-header {
+  .graph_header {
     left: 15px;
   }
-  .graph-container {
-    /*margin-left: 15px;
-    margin-right: 15px;*/
+  .graph_container {
     margin-left: auto;
     margin-right: auto;
     width: 330px;

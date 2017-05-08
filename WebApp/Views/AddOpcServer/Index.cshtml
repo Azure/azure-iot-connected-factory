@@ -52,7 +52,7 @@
     {
         <div id="addOpcServerContextpanel" class="overlay">
             <div class="dashboard_contextpanel_header">
-                <div id="addOpcServerContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecutityWarning</div>
+                <div id="addOpcServerContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecurityWarning</div>
             </div>
             <a href="#" class="closebtn" onclick="closeAddOpcServerContextPanel();">&times;</a>
             <div id="addOpcServerBodyContextPanel" class="browser_error_details_container">
@@ -68,9 +68,6 @@
                 <div class="browser_error_contextpanel_container">
                     <span class="browser_error_contextpanel_header">@Strings.BrowserErrorMessage</span>
                     <div id="addOpcServerErrorHeader" class="browser_error_contextpanel_message"></div>
-                    <br />
-                    <span class="browser_error_contextpanel_header">@Strings.AlertDetailsDescriptionHeader</span>
-                    <div id="addOpcServerErrorMessage" class="browser_error_contextpanel_message"></div>
                 </div>
             </div>
 
@@ -110,14 +107,14 @@
         if (sessionModel.ErrorHeader == "UntrustedCertificate") {
             $("#waitingForConnect").hide();
             $("#addOpcServerBodyContextPanel").show();
-            $("#addOpcServerContextpanelHeader").text("Security Warning");
+            $("#addOpcServerContextpanelHeader").html("@Strings.BrowserSecurityWarning");
             $("#addOpcServerErrorContextPanel").hide();
             $("#proceedButton").show();
             $("#cancelButton").show();
         } else if (sessionModel.ErrorHeader != null) {
             $("#connectNewOpcServerLoader").hide();
             $("#waitingForConnect").hide();
-            $("#addOpcServerContextpanelHeader").text("Error");
+            $("#addOpcServerContextpanelHeader").html("@Strings.Error");
             $("#addOpcServerErrorContextPanel").show();
             $("#addOpcServerErrorHeader").html(sessionModel.ErrorHeader);
             $("#addOpcServerErrorMessage").html(sessionModel.ErrorMessage);
@@ -131,7 +128,7 @@
     function onFailure(response) {
         $("#connectNewOpcServerLoader").hide();
         $("#waitingForConnect").hide();
-        $("#addOpcServerContextpanelHeader").text("Error");
+        $("#addOpcServerContextpanelHeader").html("@Strings.Error");
         $("#addOpcServerErrorContextPanel").show();
         $("#addOpcServerErrorHeader").html(sessionModel.ErrorHeader);
         $("#addOpcServerErrorMessage").html(sessionModel.ErrorMessage);
@@ -174,10 +171,9 @@
                 url: "/Browser/Disconnect",
                 data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), backUrl: window.location.href },
                 success: function onSuccess(response) {
-                    console.log("success");
                 },
                 error: function (response) {
-                    console.error("error connecting to an OPC UA node: ", response.d, response.responseText);
+                    console.error("error connecting to an OPC UA server: ", response.d, response.responseText);
                 }
             });
         }

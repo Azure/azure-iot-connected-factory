@@ -951,7 +951,7 @@
     <value>Подключение...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Предупреждение о безопасности</value>
     <comment>Label</comment>
   </data>

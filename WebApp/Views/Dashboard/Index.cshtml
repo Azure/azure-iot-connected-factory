@@ -90,16 +90,16 @@
         <a href="#" class="closebtn" onclick="closeChartContextPanel();">&times;</a>
         <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
         <div id="nodeMsg" class="msg-container"></div>
-        <div id="graphHeader" class="graph-header">@Strings.GraphRDXLinkHeader</div>
-        <div id="graph1" class="graph-container" onclick="openRDXExplorerLink(rdxExplorerHourLink);">
+        <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
+        <div id="graph1" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerHourLink);">
             <div class="dashboard-graph-header-text">@Strings.GraphLastHour</div>
             <div id="dashboardContextpanelOnehourHistory" class="row"></div>
         </div>
-        <div id="graph2" class="graph-container" onclick="openRDXExplorerLink(rdxExplorerDayLink);">
+        <div id="graph2" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerDayLink);">
             <div class="dashboard-graph-header-text">@Strings.GraphLastDay</div>
             <div id="dashboardContextpanelOnedayHistory" class="row"></div>
         </div>
-        <div id="graph3" class="graph-container" onclick="openRDXExplorerLink(rdxExplorerWeekLink);">
+        <div id="graph3" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerWeekLink);">
             <div class="dashboard-graph-header-text">@Strings.GraphLastWeek</div>
             <div id="dashboardContextpanelOneweekHistory" class="row"></div>
         </div>
@@ -673,7 +673,6 @@
         // the width of browser is greater then 480px
         var widthGraph = 390;
     }
-    console.log("widthGraph = ",widthGraph);
 
     var heightGraph = 195;
     var paddingTop = 10;
