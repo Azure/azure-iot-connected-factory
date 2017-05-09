@@ -7348,12 +7348,12 @@ p {
   left: 40px;
   top: 80px;
 }
-.graph-header {
+.graph_header {
   font-size: 16px;
   left: 25px;
   top: 10px;
 }
-.graph-container {
+.graph_container {
   background: #30404D;
   margin-left: 25px;
   margin-right: 25px;
@@ -7362,7 +7362,7 @@ p {
   width: 400px;
   height: 230px;
 }
-.graph-container:hover {
+.graph_container:hover {
   cursor: pointer;
 }
 .dashboard-graph-header-text {
@@ -7401,6 +7401,21 @@ p {
   .dashboard_alerts_list_container {
     overflow-y: auto;
     max-height: none;
+  }
+  .dashboard_contextpanel_list_container {
+    margin-left: 30px;
+  }
+  .dashboard_contextpanel_select_filter_button,
+  .dashboard_contextpanel_select_filter_alert_button {
+    left: 20px;
+  }
+  .graph_header {
+    left: 15px;
+  }
+  .graph_container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 330px;
   }
 }
 @media (min-height: 992px) {
@@ -7991,6 +8006,12 @@ ul.add_gateway_point_list {
 @media screen and (max-height: 768px) {
   .overlay a {
     font-size: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .overlay.overlay-right-open,
+  .overlay.overlay-right-open-big {
+    width: 100%;
   }
 }
 /*

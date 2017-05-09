@@ -951,7 +951,7 @@ Seguimiento de la pila:
     <value>Conectando...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Advertencia de seguridad</value>
     <comment>Label</comment>
   </data>

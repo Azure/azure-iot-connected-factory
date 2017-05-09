@@ -951,7 +951,7 @@
     <value>正在連接...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>安全性警告</value>
     <comment>Label</comment>
   </data>

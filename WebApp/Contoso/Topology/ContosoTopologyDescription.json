@@ -95,6 +95,11 @@
                       "Type": "CallOpcMethod",
                       "Description": "Open valve",
                       "Parameter": "ns=2;i=435, ns=2;i=424, opc.tcp://scada2194.munich0.corp.contoso:51210/UA/Munich/ProductionLine0/AssemblyStation"
+                    },
+                    {
+                      "Type": "OpenWebPage",
+                      "Description": "Open schematics",
+                      "Parameter": "https://aka.ms/azureiot/psdeploymentstore/schematics"
                     }
                   ]
                 },

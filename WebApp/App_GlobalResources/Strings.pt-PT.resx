@@ -951,7 +951,7 @@ Acompanhamento da pilha:
     <value>A ligar...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Aviso de segurança</value>
     <comment>Label</comment>
   </data>

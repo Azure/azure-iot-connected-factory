@@ -951,7 +951,7 @@ Rastreamento de pilha:
     <value>Conectando...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Aviso de Segurança</value>
     <comment>Label</comment>
   </data>

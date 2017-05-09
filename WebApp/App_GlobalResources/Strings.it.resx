@@ -951,7 +951,7 @@ Analisi dello stack:
     <value>Connessione in corso...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Avviso di sicurezza</value>
     <comment>Label</comment>
   </data>

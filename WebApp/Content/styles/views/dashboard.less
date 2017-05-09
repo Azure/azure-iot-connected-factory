@@ -496,13 +496,13 @@ p{
     top: 80px;
 }
 
-.graph-header {
+.graph_header {
     font-size: @children-listitem-text-size;
     left: 25px;
     top: 10px;
 }
 
-.graph-container {
+.graph_container {
     background: @gauges-background-color;
     margin-left: 25px;
     margin-right: 25px;
@@ -557,7 +557,23 @@ p{
         overflow-y: auto;
         max-height: none;
     }
- }
+ .dashboard_contextpanel_list_container {
+        margin-left: 30px;
+    }
+ .dashboard_contextpanel_select_filter_button, 
+ .dashboard_contextpanel_select_filter_alert_button {
+        left: 20px;
+    }
+ .graph_header {
+    left: 15px;
+    }
+
+.graph_container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 330px;
+    }
+}
 
 @media (min-height: @screen-md-min) {
  .dashboard_children_list_container {

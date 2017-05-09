@@ -951,7 +951,7 @@ Stack trace:
     <value>Connecting...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Security Warning</value>
     <comment>Label</comment>
   </data>
@@ -962,5 +962,9 @@ Stack trace:
   <data name="BrowserContextPanelPublishing" xml:space="preserve">
     <value>Publishing...</value>
     <comment>Label</comment>
+  </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>UntrustedCertificate</value>
+    <comment>Error message.</comment>
   </data>
 </root>

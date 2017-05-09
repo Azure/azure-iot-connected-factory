@@ -951,7 +951,7 @@ Trace de la pile :
     <value>Connexion en cours...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Avertissement de sécurité</value>
     <comment>Label</comment>
   </data>
