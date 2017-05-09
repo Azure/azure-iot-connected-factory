@@ -81,7 +81,7 @@
         $("#hiddenEndpointUrl").val(sessionModel.EndpointUrl);
         $("#connectLoader").hide();
 
-        if (sessionModel.ErrorHeader == "UntrustedCertificate") {
+        if (sessionModel.ErrorHeader == "@Strings.UntrustedCertificate") {
             $("#waitingForConnect").hide();
             $("#connectBodyContextPanel").show();
             $("#connectContextpanelHeader").html("@Strings.BrowserSecurityWarning");

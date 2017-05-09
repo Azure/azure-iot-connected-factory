@@ -104,7 +104,7 @@
         $("#hiddenEndpointUrl").val(sessionModel.EndpointUrl);
         $("#connectNewOpcServerLoader").hide();
 
-        if (sessionModel.ErrorHeader == "UntrustedCertificate") {
+        if (sessionModel.ErrorHeader == "@Strings.UntrustedCertificate") {
             $("#waitingForConnect").hide();
             $("#addOpcServerBodyContextPanel").show();
             $("#addOpcServerContextpanelHeader").html("@Strings.BrowserSecurityWarning");

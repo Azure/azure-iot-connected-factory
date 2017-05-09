@@ -135,7 +135,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 ServiceResultException ex = exception as ServiceResultException;
                 if ((ex != null) && (ex.InnerResult != null) && (ex.InnerResult.StatusCode == StatusCodes.BadCertificateUntrusted))
                 {
-                    sessionModel.ErrorHeader = "UntrustedCertificate";
+                    sessionModel.ErrorHeader = Strings.UntrustedCertificate;
                     return Json(sessionModel);
                 }
 

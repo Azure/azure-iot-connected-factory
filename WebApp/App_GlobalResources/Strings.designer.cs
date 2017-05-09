@@ -1925,6 +1925,15 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UntrustedCertificate.
+        /// </summary>
+        public static string UntrustedCertificate {
+            get {
+                return ResourceManager.GetString("UntrustedCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must be signed in to continue..
         /// </summary>
         public static string YouMustBeSignedIn {

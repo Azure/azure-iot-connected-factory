@@ -963,4 +963,8 @@ Stack trace:
     <value>Publishing...</value>
     <comment>Label</comment>
   </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>UntrustedCertificate</value>
+    <comment>Error message.</comment>
+  </data>
 </root>
