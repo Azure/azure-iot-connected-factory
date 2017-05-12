@@ -951,7 +951,7 @@ Trasování zásobníku:
     <value>Připojování...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Upozornění zabezpečení</value>
     <comment>Label</comment>
   </data>

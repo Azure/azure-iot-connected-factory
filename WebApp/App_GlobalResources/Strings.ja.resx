@@ -951,7 +951,7 @@ Exceptionmessage:
     <value>接続しています...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>セキュリティの警告</value>
     <comment>Label</comment>
   </data>

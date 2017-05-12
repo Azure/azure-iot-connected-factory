@@ -937,9 +937,9 @@ namespace GlobalResources {
         /// <summary>
         ///   Looks up a localized string similar to Security Warning.
         /// </summary>
-        public static string BrowserSecutityWarning {
+        public static string BrowserSecurityWarning {
             get {
-                return ResourceManager.GetString("BrowserSecutityWarning", resourceCulture);
+                return ResourceManager.GetString("BrowserSecurityWarning", resourceCulture);
             }
         }
         
@@ -1921,6 +1921,15 @@ namespace GlobalResources {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UntrustedCertificate.
+        /// </summary>
+        public static string UntrustedCertificate {
+            get {
+                return ResourceManager.GetString("UntrustedCertificate", resourceCulture);
             }
         }
         

@@ -951,7 +951,7 @@ Stack-trace:
     <value>Verbinding maken...</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSecutityWarning" xml:space="preserve">
+  <data name="BrowserSecurityWarning" xml:space="preserve">
     <value>Beveiligingswaarschuwing</value>
     <comment>Label</comment>
   </data>
