@@ -7341,6 +7341,7 @@ p {
 .msg-container-header {
   font-size: 22px;
   left: 40px;
+  margin-right: 40px;
   top: 50px;
 }
 .msg-container {
@@ -7351,6 +7352,7 @@ p {
 .graph_header {
   font-size: 16px;
   left: 25px;
+  margin-right: 25px;
   top: 10px;
 }
 .graph_container {
@@ -7488,6 +7490,7 @@ p {
   margin-top: 10px;
   padding-bottom: 5px;
   font-size: 16px;
+  word-wrap: break-word;
 }
 .browser_connect_button {
   height: 35px;
@@ -7731,7 +7734,7 @@ ul.add_gateway_point_list {
 }
 .btn.btn_browser {
   background: #e2e3e3;
-  width: 150px;
+  min-width: 150px;
 }
 .btn.btn_browser:hover {
   background: #e7f4f9;
@@ -7966,7 +7969,7 @@ ul.add_gateway_point_list {
 /* Content inside the overlay */
 .overlay-content {
   position: relative;
-  top: 10%;
+  top: 5%;
   width: 80%;
   text-align: center;
   margin-left: 10px;

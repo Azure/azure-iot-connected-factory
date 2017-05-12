@@ -17,9 +17,7 @@
                     @using (Ajax.BeginForm("Connect", "Browser", new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
                     {
                         @Html.AntiForgeryToken();
-                        <div class="row browser_connect_selection_label">
-                            <p>@Html.Raw(Strings.BrowserEnterOwn)</p>
-                        </div>
+                        <div class="row browser_connect_selection_label">@Html.Raw(Strings.BrowserEnterOwn)</div>
                         <div class="browser_connect_selection_textbox">
                             @Html.TextBox("endpointUrl", null, new { style = "width:100%" })
                         </div>
@@ -143,7 +141,7 @@
         $("#addOpcServerBodyContextPanel").hide();
         $("#addOpcServerErrorContextPanel").hide();
         $("#addOpcServerContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
-        $("#addOpcServerContextpanelHeader").text("Connect");
+        $("#addOpcServerContextpanelHeader").html("@Strings.BrowserConnect");
         $("#proceedButton").hide();
         $("#cancelButton").hide();
         $("#waitingForConnect").show();
@@ -155,7 +153,7 @@
     })
 
     function connecting() {
-        $("#addOpcServerContextpanelHeader").text("Connect");
+        $("#addOpcServerContextpanelHeader").html("@Strings.BrowserConnect");
         $("#addOpcServerBodyContextPanel").hide();
         $("#proceedButton").hide();
         $("#cancelButton").hide();

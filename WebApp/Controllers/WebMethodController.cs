@@ -53,16 +53,16 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             AggregatedTimeSeriesResult timeSeries;
             ContosoOpcUaNode contosoOpcUaNode = Startup.Topology.GetOpcUaNode(key, nodeId);
             Station station = Startup.Topology.GetStation(key);
+            string[] data = new string[3];
 
             if ((contosoOpcUaNode == null) || (station == null))
             {
-                return JsonConvert.SerializeObject("Error");
+                data[0] = "Error";
+                return JsonConvert.SerializeObject(data);
             }
 
             if (!(RDXUtils.IsAggregatedOperator(contosoOpcUaNode.OpCode)))
             {
-                string[] data = new string[3];
-
                 data[0] = "NoTimeSeries";
                 // Non aggregating opcodes are not updated unless they have a relevance
                 data[1] = contosoOpcUaNode.Last.Value.ToString(CultureInfo.InvariantCulture);

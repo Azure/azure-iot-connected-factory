@@ -118,7 +118,7 @@
         $("#connectBodyContextPanel").hide();
         $("#errorContextPanel").hide();
         $("#connectContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
-        $("#connectContextpanelHeader").text("Connect");
+        $("#connectContextpanelHeader").html("@Strings.BrowserConnect");
         $("#proceedButton").hide();
         $("#cancelButton").hide();
         $("#waitingForConnect").show();
@@ -129,7 +129,7 @@
     })
 
     function connecting() {
-        $("#connectContextpanelHeader").text("Connect");
+        $("#connectContextpanelHeader").html("@Strings.BrowserConnect");
         $("#connectBodyContextPanel").hide();
         $("#proceedButton").hide();
         $("#cancelButton").hide();

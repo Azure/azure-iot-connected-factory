@@ -963,8 +963,28 @@ Stack trace:
     <value>Publishing...</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserWriteWarning" xml:space="preserve">
+    <value>You should only proceed if you are sure you wish to make this change.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserWriteWarningHeader" xml:space="preserve">
+    <value>This change will alter how your production line is configured.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NewFactoryName" xml:space="preserve">
+    <value>New Factory</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewProductionLineName" xml:space="preserve">
+    <value>New Production Line</value>
+    <comment>Label</comment>
+  </data>
   <data name="UntrustedCertificate" xml:space="preserve">
     <value>UntrustedCertificate</value>
     <comment>Error message.</comment>
+  </data>
+  <data name="NewStationName" xml:space="preserve">
+    <value>New Station</value>
+    <comment>Label</comment>
   </data>
 </root>

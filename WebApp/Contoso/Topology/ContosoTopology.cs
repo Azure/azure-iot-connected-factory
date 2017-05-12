@@ -7,6 +7,7 @@ using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Topology;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.OpcUa;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
 using Newtonsoft.Json;
+using GlobalResources;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 {
@@ -652,9 +653,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         /// <summary>
         /// Constants used to populate new factory/production line.
         /// </summary>
-        const string _newFactoryName = "New Factory";
-        const string _newProductionLineName = "New Production Line";
-        const string _newStationName = "New Station";
+        string _newFactoryName = Strings.NewFactoryName;
+        string _newProductionLineName = Strings.NewProductionLineName;
+        string _newStationName = Strings.NewStationName;
 
         /// <summary>
         /// Get new factory node. Creates new node if new factory doesn't exist.

@@ -459,7 +459,7 @@
         $("#dashboardContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
         setLabel(label);
 
-        $("#dashboardContextpanelGraphHeader").text(label);
+        $("#dashboardContextpanelGraphHeader").html(label);
 
         linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
             rdxExplorerHourLink = rdxUrl;
@@ -488,7 +488,7 @@
         $("#dashboardContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
         setLabel(name);
 
-        $("#dashboardContextpanelGraphHeader").text(name);
+        $("#dashboardContextpanelGraphHeader").html(name);
 
         linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
             rdxExplorerHourLink = rdxUrl;
@@ -513,8 +513,8 @@
     function openContextPanelFromAlert(alertId) {
         $('#alertDetailActionResultHeader').hide();
         $('#alertDetailActionResult').hide();
-        $('#alertDetailActionResult').text('@Strings.ActionDetailResultExecuting');
-        $("#alertContextpanelHeader").text('@Strings.AlertDetails');
+        $('#alertDetailActionResult').html('@Strings.ActionDetailResultExecuting');
+        $("#alertContextpanelHeader").html('@Strings.AlertDetails');
         $("#alertDetailTimeSeriesContainer").hide();
         $("#alertDetailNoTimeSeriesContainer").hide();
         $("#timeSeriesLoadingContainer").show();
@@ -533,13 +533,13 @@
         });
 
         if (i == alertInformation.length) {
-            $("#alertDetailAlertId").text('');
-            $("#alertDetailDescription").text('@Strings.AlertDetailsUnknown');
-            $("#alertDetailTime").text('@Strings.AlertDetailsUnknown');
-            $("#alertDetailLocation").text('@Strings.AlertDetailsUnknown');
-            $("#alertDetailOccurences").text('@Strings.AlertDetailsUnknown');
+            $("#alertDetailAlertId").html('');
+            $("#alertDetailDescription").html('@Strings.AlertDetailsUnknown');
+            $("#alertDetailTime").html('@Strings.AlertDetailsUnknown');
+            $("#alertDetailLocation").html('@Strings.AlertDetailsUnknown');
+            $("#alertDetailOccurences").html('@Strings.AlertDetailsUnknown');
             $("#alertContextpanelActionPicker").children().remove();
-            $("#alertContextpanelActionPicker").text('@Strings.AlertDetailsNoActionAvailable');
+            $("#alertContextpanelActionPicker").html('@Strings.AlertDetailsNoActionAvailable');
         } else {
             if (alertInformation[i].SubKey == "null") {
                 var relevance = @((Int16)ContosoPerformanceRelevance.NotRelevant);
@@ -574,9 +574,9 @@
                 getDataForOpcUaNode(alertInformation[i].Key, alertInformation[i].SubKey, "@ContosoTopologyNode.AggregationView.Hour", alertDetailChart);
             }
 
-            $("#alertDetailAlertId").text(alertInformation[i].AlertId);
-            $("#alertDetailDescription").text(alertInformation[i].CauseDescription);
-            $("#alertDetailTime").text(alertInformation[i].UxTime);
+            $("#alertDetailAlertId").html(alertInformation[i].AlertId);
+            $("#alertDetailDescription").html(alertInformation[i].CauseDescription);
+            $("#alertDetailTime").html(alertInformation[i].UxTime);
             var alertLocation = alertInformation[i].TopologyDetails.reduce(function(acc, val) {
                 if (val) {
                     if (acc) {
@@ -587,8 +587,8 @@
                 }
                 return acc;
             }, '');
-            $("#alertDetailLocation").text(alertLocation);
-            $("#alertDetailOccurences").text(alertInformation[i].Occurences);
+            $("#alertDetailLocation").html(alertLocation);
+            $("#alertDetailOccurences").html(alertInformation[i].Occurences);
             $("#alertContextpanelActionPicker").children().remove();
             $("#alertContextpanelActionPicker").selectpicker('refresh');
             if (alertInformation[i].AlertActionInfo && alertInformation[i].AlertActionInfo.length > 0) {
@@ -619,7 +619,7 @@
     }
 
     function alertExecuteAction(alertId, alertActionId) {
-        $('#alertDetailActionResult').text('@Strings.ActionDetailResultExecuting');
+        $('#alertDetailActionResult').html('@Strings.ActionDetailResultExecuting');
         $('#alertDetailActionResultHeader').show();
         $('#alertDetailActionResult').show();
         $('#alertDetailExecuteActionButton').addClass('disabled');
@@ -630,14 +630,14 @@
                 var result = JSON.parse(response);
                 switch (result[0].actionType) {
                     case @((Int16)ContosoAlertActionType.AcknowledgeAlert):
-                        $('#alertDetailActionResult').text('@Strings.AlertActionAcknowledgeSuccessful');
+                        $('#alertDetailActionResult').html('@Strings.AlertActionAcknowledgeSuccessful');
                         // Close context panel after a short pause.
                         setTimeout(function() {
                             closeAlertContextPanel();
                         }, 1500);
                         break;
                     case @((Int16)ContosoAlertActionType.CloseAlert):
-                        $('#alertDetailActionResult').text('@Strings.AlertActionCloseSuccessful');
+                        $('#alertDetailActionResult').html('@Strings.AlertActionCloseSuccessful');
                         // Close context panel after a short pause.
                         setTimeout(function() {
                             closeAlertContextPanel();
@@ -646,15 +646,15 @@
                     case @((Int16)ContosoAlertActionType.OpenWebPage):
                         // Open a new web page.
                         window.open(result[1].url);
-                        $('#alertDetailActionResult').text('@Strings.AlertActionWebPageOpened');
+                        $('#alertDetailActionResult').html('@Strings.AlertActionWebPageOpened');
                         break;
                 }
             },
             error: function(response) {
                 if (response.status == 403) {
-                    $('#alertDetailActionResult').text('@Strings.ErrorInsufficientPermissions');
+                    $('#alertDetailActionResult').html('@Strings.ErrorInsufficientPermissions');
                 } else {
-                    $('#alertDetailActionResult').text('@Strings.ErrorAccessProblem');
+                    $('#alertDetailActionResult').html('@Strings.ErrorAccessProblem');
                 }
             },
             complete: function() {
@@ -725,7 +725,7 @@
             },
             x: {
                 label: {
-                    text: '@Strings.LastHourHistoryGraphXlabel',
+                    text: $('<div/>').html('@Strings.LastHourHistoryGraphXlabel').text(),
                     position: 'outer-center'
                 },
                 show: true,
@@ -789,7 +789,7 @@
             },
             x: {
                 label: {
-                    text: '@Strings.LastDayHistoryGraphXlabel',
+                    text: $('<div/>').html('@Strings.LastDayHistoryGraphXlabel').text(),
                     position: 'outer-center'
                 },
                 show: true,
@@ -852,7 +852,7 @@
             },
             x: {
                 label: {
-                    text: '@Strings.LastWeekHistoryGraphXlabel',
+                    text: $('<div/>').html('@Strings.LastWeekHistoryGraphXlabel').text(),
                     position: 'outer-center'
                 },
                 show: true,
@@ -916,7 +916,7 @@
             },
             x: {
                 label: {
-                    text: '@Strings.LastHourHistoryGraphXlabel',
+                    text: $('<div/>').html('@Strings.LastHourHistoryGraphXlabel').text(),
                     position: 'outer-center'
                 },
                 show: true,
@@ -961,7 +961,7 @@
         progressCount = 0;
         var intervalId = setInterval(function() {
             progressCount = ++progressCount % 10;
-            $("#timeSeriesLoadingText").text("@Strings.AnimationTimeSeriesLoading " + Array(progressCount+1).join("."));
+            $("#timeSeriesLoadingText").html("@Strings.AnimationTimeSeriesLoading " + Array(progressCount+1).join("."));
         }, 800);
         $.post({
             url: "/WebMethod/GetOeeKpiData",
@@ -987,7 +987,7 @@
                 }
                 xlabel.unshift("x");
 
-                if (data[0] != "Error") {
+                if (obj != "Error") {
                     $("#timeSeriesLoadingContainer").hide();
                     $("#alertDetailTimeSeriesContainer").show();
                     $("#alertDetailNoTimeSeriesContainer").hide();
@@ -1000,11 +1000,11 @@
                     $("#graph3").hide();
                     $("#nodeMsgHeader").show();
                     $("#nodeMsg").show();
-                    $("#nodeMsg").text('@Strings.ErrorGetOeeKpiData');
+                    $("#nodeMsg").html('@Strings.ErrorGetOeeKpiData');
                     $("#timeSeriesLoadingContainer").hide();
                     $("#alertDetailTimeSeriesContainer").hide();
                     $("#alertDetailNoTimeSeriesContainer").show();
-                    $("#alertDetailNoTimeSeriesValue").text('@Strings.ErrorGetOeeKpiData');
+                    $("#alertDetailNoTimeSeriesValue").html('@Strings.ErrorGetOeeKpiData');
                 }
             },
             error: function(response) {
@@ -1020,7 +1020,7 @@
         progressCount = 0;
         var intervalId = setInterval(function() {
             progressCount = ++progressCount % 10;
-            $("#timeSeriesLoadingText").text("@Strings.AnimationTimeSeriesLoading " + Array(progressCount+1).join("."));
+            $("#timeSeriesLoadingText").html("@Strings.AnimationTimeSeriesLoading " + Array(progressCount+1).join("."));
         }, 800);
         $.post({
             url: "/WebMethod/GetDataForOpcUaNode",
@@ -1046,7 +1046,7 @@
                 }
                 xlabel.unshift("x");
 
-                if ((data[0] != "Error") && (data[0] != "NoTimeSeries")) {
+                if ((obj[0] != "Error") && (obj[0] != "NoTimeSeries")) {
                     $("#timeSeriesLoadingContainer").hide();
                     $("#alertDetailTimeSeriesContainer").show();
                     $("#alertDetailNoTimeSeriesContainer").hide();
@@ -1062,12 +1062,12 @@
                     $("#timeSeriesLoadingContainer").hide();
                     $("#alertDetailTimeSeriesContainer").hide();
                     $("#alertDetailNoTimeSeriesContainer").show();
-                    if (data[0] == "Error") {
+                    if (obj[0] == "Error") {
                         $("#nodeMsg").text('@Strings.ErrorGetDataForOpcUaNode');
-                        $("#alertDetailNoTimeSeriesValue").text('@Strings.ErrorGetDataForOpcUaNode');
+                        $("#alertDetailNoTimeSeriesValue").html('@Strings.ErrorGetDataForOpcUaNode');
                     } else {
-                        $("#nodeMsg").text(nodeName + ' = ' + data[1] + data[2]);
-                        $("#alertDetailNoTimeSeriesValue").text(nodeName + ' = ' + data[1] + data[2]);
+                        $("#nodeMsg").text(nodeName + ' = ' + obj[1] + obj[2]);
+                        $("#alertDetailNoTimeSeriesValue").html(nodeName + ' = ' + obj[1] + obj[2]);
                     }
                 }
             },

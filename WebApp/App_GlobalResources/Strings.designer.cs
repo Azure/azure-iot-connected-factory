@@ -989,6 +989,24 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You should only proceed if you are sure you wish to make this change..
+        /// </summary>
+        public static string BrowserWriteWarning {
+            get {
+                return ResourceManager.GetString("BrowserWriteWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This change will alter how your production line is configured..
+        /// </summary>
+        public static string BrowserWriteWarningHeader {
+            get {
+                return ResourceManager.GetString("BrowserWriteWarningHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Factory Locations.
         /// </summary>
         public static string ChildrenFactoryListContainerHeaderPostfix {
@@ -1498,6 +1516,33 @@ namespace GlobalResources {
         public static string NavigationMenuSidebarSizeToggle {
             get {
                 return ResourceManager.GetString("NavigationMenuSidebarSizeToggle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Factory.
+        /// </summary>
+        public static string NewFactoryName {
+            get {
+                return ResourceManager.GetString("NewFactoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Production Line.
+        /// </summary>
+        public static string NewProductionLineName {
+            get {
+                return ResourceManager.GetString("NewProductionLineName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Station.
+        /// </summary>
+        public static string NewStationName {
+            get {
+                return ResourceManager.GetString("NewStationName", resourceCulture);
             }
         }
         
