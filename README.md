@@ -37,6 +37,11 @@ Get your Bing Maps API for Enterprise QueryKey from the Azure portal:
   
 ### Visual Studio Solution
   * **Connectedfactory:** contains the source code for the complete preconfigured solution, including the solution portal web app and the simulated factories.
+
+### Requirements
+  The project was developed and tested using the following tools:
+  * VisualStudio 2015 Update 3
+  * .NetCore 1.0 with SDK Preview 2 build 3121
   
 ## Feedback
 
