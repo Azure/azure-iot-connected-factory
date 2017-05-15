@@ -2005,7 +2005,8 @@ if ($script:Command -eq "delete")
     }
     else
     {
-        Write-Warning ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot find resource group name '{0}'. Do you have selected the correct subscription by Select-AzureRmSubscription?" -f $script:SuiteName)
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot find resource group name '{0}'. Have you selected the correct subscription by Select-AzureRmSubscription?" -f $script:SuiteName)
+        throw ("Cannot find resource group name '{0}'. Do you have selected the correct subscription by Select-AzureRmSubscription?" -f $script:SuiteName)
     }
 
     # Remove the WebApp.
