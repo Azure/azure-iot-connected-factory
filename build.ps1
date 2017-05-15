@@ -12,6 +12,10 @@
     The name of your solution deployment. The name must match the following regex: "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{3,49}[a-zA-Z0-9]{1,1}$"
 .PARAMETER AzureEnvironmentName
     The name of the Azure environment to deploy your solution to. Supported values are: "AzureCloud"
+.PARAMETER LowCost
+    Use low cost SKUs of the required Azure resources.
+.PARAMETER Force
+    Enforced deployment even there is already a deployment with the same name.
 .PARAMETER PresetAzureAccountName
     The name of the user account to use. This prevents from entering the selection menu if the account is valid.
 .PARAMETER PresetAzureSubscriptionName
@@ -80,6 +84,8 @@ Param(
 [string] $AzureEnvironmentName = "AzureCloud",
 [Parameter(Mandatory=$false, HelpMessage="Specify a username to use for the Azure deployment.")]
 [switch] $LowCost = $false,
+[Parameter(Mandatory=$false, HelpMessage="Enforce redeployment.")]
+[switch] $Force = $false,
 [Parameter(Mandatory=$false, HelpMessage="Flag to use SKUs with lowest cost for all required resources.")]
 [string] $PresetAzureAccountName,
 [Parameter(Mandatory=$false, HelpMessage="Specify the Azure subscription to use for the Azure deployment.")]
@@ -2087,6 +2093,13 @@ $script:ArmParameter = @{}
 # Respect existing Sku values
 if ($script:SuiteExists)
 {
+    # Block redeployment
+    if ($script:Command -eq "installprebuilt" -or $script:Command -eq "local" -or $script:Command -eq "cloud" -and $script:Force -eq $false)
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - A deployment with name '{0}' already exists. Please use parameter -Force to enforce a redeployment." -f $script:SuiteName)
+        throw ("An deployment with name '{0}' does already exists. Please use parameter -Force to enforce redeployment." -f $script:SuiteName)
+    }
+
     try 
     {
         $storageResource = Get-AzureRmResource -ResourceName $script:StorageAccount.StorageAccountName -ResourceType Microsoft.´Storage/storageAccounts -ResourceGroupName $script:ResourceGroupName
