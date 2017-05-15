@@ -758,7 +758,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             ContosoTopologyNode topologyNode = TopologyTable[alert.Key] as ContosoTopologyNode;
 
             alertInfo.AlertId = alert.AlertId;
-            alertInfo.CauseDescription = alert.GetAlertCauseDescription();
             alertInfo.Cause = alert.Cause;
             alertInfo.Occurences = sameCauseAlertsCount;
             List<string> parentList = GetFullHierarchy(nodeKey);

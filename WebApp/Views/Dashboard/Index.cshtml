@@ -510,6 +510,55 @@
     }
 
     // Alert details.
+    function getAlertDescription(alertCause) {
+        var description = '@Strings.AlertDetailsUnknown';
+        switch (alertCause) {
+            case @((Int16)ContosoAlertCause.AlertCauseValueBelowMinimum):
+                description = '@Strings.AlertValueBelowMinimum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseValueAboveMaximum):
+                description = '@Strings.AlertValueAboveMaximum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeeOverallBelowMinimum):
+                description = '@Strings.AlertOeeOverallBelowMinimum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeeOverallAboveMaximum):
+                description = '@Strings.AlertOeeOverallAboveMaximum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeeAvailabilityBelowMinimum):
+                description = '@Strings.AlertOeeAvailabilityBelowMinimum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeeAvailabilityAboveMaximum):
+                description = '@Strings.AlertOeeAvailabilityAboveMaximum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeePerformanceBelowMinimum):
+                description = '@Strings.AlertOeePerformanceBelowMinimum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeePerformanceAboveMaximum):
+                description = '@Strings.AlertOeePerformanceAboveMaximum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeeQualityBelowMinimum):
+                description = '@Strings.AlertOeeQualityBelowMinimum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseOeeQualityAboveMaximum):
+                description = '@Strings.AlertOeeQualityAboveMaximum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseKpi1BelowMinimum):
+                description = '@Strings.AlertKpi1BelowMinimum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseKpi1AboveMaximum):
+                description = '@Strings.AlertKpi1AboveMaximum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseKpi2BelowMinimum):
+                description = '@Strings.AlertKpi2BelowMinimum';
+                break;
+            case @((Int16)ContosoAlertCause.AlertCauseKpi2AboveMaximum):
+                description = '@Strings.AlertKpi2AboveMaximum';
+                break;
+        }
+        return description;
+    }
+
     function openContextPanelFromAlert(alertId) {
         $('#alertDetailActionResultHeader').hide();
         $('#alertDetailActionResult').hide();
@@ -575,7 +624,7 @@
             }
 
             $("#alertDetailAlertId").html(alertInformation[i].AlertId);
-            $("#alertDetailDescription").html(alertInformation[i].CauseDescription);
+            $("#alertDetailDescription").html(getAlertDescription(alertInformation[i].Cause));
             $("#alertDetailTime").html(alertInformation[i].UxTime);
             var alertLocation = alertInformation[i].TopologyDetails.reduce(function(acc, val) {
                 if (val) {
@@ -1212,7 +1261,7 @@
                                     alertsList += '<div class="dashboard_alerts_listitem_container alert_status_active row" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')">';
                                 }
                                 alertsList += '<div class="col-xs-12">';
-                                alertsList += '<div class="dashboard_alerts_listitem_source overflow row">' + session.Alerts[j].CauseDescription + '</div>';
+                                alertsList += '<div class="dashboard_alerts_listitem_source overflow row">' + getAlertDescription(session.Alerts[j].Cause) + '</div>';
                                 alertsList += '<div class="dashboard_alerts_listitem_source_details_container row">';
                                 alertsList += '<div class="dashboard_alerts_listitem_source_details overflow col-xs-7">';
                                 var detailsIndex = 1;

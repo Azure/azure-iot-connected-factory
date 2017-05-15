@@ -27,17 +27,11 @@
             {
                 alertStatusClass = "alert_status_active";
             }
+            var alertDescription = Strings.AlertDetailsUnknown;
+            alertDescription = ContosoAlert.GetAlertCauseDescription(alert.Cause);
             <div class="dashboard_alerts_listitem_container @alertStatusClass row" onclick="openContextPanelFromAlert(@alert.AlertId)">
                 <div class="col-xs-12">
-                    @if (alert.Occurences == 1)
-                    {
-                        <div class="dashboard_alerts_listitem_source overflow row">@alert.CauseDescription</div>
-                    }
-                    else
-                    {
-                        <div class="dashboard_alerts_listitem_source overflow row">@alert.CauseDescription (@alert.Occurences)</div>
-
-                    }
+                    <div class="dashboard_alerts_listitem_source overflow row">@alertDescription</div>
                     <div class="dashboard_alerts_listitem_source_details_container row">
                         <div class="dashboard_alerts_listitem_source_details overflow col-xs-7">
                             @{ int i = 0;}

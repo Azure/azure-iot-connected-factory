@@ -224,9 +224,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         /// <summary>
         /// Returns a description of the alert cause, which is shown in the UX.
         /// </summary>
-        public string GetAlertCauseDescription()
+        public static string GetAlertCauseDescription(ContosoAlertCause cause)
         {
-            switch (Cause)
+            switch (cause)
             {
                 case ContosoAlertCause.AlertCauseOeeOverallBelowMinimum:
                     return Strings.AlertOeeOverallBelowMinimum;
@@ -269,10 +269,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
                 case ContosoAlertCause.AlertCauseValueAboveMaximum:
                     return Strings.AlertValueAboveMaximum;
-
-                default:
-                    throw new Exception($"The alert cause '{Cause}' is unknown.");
             }
+            return Strings.AlertDetailsUnknown;
         }
     }
 
@@ -306,9 +304,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
         // Occurences count of alerts with the same cause in this toplogy node.
         public long Occurences { get; set; }
-
-        // Description of the root cause of the alert, shown in the UX
-        public string CauseDescription { get; set; }
 
         // Description of the toplology node, shown in the UX.
         public string[] TopologyDetails { get; set; }

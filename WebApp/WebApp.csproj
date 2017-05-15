@@ -441,11 +441,6 @@
     <Compile Include="RDX\RDXOpcUaQueries.cs" />
     <Compile Include="RDX\RDXTopologyWorker.cs" />
     <Compile Include="RDX\RDXUtils.cs" />
-    <Compile Include="Resources\Strings.Designer.cs">
-      <DependentUpon>Strings.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Security\PrincipalHelper.cs" />
     <Compile Include="Security\Permission.cs" />
     <Compile Include="Security\PermsChecker.cs" />
@@ -839,11 +834,6 @@
     <EmbeddedResource Include="App_GlobalResources\Strings.zh-TW.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Strings.zh-TW.designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.de.resx" />
-    <EmbeddedResource Include="Resources\Strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
