@@ -57,10 +57,11 @@ $VerbosePreference = "Continue"
 # Local path
 $LocalPath = ((Get-Location).Path) + "\Logs"
 Remove-Item -Path $LocalPath -Force -Recurse -ErrorAction SilentlyContinue | Out-Null
-New-Item -Path $LocalPath -ItemType Directory | Out-Null
+New-Item -Path $LocalPath -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 
 # Timeout for SSH operations
 $ConnectionTimeout = 30000
+$SshTimeout = 600
 
 # Set variables
 if ([string]::IsNullOrEmpty($script:DeploymentName))
@@ -154,28 +155,39 @@ if ($vmPublicIp -eq $null)
 
 try
 {
-# Get IP address
-$ipAddress = Get-AzureRmPublicIpAddress -ResourceGroupName $DeploymentName
-Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of the VM is '{0}'" -f $ipAddress.IpAddress)
+    # Get IP address
+    $ipAddress = Get-AzureRmPublicIpAddress -ResourceGroupName $DeploymentName
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of the VM is '{0}'" -f $ipAddress.IpAddress)
 
-# Create a PSCredential object for SSH
-$securePassword = ConvertTo-SecureString $DockerPassword -AsPlainText -Force
-$sshCredentials = New-Object System.Management.Automation.PSCredential ($DockerUsername, $securePassword)
+    # Create a PSCredential object for SSH
+    $securePassword = ConvertTo-SecureString $DockerPassword -AsPlainText -Force
+    $sshCredentials = New-Object System.Management.Automation.PSCredential ($DockerUsername, $securePassword)
 
-# Create SSH session
-Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Create SSH session to VM with IP address '{0}'" -f $ipAddress.IpAddress)
-$session = New-SSHSession $ipAddress.IpAddress -Credential $sshCredentials -AcceptKey -ConnectionTimeout $ConnectionTimeout
-if ($session -eq $null)
-{
-    Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot create SSH session to VM '{0}'" -f  $ipAddress.IpAddress)
-    throw ("Cannot create SSH session to VM '{0}'" -f  $ipAddress.IpAddress)
-}
+    # Create SSH session
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Create SSH session to VM with IP address '{0}'" -f $ipAddress.IpAddress)
+    $session = New-SSHSession $ipAddress.IpAddress -Credential $sshCredentials -AcceptKey -ConnectionTimeout $ConnectionTimeout
+    if ($session -eq $null)
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot create SSH session to VM '{0}'" -f  $ipAddress.IpAddress)
+        throw ("Cannot create SSH session to VM '{0}'" -f  $ipAddress.IpAddress)
+    }
 
-# Copy simulation binaries to VM
-Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Download Logs folder from VM")
-Get-SCPFolder -RemoteFolder "/home/docker/Logs" -LocalFolder "$LocalPath" -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -ConnectionTimeout $ConnectionTimeout
+    # Delete the old archive.
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Download Logs (in bzip2 format) from VM to $script:LocalFile")
+	$remoteFile = "Logs.tar.bz2"
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete the old archive '$remoteFile'")
+    $vmCommand = "rm -f $sourceArchiveName"
+    Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand | Out-Null
 
-
+    # Compress the simulation logs in the VM.
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Compress the log files")
+    $vmCommand = "tar -cjvf Logs.tar.bz2 Logs"
+    $status = Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand -ErrorAction SilentlyContinue
+	
+    # Copy the logs archive.
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Download the log archive")
+    $localFile = "$LocalPath/Logs_" + (Get-Date  -Format FileDateTimeUniversal) + ".tar.bz2"
+    Get-SCPFile -RemoteFile "/home/docker/$remoteFile" -LocalFile $localFile  -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -ConnectionTimeout $ConnectionTimeout
 }
 finally
 {
