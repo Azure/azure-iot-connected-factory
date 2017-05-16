@@ -29,6 +29,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
             ControllerBuilder.Current.DefaultNamespaces.Add("Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.WebApiControllers");
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         protected void Session_OnStart()
