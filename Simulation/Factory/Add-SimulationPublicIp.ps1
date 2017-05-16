@@ -10,11 +10,15 @@
 #>
 [CmdletBinding()]
 Param(
-[Parameter(Position=0, Mandatory=$true, HelpMessage="Specify the name of the deployment (this is the name used as the name for the VM and the resource group)")]
+[Parameter(Position=0, Mandatory=$false, HelpMessage="Specify the name of the deployment (this is the name used as the name for the VM and the resource group)")]
 [string] $DeploymentName
 )
 
 # Set variables
+if ([string]::IsNullOrEmpty($script:DeploymentName))
+{
+    $script:DeploymentName = $script:SuiteName = $env:USERNAME + "ConnfactoryLocal";
+}
 $script:VmName = $DeploymentName
 $script:ResourceGroupName = $DeploymentName
 

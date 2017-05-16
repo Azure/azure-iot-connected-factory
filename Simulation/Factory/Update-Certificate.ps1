@@ -24,8 +24,38 @@ Param(
 [Parameter(Position=2, Mandatory=$false, HelpMessage="Specify the name of the user in the VM.")]
 [string] $DockerUsername="docker",
 [Parameter(Position=3, Mandatory=$false, HelpMessage="Specify the password for the user.")]
-[string] $DockerPassword="Passw0rd"
+[string] $DockerPassword
 )
+
+Function GetEnvSetting()
+{
+    Param(
+        [Parameter(Mandatory=$true,Position=0)] [string] $settingName,
+        [Parameter(Mandatory=$false,Position=1)] [switch] $errorOnNull = $true
+    )
+
+    $setting = $DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']")
+
+    if ($setting -eq $null)
+    {
+        if ($errorOnNull)
+        {
+            Write-Error -Category ObjectNotFound -Message ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot locate setting '{0}' in deployment settings file {1}." -f $settingName, $script:DeploymentSettingsFile)
+            throw ("Cannot locate setting '{0}' in deployment settings file {1}." -f $settingName, $script:DeploymentSettingsFile)
+        }
+    }
+    return $setting.value
+}
+
+
+################################################################################################################################################################
+#
+# Start of script
+#
+################################################################################################################################################################
+
+$VerbosePreference = "Continue"
+
 
 Import-Module Posh-SSH
 
@@ -42,6 +72,23 @@ if ($script:DeploymentName -match ($env:USERNAME + "ConnfactoryLocal"))
 $script:VmName = $DeploymentName
 $script:ResourceGroupName = $DeploymentName
 $script:SshTimeout = 120
+
+# Read the stored docker password.
+if ([string]::IsNullOrEmpty($script:DockerPassword))
+{
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - No VM password specified on command line. Trying to read from config.user file.")
+    $script:IoTSuiteRootPath = (Split-Path $MyInvocation.MyCommand.Path) + "/../.."
+    if ($script:LocalDeployment)
+    {
+        $script:DeploymentSettingsFile = "{0}/local.config.user" -f $script:IoTSuiteRootPath
+    }
+    else
+    {
+        $script:DeploymentSettingsFile = "{0}/{1}.config.user" -f $script:IoTSuiteRootPath, $script:DeploymentName
+    }
+    $script:DeploymentSettingsXml = [xml](Get-Content "$script:DeploymentSettingsFile")
+    $script:DockerPassword = GetEnvSetting "DockerPassword"
+}
 
 # Find VM 
 try 

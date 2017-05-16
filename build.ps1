@@ -430,7 +430,7 @@ Function EnvSettingExists()
         [Parameter(Mandatory=$true,Position=0)] $settingName
     )
 
-    return ($DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']") -ne $null);
+    return ($script:DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']") -ne $null);
 }
 
 Function GetOrSetEnvSetting()
@@ -476,7 +476,7 @@ Function GetEnvSetting()
         [Parameter(Mandatory=$false,Position=1)] [switch] $errorOnNull = $true
     )
 
-    $setting = $DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']")
+    $setting = $script:DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']")
 
     if ($setting -eq $null)
     {
@@ -499,17 +499,17 @@ Function PutEnvSetting()
     if (EnvSettingExists $settingName)
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - {0} changed to {1}" -f $settingName, $settingValue)
-        $DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']").value = $settingValue
+        $script:DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']").value = $settingValue
     }
     else
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Added {0} with value {1}" -f $settingName, $settingValue)
-        $node = $DeploymentSettingsXml.CreateElement("setting")
+        $node = $script:DeploymentSettingsXml.CreateElement("setting")
         $node.SetAttribute("name", $settingName) | Out-Null
         $node.SetAttribute("value", $settingValue) | Out-Null
-        $DeploymentSettingsXml.Environment.AppendChild($node) | Out-Null
+        $script:DeploymentSettingsXml.Environment.AppendChild($node) | Out-Null
     }
-    $DeploymentSettingsXml.Save((Get-Item $script:DeploymentSettingsFile).FullName)
+    $script:DeploymentSettingsXml.Save((Get-Item $script:DeploymentSettingsFile).FullName)
 }
 
 #
@@ -1908,7 +1908,7 @@ switch($script:AzureEnvironmentName)
         $script:RdxSuffix = "timeseries.azure.com"
 
         # Set locations were all resource are available. This might need to get updated if resources are deployed to more locations.
-        $script:AzureLocations = @("West US", "North Europe", "West Europe", "Japan West", "Australia East")
+        $script:AzureLocations = @("West US", "North Europe", "West Europe")
     }
     default {throw ("'{0}' is not a supported Azure Cloud environment" -f $script:AzureEnvironmentName)}
 }
@@ -1938,7 +1938,6 @@ $script:DeploymentSettingsFile = "{0}/{1}.config.user" -f $script:IoTSuiteRootPa
 
 $script:TopologyDescription = "$script:WebAppPath/Contoso/Topology/ContosoTopologyDescription.json"
 $script:DockerUsername = "docker"
-$script:DockerPassword = "Passw0rd"
 $script:DockerRoot = "/home/$script:DockerUsername"
 # Note: These folder names need to be in sync with paths specified as defaults in the simulation config.xml file
 $script:DockerConfigFolder = "Config"
@@ -2033,8 +2032,11 @@ if ($script:Command -eq "delete")
 # Clear DNS
 ClearDnsCache
 
-# Sets Azure Account, Location, Name validation and AAD application
+# Sets Azure Account, Location, Name validation and AAD application.
 InitializeEnvironment 
+
+# Generate and persist docker password.
+$script:DockerPassword = GetOrSetEnvSetting "DockerPassword" "RandomPassword"
 
 # Initialize used SKUs
 if ($LowCost)

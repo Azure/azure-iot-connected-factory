@@ -17,13 +17,42 @@
 #>
 [CmdletBinding()]
 Param(
-[Parameter(Position=0, Mandatory=$true, HelpMessage="Specify the name of the deployment (this is the name used as the name for the VM and the resource group)")]
+[Parameter(Position=0, Mandatory=$false, HelpMessage="Specify the name of the deployment (this is the name used as the name for the VM and the resource group)")]
 [string] $DeploymentName,
 [Parameter(Position=1, Mandatory=$false, HelpMessage="Specify the name of the user in the VM.")]
 [string] $DockerUsername="docker",
 [Parameter(Position=2, Mandatory=$false, HelpMessage="Specify the password for the user.")]
-[string] $DockerPassword="Passw0rd"
+[string] $DockerPassword
 )
+
+Function GetEnvSetting()
+{
+    Param(
+        [Parameter(Mandatory=$true,Position=0)] [string] $settingName,
+        [Parameter(Mandatory=$false,Position=1)] [switch] $errorOnNull = $true
+    )
+
+    $setting = $DeploymentSettingsXml.Environment.SelectSingleNode("//setting[@name = '$settingName']")
+
+    if ($setting -eq $null)
+    {
+        if ($errorOnNull)
+        {
+            Write-Error -Category ObjectNotFound -Message ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot locate setting '{0}' in deployment settings file {1}." -f $settingName, $script:DeploymentSettingsFile)
+            throw ("Cannot locate setting '{0}' in deployment settings file {1}." -f $settingName, $script:DeploymentSettingsFile)
+        }
+    }
+    return $setting.value
+}
+
+
+################################################################################################################################################################
+#
+# Start of script
+#
+################################################################################################################################################################
+
+$VerbosePreference = "Continue"
 
 # Local path
 $LocalPath = ((Get-Location).Path) + "\Logs"
@@ -34,8 +63,34 @@ New-Item -Path $LocalPath -ItemType Directory | Out-Null
 $ConnectionTimeout = 30000
 
 # Set variables
+if ([string]::IsNullOrEmpty($script:DeploymentName))
+{
+    $script:DeploymentName = $script:SuiteName = $env:USERNAME + "ConnfactoryLocal";
+}
+$script:LocalDeployment = $false
+if ($script:DeploymentName -match ($env:USERNAME + "ConnfactoryLocal"))
+{
+    $script:LocalDeployment = $true
+}
 $script:VmName = $DeploymentName
 $script:ResourceGroupName = $DeploymentName
+
+# Read the stored docker password.
+if ([string]::IsNullOrEmpty($script:DockerPassword))
+{
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - No VM password specified on command line. Trying to read from config.user file.")
+    $script:IoTSuiteRootPath = (Split-Path $MyInvocation.MyCommand.Path) + "/../.."
+    if ($script:LocalDeployment)
+    {
+        $script:DeploymentSettingsFile = "{0}/local.config.user" -f $script:IoTSuiteRootPath
+    }
+    else
+    {
+        $script:DeploymentSettingsFile = "{0}/{1}.config.user" -f $script:IoTSuiteRootPath, $script:DeploymentName
+    }
+    $script:DeploymentSettingsXml = [xml](Get-Content "$script:DeploymentSettingsFile")
+    $script:DockerPassword = GetEnvSetting "DockerPassword"
+}
 
 # Find VM 
 try 
