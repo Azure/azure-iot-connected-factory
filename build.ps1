@@ -1306,37 +1306,37 @@ function RecordVmCommand
 {
     Param(
         [Parameter(Mandatory=$true)] $command,
-        [Switch] $runScript,
         [Switch] $initScript,
+        [Switch] $deleteScript,
+        [Switch] $startScript,
         [Switch] $stopScript
     )
     
-    if ($runScript)
+    if ($initScript -eq $false -and $deleteScript -eq $false -and $startScript -eq $false-and $stopScript -eq $false)
     {
-        # Add this to our run script, which we register as VM startup job to start the simulation when the VM will be restarted.
-        Add-Content -path "$script:SimulationBuildOutputRunScript" -Value "$command `n" -NoNewline
-    } 
-    else 
-    {
-        if ($initScript)
-        {
-            # Add this to our init script, which will be executed when the VM will be created.
-            Add-Content -path "$script:SimulationBuildOutputInitScript" -Value "$command `n" -NoNewline
-        }
-        else
-        {
-            if ($stopScript)
-            {
-                # Add this to our stop script, which will be executed before the simulation is updated in the VM.
-                Add-Content -path "$script:SimulationBuildOutputStopScript" -Value "$command `n" -NoNewline
-            }
-            else
-            {
-                Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - No switch set. Please check usage.")
-                throw ("No switch set. Please check usage.")
-            }
-        }
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - No switch set. Please check usage.")
+        throw ("No switch set. Please check usage.")
     }
+    if ($initScript)
+    {
+        # Add this to the init script.
+        Add-Content -path "$script:SimulationBuildOutputInitScript" -Value "$command `n" -NoNewline
+    }
+    if ($deleteScript)
+    {
+        # Add this to the delete script.
+        Add-Content -path "$script:SimulationBuildOutputDeleteScript" -Value "$command `n" -NoNewline
+    }
+    if ($startScript)
+    {
+        # Add this to the start script.
+        Add-Content -path "$script:SimulationBuildOutputStartScript" -Value "$command `n" -NoNewline
+    } 
+    if ($stopScript)
+    {
+        # Add this to the stop script.
+        Add-Content -path "$script:SimulationBuildOutputStopScript" -Value "$command `n" -NoNewline
+    } 
 }
 
 function StartStation
@@ -1356,7 +1356,7 @@ function StartStation
         New-Item -Path "$script:SimulationBuildOutputPath/$script:DockerLogsFolder/$containerInstance" -ItemType "Directory" | Out-Null
     }
 
-    # Stop and start the station
+    # Set simulation variables.
     $hostName = $station.Simulation.Id.ToLower() + "." + $net
     $port = $station.Simulation.Port
     $defaultPort = 51210
@@ -1365,17 +1365,21 @@ function StartStation
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - For station '{0}' there was no port configured. Using default port 51210.." -f $containerInstance, $defaultPort)
         $port = "$defaultPort" 
     }
+
+    # Disconnect from network on stop and delete.
+    $vmCommand = "docker network disconnect -f $net $hostName"
+    RecordVmCommand -command $vmCommand -stopScript -deleteScript
+
+    # Start the station
     $stationUri = (CreateStationUrl -net $net -station $station)
     $commandLine = "../buildOutput/Station.dll " + $station.Simulation.Id + " " + $stationUri.ToLower() + " " + $station.Simulation.Args
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for station node $hostName ...")
-    $vmCommand = "docker network disconnect -f $net $hostName"
-    RecordVmCommand -command $vmCommand -stopScript
     $volumes = "-v $script:DockerRoot/$($script:DockerSharedFolder):/app/$script:DockerSharedFolder "
     $volumes +="-v $script:DockerRoot/$script:DockerLogsFolder/$($containerInstance):/app/$script:DockerLogsFolder"
     $vmCommand = "docker run -itd $volumes -w /app/buildOutput --name $hostName -h $hostName --network $net --restart always --expose $port simulation:latest $commandLine"
-    RecordVmCommand -command $vmCommand -runScript
+    RecordVmCommand -command $vmCommand -startScript
     $vmCommand = "sleep 5s"
-    RecordVmCommand -command $vmCommand -runScript
+    RecordVmCommand -command $vmCommand -startScript
 }
 
 function StartMES
@@ -1425,20 +1429,23 @@ function StartMES
     # Copy the application configuration file
     Copy-Item -Path $applicationFileName -Destination "$script:SimulationBuildOutputPath/$script:DockerConfigFolder/$containerInstance"
 
-    # Stop and start production line MES instance
+    # Set MES hostname.
     $hostName = $productionLine.Simulation.Mes.ToLower() + "." + $net
+    
+    # Disconnect from network on stop and delete.
+    $vmCommand = "docker network disconnect -f $net $hostName"
+    RecordVmCommand -command $vmCommand -stopScript -deleteScript
+
+    # Start MES.
     $commandLine = "../buildOutput/MES.dll"
     Write-Output("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for MES node $hostName ...");
-    
-    $vmCommand = "docker network disconnect -f $net $hostName"
-    RecordVmCommand -command $vmCommand -stopScript
     $volumes = "-v $script:DockerRoot/$($script:DockerSharedFolder):/app/$script:DockerSharedFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerLogsFolder/$($containerInstance):/app/$script:DockerLogsFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerConfigFolder/$($containerInstance):/app/$script:DockerConfigFolder"
     $vmCommand = "docker run -itd $volumes -w /app/Config --name $hostName -h $hostName --network $net --restart always simulation:latest $commandLine"
-    RecordVmCommand -command $vmCommand -runScript
+    RecordVmCommand -command $vmCommand -startScript
     $vmCommand = "sleep 10s"
-    RecordVmCommand -command $vmCommand -runScript
+    RecordVmCommand -command $vmCommand -startScript
 }
 
 function StartProxy
@@ -1449,13 +1456,17 @@ function StartProxy
 
     # Start proxy container in the VM and link to simulation container
     $hostName = "proxy." + $net
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for Proxy node $hostName ...")
+
+    # Disconnect from network on stop and delete.
     $vmCommand = "docker network disconnect -f $net $hostName"
-    RecordVmCommand -command $vmCommand -stopScript
+    RecordVmCommand -command $vmCommand -stopScript -deleteScript
+
+    # Start proxy.
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for Proxy node $hostName ...")
     $vmCommand = "docker run -itd -v $script:DockerRoot/$($script:DockerLogsFolder):/app/$script:DockerLogsFolder --name $hostName -h $hostName --network $net --restart always $script:DockerProxyImage -c " + '"$IOTHUB_CONNECTIONSTRING"' + " -l /app/$script:DockerLogsFolder/proxy1.$net.log"
-    RecordVmCommand -command $vmCommand -runScript
+    RecordVmCommand -command $vmCommand -startScript
     $vmCommand = "sleep 5s"
-    RecordVmCommand -command $vmCommand -runScript
+    RecordVmCommand -command $vmCommand -startScript
 }
 
 function StartGWPublisher
@@ -1511,23 +1522,23 @@ function StartGWPublisher
     # Save the published nodes file
     $jsonOut | ConvertTo-Json -depth 100 | Out-File $publishedNodesFileName
 
+    # Disconnect from network on stop and delete.
+    $vmCommand = "docker network disconnect -f $net $hostName"
+    RecordVmCommand -command $vmCommand -stopScript -deleteScript
+
     # Start GW Publisher container in the VM and link to simulation container
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for GW Publisher node $hostName ...")
-
-    $vmCommand = "docker network disconnect -f $net $hostName"
-    RecordVmCommand -command $vmCommand -stopScript
-
     $volumes = "-v $script:DockerRoot/$($script:DockerSharedFolder):/app/$script:DockerSharedFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerLogsFolder/$($hostName):/app/$script:DockerLogsFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerConfigFolder/$($hostName):/app/$script:DockerConfigFolder"
 
     $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always -e _GW_PNFP=`'/app/$script:DockerConfigFolder/publishednodes.JSON`' -e _TPC_SP=`'/app/Shared/CertificateStores/UA Applications`' -e _GW_LOGP=`'/app/$script:DockerLogsFolder/$hostName.log.txt`' $script:DockerGWPublisherImage $hostName " + '"$IOTHUB_CONNECTIONSTRING"'
-    RecordVmCommand -command $vmCommand -runScript
+    RecordVmCommand -command $vmCommand -startScript
 }
 
 function SimulationBuildScripts
 {
-    # Initialize initsimulation script
+    # Initialize init script
     Set-Content -Path "$script:SimulationBuildOutputInitScript" -Value "#!/bin/bash `n" -NoNewline
     # Unpack the simulation files
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "chmod +x simulation `n" -NoNewline
@@ -1537,8 +1548,10 @@ function SimulationBuildScripts
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "cp -r $script:DockerRoot/buildOutput/$script:DockerConfigFolder $script:DockerRoot `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "cp -r $script:DockerRoot/buildOutput/$script:DockerLogsFolder $script:DockerRoot `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "cp -r $script:DockerRoot/buildOutput/$script:DockerSharedFolder $script:DockerRoot `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "cp $script:DockerRoot/buildOutput/runsimulation $script:DockerRoot `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "chmod +x $script:DockerRoot/runsimulation `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "cp $script:DockerRoot/buildOutput/startsimulation $script:DockerRoot `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "chmod +x $script:DockerRoot/startsimulation `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "cp $script:DockerRoot/buildOutput/deletesimulation $script:DockerRoot `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "chmod +x $script:DockerRoot/deletesimulation `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "cp $script:DockerRoot/buildOutput/stopsimulation $script:DockerRoot `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "chmod +x $script:DockerRoot/stopsimulation `n" -NoNewline
     # Bring the public key in place.
@@ -1547,11 +1560,14 @@ function SimulationBuildScripts
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "    cp ../../../`$2.crt `"$script:DockerRoot/$script:DockerCertsFolder/$script:UaSecretBaseName.der`" `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "fi `n" -NoNewline
 
-    # Initialize runsimulation script
-    Set-Content -Path "$script:SimulationBuildOutputRunScript" -Value "#!/bin/bash `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputRunScript" -Value "cd $script:DockerRoot/buildOutput `n" -NoNewline
+    # Initialize start script
+    Set-Content -Path "$script:SimulationBuildOutputStartScript" -Value "#!/bin/bash `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "cd $script:DockerRoot/buildOutput `n" -NoNewline
 
-    # Initialize stopsimulation
+    # Initialize delete script
+    Set-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "#!/bin/bash `n" -NoNewline
+
+    # Initialize stop script
     Set-Content -Path "$script:SimulationBuildOutputStopScript" -Value "#!/bin/bash `n" -NoNewline
 
     # Create shared folder in the build output. It will copied to its final place in the VM by the init script
@@ -1613,7 +1629,7 @@ function SimulationBuildScripts
         $networks = ($productionLines | select -ExpandProperty Simulation | select net -ExpandProperty Network -Unique)
         foreach($network in $networks)
         {
-            # Create bridge network in vm and start proxy - remove network if it does already exist...
+            # Create bridge network in vm and start proxy.
             $net = $network.ToLower()
             Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Create network $net ...");
             $vmCommand = "docker network create -d bridge -o 'com.docker.network.bridge.enable_icc'='true' $net"
@@ -1644,13 +1660,13 @@ function SimulationBuildScripts
             StartGWPublisher -net $net -topologyJson $json
         }
 
-        # Remove the networks on stop.
+        # Remove the networks on delete.
         foreach($network in $networks)
         {
             $net = $network.ToLower()
             Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Remove network $net ...");
             $vmCommand = "docker network rm $net"
-            RecordVmCommand -command $vmCommand -stopScript
+            RecordVmCommand -command $vmCommand -deleteScript
         }
     }
     catch
@@ -1663,17 +1679,24 @@ function SimulationBuildScripts
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "sudo chown -R root:root `"$script:DockerRoot/$script:DockerCertsFolder`" `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "sudo chmod u+x `"$script:DockerRoot/$script:DockerCertsFolder/$script:UaSecretBaseName.der`" `n" -NoNewline
     # Start the simulation.
-    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "sudo bash -c `'export IOTHUB_CONNECTIONSTRING=`"`$0`"; $script:DockerRoot/runsimulation`' `$1 &`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "sudo bash -c `'export IOTHUB_CONNECTIONSTRING=`"`$0`"; $script:DockerRoot/startsimulation`' `$1 &`n" -NoNewline
 
-    # When stopping, we remove the build output. all mapped folders and stop all containers.
-    Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "sudo rm -r $script:DockerRoot/$script:DockerSharedFolder `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "sudo rm -r $script:DockerRoot/$script:DockerLogsFolder `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "sudo rm -r $script:DockerRoot/$script:DockerConfigFolder `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "sudo rm -r $script:DockerRoot/buildOutput `n" -NoNewline
+    # To delete, we remove the build output. all mapped folders and stop all containers.
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "sudo rm -r $script:DockerRoot/$script:DockerSharedFolder `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "sudo rm -r $script:DockerRoot/$script:DockerLogsFolder `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "sudo rm -r $script:DockerRoot/$script:DockerConfigFolder `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "sudo rm -r $script:DockerRoot/buildOutput `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "if [ `$(docker ps -a -q | wc -l) -gt 0 ] `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "then `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "    docker stop `$(docker ps -a -q) `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "    docker rm -f `$(docker ps -a -q) `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "fi `n" -NoNewline
+
+    # To stop, we just stop all docker containers.
     Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "if [ `$(docker ps -a -q | wc -l) -gt 0 ] `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "then `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "    docker stop `$(docker ps -a -q) `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "    docker rm -f `$(docker ps -a -q) `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "    docker rm `$(docker ps -a -q) `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStopScript" -Value "fi `n" -NoNewline
 }
 
@@ -1767,18 +1790,18 @@ function SimulationUpdate
         }
         try
         {
-            # Upload stop script and stop simulation.
-            Set-SCPFile -LocalFile "$script:SimulationBuildOutputStopScript" -RemotePath $script:DockerRoot -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
-            Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Stop simulation.")
-            $vmCommand = "chmod +x $script:DockerRoot/stopsimulation"
-            $status = Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand
+            # Upload delete script and delete simulation.
+            Set-SCPFile -LocalFile "$script:SimulationBuildOutputDeleteScript" -RemotePath $script:DockerRoot -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
+            Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete simulation.")
+            $vmCommand = "chmod +x $script:DockerRoot/deletesimulation"
+            $status = Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut ($script:SshTimeout * 5) -Command $vmCommand
             if ($status.ExitStatus -ne 0)
             {
                 Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Failed to run $vmCommand in VM : $status")
                 throw ("Failed to run $vmCommand in VM : $status")
             }
-            $vmCommand = "$script:DockerRoot/stopsimulation `&> $script:DockerRoot/stopsimulation.log"
-            # Ignore the status of the stopSimulation script. Check the log file in the VM for details.
+            $vmCommand = "$script:DockerRoot/deletesimulation `&> $script:DockerRoot/deletesimulation.log"
+            # Ignore the status of the delete script. Check the log file in the VM for details.
             Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand | Out-Null
 
             # Copy compressed simulation binaries and scripts to VM
@@ -1865,7 +1888,8 @@ $script:OptionIndex = 0;
 $script:SshTimeout = 120
 $script:SimulationBuildOutputPath = "$script:SimulationPath/Factory/buildOutput"
 $script:SimulationBuildOutputInitScript = "$script:SimulationBuildOutputPath/initsimulation"
-$script:SimulationBuildOutputRunScript = "$script:SimulationBuildOutputPath/runsimulation"
+$script:SimulationBuildOutputDeleteScript = "$script:SimulationBuildOutputPath/deletesimulation"
+$script:SimulationBuildOutputStartScript = "$script:SimulationBuildOutputPath/startsimulation"
 $script:SimulationBuildOutputStopScript = "$script:SimulationBuildOutputPath/stopsimulation"
 $script:SimulationConfigPath = "$script:SimulationBuildOutputPath/Config"
 
