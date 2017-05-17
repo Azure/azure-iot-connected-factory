@@ -962,7 +962,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string errorMessage = string.Format(Strings.BrowserOpcException, exception.Message,
                 exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--");
             Trace.TraceError(errorMessage);
-            errorMessage = errorMessage.Replace("\r\n", "<br/>");
+            errorMessage = Strings.BrowserErrorUnknown;
             string actionResult = HttpUtility.HtmlEncode(errorMessage);
             Response.StatusCode = 1;
 

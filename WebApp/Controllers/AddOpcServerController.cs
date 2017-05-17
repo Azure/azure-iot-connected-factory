@@ -38,13 +38,11 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             catch (Exception ex)
             {
                 Trace.TraceError(ex.Message);
-
-                string errorMessage = ex.Message.Replace("\r\n", "<br/>");
                 OpcSessionModel sessionModel = new OpcSessionModel
                 {
                     ErrorHeader = Strings.BrowserCertDownloadError,
                     EndpointUrl = string.Empty,
-                    ErrorMessage = errorMessage
+                    ErrorMessage = Strings.BrowserCertDownloadError
                 };
 
                 return View("Error", sessionModel);
