@@ -656,6 +656,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         string _newFactoryName = Strings.NewFactoryName;
         string _newProductionLineName = Strings.NewProductionLineName;
         string _newStationName = Strings.NewStationName;
+        const string _newFactoryImage = "newfactory.jpg";
+        const string _newProductionLineImage = "assembly_floor.jpg";
+        const string _newStationImage = "assembly_station.jpg";
 
         /// <summary>
         /// Get new factory node. Creates new node if new factory doesn't exist.
@@ -672,6 +675,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             FactoryDescription factoryDescription = new FactoryDescription();
             factoryDescription.Name = _newFactoryName;
             factoryDescription.Description = _newFactoryName;
+            factoryDescription.Image = _newFactoryImage;
             factoryDescription.Guid = Guid.NewGuid().ToString();
             Factory factory = new Factory(factoryDescription);
             AddChild(TopologyRoot.Key, factory);
@@ -695,6 +699,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             productionLineDescription.Name = _newProductionLineName;
             productionLineDescription.Description = _newProductionLineName;
             productionLineDescription.Guid = Guid.NewGuid().ToString();
+            productionLineDescription.Image = _newProductionLineImage;
             ProductionLine productionLine = new ProductionLine(productionLineDescription);
             productionLine.Location = newFactory.Location;
             AddChild(newFactory.Key, productionLine);
@@ -714,6 +719,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                     StationDescription desc = new StationDescription();
                     desc.Name = opcUri;
                     desc.Description = _newStationName;
+                    desc.Image = _newStationImage;
                     desc.OpcUri = opcUri;
                     Station station = new Station(desc);
                     station.Location = newProductionLine.Location;
