@@ -1939,7 +1939,7 @@ $script:DockerConfigFolder = "Config"
 $script:DockerLogsFolder = "Logs"
 $script:DockerSharedFolder = "Shared"
 $script:DockerCertsFolder = "$script:DockerSharedFolder/CertificateStores/UA Applications/certs"
-$script:DockerProxyImage = "microsoft/iot-gateway-opc-ua-proxy:0.1.3"
+$script:DockerProxyImage = "microsoft/iot-gateway-opc-ua-proxy:0.1.4"
 $script:DockerGWPublisherImage = "microsoft/iot-gateway-opc-ua:1.0.0"
 $script:UaSecretBaseName = "UAWebClient"
 # Note: The password could only be changed if it is synced with the password used in CreateCerts.exe
