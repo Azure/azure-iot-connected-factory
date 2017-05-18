@@ -136,7 +136,7 @@
             }
         }
 
-        $(document).on('mouseenter', ".overflow", function () {
+        $(document).on('mouseenter', ".overflow", function (event) {
             var $this = $(this);
             if (this.offsetWidth < this.scrollWidth && !$this.attr('title')) {
                 $this.tooltip({
@@ -146,6 +146,8 @@
                 });
                 $this.tooltip('show');
             }
+        }).on('mouseleave', ".overflow", function () {
+            $('.tooltip').tooltip('destroy');
         });
 
     </script>
