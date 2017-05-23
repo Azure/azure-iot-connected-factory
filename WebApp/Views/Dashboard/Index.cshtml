@@ -1,4 +1,5 @@
-﻿@using GlobalResources
+﻿@using System.Globalization
+@using GlobalResources
 @using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
 @using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 @using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
@@ -402,7 +403,8 @@
         },
         data: {
             columns: [
-                ['Actual', @Model.TopNode.Kpi2Last.Kpi ]
+                // we need to force en-US locale, since the app runs in the locale the user has selected.
+                ['Actual', @Math.Round(Model.TopNode.Kpi2Last.Kpi, 1).ToString(new CultureInfo("en-US")) ]
             ],
             type: 'gauge',
         },
@@ -1232,6 +1234,7 @@
                             });
                         }
                         if (session.Kpi2Last != undefined && session.Kpi2Last.Kpi != null) {
+                            // we do not need to enforce en-US locale, since the data is JSON
                             kpi2.load({
                                 columns: [['Actual', session.Kpi2Last.Kpi]]
                             });
