@@ -12,6 +12,9 @@
 <script type='text/javascript' src='//www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
 
 <script type='text/javascript'>
+    var factoryMap = null;    
+    var factoryMapPushpin = [];
+
     function GetMap()
     {
         // get the model
@@ -19,7 +22,7 @@
         var mapKey = @Html.Raw(mapApiQueryKey);
         // create a world map
         var worldRect = Microsoft.Maps.LocationRect.fromEdges(71, -28, -55, 28);
-        var map = new Microsoft.Maps.Map('#factoryMap', {
+        factoryMap = new Microsoft.Maps.Map('#factoryMap', {
             credentials: mapKey,
             bounds: worldRect,
             mapTypeId: Microsoft.Maps.MapTypeId.aerial,
@@ -47,25 +50,25 @@
                 pushPinFile = "/Content/img/icon_red.svg";
             }
             var location = new Microsoft.Maps.Location(children[index].Latitude, children[index].Longitude);
-            pin = new Microsoft.Maps.Pushpin(location,
+            factoryMapPushpin[index] = new Microsoft.Maps.Pushpin(location,
                             {
                                 anchor: new Microsoft.Maps.Point(8, 8),
                                 icon: pushPinFile,
                                 draggalbe: false,
                                 title: (children[index].Name)
                             });
-            Microsoft.Maps.Events.addHandler(pin, 'click', 
+            Microsoft.Maps.Events.addHandler(factoryMapPushpin[index], 'click',
                 function () {
                     for (index = 0; index < children.length; index++) {
                         if (arguments[0].target._options.title == children[index].Name)
                         {
                             var dashboardUrl = "Index?TopNode=" + children[index].Key;
-                            window.location.assign(dashboardUrl); 
+                            window.location.assign(dashboardUrl);
                             break;
                         }
                     }
                 });
-            map.entities.push(pin);
+            factoryMap.entities.push(factoryMapPushpin[index]);
         }
     }
 </script>

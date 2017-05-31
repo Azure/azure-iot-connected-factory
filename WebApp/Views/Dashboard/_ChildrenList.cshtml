@@ -25,8 +25,9 @@
 <div class="dashboard_children_list_container row">
     <div class="col-xs-12">
        
-        @foreach (var child in Model.Children)
+        @for (int i = 0; i < Model.Children.Count; i++)
         {
+            var child = Model.Children[i];
             var statusMessage = Strings.Normal;
             var dashboardStatusClass = "dashboard_status_good";
             if (child.Status == ContosoPerformanceStatus.Poor.ToString())
@@ -41,8 +42,7 @@
                 {
                     if (child.Visible == true)
                     {
-                        <div class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');">
-                            <p id="childKey" hidden>@child.Key</p>
+                        <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');">
                             <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                             <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
                         </div>
@@ -50,15 +50,14 @@
                 }
                 else
                 {
-                    <div class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:gotoChildrenNode('@dashboardUrl');">
-                        <p id="childKey" hidden>@child.Key</p>
+                    <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:gotoChildrenNode('@dashboardUrl');">
                         <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                         <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
                         <div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">@child.Description</div>
                     </div>
                 }
              </div>
-         }
+        }
     </div>
 </div>
 

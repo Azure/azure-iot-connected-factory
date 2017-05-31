@@ -1192,6 +1192,19 @@
                         if (session.Children != undefined) {
                             for (j = 0; j < session.Children.length; j++)
                             {
+                                if (session.Children[j].Status == "@ContosoPerformanceStatus.Poor" ) {
+                                    $("#dashboard_children_listitem" + j).find("#childrenListListItemStatusText").html("@Strings.Error");
+                                    $("#dashboard_children_listitem" + j).addClass("dashboard_status_poor").removeClass("dashboard_status_good");
+
+                                    factoryMapPushpin[j].setOptions({icon: "/Content/img/icon_red.svg"});
+                                }
+                                else {
+                                    $("#dashboard_children_listitem" + j).find("#childrenListListItemStatusText").html("@Strings.Normal");
+                                    $("#dashboard_children_listitem" + j).addClass("dashboard_status_good").removeClass("dashboard_status_poor");
+
+                                    factoryMapPushpin[j].setOptions({icon: "/Content/img/icon_green.svg"});
+                                }
+                                factoryMap.entities.push(factoryMapPushpin[j]);
                             }
                         }
                     };
