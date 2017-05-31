@@ -20,7 +20,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
     /// <summary>
     /// Implementation of all operations and helpers. 
     /// </summary>
-    public class RDXContosoOpCodes
+    public class RDXContosoOpCodes 
     {
         /// <summary>
         /// Get the delegate for an operator
@@ -356,11 +356,12 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
 
                         if (oeeKpiHistogram.CheckAlerts)
                         {
+                            station.Status = ContosoPerformanceStatus.Good;
                             foreach (ContosoOpcUaNode node in station.NodeList)
                             {
                                 if (node.Minimum != null || node.Maximum != null)
                                 {
-                                    await CheckAlert(intervalSearchSpan, appUri, station, node);
+                                    station.Status |= await CheckAlert(intervalSearchSpan, appUri, station, node);
                                 }
                             }
                         }
@@ -376,7 +377,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
         /// <param name="appUri"></param>
         /// <param name="topologyNode"></param>
         /// <param name="node"></param>
-        public async Task CheckAlert(DateTimeRange searchSpan, string appUri, ContosoTopologyNode topologyNode, ContosoOpcUaNode node)
+        public async Task<ContosoPerformanceStatus> CheckAlert(DateTimeRange searchSpan, string appUri, ContosoTopologyNode topologyNode, ContosoOpcUaNode node)
         {
             double value = await _opcUaQueries.GetLatestQuery(searchSpan.To, appUri, node.NodeId);
             // Check for an alert condition.
@@ -387,13 +388,18 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                 topologyNode.AddAlert(alert);
                 node.Status = ContosoPerformanceStatus.Poor;
             }
-            if (node.Maximum != null && value > node.Maximum)
+            else if (node.Maximum != null && value > node.Maximum)
             {
                 // Add an alert to the server this OPC UA node belongs to.
                 ContosoAlert alert = new ContosoAlert(ContosoAlertCause.AlertCauseValueAboveMaximum, appUri, node.NodeId, searchSpan.To);
                 topologyNode.AddAlert(alert);
                 node.Status = ContosoPerformanceStatus.Poor;
             }
+            else
+            {
+                node.Status = ContosoPerformanceStatus.Good;
+            }
+            return node.Status;
         }
     }
 }

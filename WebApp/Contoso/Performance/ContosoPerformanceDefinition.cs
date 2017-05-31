@@ -112,7 +112,14 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
     /// <summary>
     /// Defines the current performance status in colors.
+    /// To add a new status each status must have an increasing number of one in its binary rapresentation.
+    /// For example for 3 status:
+    ///       binary decimal
+    /// good    00	   0
+	/// medium	01	   1
+	/// poor	11	   3
     /// </summary>
+    [Flags]
     public enum ContosoPerformanceStatus { Good = 0, Poor = 1 };
 
     /// <summary>

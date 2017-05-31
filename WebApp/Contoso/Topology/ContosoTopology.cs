@@ -508,6 +508,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             // add top view
             orderedlist.Add(TopologyRoot.Key);
 
+            bool updateStatus = false;
+
             // update all, list is already in the right order to process sequentially
             foreach (string item in orderedlist)
             {
@@ -562,8 +564,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                     {
                         // check for alerts
                         UpdateKPIAndOeeAlerts(actualNode);
+                        updateStatus = true;
                     }
                 }
+            }
+            if (updateStatus)
+            {
+                UpdateAllStatusTopology();
             }
         }
 
@@ -612,22 +619,74 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         }
 
         /// <summary>
+        /// Update status through the topology hierarchy.
+        /// </summary>
+        public void UpdateAllStatusTopology()
+        {
+            // topology is updated from bottom to top nodes, add Production Line view
+            List<string> orderedlist = GetAllChildren(TopologyRoot.Key, typeof(ProductionLine));
+            // add factory view
+            orderedlist.AddRange(GetAllChildren(TopologyRoot.Key, typeof(Factory)));
+            // add top view
+            orderedlist.Add(TopologyRoot.Key);
+
+            foreach (string item in orderedlist)
+            {
+                ContosoPerformanceStatus status = ContosoPerformanceStatus.Good;
+                ContosoTopologyNode actualNode = this[item] as ContosoTopologyNode;
+
+                if (actualNode != null)
+                {
+                    List<string> children = actualNode.GetChildren();
+                    foreach (string child in children)
+                    {
+                        // special case for child as OPC UA server
+                        Station station = this[child] as Station;
+                        if (station != null)
+                        {
+                            foreach(ContosoOpcUaNode node in station.NodeList)
+                            {
+                                status = node.Status;
+                                if (node.Status == ContosoPerformanceStatus.Poor)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                           
+                        ContosoTopologyNode childNode = this[child] as ContosoTopologyNode;
+                        if (childNode != null)
+                        {
+                            if (childNode.Status == ContosoPerformanceStatus.Poor)
+                            {
+                                status = ContosoPerformanceStatus.Poor;
+                                break;
+                            }
+                        }
+                    }
+                    actualNode.Status = status;
+                }
+            }
+        }
+
+        /// <summary>
         /// Update the alerts for the specified node.
         /// </summary>
         void UpdateKPIAndOeeAlerts(ContosoTopologyNode node)
         {
             ContosoAggregatedOeeKpiTimeSpan oeeKpi = node.Last;
-            UpdateAlert(node, oeeKpi.Kpi1.Kpi, oeeKpi.Kpi1.Time, node.Kpi1PerformanceSetting, ContosoAlertCause.AlertCauseKpi1BelowMinimum, ContosoAlertCause.AlertCauseKpi1AboveMaximum);
-            UpdateAlert(node, oeeKpi.Kpi2.Kpi, oeeKpi.Kpi2.Time, node.Kpi2PerformanceSetting, ContosoAlertCause.AlertCauseKpi2BelowMinimum, ContosoAlertCause.AlertCauseKpi2AboveMaximum);
-            UpdateAlert(node, node.OeeAvailabilityLast.OeeAvailability, node.OeeAvailabilityLast.Time, node.OeeAvailabilityPerformanceSetting);
-            UpdateAlert(node, node.OeePerformanceLast.OeePerformance, node.OeePerformanceLast.Time, node.OeePerformancePerformanceSetting);
-            UpdateAlert(node, node.OeeQualityLast.OeeQuality, node.OeeQualityLast.Time, node.OeeQualityPerformanceSetting);
+
+            node.Status |= UpdateAlert(node, oeeKpi.Kpi1.Kpi, oeeKpi.Kpi1.Time, node.Kpi1PerformanceSetting, ContosoAlertCause.AlertCauseKpi1BelowMinimum, ContosoAlertCause.AlertCauseKpi1AboveMaximum);
+            node.Status |= UpdateAlert(node, oeeKpi.Kpi2.Kpi, oeeKpi.Kpi2.Time, node.Kpi2PerformanceSetting, ContosoAlertCause.AlertCauseKpi2BelowMinimum, ContosoAlertCause.AlertCauseKpi2AboveMaximum);
+            node.Status |= UpdateAlert(node, node.OeeAvailabilityLast.OeeAvailability, node.OeeAvailabilityLast.Time, node.OeeAvailabilityPerformanceSetting);
+            node.Status |= UpdateAlert(node, node.OeePerformanceLast.OeePerformance, node.OeePerformanceLast.Time, node.OeePerformancePerformanceSetting);
+            node.Status |= UpdateAlert(node, node.OeeQualityLast.OeeQuality, node.OeeQualityLast.Time, node.OeeQualityPerformanceSetting);
         }
 
         /// <summary>
         /// Create an alert if conditions are met.
         /// </summary>
-        void UpdateAlert(
+        ContosoPerformanceStatus UpdateAlert(
             ContosoTopologyNode node,
             double value,
             DateTime time,
@@ -641,14 +700,18 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                 node.AddAlert(alert);
                 node.Status = ContosoPerformanceStatus.Poor;
             }
-            if (value != 0 && value > setting.Maximum)
+            else if (value != 0 && value > setting.Maximum)
             {
                 ContosoAlert alert = new ContosoAlert(causeMax, node.Key, time);
                 node.AddAlert(alert);
                 node.Status = ContosoPerformanceStatus.Poor;
             }
+            else
+            {
+                node.Status = ContosoPerformanceStatus.Good;
+            }
+            return node.Status;
         }
-
 
         /// <summary>
         /// Constants used to populate new factory/production line.
