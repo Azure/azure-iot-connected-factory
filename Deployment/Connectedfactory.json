@@ -307,7 +307,7 @@
     "certificateVersion": "2016-03-01",
     "certificateName": "[parameters('suiteName')]",
     "keyVaultVersion": "2015-06-01",
-    "keyVaultName": "[take(replace(parameters('suiteName'),'--',''), 24)]",
+    "keyVaultName": "[concat(take(replace(parameters('suiteName'),'--',''), 11), uniqueString(subscription().id, parameters('suiteName')))]",
     "keyVaultDisplayName": "[parameters('suiteName')]",
     "keyVaultVmSecretName": "[concat(parameters('keyVaultSecretBaseName'), '-VM')]",
     "keyVaultVmSecretJson": {

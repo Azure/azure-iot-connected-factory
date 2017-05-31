@@ -5,9 +5,9 @@
     .
 .PARAMETER DeploymentName
     The name of the deployment to get the logs from. This is the resource group name.
-.PARAMETER DockerUsername
+.PARAMETER VmAdminUsername
     The username used to connect to the VM.
-.PARAMETER DockerPassword
+.PARAMETER VmAdminPassword
     The password of the user used to connect to the VM.
 .EXAMPLE
     ./Get-SimulationLogs.ps1 mydeployment
@@ -20,9 +20,9 @@ Param(
 [Parameter(Position=0, Mandatory=$false, HelpMessage="Specify the name of the deployment (this is the name used as the name for the VM and the resource group)")]
 [string] $DeploymentName,
 [Parameter(Position=1, Mandatory=$false, HelpMessage="Specify the name of the user in the VM.")]
-[string] $DockerUsername="docker",
+[string] $VmAdminUsername="docker",
 [Parameter(Position=2, Mandatory=$false, HelpMessage="Specify the password for the user.")]
-[string] $DockerPassword
+[string] $VmAdminPassword
 )
 
 Function GetEnvSetting()
@@ -77,7 +77,7 @@ $script:VmName = $DeploymentName
 $script:ResourceGroupName = $DeploymentName
 
 # Read the stored docker password.
-if ([string]::IsNullOrEmpty($script:DockerPassword))
+if ([string]::IsNullOrEmpty($script:VmAdminPassword))
 {
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - No VM password specified on command line. Trying to read from config.user file.")
     $script:IoTSuiteRootPath = (Split-Path $MyInvocation.MyCommand.Path) + "/../.."
@@ -90,7 +90,7 @@ if ([string]::IsNullOrEmpty($script:DockerPassword))
         $script:DeploymentSettingsFile = "{0}/{1}.config.user" -f $script:IoTSuiteRootPath, $script:DeploymentName
     }
     $script:DeploymentSettingsXml = [xml](Get-Content "$script:DeploymentSettingsFile")
-    $script:DockerPassword = GetEnvSetting "DockerPassword"
+    $script:VmAdminPassword = GetEnvSetting "VmAdminPassword"
 }
 
 # Find VM 
@@ -160,8 +160,8 @@ try
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of the VM is '{0}'" -f $ipAddress.IpAddress)
 
     # Create a PSCredential object for SSH
-    $securePassword = ConvertTo-SecureString $DockerPassword -AsPlainText -Force
-    $sshCredentials = New-Object System.Management.Automation.PSCredential ($DockerUsername, $securePassword)
+    $securePassword = ConvertTo-SecureString $VmAdminPassword -AsPlainText -Force
+    $sshCredentials = New-Object System.Management.Automation.PSCredential ($VmAdminUsername, $securePassword)
 
     # Create SSH session
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Create SSH session to VM with IP address '{0}'" -f $ipAddress.IpAddress)

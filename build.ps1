@@ -4,7 +4,7 @@
 .DESCRIPTION
     .
 .PARAMETER Command
-    The command to execute. Supported commands are: "build", "updatesimulation", "local", "cloud", "clean", "delete", "installprebuilt"
+    The command to execute. Supported commands are: "build", "updatesimulation", "local", "cloud", "clean", "delete"
     build: Does build the simulation.
 .PARAMETER Configuration
     The configuration to build.or deploy. Supported values are: "debug", "release"
@@ -24,6 +24,8 @@
     The name of the Azure location to use. This prevents from entering the selection menu if the location name is valid.
 .PARAMETER PresetAzureDirectoryName
     The name of the Azure directory to use. This prevents from entering the selection menu if the directory name is valid.
+.PARAMETER VmAdminPassword
+    The admin password of the VM used for the simulation.
 .EXAMPLE
     ./build.ps1
     Builds the solution.
@@ -59,10 +61,6 @@
 .EXAMPLE
     ./build.ps1 delete -DeploymentName mydeployment
     Updates the web packages of the resource group mydeployment.
-.EXAMPLE
-    ./build.ps1 installprebuilt -DeploymentName mydeployment
-    Deploys the prebuilt simulation and solution to the AzureCloud environment.
-    
 .NOTES
     This is the user deployment script of Azure IoT Suite Connected factory.
 #>
@@ -70,8 +68,8 @@
 Param(
 
 [Parameter(Position=0, Mandatory=$false, HelpMessage="Specify the command to execute.")]
-[ValidateSet("build", "updatesimulation", "local", "cloud", "clean", "delete", "installprebuilt")]
-[string] $command = "build",
+[ValidateSet("build", "updatesimulation", "local", "cloud", "clean", "delete")]
+[string] $Command = "build",
 [Parameter(Mandatory=$false, HelpMessage="Specify the configuration to build.")]
 [ValidateSet("debug", "release")]
 [string] $Configuration = "debug",
@@ -93,7 +91,9 @@ Param(
 [Parameter(Mandatory=$false, HelpMessage="Specify the Azure location to use for the Azure deployment.")]
 [string] $PresetAzureLocationName,
 [Parameter(Mandatory=$false, HelpMessage="Specify the Azure AD name to use for the Azure deployment.")]
-[string] $PresetAzureDirectoryName
+[string] $PresetAzureDirectoryName,
+[Parameter(Mandatory=$false, HelpMessage="Specify the admin password to use for the simulation VM.")]
+[string] $VmAdminPassword
 )
 
 Function CheckCommandAvailability()
@@ -117,11 +117,6 @@ Function CheckCommandAvailability()
 
 function InstallNuget()
 {
-    # nuget is not required for a install of prebuilt
-    if ($script:Command -eq "installprebuilt")
-    {
-        return
-    }
     $nugetPath = "{0}/.nuget" -f $script:IoTSuiteRootPath
     if (-not (Test-Path "$nugetPath")) 
     {
@@ -518,10 +513,10 @@ Function PutEnvSetting()
 #
 Function GetAzureAccountInfo()
 {
-    if ($PresetAzureAccountName -ne $null -and $PresetAzureAccountName -ne "")
+    if ($script:PresetAzureAccountName -ne $null -and $script:PresetAzureAccountName -ne "")
     {
-        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset account name '{0}'" -f $PresetAccountName)
-        $account = Get-AzureAccount $PresetAzureAccountName
+        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset account name '{0}'" -f $script:PresetAzureAccountName)
+        $account = Get-AzureAccount $script:PresetAzureAccountName
 
     }
     if ($account -eq $null)
@@ -733,9 +728,9 @@ Function GetAadTenant()
                 $directory | Add-Member -MemberType NoteProperty -Name "Directory Name" -Value ($result.userPrincipalName.Split('@')[1])
                 $directory | Add-Member -MemberType NoteProperty -Name "Tenant Id" -Value $tenant
                 $directories += $directory
-                if ($PresetAzuredirectoryName -ne $null -and $PresetAzureDirectoryName -eq ($result.userPrincipalName.Split('@')[1]))
+                if ($script:PresetAzureDirectoryName -ne $null -and $script:PresetAzureDirectoryName -eq ($result.userPrincipalName.Split('@')[1]))
                 {
-                    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset directory name '{0}'" -f $PresetAzureDirectoryName)
+                    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset directory name '{0}'" -f $script:PresetAzureDirectoryName)
                     $selectedIndex = $index
                     break
                 }
@@ -901,9 +896,6 @@ Function InitializeDeploymentSettings()
 
 Function InitializeEnvironment()
 {
-    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - InitializeDeployment '{0}'" -f $script:DeploymentName)
-    InitializeDeploymentSettings
-
     #
     # Azure login
     #
@@ -911,10 +903,10 @@ Function InitializeEnvironment()
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Validate Azure account '{0}'" -f $script:AzureAccountName)
     ValidateLoginCredentials
 
-    if ($PresetAzureSubscriptionName -ne $null -and $PresetAzuresubscriptionName -ne "")
+    if ($script:PresetAzureSubscriptionName -ne $null -and $script:PresetAzuresubscriptionName -ne "")
     {
-        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset subscription name '{0}'" -f $PresetAzureSubscriptionName)
-        $subscriptionId = Get-AzureRmSubscription -SubscriptionName $PresetAzureSubscriptionName
+        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset subscription name '{0}'" -f $script:PresetAzureSubscriptionName)
+        $subscriptionId = Get-AzureRmSubscription -SubscriptionName $script:PresetAzureSubscriptionName
     }
 
     #
@@ -978,10 +970,10 @@ Function InitializeEnvironment()
     #
     # Initialize location
     #
-    if ($PresetAzureLocationName -ne $null -and $PresetAzureLocationName -ne "")
+    if ($script:PresetAzureLocationName -ne $null -and $script:PresetAzureLocationName -ne "")
     {
-        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset allocation location name '{0}'" -f $PresetAzureLocationName)
-        $script:AzureLocation = $PresetAzureLocationName
+        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using preset allocation location name '{0}'" -f $script:PresetAzureLocationName)
+        $script:AzureLocation = $script:PresetAzureLocationName
     }
     else
     {
@@ -1149,9 +1141,15 @@ Function Build()
         throw "Restoring dotnet packages for solution failed."
     }
 
+    # Enforce WebApp admin mode if requested via environment.
+    if (-not [string]::IsNullOrEmpty($env:EnforceWebAppAdminMode))
+    {
+        $script:EnforceWebAppAdminMode = '/p:DefineConstants="GRANT_FULL_ACCESS_PERMISSIONS"'
+    }
+
     # Build the solution.
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Building Connectedfactory.sln for configuration '{0}'." -f $script:Configuration)
-    Invoke-Expression "msbuild Connectedfactory.sln /v:m /p:Configuration=$script:Configuration"
+    Invoke-Expression "msbuild Connectedfactory.sln /v:m /p:Configuration=$script:Configuration $script:EnforceWebAppAdminMode"
     if ($LASTEXITCODE -ne 0)
     {
         Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Building Connectedfactory.sln failed.")
@@ -1742,42 +1740,24 @@ function SimulationUpdate
     $removePublicIp = $false
     try
     {
-        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Get the public IP address.")
         $vmPublicIp = Get-AzureRmPublicIpAddress -Name $script:VmName -ResourceGroupName $script:ResourceGroupName -ErrorAction SilentlyContinue
     }
     catch 
     {
-        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - The VM '{0}' does not have a public IP address." -f $script:VmName)
     }
 
     if ($vmPublicIp -eq $null)
     {
-        Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - The VM '{0}' does not have a public IP address. Adding one (will take a while)..." -f $script:VmName)
         # Add a public IP address to the VM
-        try
-        {
-            $dnsForPublicIpAddress = GetDnsForPublicIpAddress
-            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Create a public IP address.")
-            $vmPublicIp = New-AzureRmPublicIpAddress -Name $script:VmName -ResourceGroupName $script:ResourceGroupName -Location $script:AzureLocation -AllocationMethod Dynamic -DomainNameLabel $dnsForPublicIpAddress
-            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Get the network interface.")
-            $vmNetworkInterface = Get-AzureRmNetworkInterface -Name $script:VmName -ResourceGroupName $script:ResourceGroupName
-            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Set public IP address on network interface.")
-            $vmNetworkInterface.IpConfigurations[0].PublicIpAddress = $vmPublicIp
-            Set-AzureRmNetworkInterface -NetworkInterface $vmNetworkInterface | Out-Null
-            $removePublicIp = $true
-        }
-        catch
-        {
-            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Unable to add a public IP address to VM '{0}' in resource group '{1}'" -f $script:VmName, $script:ResourceGroupName)
-            throw ("Unable to add a public IP address to VM '{0}' in resource group '{1}'" -f $script:VmName, $script:ResourceGroupName)
-        }
+        Invoke-Expression "$script:SimulationPath/Factory/Add-SimulationPublicIp -DeploymentName $script:DeploymentName"
+        $removePublicIp = $true
     }
 
     try
     {
         # Create a PSCredential object for SSH
-        $securePassword = ConvertTo-SecureString $script:DockerPassword -AsPlainText -Force
-        $sshCredentials = New-Object System.Management.Automation.PSCredential ($script:DockerUsername, $securePassword)
+        $securePassword = ConvertTo-SecureString $script:VmAdminPassword -AsPlainText -Force
+        $sshCredentials = New-Object System.Management.Automation.PSCredential ($script:VmAdminUsername, $securePassword)
 
         # Create SSH session
         $ipAddress = Get-AzureRmPublicIpAddress -Name $script:VmName -ResourceGroupName $script:ResourceGroupName
@@ -1848,11 +1828,7 @@ function SimulationUpdate
         # Remove the public IP address from the VM if we added it.
         if ($removePublicIp -eq $true)
         {
-            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Remove the public IP address from network interface.")
-            $vmNetworkInterface.IpConfigurations[0].PublicIpAddress = $null
-            Set-AzureRmNetworkInterface -NetworkInterface $vmNetworkInterface | Out-Null
-            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete the public IP address.")
-            Remove-AzureRmPublicIpAddress -Name $script:VmName -ResourceGroupName $script:ResourceGroupName -Force | Out-Null
+            Invoke-Expression "$script:SimulationPath/Factory/Remove-SimulationPublicIp -DeploymentName $script:DeploymentName"
         }
     }
 }
@@ -1961,8 +1937,8 @@ $script:VmDeploymentTemplateFile = "$script:DeploymentConfigPath/FactorySimulati
 $script:DeploymentSettingsFile = "{0}/{1}.config.user" -f $script:IoTSuiteRootPath, $script:DeploymentName
 
 $script:TopologyDescription = "$script:WebAppPath/Contoso/Topology/ContosoTopologyDescription.json"
-$script:DockerUsername = "docker"
-$script:DockerRoot = "/home/$script:DockerUsername"
+$script:VmAdminUsername = "docker"
+$script:DockerRoot = "/home/$script:VmAdminUsername"
 # Note: These folder names need to be in sync with paths specified as defaults in the simulation config.xml file
 $script:DockerConfigFolder = "Config"
 $script:DockerLogsFolder = "Logs"
@@ -1992,7 +1968,8 @@ if ($script:Command -eq "clean")
     exit
 }
 
-if ($script:Command -eq "build")
+# Build everything for build and updatesimulation commands
+if ($script:Command -eq "build" -or $script:Command -eq "updatesimulation")
 {
     # Build the solution
     Build
@@ -2013,7 +1990,12 @@ if ($script:Command -eq "build")
     Write-BZip2 -LiteralPath "$script:SimulationPath/buildOutput.tar" -OutputPath "$script:SimulationPath" -Quiet 4> $null | Out-Null
     Remove-Item "$script:SimulationPath/simulation" -ErrorAction SilentlyContinue | Out-Null
     Move-Item "$script:SimulationPath/buildOutput.tar.bz2" "$script:SimulationPath/simulation" | Out-Null
-    exit
+
+    # We are done in case of a build command
+    if ($script:Command -eq "build")
+    {
+        exit
+    }
 }
 
 if ($script:Command -eq "delete")
@@ -2049,21 +2031,35 @@ if ($script:Command -eq "delete")
     Write-Output Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete existing certificates")
     Remove-Item -Recurse -Path "$script:CreateCertsPath/certs/$script:DeploymentName" -Force -ErrorAction SilentlyContinue | Out-Null
     Remove-Item -Recurse -Path "$script:CreateCertsPath/private/$script:DeploymentName" -Force -ErrorAction SilentlyContinue | Out-Null
-
     exit
 }
 
-# Clear DNS
-ClearDnsCache
+# Initialize deployment settings.
+Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - InitializeDeployment settings for'{0}'" -f $script:DeploymentName)
+InitializeDeploymentSettings
 
-# Sets Azure Account, Location, Name validation and AAD application.
-InitializeEnvironment 
+# Initialize Azure environment, but not for updatesimulation command.
+if ($script:Command -ne "updatesimulation")
+{
+    # Clear DNS
+    ClearDnsCache
 
-# Generate and persist docker password.
-$script:DockerPassword = GetOrSetEnvSetting "DockerPassword" "RandomPassword"
+    # Sets Azure Account, Location, Name validation and AAD application.
+    InitializeEnvironment 
+}
+
+# Generate and persist VM admin password.
+if ([string]::IsNullOrEmpty($script:VmAdminPassword))
+{
+    $script:VmAdminPassword = GetOrSetEnvSetting "VmAdminPassword" "RandomPassword"
+}
+else
+{
+    PutEnvSetting "VmAdminPassword" $script:VmAdminPassword
+}
 
 # Initialize used SKUs
-if ($LowCost)
+if ($script:LowCost)
 {
     # Set SKU values to use the Azure assets generating the lowest costs.
     $script:StorageSkuName = "Standard_LRS"
@@ -2117,11 +2113,37 @@ $script:VmName = GetAzureVmName
 $script:RdxEnvironmentName = GetAzureRdxName
 $script:ArmParameter = @{}
 
+# Update the simulation in the VM
+if ($script:Command -eq "updatesimulation")
+{
+    # Check if resource group and VM exists.
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Validate resource group name '{0}' existence" -f $script:ResourceGroupName)
+    $resourceGroup = Get-AzureRmResourceGroup -Name $script:ResourceGroupName -ErrorAction SilentlyContinue
+    if ($resourceGroup -eq $null)
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Resource group {0} does not exist." -f $script:ResourceGroupName)
+        throw ("Resource group {0} does not exist." -f $script:ResourceGroupName)
+    }
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check if VM exists in resource group '{0}'" -f $script:ResourceGroupName)
+    $vmResource = Find-AzureRmResource -ResourceGroupNameContains $script:ResourceGroupName -ResourceType Microsoft.Compute/VirtualMachines -ResourceNameContains $script:ResourceGroupName -ErrorAction SilentlyContinue
+    if ($vmResource -eq $null)
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - There is no VM '{0}' in resource group '{1}'." -f $script:ResourceGroupName, $script:ResourceGroupName)
+        throw ("There is no VM with name '{0}' in resource group '{1}'." -f $script:ResourceGroupName, $script:ResourceGroupName)
+    }
+
+    # Update the simulation.
+    Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Upload and start the simulation"
+    SimulationUpdate
+    UpdateBrowserEndpoints
+    exit
+}
+
 # Respect existing Sku values
 if ($script:SuiteExists)
 {
     # Block redeployment
-    if ($script:Command -eq "installprebuilt" -or $script:Command -eq "local" -or $script:Command -eq "cloud" -and $script:Force -eq $false)
+    if ($script:Command -eq "local" -or $script:Command -eq "cloud" -and $script:Force -eq $false)
     {
         Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - A deployment with name '{0}' already exists. Please use parameter -Force to enforce a redeployment." -f $script:SuiteName)
         throw ("An deployment with name '{0}' does already exists. Please use parameter -Force to enforce redeployment." -f $script:SuiteName)
@@ -2173,73 +2195,39 @@ UpdateAadApp $script:AadTenant
 $script:AadClientId = GetEnvSetting "AadClientId"
 UpdateEnvSetting "AadInstance" ($script:AzureEnvironment.ActiveDirectoryAuthority + "{0}")
 
-# If we do not use the prebuilt binaries, we build everything.
-if ($script:Command -ne "installprebuilt")
-{
-    # Build the solution
-    Build
+# Build the solution
+Build
 
-    # Package and upload solution WebPackages
-    Package
-    FinalizeWebPackages
+# Package and upload solution WebPackages
+Package
+FinalizeWebPackages
 
-    # Build the simulation
-    SimulationBuild
+# Build the simulation
+SimulationBuild
 
-    # Build simulation scripts
-    SimulationBuildScripts
+# Build simulation scripts
+SimulationBuildScripts
 
-    # Compressed simulation binaries
-    Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Build compressed archive"
-    Write-Tar "$script:SimulationBuildOutputPath" -OutputPath "$script:SimulationPath/buildOutput.tar" -Quiet 4> $null | Out-Null
-    Write-BZip2 -LiteralPath "$script:SimulationPath/buildOutput.tar" -OutputPath "$script:SimulationPath" -Quiet 4> $null | Out-Null
-    Remove-Item "$script:SimulationPath/simulation" -ErrorAction SilentlyContinue | Out-Null
-    Move-Item "$script:SimulationPath/buildOutput.tar.bz2" "$script:SimulationPath/simulation" | Out-Null
+# Compressed simulation binaries
+Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Build compressed archive"
+Write-Tar "$script:SimulationBuildOutputPath" -OutputPath "$script:SimulationPath/buildOutput.tar" -Quiet 4> $null | Out-Null
+Write-BZip2 -LiteralPath "$script:SimulationPath/buildOutput.tar" -OutputPath "$script:SimulationPath" -Quiet 4> $null | Out-Null
+Remove-Item "$script:SimulationPath/simulation" -ErrorAction SilentlyContinue | Out-Null
+Move-Item "$script:SimulationPath/buildOutput.tar.bz2" "$script:SimulationPath/simulation" | Out-Null
 
-    # For the simulation update the resource group and the VM must exist
-    if ($script:Command -eq "updatesimulation")
-    {
-        # Check if resource group and VM exists.
-        Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Validate resource group name '{0}' existence" -f $script:ResourceGroupName)
-        $resourceGroup = Get-AzureRmResourceGroup -Name $script:ResourceGroupName -ErrorAction SilentlyContinue
-        if ($resourceGroup -eq $null)
-        {
-            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Resource group {0} does not exist." -f $script:ResourceGroupName)
-            throw ("Resource group {0} does not exist." -f $script:ResourceGroupName)
-        }
-        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check if VM exists in resource group '{0}'" -f $script:ResourceGroupName)
-        $vmResource = Find-AzureRmResource -ResourceGroupNameContains $script:ResourceGroupName -ResourceType Microsoft.Compute/VirtualMachines -ResourceNameContains $script:ResourceGroupName -ErrorAction SilentlyContinue
-        if ($vmResource -eq $null)
-        {
-            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - There is no VM '{0}' in resource group '{1}'." -f $script:ResourceGroupName, $script:ResourceGroupName)
-            throw ("There is no VM with name '{0}' in resource group '{1}'." -f $script:ResourceGroupName, $script:ResourceGroupName)
-        }
+# Copy the factory simulation template, the factory simulation binaries and the VM init script into the WebDeploy container.
+Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Upload all required files into the storage account.")
+$script:VmArmTemplateUri = UploadFileToContainerBlob $script:VmDeploymentTemplateFile $script:StorageAccount.StorageAccountName "WebDeploy" $true
+$script:SimulationUri = UploadFileToContainerBlob "$script:SimulationPath/simulation" $script:StorageAccount.StorageAccountName "WebDeploy" $true
+$script:InitSimulationUri = UploadFileToContainerBlob $script:SimulationBuildOutputInitScript $script:StorageAccount.StorageAccountName "WebDeploy" $true
+$script:WebAppUri = UploadFileToContainerBlob $script:WebAppLocalPath $script:StorageAccount.StorageAccountName "WebDeploy" -secure $true
 
-        # Update the simulation.
-        Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Upload and start the simulation"
-        SimulationUpdate
-        UpdateBrowserEndpoints
-        exit
-    }
-
-    # Copy the factory simulation template, the factory simulation binaries and the VM init script into the WebDeploy container.
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Upload all required files into the storage account.")
-    $script:VmArmTemplateUri = UploadFileToContainerBlob $script:VmDeploymentTemplateFile $script:StorageAccount.StorageAccountName "WebDeploy" $true
-    $script:SimulationUri = UploadFileToContainerBlob "$script:SimulationPath/simulation" $script:StorageAccount.StorageAccountName "WebDeploy" $true
-    $script:InitSimulationUri = UploadFileToContainerBlob $script:SimulationBuildOutputInitScript $script:StorageAccount.StorageAccountName "WebDeploy" $true
-    $script:WebAppUri = UploadFileToContainerBlob $script:WebAppLocalPath $script:StorageAccount.StorageAccountName "WebDeploy" -secure $true
-
-    # Ensure that our build output is picked up by the ARM deployment.
-    $script:ArmParameter += @{ `
-        webAppUri = $script:WebAppUri; `
-        vmArmTemplateUri = $script:VmArmTemplateUri; `
-        simulationUri = $script:SimulationUri; `
-        initSimulationUri = $script:InitSimulationUri; `
-    }
-}
-else
-{
-    Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Deployment is using the binaries provided to the default URI locations."
+# Ensure that our build output is picked up by the ARM deployment.
+$script:ArmParameter += @{ `
+    webAppUri = $script:WebAppUri; `
+    vmArmTemplateUri = $script:VmArmTemplateUri; `
+    simulationUri = $script:SimulationUri; `
+    initSimulationUri = $script:InitSimulationUri; `
 }
 
 $script:X509Collection = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2Collection
@@ -2298,8 +2286,8 @@ $script:ArmParameter += @{ `
     rdxAccessPolicyPrincipalObjectId = $script:RdxAccessPolicyPrincipalObjectId; `
     rdxOwnerServicePrincipalObjectId = $script:RdxOwnerServicePrincipalObjectId; `
     vmSize = $script:VmSize; `
-    adminUsername = $script:DockerUsername; `
-    adminPassword = $script:DockerPassword; `
+    adminUsername = $script:VmAdminUsername; `
+    adminPassword = $script:VmAdminPassword; `
     keyVaultSkuName = $script:KeyVaultSkuName; `
     keyVaultSecretBaseName = $script:UaSecretBaseName; `
     keyVaultVmSecret = $script:UaSecretForVmEncoded; `

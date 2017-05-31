@@ -19,8 +19,8 @@ if ([string]::IsNullOrEmpty($script:DeploymentName))
 {
     $script:DeploymentName = $script:SuiteName = $env:USERNAME + "ConnfactoryLocal";
 }
-$script:VmName = $DeploymentName
-$script:ResourceGroupName = $DeploymentName
+$script:VmName = $script:DeploymentName
+$script:ResourceGroupName = $script:DeploymentName
 
 # Find VM 
 try 
