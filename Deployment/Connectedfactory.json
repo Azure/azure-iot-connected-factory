@@ -157,7 +157,7 @@
     },
     "webAppUri": {
       "type": "string",
-      "defaultValue": "https://aka.ms/azureiot/psdeploymentstore/webapp"
+      "defaultValue": "https://aka.ms/azureiot/connectedfactory/webapp"
     },
     "webPlanSkuName": {
       "type": "string",
@@ -228,11 +228,11 @@
       }
     },
     "vmArmTemplateUri": {
-      "type": "string",
-      "defaultValue": "https://aka.ms/azureiot/psdeploymentstore/linkedarm",
-      "metadata": {
-        "description": "URI containing files for deployment."
-      }
+        "type": "string",
+        "defaultValue": "https://aka.ms/azureiot/connectedfactory/linkedarm",
+        "metadata": {
+            "description": "URI containing files for deployment."
+        }
     },
     "adminUsername": {
       "type": "string",
@@ -254,18 +254,18 @@
       }
     },
     "initSimulationUri": {
-      "type": "string",
-      "defaultValue": "https://aka.ms/azureiot/psdeploymentstore/initsimulation",
-      "metadata": {
-        "description": "URI containing script to init the VM."
-      }
+        "type": "string",
+        "defaultValue": "https://aka.ms/azureiot/connectedfactory/initsimulation",
+        "metadata": {
+            "description": "URI containing script to init the VM."
+        }
     },
     "simulationUri": {
-      "type": "string",
-      "defaultValue": "https://aka.ms/azureiot/psdeploymentstore/simulation",
-      "metadata": {
-        "description": "URI containing the archive with all files for the simulation."
-      }
+        "type": "string",
+        "defaultValue": "https://aka.ms/azureiot/connectedfactory/simulation",
+        "metadata": {
+            "description": "URI containing the archive with all files for the simulation."
+        }
     }
   },
   "variables": {

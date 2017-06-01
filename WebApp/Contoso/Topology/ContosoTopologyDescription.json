@@ -99,7 +99,7 @@
                     {
                       "Type": "OpenWebPage",
                       "Description": "Open schematics",
-                      "Parameter": "https://aka.ms/azureiot/psdeploymentstore/schematics"
+                      "Parameter": "https://aka.ms/azureiot/connectedfactory/schematics"
                     }
                   ]
                 },
