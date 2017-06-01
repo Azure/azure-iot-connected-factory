@@ -29,6 +29,9 @@ Get your Bing Maps API for Enterprise QueryKey from the Azure portal:
 4.	To have the key picked up by the build.ps1 script, set the environment variable "$env:MapApiQueryKey" in your PowerShell environment to a valid BingMaps license key and it will be picked up by the build script and automatically added to the settings of the App Service.
 5.	Run a local or cloud deployment using build.ps1.
 
+#### Simulation VM security
+By default the configuration of the VM used for the production line simulation does not allow any inbound connections. This was a deliberate decision to maintain high level security for the VM. If you need to change the configuration of the production line VM to allow inbound connections, e.g. to login via SSH, please make sure you are running a vulnerability check on the VM first and also install the latest patches by following the [instructions](https://wiki.ubuntu.com/Security/Upgrades) on the Ubuntu website. 
+
 ## Documentation
 
   * [IoT Suite documentation](https://azure.microsoft.com/documentation/suites/iot-suite/)
