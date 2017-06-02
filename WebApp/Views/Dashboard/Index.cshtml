@@ -1183,6 +1183,9 @@
         //
         // Children update
         //
+        var factoryMap = null;
+        var factoryMapPushpin = [];
+
         telemetry.client.updateSessionChildrenData = function (sessionUpdateJson) {
             sessionUpdate = JSON.parse(sessionUpdateJson);
             if (sessionUpdate != undefined) {
@@ -1190,21 +1193,30 @@
                     var session = sessionUpdate[i];
                     if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
                         if (session.Children != undefined) {
-                            for (j = 0; j < session.Children.length; j++)
-                            {
-                                if (session.Children[j].Status == "@ContosoPerformanceStatus.Poor" ) {
+                            for (j = 0; j < session.Children.length; j++) {
+                                var updateMap = false;
+                                if (session.Children[j].Status == "@ContosoPerformanceStatus.Poor") {
                                     $("#dashboard_children_listitem" + j).find("#childrenListListItemStatusText").html("@Strings.Error");
                                     $("#dashboard_children_listitem" + j).addClass("dashboard_status_poor").removeClass("dashboard_status_good");
-
-                                    factoryMapPushpin[j].setOptions({icon: "/Content/img/icon_red.svg"});
-                                }
-                                else {
+                                    if (factoryMapPushpin != undefined) {
+                                        if (factoryMapPushpin != null && factoryMapPushpin.Count < j && factoryMapPushpin[j] != null) {
+                                            factoryMapPushpin[j].setOptions({ icon: "/Content/img/icon_red.svg" });
+                                            updateMap = true;
+                                        }
+                                    }
+                                } else {
                                     $("#dashboard_children_listitem" + j).find("#childrenListListItemStatusText").html("@Strings.Normal");
                                     $("#dashboard_children_listitem" + j).addClass("dashboard_status_good").removeClass("dashboard_status_poor");
-
-                                    factoryMapPushpin[j].setOptions({icon: "/Content/img/icon_green.svg"});
+                                    if (factoryMapPushpin != undefined) {
+                                        if (factoryMapPushpin != null && factoryMapPushpin.Count < j && factoryMapPushpin[j] != null) {
+                                            factoryMapPushpin[j].setOptions({icon: "/Content/img/icon_green.svg"});
+                                            updateMap = true;
+                                        }
+                                    }
                                 }
-                                factoryMap.entities.push(factoryMapPushpin[j]);
+                                if (updateMap == true && factoryMap != undefined && factoryMap != null) {
+                                    factoryMap.entities.push(factoryMapPushpin[j]);
+                                }
                             }
                         }
                     };
