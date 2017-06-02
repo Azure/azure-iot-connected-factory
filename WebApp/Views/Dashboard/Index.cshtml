@@ -1149,6 +1149,10 @@
     // SignalR hub client.
     var telemetry = $.connection.telemetryHub;
 
+    //Bing map and pushpins.
+    var factoryMap = null;
+    var factoryMapPushpin = [];
+
     // Alert information
     @{   var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         var jsonAlerts = serializer.Serialize(Model.Alerts);
@@ -1183,9 +1187,6 @@
         //
         // Children update
         //
-        var factoryMap = null;
-        var factoryMapPushpin = [];
-
         telemetry.client.updateSessionChildrenData = function (sessionUpdateJson) {
             sessionUpdate = JSON.parse(sessionUpdateJson);
             if (sessionUpdate != undefined) {
