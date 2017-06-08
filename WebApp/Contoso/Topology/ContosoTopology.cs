@@ -740,6 +740,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             factoryDescription.Description = _newFactoryName;
             factoryDescription.Image = _newFactoryImage;
             factoryDescription.Guid = Guid.NewGuid().ToString();
+            factoryDescription.Location.Latitude = 0;
+            factoryDescription.Location.Longitude = 0;
             Factory factory = new Factory(factoryDescription);
             AddChild(TopologyRoot.Key, factory);
             return factory;

@@ -1193,32 +1193,66 @@
                 for (i = 0; i < sessionUpdate.length; i++) {
                     var session = sessionUpdate[i];
                     if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
-                        if (session.Children != undefined) {
+                        // Only update if the filter panel is closed.
+                        if ($("#dashboardFilterContextpanel").hasClass('overlay-close') && session.Children != undefined) {
+                            var childrenList = '';
                             for (j = 0; j < session.Children.length; j++) {
+                                childrenList += '<div >';
                                 var updateMap = false;
                                 if (session.Children[j].Status == "@ContosoPerformanceStatus.Poor") {
-                                    $("#dashboard_children_listitem" + j).find("#childrenListListItemStatusText").html("@Strings.Error");
-                                    $("#dashboard_children_listitem" + j).addClass("dashboard_status_poor").removeClass("dashboard_status_good");
+                                    var statusMessage = "@Strings.Error";
+                                    var dashboardStatusClass = "dashboard_status_poor";
+
                                     if (factoryMapPushpin != undefined) {
-                                        if (factoryMapPushpin != null && factoryMapPushpin.Count < j && factoryMapPushpin[j] != null) {
+                                        if (factoryMapPushpin != null && factoryMapPushpin.Length > j && factoryMapPushpin[j] != null) {
                                             factoryMapPushpin[j].setOptions({ icon: "/Content/img/icon_red.svg" });
                                             updateMap = true;
                                         }
                                     }
                                 } else {
-                                    $("#dashboard_children_listitem" + j).find("#childrenListListItemStatusText").html("@Strings.Normal");
-                                    $("#dashboard_children_listitem" + j).addClass("dashboard_status_good").removeClass("dashboard_status_poor");
+                                    var statusMessage = "@Strings.Normal";
+                                    var dashboardStatusClass = "dashboard_status_good";
+
                                     if (factoryMapPushpin != undefined) {
-                                        if (factoryMapPushpin != null && factoryMapPushpin.Count < j && factoryMapPushpin[j] != null) {
+                                        if (factoryMapPushpin != null && factoryMapPushpin.Length > j && factoryMapPushpin[j] != null) {
                                             factoryMapPushpin[j].setOptions({icon: "/Content/img/icon_green.svg"});
                                             updateMap = true;
                                         }
                                     }
                                 }
+
+                                var url = '@Url.Action("Index", "Dashboard")' + "?topNode=" + session.Children[j].Key;
+
+                                if ("@Model.ChildrenType" == "@typeof(ContosoOpcUaNode).ToString()") {
+                                    if (session.Children[j].Visible == true) {
+                                        childrenList += '<div id="dashboard_children_listitem' + j +'" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick="openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');">';
+                                        childrenList += '<div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
+                                        childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>';
+                                        childrenList += '</div>';
+                                    }
+                                }
+                                else {
+                                    childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick="gotoChildrenNode(\''+url+'\')">';
+                                    childrenList += '<div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
+                                    childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>';
+                                    childrenList += '<div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">' + session.Children[j].Description + '</div>';
+                                    childrenList += '</div>';
+                                }
+                                childrenList += '</div>';
+
+                                $('#dashboardChildrenList').html(childrenList);
+                                updateTopologyListInformation();
+                                // check if filters are active and apply them
+                                if ($(topologyListInformation.idFilter).is(":visible")) {
+                                    applyFilter(topologyListInformation);
+                                }
+
                                 if (updateMap == true && factoryMap != undefined && factoryMap != null) {
                                     factoryMap.entities.push(factoryMapPushpin[j]);
                                 }
                             }
+                        }  else {
+                            console.log('ignore the topology list update, since filtering is in active');
                         }
                     };
                 };
@@ -1427,6 +1461,13 @@
         applyFilter(alertListInformation);
     });
 
+    function updateTopologyListInformation() {
+        topologyListInformation.listItemContainer = $(".dashboard_children_listitem_container");
+        topologyListInformation.listItemDetails[0].elementClass = $(".dashboard_children_listitem_status_text");
+        topologyListInformation.listItemDetails[1].elementClass = $(".dashboard_children_listitem_location");
+        topologyListInformation.listItemDetails[2].elementClass = $(".dashboard_children_listitem_details");
+    }
+
     function updateAlertListInformation() {
         alertListInformation.listItemContainer = $(".dashboard_alerts_listitem_container");
         alertListInformation.listItemDetails[0].elementClass = $(".dashboard_alerts_listitem_source");
@@ -1457,6 +1498,7 @@
     }
 
     function openFilterContextPanel() {
+        updateTopologyListInformation();
         createListItems(topologyListInformation);
 
         $("#openFromUnfiltered").blur();

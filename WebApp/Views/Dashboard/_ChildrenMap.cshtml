@@ -40,32 +40,34 @@
         });
         for (index = 0; index < children.length; index++)
         {
-            var pushPinFile = "/Content/img/icon_green.svg";
-            var city = children[index].City;
-            if (children[index].Status == "@ContosoPerformanceStatus.Poor.ToString()")
-            {
-                pushPinFile = "/Content/img/icon_red.svg";
-            }
-            var location = new Microsoft.Maps.Location(children[index].Latitude, children[index].Longitude);
-            factoryMapPushpin[index] = new Microsoft.Maps.Pushpin(location,
+            if (children[index].Latitude != 0 && children[index].Longitude != 0) {
+                var pushPinFile = "/Content/img/icon_green.svg";
+                var city = children[index].City;
+                if (children[index].Status == "@ContosoPerformanceStatus.Poor.ToString()")
+                {
+                    pushPinFile = "/Content/img/icon_red.svg";
+                }
+                var location = new Microsoft.Maps.Location(children[index].Latitude, children[index].Longitude);
+                factoryMapPushpin[index] = new Microsoft.Maps.Pushpin(location,
+                                {
+                                    anchor: new Microsoft.Maps.Point(8, 8),
+                                    icon: pushPinFile,
+                                    draggalbe: false,
+                                    title: (children[index].Name)
+                                });
+                Microsoft.Maps.Events.addHandler(factoryMapPushpin[index], 'click',
+                    function () {
+                        for (index = 0; index < children.length; index++) {
+                            if (arguments[0].target._options.title == children[index].Name)
                             {
-                                anchor: new Microsoft.Maps.Point(8, 8),
-                                icon: pushPinFile,
-                                draggalbe: false,
-                                title: (children[index].Name)
-                            });
-            Microsoft.Maps.Events.addHandler(factoryMapPushpin[index], 'click',
-                function () {
-                    for (index = 0; index < children.length; index++) {
-                        if (arguments[0].target._options.title == children[index].Name)
-                        {
-                            var dashboardUrl = "Index?TopNode=" + children[index].Key;
-                            window.location.assign(dashboardUrl);
-                            break;
+                                var dashboardUrl = "Index?TopNode=" + children[index].Key;
+                                window.location.assign(dashboardUrl);
+                                break;
+                            }
                         }
-                    }
-                });
-            factoryMap.entities.push(factoryMapPushpin[index]);
+                    });
+                factoryMap.entities.push(factoryMapPushpin[index]);
+            }
         }
     }
 </script>
