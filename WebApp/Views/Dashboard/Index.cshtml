@@ -341,11 +341,11 @@
     // KPI charts creation.
     //
     function Kpi1Tooltip(node) {
-        return ('Minimum: ' + @Model.TopNode.Kpi1PerformanceSetting.Minimum + ', Target: ' + @Model.TopNode.Kpi1PerformanceSetting.Target + ', Maximum: ' + @Model.TopNode.Kpi1PerformanceSetting.Maximum);
+        return ('@Strings.KpiMinimum: ' + @Model.TopNode.Kpi1PerformanceSetting.Minimum + ', @Strings.KpiTarget: ' + @Model.TopNode.Kpi1PerformanceSetting.Target + ', @Strings.KpiMaximum: ' + @Model.TopNode.Kpi1PerformanceSetting.Maximum);
     }
 
     function Kpi2Tooltip(node) {
-        return ('Minimum: ' + @Model.TopNode.Kpi2PerformanceSetting.Minimum + ', Target: ' + @Model.TopNode.Kpi2PerformanceSetting.Target + ', Maximum: ' + @Model.TopNode.Kpi2PerformanceSetting.Maximum);
+        return ('@Strings.KpiMinimum: ' + @Model.TopNode.Kpi2PerformanceSetting.Minimum + ', @Strings.KpiTarget: ' + @Model.TopNode.Kpi2PerformanceSetting.Target + ', @Strings.KpiMaximum: ' + @Model.TopNode.Kpi2PerformanceSetting.Maximum);
     }
 
     $('#kpi1Chart').tooltip({

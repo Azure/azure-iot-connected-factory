@@ -987,4 +987,16 @@ Stack trace:
     <value>New Station</value>
     <comment>Label</comment>
   </data>
+  <data name="KpiMaximum" xml:space="preserve">
+    <value>Maximum</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMinimum" xml:space="preserve">
+    <value>Minimum</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiTarget" xml:space="preserve">
+    <value>Target</value>
+    <comment>Label</comment>
+  </data>
 </root>

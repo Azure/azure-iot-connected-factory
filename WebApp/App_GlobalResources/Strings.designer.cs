@@ -1412,6 +1412,33 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum.
+        /// </summary>
+        public static string KpiMaximum {
+            get {
+                return ResourceManager.GetString("KpiMaximum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum.
+        /// </summary>
+        public static string KpiMinimum {
+            get {
+                return ResourceManager.GetString("KpiMinimum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target.
+        /// </summary>
+        public static string KpiTarget {
+            get {
+                return ResourceManager.GetString("KpiTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last day (hours).
         /// </summary>
         public static string LastDayHistoryGraphXlabel {
