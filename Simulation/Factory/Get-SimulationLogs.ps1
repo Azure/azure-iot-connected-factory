@@ -181,7 +181,7 @@ try
 
     # Compress the simulation logs in the VM.
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Compress the log files")
-    $vmCommand = "tar -cjvf Logs.tar.bz2 Logs"
+    $vmCommand = "tar -cjvf Logs.tar.bz2 Logs *.log"
     $status = Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand -ErrorAction SilentlyContinue
 	
     # Copy the logs archive.

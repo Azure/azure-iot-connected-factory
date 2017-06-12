@@ -1,8 +1,9 @@
 ﻿<#
 .SYNOPSIS
-    .
+    Builds an Azure IoT Connected factory solution preconfigured solution (CF PCS).
 .DESCRIPTION
-    .
+    This script allows to build all components of the CF PCS. It is able to create and delete all required Azure resources and deploy the 
+    different components to the Azure cloud resources.
 .PARAMETER Command
     The command to execute. Supported commands are: "build", "updatesimulation", "local", "cloud", "clean", "delete"
     build: Does build the simulation.
@@ -1600,7 +1601,7 @@ function SimulationBuildScripts
         if (-not (Test-Path "$script:CreateCertsPath/certs/$script:DeploymentName/$script:UaSecretBaseName.der"))
         {
             Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Create certificate to secure OPC communication.");
-            Invoke-Expression "dotnet run -p $script:CreateCertsPath $script:CreateCertsPath `"UA Web Client`" `"urn:localhost:Contoso:FactorySimulation:UA Web Client`""
+            Invoke-Expression "dotnet run -p $script:CreateCertsPath/CreateCerts.csproj $script:CreateCertsPath `"UA Web Client`" `"urn:localhost:Contoso:FactorySimulation:UA Web Client`""
             New-Item -Path "$script:CreateCertsPath/certs/$script:DeploymentName" -ItemType "Directory" -Force | Out-Null
             Move-Item "$script:CreateCertsPath/certs/$script:UaSecretBaseName.der" "$script:CreateCertsPath/certs/$script:DeploymentName/$script:UaSecretBaseName.der" -Force | Out-Null
             New-Item -Path "$script:CreateCertsPath/private/$script:DeploymentName" -ItemType "Directory" -Force | Out-Null

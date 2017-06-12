@@ -65,8 +65,10 @@ rem -- restore packets and clean publish folder
 rem -----------------------------------------------------------------------------
 
 @REM Package restore
-dotnet restore
-if not !ERRORLEVEL!==0 exit /b !ERRORLEVEL!
+for /f %%p in ('dir /s /b *.csproj') do ( 
+    dotnet restore  %%p
+    if not !ERRORLEVEL!==0 exit /b !ERRORLEVEL!
+)
 
 @REM bugbug - dotnet preview2 requires an absolute path for publish or include files are ignored
 set publish=%build-root%\buildOutput

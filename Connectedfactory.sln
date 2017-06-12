@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3E3CB1FA-112D-49FB-A60A-71085BF01992}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,8 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simulation", "Simulation", "{63062CFC-9716-47F7-9997-29770F3FD984}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MES", "Simulation\Factory\MES\MES.xproj", "{BB55757C-C3A2-4C1D-A1C6-1D67DE6699CA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Factory", "Factory", "{FBBD7855-14C3-4046-A7D4-C58519BCE52A}"
 	ProjectSection(SolutionItems) = preProject
 		Simulation\Factory\Add-SimulationPublicIp.ps1 = Simulation\Factory\Add-SimulationPublicIp.ps1
@@ -38,10 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Factory", "Factory", "{FBBD
 		Simulation\Factory\Update-Certificate.ps1 = Simulation\Factory\Update-Certificate.ps1
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Station", "Simulation\Factory\Station\Station.xproj", "{5F0E884A-48AE-46FE-8105-4D8CAE4E8CB9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{2101F5D8-84ED-47BC-8254-6505819E17C6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{7490D6FB-41F2-4A5B-A9D8-94FE455E17DF}"
 	ProjectSection(SolutionItems) = preProject
 		Deployment\Application.json = Deployment\Application.json
@@ -51,7 +45,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", 
 		Deployment\FactorySimulation.json = Deployment\FactorySimulation.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CreateCerts", "Simulation\Factory\CreateCerts\CreateCerts.xproj", "{CB468D21-E239-4367-82C6-F85EA904C2CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MES", "Simulation\Factory\MES\MES.csproj", "{BB55757C-C3A2-4C1D-A1C6-1D67DE6699CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station", "Simulation\Factory\Station\Station.csproj", "{5F0E884A-48AE-46FE-8105-4D8CAE4E8CB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{2101F5D8-84ED-47BC-8254-6505819E17C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateCerts", "Simulation\Factory\CreateCerts\CreateCerts.csproj", "{CB468D21-E239-4367-82C6-F85EA904C2CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,8 +116,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BB55757C-C3A2-4C1D-A1C6-1D67DE6699CA} = {FBBD7855-14C3-4046-A7D4-C58519BCE52A}
 		{FBBD7855-14C3-4046-A7D4-C58519BCE52A} = {63062CFC-9716-47F7-9997-29770F3FD984}
+		{BB55757C-C3A2-4C1D-A1C6-1D67DE6699CA} = {FBBD7855-14C3-4046-A7D4-C58519BCE52A}
 		{5F0E884A-48AE-46FE-8105-4D8CAE4E8CB9} = {FBBD7855-14C3-4046-A7D4-C58519BCE52A}
 		{CB468D21-E239-4367-82C6-F85EA904C2CE} = {FBBD7855-14C3-4046-A7D4-C58519BCE52A}
 	EndGlobalSection
