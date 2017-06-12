@@ -377,7 +377,7 @@
             var result = {};
             @if (PermsChecker.HasPermission(Permission.PublishOpcNode))
             {
-                @:if (node.original.nodeClass === "Variable" && (node.original.accessLevel & 0x01)) {
+                @:if (node.original.nodeClass === "Variable" && node.original.publishedNode == false && (node.original.accessLevel & 0x01)) {
                 @:  $.extend(result, {
                 @:      "Publish": {
                 @:          "separator_before": false,
