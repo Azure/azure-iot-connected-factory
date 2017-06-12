@@ -8,6 +8,7 @@ using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.OpcUa;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
 using Newtonsoft.Json;
 using GlobalResources;
+using System.Globalization;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 {
@@ -92,6 +93,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         // City the topology node resides, shown in the UX.
         public string City { get; set; }
 
+        // Last value               
+        public string Last { get; set; }
+
+        //Unit of node value
+        public string Unit { get; set; }
+
+
         // Geo location the toplogy node resides. Could be used in the UX.
         public double Latitude { get; set; }
         public double Longitude { get; set; }
@@ -117,7 +125,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         /// Ctor for child node information of OPC UA nodes.
         /// </summary>
 
-        public ContosoChildInfo(string key, string subKey, string status, string name, string description, string city, double latitude, double longitude, bool visible)
+        public ContosoChildInfo(string key, string subKey, string status, string name, string description, string city, double latitude, double longitude, bool visible, string last, string unit)
         {
             Key = key;
             SubKey = subKey;
@@ -128,6 +136,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             Latitude = latitude;
             Longitude = longitude;
             Visible = visible;
+            Last = last;
+            Unit = unit != null ? unit : "";
         }
     }
 
@@ -427,8 +437,17 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                 Station station = (Station)TopologyTable[parentKey];
                 foreach (ContosoOpcUaNode opcUaNode in station.NodeList)
                 {
-                    ContosoChildInfo childInfo = new ContosoChildInfo(station.Key, opcUaNode.NodeId, opcUaNode.Status.ToString(), opcUaNode.SymbolicName, opcUaNode.SymbolicName,
-                                                                station.Location.City, station.Location.Latitude, station.Location.Longitude, opcUaNode.Visible);
+                    ContosoChildInfo childInfo = new ContosoChildInfo(station.Key, 
+                                                                      opcUaNode.NodeId, 
+                                                                      opcUaNode.Status.ToString(), 
+                                                                      opcUaNode.SymbolicName, 
+                                                                      opcUaNode.SymbolicName,
+                                                                      station.Location.City, 
+                                                                      station.Location.Latitude, 
+                                                                      station.Location.Longitude, 
+                                                                      opcUaNode.Visible, 
+                                                                      opcUaNode.Last.Value.ToString("0.###",CultureInfo.InvariantCulture), 
+                                                                      opcUaNode.Units);
                     childrenInfo.Add(childInfo);
                 }
             }

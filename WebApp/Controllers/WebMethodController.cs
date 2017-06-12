@@ -65,7 +65,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             {
                 data[0] = "NoTimeSeries";
                 // Non aggregating opcodes are not updated unless they have a relevance
-                data[1] = contosoOpcUaNode.Last.Value.ToString(CultureInfo.InvariantCulture);
+                data[1] = contosoOpcUaNode.Last.Value.ToString("0.###", CultureInfo.InvariantCulture);
 
                 if (contosoOpcUaNode.Units != null)
                 {

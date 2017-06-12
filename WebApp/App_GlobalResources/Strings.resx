@@ -286,7 +286,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
-    <value>DESCRIPTION</value>
+    <value>VALUE</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">

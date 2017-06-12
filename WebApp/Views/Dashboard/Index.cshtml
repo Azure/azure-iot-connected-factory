@@ -1228,6 +1228,7 @@
                                         childrenList += '<div id="dashboard_children_listitem' + j +'" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick="openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');">';
                                         childrenList += '<div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
                                         childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>';
+                                        childrenList += '<div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">' + session.Children[j].Last + ' ' + session.Children[j].Unit + '</div>';
                                         childrenList += '</div>';
                                     }
                                 }

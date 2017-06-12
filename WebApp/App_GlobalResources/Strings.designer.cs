@@ -1052,7 +1052,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DESCRIPTION.
+        ///   Looks up a localized string similar to VALUE.
         /// </summary>
         public static string ChildrenOpcUaNodeListListHeaderDetails {
             get {
