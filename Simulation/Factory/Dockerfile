@@ -1,3 +1,5 @@
-FROM microsoft/dotnet:1.0.3-runtime
+FROM microsoft/dotnet:1.1-runtime
+
 COPY . /app/buildOutput
+
 ENTRYPOINT ["dotnet"]

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
     <AssemblyName>MES</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>MES</PackageId>
-    <RuntimeFrameworkVersion>1.0.3</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua.SDK" Version="0.2.3" />
+    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua.SDK" Version="0.2.4" />
   </ItemGroup>
 
 </Project>

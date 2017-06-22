@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
     <AssemblyName>CreateCerts</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>CreateCerts</PackageId>
-    <RuntimeFrameworkVersion>1.0.3</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua.SDK" Version="0.2.3" />
+    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua.SDK" Version="0.2.4" />
   </ItemGroup>
 
 </Project>
