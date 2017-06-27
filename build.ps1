@@ -857,35 +857,7 @@ Function InitializeDeploymentSettings()
     #
     # Initialize deployment settings
     #
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Read or create deployment settings file for '{0}'" -f $script:DeploymentName)
-    if ($script:CloudDeploy -eq $false -and (Test-Path "$script:DeploymentSettingsFile"))
-    {
-        $title = ""
-        $message = "Settings for deployment '{0}' were saved earlier.  How would you like to proceed?" -f $script:DeploymentName
-        $use = New-Object System.Management.Automation.Host.ChoiceDescription "&Use existing", `
-            "Use existing config in existing cloud"
-        $new = New-Object System.Management.Automation.Host.ChoiceDescription "&Delete and Create new", `
-            "Delete existing config and deploy to new cloud environment"
-        $save = New-Object System.Management.Automation.Host.ChoiceDescription "&Save and Create New", `
-            "Rename existing config and deploy to new cloud environment"
-        $options = [System.Management.Automation.Host.ChoiceDescription[]]($use, $new, $save)
-        $result = $Host.UI.PromptForChoice($title, $message, $options, 0)
-        switch ($result)
-        {
-            0 {}
-            1 {
-                Write-Output Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete existing settings file '{0}'" -f $script:DeploymentSettingsFile)
-                Remove-Item $script:DeploymentSettingsFile -ErrorAction SilentlyContinue | Out-Null
-              }
-            2 {
-                $newFileName = "{0}/{1}-{2}.config.user" -f $script:IoTSuiteRootPath, $script:DeploymentName, (get-date -Format "yyyy-MM-dd")
-                Move-Item -Path "$script:DeploymentSettingsFile" -Destination $newFileName
-                Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Existing config renamed to {0}" -f $newFileName)
-            }
-        }
-
-    }
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using deployment settings file {0}" -f $script:DeploymentSettingsFile)
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Using deployment settings filename {0}" -f $script:DeploymentSettingsFile)
 
     # read settings into XML variable
     if (!(Test-Path "$script:DeploymentSettingsFile"))
@@ -1462,7 +1434,7 @@ function StartProxy
 
     # Start proxy.
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for Proxy node $hostName ...")
-    $vmCommand = "docker run -itd -v $script:DockerRoot/$($script:DockerLogsFolder):/app/$script:DockerLogsFolder --name $hostName -h $hostName --network $net --restart always $script:DockerProxyImage -c " + '"$IOTHUB_CONNECTIONSTRING"' + " -l /app/$script:DockerLogsFolder/proxy1.$net.log"
+    $vmCommand = "docker run -itd -v $script:DockerRoot/$($script:DockerLogsFolder):/app/$script:DockerLogsFolder --name $hostName -h $hostName --network $net --restart always " + '$DOCKER_PROXY_REPO:$DOCKER_PROXY_VERSION ' + "-c " + '"$IOTHUB_CONNECTIONSTRING" ' + "-l /app/$script:DockerLogsFolder/proxy1.$net.log "
     RecordVmCommand -command $vmCommand -startScript
     $vmCommand = "sleep 5s"
     RecordVmCommand -command $vmCommand -startScript
@@ -1531,7 +1503,7 @@ function StartGWPublisher
     $volumes += "-v $script:DockerRoot/$script:DockerLogsFolder/$($hostName):/app/$script:DockerLogsFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerConfigFolder/$($hostName):/app/$script:DockerConfigFolder"
 
-    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always -e _GW_PNFP=`'/app/$script:DockerConfigFolder/publishednodes.JSON`' -e _TPC_SP=`'/app/Shared/CertificateStores/UA Applications`' -e _GW_LOGP=`'/app/$script:DockerLogsFolder/$hostName.log.txt`' $script:DockerGWPublisherImage $hostName " + '"$IOTHUB_CONNECTIONSTRING"'
+    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always -e _GW_PNFP=`'/app/$script:DockerConfigFolder/publishednodes.JSON`' -e _TPC_SP=`'/app/Shared/CertificateStores/UA Applications`' -e _GW_LOGP=`'/app/$script:DockerLogsFolder/$hostName.log.txt`' " + '$DOCKER_PUBLISHER_REPO:$DOCKER_PUBLISHER_VERSION ' + "$hostName " + '"$IOTHUB_CONNECTIONSTRING"'
     RecordVmCommand -command $vmCommand -startScript
 }
 
@@ -1562,6 +1534,15 @@ function SimulationBuildScripts
     # Initialize start script
     Set-Content -Path "$script:SimulationBuildOutputStartScript" -Value "#!/bin/bash `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "cd $script:DockerRoot/buildOutput `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PROXY_REPO=`"$script:DockerProxyRepo`" `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PROXY_VERSION=`"$script:DockerProxyVersion`" `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PUBLISHER_REPO=`"$script:DockerPublisherRepo`" `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PUBLISHER_VERSION=`"$script:DockerPublisherVersion`" `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "if [ `"`$IOTHUB_CONNECTIONSTRING`" == `"`" ] `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "then `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "    echo `"Please make sure that the environment variable IOTHUB_CONNECTIONSTRING is defined.`" `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "    exit `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "fi `n" -NoNewline
 
     # Initialize delete script
     Set-Content -Path "$script:SimulationBuildOutputDeleteScript" -Value "#!/bin/bash `n" -NoNewline
@@ -1584,11 +1565,11 @@ function SimulationBuildScripts
         RecordVmCommand -command $vmCommand -initScript
 
         # Pull proxy image from docker hub.
-        $vmCommand = "docker pull $script:DockerProxyImage"
+        $vmCommand = "docker pull $script:DockerProxyRepo:$script:DockerProxyVersion"
         RecordVmCommand -command $vmCommand -initScript
 
         # Pull GW Publisher image from docker hub.
-        $vmCommand = "docker pull $script:DockerGWPublisherImage"
+        $vmCommand = "docker pull $script:DockerPublisherRepo:$script:DockerPublisherVersion"
         RecordVmCommand -command $vmCommand -initScript
 
         # Put UA Web Client public cert in place
@@ -1945,8 +1926,10 @@ $script:DockerConfigFolder = "Config"
 $script:DockerLogsFolder = "Logs"
 $script:DockerSharedFolder = "Shared"
 $script:DockerCertsFolder = "$script:DockerSharedFolder/CertificateStores/UA Applications/certs"
-$script:DockerProxyImage = "microsoft/iot-gateway-opc-ua-proxy:0.1.4.1"
-$script:DockerGWPublisherImage = "microsoft/iot-gateway-opc-ua:1.1.1"
+$script:DockerProxyRepo = "microsoft/iot-gateway-opc-ua-proxy"
+$script:DockerProxyVersion = "0.1.4.1"
+$script:DockerPublisherRepo = "microsoft/iot-gateway-opc-ua"
+$script:DockerPublisherVersion = "1.1.1"
 $script:UaSecretBaseName = "UAWebClient"
 # Note: The password could only be changed if it is synced with the password used in CreateCerts.exe
 $script:UaSecretPassword = "password"

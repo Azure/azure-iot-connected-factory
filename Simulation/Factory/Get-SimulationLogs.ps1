@@ -173,7 +173,6 @@ try
     }
 
     # Delete the old archive.
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Download Logs (in bzip2 format) from VM to $script:LocalFile")
 	$remoteFile = "Logs.tar.bz2"
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete the old archive '$remoteFile'")
     $vmCommand = "rm -f $sourceArchiveName"
@@ -187,6 +186,7 @@ try
     # Copy the logs archive.
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Download the log archive")
     $localFile = "$LocalPath/Logs_" + (Get-Date  -Format FileDateTimeUniversal) + ".tar.bz2"
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Download Logs (in bzip2 format) from VM as $script:localFile")
     Get-SCPFile -RemoteFile "/home/docker/$remoteFile" -LocalFile $localFile  -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -ConnectionTimeout $ConnectionTimeout
 }
 finally

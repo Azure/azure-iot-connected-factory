@@ -84,3 +84,4 @@ if ($vmPublicIp -eq $null)
 # Get IP address
 $ipAddress = Get-AzureRmPublicIpAddress -ResourceGroupName $DeploymentName
 Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of the VM is '{0}'" -f $ipAddress.IpAddress)
+Write-Warning ("$(Get-Date –f $TIME_STAMP_FORMAT) - Your VM is now accessible from the public internet. Please make sure you have the latest security fixes applied by following the instructions here: https://wiki.ubuntu.com/Security/Upgrades")
