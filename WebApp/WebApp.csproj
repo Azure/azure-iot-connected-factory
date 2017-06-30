@@ -499,15 +499,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.tr.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Strings.zh-CN.designer.cs">
+    <Compile Include="App_GlobalResources\Strings.zh-HANS.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.zh-CN.resx</DependentUpon>
+      <DependentUpon>Strings.zh-HANS.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Strings.zh-TW.designer.cs">
+    <Compile Include="App_GlobalResources\Strings.zh-HANT.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.zh-TW.resx</DependentUpon>
+      <DependentUpon>Strings.zh-HANT.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\Startup.Json.cs" />
     <Compile Include="App_Start\Startup.OPC.cs" />
@@ -941,13 +941,13 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Strings.tr.designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Strings.zh-CN.resx">
+    <EmbeddedResource Include="App_GlobalResources\Strings.zh-HANS.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Strings.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Strings.zh-HANS.designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Strings.zh-TW.resx">
+    <EmbeddedResource Include="App_GlobalResources\Strings.zh-HANT.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Strings.zh-TW.designer.cs</LastGenOutput>
+      <LastGenOutput>Strings.zh-HANT.designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
