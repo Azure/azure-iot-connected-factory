@@ -43,8 +43,8 @@ By default the configuration of the VM used for the production line simulation d
 
 ### Requirements
   The project was developed and tested using the following tools:
-  * VisualStudio 2015 Update 3
-  * .NetCore 1.0 with SDK Preview 2 build 3121
+  * VisualStudio 2017
+  * .NET Core 1.1 (1.1.2 with SDK 1.0.4)
   
 ## Feedback
 
