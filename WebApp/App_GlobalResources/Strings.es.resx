@@ -250,7 +250,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
-    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <value>Después de conectar su puerta de enlace, puede comenzar a conectar sus propios servidores OPC UA. Escriba la dirección URL del punto de conexión del servidor OPC UA (opc.tcp://servername.domain:portnumber) aquí:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
@@ -286,7 +286,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
-    <value>DESCRIPCIÓN</value>
+    <value>VALOR</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
@@ -482,7 +482,7 @@
   </data>
   <data name="BrowserConnectException" xml:space="preserve">
     <value>Excepción al intentar conectarse al servidor OPC UA.
-Exceptionmessage:
+Mensaje de excepción:
 {0}
 Mensaje interno:
 {1}
@@ -961,6 +961,42 @@ Seguimiento de la pila:
   </data>
   <data name="BrowserContextPanelPublishing" xml:space="preserve">
     <value>Publicando...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserWriteWarning" xml:space="preserve">
+    <value>Solo debe continuar si está seguro de que quiere realizar este cambio.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserWriteWarningHeader" xml:space="preserve">
+    <value>Este cambio modificará la configuración de su línea de producción.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NewFactoryName" xml:space="preserve">
+    <value>Nueva fábrica</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewProductionLineName" xml:space="preserve">
+    <value>Nueva línea de producción</value>
+    <comment>Label</comment>
+  </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>UntrustedCertificate</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="NewStationName" xml:space="preserve">
+    <value>Nueva estación</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMaximum" xml:space="preserve">
+    <value>Máximo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMinimum" xml:space="preserve">
+    <value>Mínimo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiTarget" xml:space="preserve">
+    <value>Destino</value>
     <comment>Label</comment>
   </data>
 </root>

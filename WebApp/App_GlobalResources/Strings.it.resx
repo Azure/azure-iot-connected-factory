@@ -250,7 +250,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
-    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <value>Dopo aver connesso il gateway, è possibile iniziare a connettere i server OPC UA. Immettere l'URL dell'endpoint del server OPC UA (ad esempio, opc.tcp://nomeserver.dominio:numeroporta) qui:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
@@ -286,7 +286,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
-    <value>DESCRIZIONE</value>
+    <value>VALORE</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
@@ -961,6 +961,42 @@ Analisi dello stack:
   </data>
   <data name="BrowserContextPanelPublishing" xml:space="preserve">
     <value>Pubblicazione...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserWriteWarning" xml:space="preserve">
+    <value>Continuare solo se si è sicuri di voler apportare questa modifica.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserWriteWarningHeader" xml:space="preserve">
+    <value>Questa modifica cambierà la configurazione della linea di produzione.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NewFactoryName" xml:space="preserve">
+    <value>Nuova factory</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewProductionLineName" xml:space="preserve">
+    <value>Nuova linea di produzione</value>
+    <comment>Label</comment>
+  </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>Certificato non attendibile</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="NewStationName" xml:space="preserve">
+    <value>Nuova stazione</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMaximum" xml:space="preserve">
+    <value>Massima</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMinimum" xml:space="preserve">
+    <value>Minima</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiTarget" xml:space="preserve">
+    <value>Destinazione</value>
     <comment>Label</comment>
   </data>
 </root>

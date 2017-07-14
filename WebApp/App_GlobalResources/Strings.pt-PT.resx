@@ -250,7 +250,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
-    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <value>Depois de se ter ligado ao seu gateway, pode começar a ligar-se aos seus próprios servidores OPC UA. Introduza o URL do ponto final do seu servidor OPC UA (opc.tcp://nomedoservidor.domínio:numerodeporta) aqui:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
@@ -286,7 +286,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
-    <value>DESCRIÇÃO</value>
+    <value>VALOR</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
@@ -302,7 +302,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>CONFIGUAÇÃO ATUAL</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenProductionLineListListHeaderLocation" xml:space="preserve">
@@ -318,7 +318,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderDetails" xml:space="preserve">
-    <value>CURRENT CONFIGURATION</value>
+    <value>CONFIGUAÇÃO ATUAL</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenStationListListHeaderLocation" xml:space="preserve">
@@ -607,7 +607,7 @@ Acompanhamento da pilha:
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcAttributesOneDimension" xml:space="preserve">
-    <value>UmaDimensão</value>
+    <value>OneDimension</value>
     <comment>Message</comment>
   </data>
   <data name="BrowserOpcAttributesOneOrMoreDimensions" xml:space="preserve">
@@ -961,6 +961,42 @@ Acompanhamento da pilha:
   </data>
   <data name="BrowserContextPanelPublishing" xml:space="preserve">
     <value>A publicar...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserWriteWarning" xml:space="preserve">
+    <value>Só deve continuar se tiver a certeza de que pretende efetuar esta alteração.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserWriteWarningHeader" xml:space="preserve">
+    <value>Esta alteração irá alterar a forma como a linha de produção é configurada.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NewFactoryName" xml:space="preserve">
+    <value>Nova Fábrica</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewProductionLineName" xml:space="preserve">
+    <value>Nova Linha de Produção</value>
+    <comment>Label</comment>
+  </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>UntrustedCertificate</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="NewStationName" xml:space="preserve">
+    <value>Nova Estação</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMaximum" xml:space="preserve">
+    <value>Máximo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMinimum" xml:space="preserve">
+    <value>Mínimo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiTarget" xml:space="preserve">
+    <value>Destino</value>
     <comment>Label</comment>
   </data>
 </root>

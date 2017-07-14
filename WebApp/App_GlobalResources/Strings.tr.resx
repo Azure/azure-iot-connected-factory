@@ -250,7 +250,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
-    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <value>Ağ geçidinizi bağladıktan sonra, kendi OPC UA sunucularınızı bağlamaya başlayabilirsiniz. OPC UA sunucunuzun uç nokta URL'sini (opc.tcp://servername.domain:portnumber) buraya girin:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
@@ -286,7 +286,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
-    <value>AÇIKLAMA</value>
+    <value>DEĞER</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
@@ -961,6 +961,42 @@ Yığın izleme:
   </data>
   <data name="BrowserContextPanelPublishing" xml:space="preserve">
     <value>Yayımlanıyor...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserWriteWarning" xml:space="preserve">
+    <value>Yalnızca bu değişikliği yapmak istediğinizden eminseniz devam etmelisiniz.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserWriteWarningHeader" xml:space="preserve">
+    <value>Bu değişiklik, üretim emri satırı yapılandırmanızı değiştirecektir.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NewFactoryName" xml:space="preserve">
+    <value>Yeni Fabrika</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewProductionLineName" xml:space="preserve">
+    <value>Yeni Üretim Emri Satırı</value>
+    <comment>Label</comment>
+  </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>UntrustedCertificate</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="NewStationName" xml:space="preserve">
+    <value>Yeni İstasyon</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMaximum" xml:space="preserve">
+    <value>En fazla</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMinimum" xml:space="preserve">
+    <value>En az</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiTarget" xml:space="preserve">
+    <value>Hedef</value>
     <comment>Label</comment>
   </data>
 </root>

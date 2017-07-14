@@ -250,7 +250,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
-    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <value>Après avoir connecté votre passerelle, vous pouvez commencer à connecter vos propres serveurs OPC UA. Entrez l'URL du point de terminaison de votre serveur OPC UA (opc.tcp://nom_serveur.domaine:numéro_port) ici :</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
@@ -286,7 +286,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
-    <value>DESCRIPTION</value>
+    <value>VALEUR</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
@@ -887,7 +887,7 @@ Trace de la pile :
     <comment>Error message.</comment>
   </data>
   <data name="ErrorInsufficientPermissions" xml:space="preserve">
-    <value>Vous ne disposez pas d'autorisations suffisantes pour effectuer cette opération. Contactez l'administrateur de ce site.</value>
+    <value>Vous ne disposez pas des autorisations requises pour effectuer cette opération. Contactez l'administrateur de ce site.</value>
     <comment>Error message.</comment>
   </data>
   <data name="BrowserError" xml:space="preserve">
@@ -961,6 +961,42 @@ Trace de la pile :
   </data>
   <data name="BrowserContextPanelPublishing" xml:space="preserve">
     <value>Publication...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserWriteWarning" xml:space="preserve">
+    <value>Il est recommandé de continuer seulement si vous êtes certain de vouloir faire cette modification.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserWriteWarningHeader" xml:space="preserve">
+    <value>Cette modification changera la configuration de votre ligne de production.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NewFactoryName" xml:space="preserve">
+    <value>Nouvelle fabrique</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewProductionLineName" xml:space="preserve">
+    <value>Nouvelle ligne de production</value>
+    <comment>Label</comment>
+  </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>UntrustedCertificate</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="NewStationName" xml:space="preserve">
+    <value>Nouvelle station</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMaximum" xml:space="preserve">
+    <value>Maximum</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMinimum" xml:space="preserve">
+    <value>Minimum</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiTarget" xml:space="preserve">
+    <value>Cible</value>
     <comment>Label</comment>
   </data>
 </root>

@@ -250,7 +250,7 @@
     <comment>Label</comment>
   </data>
   <data name="BrowserEnterOwn" xml:space="preserve">
-    <value>After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server's endpoint URL (opc.tcp://servername.domain:portnumber) here:</value>
+    <value>Após conectar ao gateway, você pode começar conectando seus próprios servidores OPC UA. Insira a URL do ponto de extremidade do servidor OPC UA (opc.tcp://servername.domain:portnumber) aqui:</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserPreconfiguredListLabel" xml:space="preserve">
@@ -286,7 +286,7 @@
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderDetails" xml:space="preserve">
-    <value>DESCRIÇÃO</value>
+    <value>Valor</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenOpcUaNodeListListHeaderLocation" xml:space="preserve">
@@ -505,7 +505,7 @@ Rastreamento de pilha:
     <comment>Label</comment>
   </data>
   <data name="BrowserConnectErrorHeader" xml:space="preserve">
-    <value>Erro ao conectar com o servidor OPC UA</value>
+    <value>Erro durante a conexão com o servidor OPC UA</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserOpcErrorHeader" xml:space="preserve">
@@ -763,7 +763,7 @@ Rastreamento de pilha:
     <comment>ErrorMessage</comment>
   </data>
   <data name="GraphRDXLinkHeader" xml:space="preserve">
-    <value>Clique no gráfico para explorar no Azure Time Series Insights</value>
+    <value>Clique no gráfico para explorar o Azure Time Series Insights</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionAcknowledge" xml:space="preserve">
@@ -875,7 +875,7 @@ Rastreamento de pilha:
     <comment>Message</comment>
   </data>
   <data name="AlertDetailsRdxLinkHeader" xml:space="preserve">
-    <value>Clique no gráfico para explorar no Azure Time Series Insights</value>
+    <value>Clique no gráfico para explorar o Azure Time Series Insights</value>
     <comment>Message</comment>
   </data>
   <data name="AnimationTimeSeriesLoading" xml:space="preserve">
@@ -961,6 +961,42 @@ Rastreamento de pilha:
   </data>
   <data name="BrowserContextPanelPublishing" xml:space="preserve">
     <value>Publicando...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserWriteWarning" xml:space="preserve">
+    <value>Prossiga somente se tiver certeza de que deseja fazer essa alteração.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BrowserWriteWarningHeader" xml:space="preserve">
+    <value>Esta alteração irá mudar a forma como sua linha de produção está configurada.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NewFactoryName" xml:space="preserve">
+    <value>Nova Fábrica</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewProductionLineName" xml:space="preserve">
+    <value>Nova Linha de Produção</value>
+    <comment>Label</comment>
+  </data>
+  <data name="UntrustedCertificate" xml:space="preserve">
+    <value>UntrustedCertificate</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="NewStationName" xml:space="preserve">
+    <value>Nova Estação</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMaximum" xml:space="preserve">
+    <value>Máximo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiMinimum" xml:space="preserve">
+    <value>Mínimo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="KpiTarget" xml:space="preserve">
+    <value>Destino</value>
     <comment>Label</comment>
   </data>
 </root>
