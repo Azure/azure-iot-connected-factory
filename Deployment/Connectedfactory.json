@@ -126,7 +126,7 @@
       "type": "string",
       "defaultValue": "P30D",
       "metadata": {
-        "description": "The minimum timespan the environment’s events will be available for query. The value must be specified in the ISO 8601 format, e.g. \"P30D\" for a retention policy of 30 days."
+        "description": "The minimum timespan the environmentâ€™s events will be available for query. The value must be specified in the ISO 8601 format, e.g. \"P30D\" for a retention policy of 30 days."
       }
     },
     "rdxDnsName": {
