@@ -126,7 +126,7 @@
       "type": "string",
       "defaultValue": "P30D",
       "metadata": {
-        "description": "The minimum timespan the environment’s events will be available for query. The value must be specified in the ISO 8601 format, e.g. \"P30D\" for a retention policy of 30 days."
+        "description": "The minimum timespan the environment's events will be available for query. The value must be specified in the ISO 8601 format, e.g. \"P30D\" for a retention policy of 30 days."
       }
     },
     "rdxDnsName": {
@@ -152,7 +152,7 @@
     "rdxOwnerServicePrincipalObjectId": {
       "type": "string",
       "metadata": {
-        "description": "Object Id of the AAD user or service principal that will have contributor access to the environment. Available from the Get-AzureRMADUser or the Get-AzureRMADServicePrincipal cmdlets",
+        "description": "Object Id of the AAD user or service principal that will have contributor access to the environment. Available from the Get-AzureRMADUser or the Get-AzureRMADServicePrincipal cmdlets"
       }
     },
     "webAppUri": {
