@@ -594,15 +594,37 @@ Function ValidateLoginCredentials()
     # Validate Azure RM
     $profileFile = ($IotSuiteRootPath + "/$($script:AzureAccountName).user")
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check for profile file '{0}'" -f $profileFile)
-    if (Test-Path "$profileFile") {
+    if (Test-Path "$profileFile") 
+    {
         Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Use saved profile from '{0}" -f $profileFile)
-        $rmProfile = Select-AzureRmProfile -Path "$profileFile"
+        if ($script:AzurePowershellVersionMajor -le 3)
+        {
+            $rmProfile = Select-AzureRmProfile -Path "$profileFile"
+        }
+        else 
+        {
+            $rmProfile = Import-AzureRmContext -Path "$profileFile"
+        }
         $rmProfileLoaded = ($rmProfile -ne $null) -and ($rmProfile.Context -ne $null) -and ((Get-AzureRmSubscription) -ne $null)
     }
     if ($rmProfileLoaded -ne $true) {
         Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Logging in to your AzureRM account"
-        Login-AzureRmAccount -EnvironmentName $script:AzureEnvironment.Name | Out-Null
-        Save-AzureRmProfile -Path "$profileFile"
+        try {
+            Login-AzureRmAccount -EnvironmentName $script:AzureEnvironment.Name -ErrorAction Stop | Out-Null
+        }
+        catch
+        {
+            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - The login to the Azure account was not successful. Please run the script again.")
+            throw ("The login to the Azure account was not successful. Please run the script again.")
+        }
+        if ($script:AzurePowershellVersionMajor -le 3)
+        {
+            Save-AzureRmProfile -Path "$profileFile"
+        }
+        else 
+        {
+            Save-AzureRmContext -Path "$profileFile"
+        }
     }
 }
 
@@ -667,13 +689,11 @@ Function RandomPassword ($length = 15)
 {
     $punc = 46..46
     $digits = 48..57
-    $letters = 65..90 + 97..122
+    $lcLetters = 65..90
+    $ucLetters = 97..122
 
-    $password = get-random -count $length `
-        -input ($punc + $digits + $letters) |
-            % -begin { $aa = $null } `
-            -process {$aa += [char]$_} `
-            -end {$aa}
+    $password = [char](Get-Random -Count 1 -InputObject ($lcLetters)) + [char](Get-Random -Count 1 -InputObject ($ucLetters)) + [char](Get-Random -Count 1 -InputObject ($digits)) + [char](Get-Random -Count 1 -InputObject ($punc))
+    $password += get-random -Count ($length -4) -InputObject ($punc + $digits + $lcLetters + $ucLetters) | % -begin { $aa = $null } -process {$aa += [char]$_} -end {$aa}
 
     return $password
 }
@@ -707,7 +727,14 @@ Function GetAadTenant()
     if ($tenants.Count -eq 1)
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Only one tenant found, use it. TenantId: '{0}' with IdentifierUri '{1}' exists in Azure environment '{2}'" -f $script:WebAppDisplayName , $script:WebAppIdentifierUri, $script:AzureEnvironment.Name)
-        $tenantId = $tenants[0].TenantId
+        if ($script:AzurePowershellVersionMajor -le 3)
+        {
+            $tenantId = $tenants[0].TenantId
+        }
+        else
+        {
+            $tenantId = $tenants[0].Id
+        }
     }
     else
     {
@@ -717,7 +744,14 @@ Function GetAadTenant()
         [int]$selectedIndex = -1
         foreach ($tenantObj in $tenants)
         {
-            $tenant = $tenantObj.TenantId
+            if ($script:AzurePowershellVersionMajor -le 3)
+            {
+                $tenant = $tenantObj.TenantId
+            }
+            else
+            {
+                $tenant = $tenantObj.Id
+            }
             $uri = "{0}{1}/me?api-version=1.6" -f $script:AzureEnvironment.GraphUrl, $tenant
             $authResult = GetAuthenticationResult $tenant $script:AzureEnvironment.ActiveDirectoryAuthority $script:AzureEnvironment.GraphUrl $script:AzureAccountName -Prompt "Auto"
             $header = $authResult.CreateAuthorizationHeader()
@@ -758,7 +792,14 @@ Function GetAadTenant()
                 }
             }
         }
-        $tenantId = $tenants[$selectedIndex - 1].TenantId
+        if ($script:AzurePowershellVersionMajor -le 3)
+        {
+            $tenantId = $tenants[$selectedIndex - 1].TenantId
+        }
+        else
+        {
+            $tenantId = $tenants[$selectedIndex - 1].Id
+        }
     }
 
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - AAD Tenant ID is '{0}'" -f $tenantId)
@@ -894,7 +935,14 @@ Function InitializeEnvironment()
             $subscriptions = Get-AzureRMSubscription
             if ($subscriptions.Count -eq 1)
             {
-                $subscriptionId = $subscriptions[0].SubscriptionId
+                if ($script:AzurePowershellVersionMajor -le 3)
+                {
+                    $subscriptionId = $subscriptions[0].SubscriptionId
+                }
+                else
+                {
+                    $subscriptionId = $subscriptions[0].Id
+                }
             }
             else
             {
@@ -902,10 +950,32 @@ Function InitializeEnvironment()
                 Write-Host
                 Write-Host ("Available subscriptions for account '{0}'" -f $script:AzureAccountName)
                 Write-Host
-                Write-Host ($subscriptions | Format-Table @{Name='Option';Expression={$script:OptionIndex;$script:OptionIndex+=1};Alignment='right'},SubscriptionName, subscriptionId -AutoSize | Out-String).Trim() 
-                Write-Host           
-                while (!$subscriptions.SubscriptionId.Contains($subscriptionId))
+                if ($script:AzurePowershellVersionMajor -le 3)
                 {
+                    Write-Host ($subscriptions | Format-Table @{Name='Option';Expression={$script:OptionIndex;$script:OptionIndex+=1};Alignment='right'},SubscriptionName, subscriptionId -AutoSize | Out-String).Trim() 
+                }
+                else
+                {
+                    Write-Host ($subscriptions | Format-Table @{Name='Option';Expression={$script:OptionIndex;$script:OptionIndex+=1};Alignment='right'},Name, Id -AutoSize | Out-String).Trim() 
+                }
+                Write-Host
+                while ($true)
+                {
+                    if ($script:AzurePowershellVersionMajor -le 3)
+                    {
+                        if ($subscriptions.SubscriptionId.Contains($subscriptionId))
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if ($subscriptions.Id.Contains($subscriptionId))
+                        {
+                            break;
+                        }
+                    }
+
                     try
                     {
                         [int]$script:OptionIndex = Read-Host "Select an option from the above subscription list"
@@ -915,27 +985,41 @@ Function InitializeEnvironment()
                         Write-Host "Must be a number"
                         continue
                     }
-                
+
                     if ($script:OptionIndex -lt 1 -or $script:OptionIndex -gt $subscriptions.length)
                     {
                         continue
                     }
-                
-                    $subscriptionId = $subscriptions[$script:OptionIndex - 1].SubscriptionId
+
+                    if ($script:AzurePowershellVersionMajor -le 3)
+                    {
+                        $subscriptionId = $subscriptions[$script:OptionIndex - 1].SubscriptionId
+                    }
+                    else
+                    {
+                        $subscriptionId = $subscriptions[$script:OptionIndex - 1].Id
+                    }
                 }
             }
         }
     }
     UpdateEnvSetting "SubscriptionId" $subscriptionId
-    Select-AzureSubscription -SubscriptionId $subscriptionId | Out-Null
     $rmSubscription = Get-AzureRmSubscription -SubscriptionId $subscriptionId
-    Select-AzureRmSubscription -SubscriptionName $rmSubscription.SubscriptionName -TenantId $rmSubscription.TenantId | Out-Null
-    Set-AzureRmContext -SubscriptionName $rmSubscription.SubscriptionName -TenantId $rmSubscription.TenantId | Out-Null
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Selected Azure subscription {0} with ID {1}" -f $rmSubscription.SubscriptionName, $subscriptionId)
+    if ($script:AzurePowershellVersionMajor -le 3)
+    {
+        $subscriptionName = $rmSubscription.SubscriptionName
+    }
+    else
+    {
+        $subscriptionName = $rmSubscription.Name
+    }
+    $tenantId = $rmSubscription.TenantId
+    Set-AzureRmContext -SubscriptionName $subscriptionName -TenantId $tenantId | Out-Null
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Selected Azure subscription {0} with ID {1}" -f $subscriptionName, $subscriptionId)
 
     # Initialize Tenant
     $script:AadTenant = GetOrSetEnvSetting "AadTenant" "GetAADTenant"
-    if ($rmSubscription.TenantId -ne $script:AadTenant)
+    if ($tenantId -ne $script:AadTenant)
     {
         throw ("Unable to use directory different than subscription tenant.")
     }
@@ -1852,6 +1936,7 @@ $script:SimulationBuildOutputStopScript = "$script:SimulationBuildOutputPath/sto
 $script:SimulationConfigPath = "$script:SimulationBuildOutputPath/Config"
 
 # Import and check installed Azure cmdlet version
+$script:AzurePowershellVersionMajor = (Get-Module -ListAvailable -Name Azure).Version.Major
 CheckModuleVersion PSCX $EXPECTED_PSCX_MODULE_VERSION
 CheckModuleVersion Posh-SSH $EXPECTED_POSHSSH_MODULE_VERSION
 
