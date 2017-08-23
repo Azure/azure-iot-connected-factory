@@ -50,7 +50,7 @@
     ./build.ps1 cloud -Configuration release -DeploymentName mydeployment -LowCost
     Build the release version of your solution and deploys it to the AzureCloud environment. The deployment is using those SKUs of the required resources which generate lowest cost.
 .EXAMPLE
-    ./build.ps1 cloud -Configuration release -DeploymentName mydeployment -PresetAzureAccountName myname@mydomain.com -PresetAzureSubscriptionName myszuresubscription -PresetAzureLocationnName "West Europe" -PresetAzureDirectoryName mydomain.com
+    ./build.ps1 cloud -Configuration release -DeploymentName mydeployment -PresetAzureAccountName myname@mydomain.com -PresetAzureSubscriptionName myszuresubscription -PresetAzureLocationName "West Europe" -PresetAzureDirectoryName mydomain.com
     Build the release version of your solution and deploys it to the AzureCloud environment using the preset values. This allows you to run the script without
     selecting any values manually.
 .EXAMPLE
