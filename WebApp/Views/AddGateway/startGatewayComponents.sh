@@ -1,7 +1,6 @@
 #!/bin/bash
 # Sample shell script to start the requiered components on a gateway device.
-# This script assumes, that it runs either on a Linux system
-# or on a Windows system in cygwin or mingw environment (git for Windows installs a mingw environment)
+# This script assumes, that it runs on a Linux system
 
 # Please set the following variabels to your local requierements:
 
@@ -11,16 +10,7 @@ _HUB_CS='replace with your connect string'
 
 # Set the docker shared root variable, so that the docker containers could access the files stored on your real drive:
 # In the example below, it is assumed, that on Linux the directory /shared is shared with the docker containers.
-# And for Windows the driver D: is a shared driver for docker, and it contains the directory docker.
-
-case `uname` in
-Linux)	# Running on Linux
-		DOCKER_SHARED_ROOT=/shared
-		;;
-*)		# Running on Windows in mingw environment
-		DOCKER_SHARED_ROOT=//D/docker
-		;;
-esac
+DOCKER_SHARED_ROOT=/shared
 
 # Initialy run the publisher to initialize itself and register itself at the IoT-hub:
 docker run -it --rm -h publisher -v ${DOCKER_SHARED_ROOT}:/build/out/CertificateStores -v ${DOCKER_SHARED_ROOT}:/root/.dotnet/corefx/cryptography/x509stores microsoft/iot-edge-opc-publisher:2.0.3 publisher "$_HUB_CS"
