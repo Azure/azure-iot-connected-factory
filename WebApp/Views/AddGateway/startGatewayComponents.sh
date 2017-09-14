@@ -16,10 +16,8 @@ set MYHOSTNAME=`hostname`
 set MYIP=192.168.237.10
 # Initially run the publisher to register itself at the IoT-hub:
 
-# Initialy run the publisher to initialize itself and register itself at the IoT-hub:
-docker run -it --rm -h publisher -v ${DOCKER_SHARED_ROOT}:/build/out/CertificateStores -v ${DOCKER_SHARED_ROOT}:/root/.dotnet/corefx/cryptography/x509stores microsoft/iot-edge-opc-publisher:2.0.3 publisher "$_HUB_CS"
 # Run the publisher permanently, so that it is accessible by port 62222 from the "outside"
-docker run -it --rm -h publisher --expose 62222 -p 62222:62222 -v ${DOCKER_SHARED_ROOT}:/build/out/Logs -v ${DOCKER_SHARED_ROOT}:/build/out/CertificateStores -v ${DOCKER_SHARED_ROOT}:/shared -v ${DOCKER_SHARED_ROOT}:/root/.dotnet/corefx/cryptography/x509stores -e _GW_PNFP="/shared/publishednodes.JSON" microsoft/iot-edge-opc-publisher:2.0.3 publisher &
+docker run -it --rm -h publisher --expose 62222 -p 62222:62222 -v ${DOCKER_SHARED_ROOT}:/build/out/Logs -v ${DOCKER_SHARED_ROOT}:/build/out/CertificateStores -v ${DOCKER_SHARED_ROOT}:/shared -v ${DOCKER_SHARED_ROOT}:/root/.dotnet/corefx/cryptography/x509stores -e _GW_PNFP="/shared/publishednodes.JSON" microsoft/iot-edge-opc-publisher:2.0.3 publisher "$_HUB_CS" &
 
 # Initially run the publisher to register itself at the IoT-hub:
 docker run -it --rm -v ${DOCKER_SHARED_ROOT}:/mapped microsoft/iot-edge-opc-proxy:1.0.3 -i -c "$_HUB_CS" -D /mapped/cs.db
