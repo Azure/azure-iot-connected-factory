@@ -50,7 +50,7 @@
     ./build.ps1 cloud -Configuration release -DeploymentName mydeployment -LowCost
     Build the release version of your solution and deploys it to the AzureCloud environment. The deployment is using those SKUs of the required resources which generate lowest cost.
 .EXAMPLE
-    ./build.ps1 cloud -Configuration release -DeploymentName mydeployment -PresetAzureAccountName myname@mydomain.com -PresetAzureSubscriptionName myszuresubscription -PresetAzureLocationnName "West Europe" -PresetAzureDirectoryName mydomain.com
+    ./build.ps1 cloud -Configuration release -DeploymentName mydeployment -PresetAzureAccountName myname@mydomain.com -PresetAzureSubscriptionName myszuresubscription -PresetAzureLocationName "West Europe" -PresetAzureDirectoryName mydomain.com
     Build the release version of your solution and deploys it to the AzureCloud environment using the preset values. This allows you to run the script without
     selecting any values manually.
 .EXAMPLE
@@ -342,6 +342,14 @@ Function ValidateResourceName()
         {
             $resourceBaseName = $resourceBaseName.Substring(0, [System.Math]::Min(40, $resourceBaseName.Length))
         }
+		"microsoft.compute/virtualmachines"
+        {
+           return  "{0}{1:x5}" -f $resourceBaseName.Substring(0, [System.Math]::Min(19, $resourceBaseName.Length)), (get-random -max 1048575)
+        }
+        "microsoft.timeseriesinsights/environments"
+        {
+           return  "{0}{1:x5}" -f $resourceBaseName.Substring(0, [System.Math]::Min(19, $resourceBaseName.Length)), (get-random -max 1048575)
+        }
         default {}
     }
     
@@ -361,30 +369,117 @@ Function ValidateResourceName()
         }
     }
     
-    return GetUniqueResourceName $resourceBaseName $resourceUrl
+    return GetUniqueResourceName $resourceBaseName $resourceType $resourceUrl
 }
 
 Function GetUniqueResourceName()
 {
     Param(
         [Parameter(Mandatory=$true,Position=0)] [string] $resourceBaseName,
-        [Parameter(Mandatory=$true,Position=1)] [string] $resourceUrl
+		[Parameter(Mandatory=$true,Position=1)] [string] $resourceType,
+        [Parameter(Mandatory=$true,Position=2)] [string] $resourceUrl
     )
 
     # retry max 200 times if the random name already exists
     $max = 200
     $name = $resourceBaseName
-    while (HostEntryExists ("{0}.{1}" -f $name, $resourceUrl))
+    while (AzureNameExists $name $resourceType $resourceUrl)
     {
         $name = "{0}{1:x5}" -f $resourceBaseName, (get-random -max 1048575)
         if ($max-- -le 0)
         {
-            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Unable to create unique name for resource {0} for url {1}" -f $resourceBaseName, $resourceUrl)
-            throw ("Unable to create unique name for resource {0} for url {1}" -f $resourceBaseName, $resourceUrl)
+            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Unable to create unique name for resource {0} for url {1}" -f $name, $resourceUrl)
+            throw ("Unable to create unique name for resource {0} for url {1}" -f $name, $resourceUrl)
         }
     }
     ClearDnsCache
     return $name
+}
+
+function AzureNameExists () {
+	 Param(
+        [Parameter(Mandatory=$true,Position=0)] [string] $resourceBaseName,
+        [Parameter(Mandatory=$true,Position=1)] [string] $resourceType,
+        [Parameter(Mandatory=$true,Position=2)] [string] $resourceUrl
+    )
+
+	switch ($resourceType.ToLowerInvariant())
+    {
+        "microsoft.storage/storageaccounts"
+		{
+			return Test-AzureName -Storage $resourceBaseName
+		}
+		"microsoft.eventhub/namespaces"
+		{
+		    return Test-AzureName -ServiceBusNamespace $resourceBaseName
+		}
+		"microsoft.web/sites"
+		{
+		    return Test-AzureName -Website $resourceBaseName
+		}
+        "microsoft.devices/iothubs"
+        {
+            if($script:CorruptedIotHubDNS)
+			{
+				return HostReplyRequest("https://{0}.{1}/devices" -f $resourceBaseName, $resourceUrl)
+			}
+			else
+			{
+				return HostEntryExists ("{0}.{1}" -f $resourceBaseName, $resourceUrl)
+			}
+        }
+		default 
+        {
+			return $true
+		}
+	}
+}
+
+# Detect if DNS server always return fake response which corrupts DNS name availability check.
+function DetectIoTHubDNS()
+{
+	$hostName = "nonexistsitesforsure{0:x5}.$script:IotHubSuffix" -f (get-random -max 1048575)
+	$script:CorruptedIotHubDNS = $false
+	try
+    {
+        if ([Net.Dns]::GetHostEntry($hostName) -ne $null)
+        {
+		    Write-Output ("IotHub DNS resolution corruption detected for: {0}" -f $hostName)
+            $script:CorruptedIotHubDNS = $true
+        }
+    }
+    catch
+	{
+	    Write-Verbose ("IotHub DNS resolution is normal for: {0}" -f $hostName)
+	}
+}
+
+function HostReplyRequest() 
+{
+	Param
+    (
+        [Parameter(Mandatory=$true,Position=2)] [string] $resourceUrl
+    )
+
+	try
+	{
+		Invoke-WebRequest -Uri $resourceUrl
+	}
+	catch [System.Net.WebException]
+	{
+		if ($_.Exception -ne $null) 
+        {
+			if ($_.Exception.Status -eq "ConnectFailure") 
+            {
+				return $false
+			}
+			if ($_.Exception.Response.StatusCode -eq "Unauthorized") 
+            {
+				return $true
+			}
+		}
+	}
+	return $false
 }
 
 Function GetAzureStorageAccount()
@@ -1272,10 +1367,10 @@ Function UploadFileToContainerBlob()
     $storageAccountKey = (Get-AzureRmStorageAccountKey -StorageAccountName $storageAccountName -ResourceGroupName $script:ResourceGroupName).Value[0]
     $context = New-AzureStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storageAccountKey
     $maxTries = $MAX_TRIES
-    if (!(HostEntryExists $context.StorageAccount.BlobEndpoint.Host))
+    if (!(AzureNameExists $storageAccountName "microsoft.storage/storageaccounts" $context.StorageAccount.BlobEndpoint.Host))
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Waiting for storage account '{0} to resolve." -f $context.StorageAccount.BlobEndpoint.Host)
-        while (!(HostEntryExists $context.StorageAccount.BlobEndpoint.Host) -and $maxTries-- -gt 0)
+        while (!(AzureNameExists $storageAccountName "microsoft.storage/storageaccounts" $context.StorageAccount.BlobEndpoint.Host) -and $maxTries-- -gt 0)
         {
             Write-Progress -Activity "Resolving storage account endpoint" -Status "Resolving" -SecondsRemaining ($maxTries*$SECONDS_TO_SLEEP)
             ClearDnsCache
@@ -1973,7 +2068,7 @@ switch($script:AzureEnvironmentName)
         $script:IotHubSuffix = "azure-devices.net"
         $script:WebsiteSuffix = "azurewebsites.net"
         $script:RdxSuffix = "timeseries.azure.com"
-
+        $script:docdbSuffix = "documents.azure.com"
         # Set locations were all resource are available. This might need to get updated if resources are deployed to more locations.
         $script:AzureLocations = @("West US", "North Europe", "West Europe")
     }
@@ -2169,6 +2264,9 @@ else
     $script:RdxEnvironmentSkuName = "S1"
     $script:KeyVaultSkuName = "Standard"
 }
+
+# Detect if DNS server always return fake response which corrupts DNS name availability check.
+DetectIoTHubDNS
 
 # Initialize cloud related variables
 $script:SuiteExists = (Find-AzureRmResourceGroup -Tag @{"IotSuiteType" = $script:SuiteType} | Where-Object {$_.name -eq $script:SuiteName -or $_.ResourceGroupName -eq $script:SuiteName}) -ne $null
@@ -2441,10 +2539,10 @@ if ($script:CloudDeploy -eq $true)
 {
     $script:MaxTries = $MAX_TRIES
     $script:WebEndpoint = "{0}.{1}" -f $script:DeploymentName, $script:WebsiteSuffix
-    if (!(HostEntryExists $script:WebEndpoint))
+    if (!(Test-AzureName -Website $script:WebEndpoint))
     {
         Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Waiting for website URL to resolve."
-        while (!(HostEntryExists $script:WebEndpoint))
+        while (!(Test-AzureName -Website $script:WebEndpoint))
         {
             Clear-DnsClientCache
             Write-Progress -Activity "Resolving website URL" -Status "Trying" -SecondsRemaining ($script:MaxTries*$SECONDS_TO_SLEEP)
@@ -2456,7 +2554,7 @@ if ($script:CloudDeploy -eq $true)
             sleep $SECONDS_TO_SLEEP
         }
     }
-    if (HostEntryExists $script:WebEndpoint)
+    if (Test-AzureName -Website $script:WebEndpoint)
     {
         # Wait till we can successfully load the page
         Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Waiting for website to respond."
