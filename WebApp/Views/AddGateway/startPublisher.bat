@@ -10,4 +10,4 @@ set _HUB_CS='replace with your connect string'
 set DOCKER_SHARED_ROOT=//D/docker
 
 ::# Run the publisher permanently, so that it is accessible by port 62222 from the "outside"
-docker run -it --rm -h publisher --expose 62222 -p 62222:62222 -v %DOCKER_SHARED_ROOT%:/build/out/Logs -v %DOCKER_SHARED_ROOT%:/build/out/CertificateStores -v %DOCKER_SHARED_ROOT%:/shared -v %DOCKER_SHARED_ROOT%:/root/.dotnet/corefx/cryptography/x509stores -e _GW_PNFP="/shared/publishednodes.JSON" microsoft/iot-edge-opc-publisher:2.0.3 publisher "%_HUB_CS%"
+docker run -it --rm -h publisher --name publisher -p 62222:62222 -v %DOCKER_SHARED_ROOT%:/build/out/Logs -v %DOCKER_SHARED_ROOT%:/build/out/CertificateStores -v %DOCKER_SHARED_ROOT%:/shared -v %DOCKER_SHARED_ROOT%:/root/.dotnet/corefx/cryptography/x509stores -e _GW_PNFP="/shared/publishednodes.JSON" microsoft/iot-edge-opc-publisher:2.0.3 publisher.example.net "%_HUB_CS%"
