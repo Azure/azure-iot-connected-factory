@@ -999,4 +999,8 @@ Stack trace:
     <value>Target</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>View in Time Series Insights</value>
+    <comment>Hyperlink label</comment>
+  </data>
 </root>

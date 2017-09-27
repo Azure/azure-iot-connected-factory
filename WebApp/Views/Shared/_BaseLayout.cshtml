@@ -150,6 +150,25 @@
             $('.tooltip').tooltip('destroy');
         });
 
+        function openRDXExplorerLink(url) {
+            window.open(url);
+        }
+
+        function linkRDXExplorer(aggregationView, keyNode) {
+            // Variable which is still available in deferred done promise for this function.
+            var rdxUrl;
+            return $.post({
+                url: "/WebMethod/RDXLink",
+                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), key: keyNode, view: aggregationView },
+                success: function onSuccess(response) {
+                    rdxUrl = response;
+                },
+                error: function (response) {
+                    console.error("error getting Rdx link: ", response.d, response.responseText);
+                }
+            });
+        }
+
     </script>
 </body>
 </html>

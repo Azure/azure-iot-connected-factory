@@ -89,7 +89,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             if (OpcSessionHelper.Instance.OpcSessionCache.TryGetValue(Session.SessionID, out entry))
             {
                 sessionModel.EndpointUrl = entry.EndpointURL;
-                Session["EndpointUrl"] = entry.EndpointURL;
+                Session["EndpointUrl"] = entry.EndpointURL; 
                 return View("Browse", sessionModel);
             }
 

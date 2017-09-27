@@ -463,13 +463,13 @@
 
         $("#dashboardContextpanelGraphHeader").html(label);
 
-        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour", "@Model.TopNode.Key").done(function(rdxUrl) {
             rdxExplorerHourLink = rdxUrl;
         });
-        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Day").done(function(rdxUrl) {
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Day", "@Model.TopNode.Key").done(function(rdxUrl) {
             rdxExplorerDayLink = rdxUrl;
         });
-        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Week").done(function(rdxUrl) {
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Week", "@Model.TopNode.Key").done(function(rdxUrl) {
             rdxExplorerWeekLink = rdxUrl;
         });
     }
@@ -492,23 +492,19 @@
 
         $("#dashboardContextpanelGraphHeader").html(name);
 
-        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour", "@Model.TopNode.Key").done(function(rdxUrl) {
             rdxExplorerHourLink = rdxUrl;
         });
-        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Day").done(function(rdxUrl) {
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Day", "@Model.TopNode.Key").done(function(rdxUrl) {
             rdxExplorerDayLink = rdxUrl;
         });
-        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Week").done(function(rdxUrl) {
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Week", "@Model.TopNode.Key").done(function(rdxUrl) {
             rdxExplorerWeekLink = rdxUrl;
         });
     }
 
     function closeChartContextPanel() {
         $("#dashboardContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big")
-    }
-
-    function openRDXExplorerLink(url) {
-        window.open(url);
     }
 
     // Alert details.
@@ -579,7 +575,7 @@
             }
         }
 
-        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour").done(function(rdxUrl) {
+        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour", "@Model.TopNode.Key").done(function(rdxUrl) {
             alertDetailRdxUrl = rdxUrl;
         });
 
@@ -1127,21 +1123,6 @@
             },
             complete: function() {
                 clearInterval(intervalId);
-            }
-        });
-    }
-
-    function linkRDXExplorer(aggregationView) {
-        // Variable which is still available in deferred done promise for this function.
-        var rdxUrl;
-        return $.post({
-            url: "/WebMethod/RDXLink",
-            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), key: "@Model.TopNode.Key", view: aggregationView },
-            success: function onSuccess(response) {
-                rdxUrl = response;
-            },
-            error: function(response) {
-                console.error("error getting Rdx link: ", response.d, response.responseText);
             }
         });
     }

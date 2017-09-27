@@ -95,7 +95,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         public string RDXLink(string key, ContosoTopologyNode.AggregationView view)
         {
             string url = null;
-            Station station = Startup.Topology.GetStation(key);
             DateTime now = DateTime.UtcNow;
             DateTime past;
 
@@ -115,7 +114,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                     break;
             }
 
-            if (station != null)
+            if (key != null && Startup.Topology.GetStation(key) != null)
             {
                 url = RDXExplorer.GetExplorerStationView(past, now, key, true, false);
             }

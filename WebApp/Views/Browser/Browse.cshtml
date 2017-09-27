@@ -1,8 +1,10 @@
 ﻿@using GlobalResources
 @using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
 @using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
 @model OpcSessionModel
+
 
 <div class="container-fluid browser_browse_container">
     <div class="row browser_container_header">
@@ -72,6 +74,7 @@
             <div class="list-group-item text-left"><b>@Strings.NodeInfo <span id="variablePublish_variableName">@Strings.NodeVariableName</span></b></div>
             <span class="list-group-item text-left" id="variablePublish_variableData">@Strings.NodePublishInProgress</span>
         </div>
+        <div id="rdxLink" class="browser_rdxlink_container" onclick="openRDXExplorerLink(linkRDXExplorer)">@Strings.Tsilink</div>
     </div>
 
     <div id="methodCallContextPanel" class="overlay">
@@ -185,6 +188,11 @@
             return encodedValue;
         }
 
+        function htmlDecode(value) {
+            decodedValue = $('<div>').html(value).text();
+            return decodedValue;
+        }
+
         function VariableRead(obj) {
             $.post({
                 url: "/Browser/VariableRead",
@@ -207,6 +215,8 @@
             });
         }
 
+        var linkRDXExplorer
+
         function VariablePublish(obj) {
             $.post({
                 url: "/Browser/VariablePublish",
@@ -217,13 +227,19 @@
                     $("#connectLoader").hide();
                     $("#waitingForPublishing").hide();
                     $("#publishBody").show();
-                    if (data == '@Strings.BrowserOpcMethodCallSucceeded') {
+                    if (data == htmlDecode('@Strings.BrowserOpcMethodCallSucceeded')) {
                         var jsonNode = $('#OpcNodeTree').jstree(true).get_node(obj.item.nodeId);
                         $('#OpcNodeTree').jstree(true).set_type(jsonNode, "published");
+
+                        $("#rdxLink").show();
+                        linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour", null).done(function(rdxUrl) {
+                            linkRDXExplorer = rdxUrl;
+                        });
                     }
                 },
                 error: function (response) {
                     openErrorPanel();
+                    $("#rdxLink").hide();
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
@@ -388,6 +404,7 @@
                 @:          "action": function (obj) {
                 @:             $("#variablePublishContextPanel").removeClass("overlay-close").addClass("overlay-right-open");
                 @:             $("#publishBody").hide();
+                @:             $("#rdxLink").hide();
                 @:             $("#waitingForPublishing").show();
                 @:             $("#connectLoader").show();
                 @:             VariablePublish(obj);
