@@ -557,6 +557,9 @@
         return description;
     }
 
+    var maxThreshold;
+    var minThreshold;
+
     function openContextPanelFromAlert(alertId) {
         $('#alertDetailActionResultHeader').hide();
         $('#alertDetailActionResult').hide();
@@ -588,6 +591,9 @@
             $("#alertContextpanelActionPicker").children().remove();
             $("#alertContextpanelActionPicker").html('@Strings.AlertDetailsNoActionAvailable');
         } else {
+            maxThreshold = alertInformation[i].Maximum;
+            minThreshold = alertInformation[i].Minimum;
+
             if (alertInformation[i].SubKey == "null") {
                 var relevance = @((Int16)ContosoPerformanceRelevance.NotRelevant);
                 switch (alertInformation[i].Cause) {
@@ -662,6 +668,7 @@
         $("#alertContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
     }
     function closeAlertContextPanel() {
+        alertDetailChart.ygrids.remove();
         $("#alertContextpanel").addClass("overlay-close").removeClass("overlay-right-open-big");
     }
 
@@ -728,6 +735,7 @@
     var colorGraph2 = '#ecee14';
     var colorGraph3 = '#6490A9';
     var colorAlertDetailChart = '#65CB99';
+    var colorAlertThreshold = '#ff0000'
     var gridGraph1 = initGridArray(2,60,3);
     var gridGraph2 = initGridArray(1,24,2);
     var gridGraph3 = initGridArray(0,7.5,0.5);
@@ -946,10 +954,23 @@
               ['x', "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
               ['data', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             ],
+            type: 'bar',
             colors: {
-                data: colorAlertDetailChart
-            },
-            type: 'bar'
+                data: function (d) {
+                    var color = colorAlertDetailChart;
+                    if(maxThreshold != null) {
+                        if (d.value >= maxThreshold) {
+                            color = colorAlertThreshold;
+                        }
+                    }
+                    if(minThreshold != null) {
+                        if (d.value <= minThreshold) {
+                            color = colorAlertThreshold;
+                        }
+                    }
+                    return color;
+                }
+            }
         },
         axis: {
             y: {
@@ -1004,6 +1025,18 @@
         chart3.axis.labels({ y: ylabel });
     }
 
+    function setChartThreshold(chart, data) {
+        if (chart == alertDetailChart) {
+            chart.axis.max(undefined);
+
+            maxThreshold != null ? chart.ygrids.add([{ value: maxThreshold, text: '@Strings.GraphMaxThreshold' }]) : maxThreshold = 0;
+            minThreshold != null ? chart.ygrids.add([{ value: minThreshold, text: '@Strings.GraphMinThreshold' }]) : minThreshold = 0;
+
+            var maxT = Math.max(Math.max.apply(Math, data.map(Number)), maxThreshold, minThreshold);
+            chart.axis.max(maxT * 1.1);         
+        }
+    }
+
     function getOeeKpiData(key, aggregationView, performanceRelevance, chart) {
         progressCount = 0;
         var intervalId = setInterval(function() {
@@ -1038,6 +1071,9 @@
                     $("#timeSeriesLoadingContainer").hide();
                     $("#alertDetailTimeSeriesContainer").show();
                     $("#alertDetailNoTimeSeriesContainer").hide();
+
+                    setChartThreshold(chart, data);
+                    chart.flush();
                     data.unshift("data");
                     chart.load({columns: [xlabel, data]});
                 } else {
@@ -1097,6 +1133,9 @@
                     $("#timeSeriesLoadingContainer").hide();
                     $("#alertDetailTimeSeriesContainer").show();
                     $("#alertDetailNoTimeSeriesContainer").hide();
+
+                    setChartThreshold(chart, data);
+                    chart.flush();
                     data.unshift("data");
                     chart.load({columns: [xlabel, data]});
                 } else {

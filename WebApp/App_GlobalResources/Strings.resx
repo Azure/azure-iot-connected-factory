@@ -1003,4 +1003,12 @@ Stack trace:
     <value>View in Time Series Insights</value>
     <comment>Hyperlink label</comment>
   </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Max Threshold</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Min Threshold</value>
+    <comment>Label</comment>
+  </data>
 </root>

@@ -8063,6 +8063,15 @@ path {
   stroke: #f2f2f7;
   stroke-width: 0.1px;
 }
+.c3-ygrid-line line {
+  stroke: #f2f2f7;
+  stroke-width: 1.0px;
+}
+.c3-ygrid-line {
+  fill: #f2f2f7;
+  font-size: 12px;
+  stroke-width: 0.2px;
+}
 .c3-axis-y text {
   fill: #f2f2f7;
   font-size: 12px;

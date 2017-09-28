@@ -869,8 +869,46 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                 // Check if the alert has been caused by an OPC UA node value.
                 if (alert.SubKey != "null")
                 {
-                    OpcUaNode opcUaNode = ((Station)TopologyTable[alert.Key]).GetOpcUaNode(alert.SubKey);
-                    alertInfo.TopologyDetails[index] = opcUaNode.SymbolicName;
+                    ContosoOpcUaNode contosoOpcUaNode = Startup.Topology.GetOpcUaNode(alert.Key, alert.SubKey);
+                    alertInfo.TopologyDetails[index] = contosoOpcUaNode.SymbolicName;
+                    alertInfo.Maximum = contosoOpcUaNode.Maximum;
+                    alertInfo.Minimum = contosoOpcUaNode.Minimum;
+                }
+                else
+                {
+                    switch (alert.Cause)
+                    {
+                        case ContosoAlertCause.AlertCauseOeeOverallBelowMinimum:
+                        case ContosoAlertCause.AlertCauseOeeOverallAboveMaximum:
+                            alertInfo.Maximum = topologyNode.OeeOverallPerformanceSetting.Maximum;
+                            alertInfo.Minimum = topologyNode.OeeOverallPerformanceSetting.Minimum;
+                            break;
+                        case ContosoAlertCause.AlertCauseOeeAvailabilityBelowMinimum:
+                        case ContosoAlertCause.AlertCauseOeeAvailabilityAboveMaximum:
+                            alertInfo.Maximum = topologyNode.OeeAvailabilityPerformanceSetting.Maximum;
+                            alertInfo.Minimum = topologyNode.OeeAvailabilityPerformanceSetting.Minimum;
+                            break;
+                        case ContosoAlertCause.AlertCauseOeePerformanceBelowMinimum:
+                        case ContosoAlertCause.AlertCauseOeePerformanceAboveMaximum:
+                            alertInfo.Maximum = topologyNode.OeePerformancePerformanceSetting.Maximum;
+                            alertInfo.Minimum = topologyNode.OeePerformancePerformanceSetting.Minimum;
+                            break;
+                        case ContosoAlertCause.AlertCauseOeeQualityBelowMinimum:
+                        case ContosoAlertCause.AlertCauseOeeQualityAboveMaximum:
+                            alertInfo.Maximum = topologyNode.OeeQualityPerformanceSetting.Maximum;
+                            alertInfo.Minimum = topologyNode.OeeQualityPerformanceSetting.Minimum;
+                            break;
+                        case ContosoAlertCause.AlertCauseKpi1BelowMinimum:
+                        case ContosoAlertCause.AlertCauseKpi1AboveMaximum:
+                            alertInfo.Maximum = topologyNode.Kpi1PerformanceSetting.Maximum;
+                            alertInfo.Minimum = topologyNode.Kpi1PerformanceSetting.Minimum;
+                            break;
+                        case ContosoAlertCause.AlertCauseKpi2BelowMinimum:
+                        case ContosoAlertCause.AlertCauseKpi2AboveMaximum:
+                            alertInfo.Maximum = topologyNode.Kpi2PerformanceSetting.Maximum;
+                            alertInfo.Minimum = topologyNode.Kpi2PerformanceSetting.Minimum;
+                            break;
+                    }
                 }
             }
             alertInfo.Key = alert.Key;

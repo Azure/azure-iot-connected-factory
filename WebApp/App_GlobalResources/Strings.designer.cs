@@ -1286,6 +1286,24 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max Threshold.
+        /// </summary>
+        public static string GraphMaxThreshold {
+            get {
+                return ResourceManager.GetString("GraphMaxThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Threshold.
+        /// </summary>
+        public static string GraphMinThreshold {
+            get {
+                return ResourceManager.GetString("GraphMinThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to M.
         /// </summary>
         public static string GraphMonday {

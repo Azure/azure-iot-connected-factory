@@ -293,6 +293,12 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         // OPC UA nodeId, if the alert source was an OPC UA node.
         public string SubKey { get; set; }
 
+        // If the actual value falls below Minimum an alert is created.
+        public double? Minimum { get; set; }
+
+        // If the actual value raises above Maximum, an alert is created.
+        public double? Maximum { get; set; }
+
         // Time when the alert was detected.
         public DateTime Time { get; set; }
 
