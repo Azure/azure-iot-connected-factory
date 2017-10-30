@@ -763,7 +763,7 @@ Yığın izleme:
     <comment>ErrorMessage</comment>
   </data>
   <data name="GraphRDXLinkHeader" xml:space="preserve">
-    <value>Azure Zaman Serisi Öngörülerinde keşif yapmak için grafiğe tıklayın</value>
+    <value>Azure Zaman Serisi Öngörülerinde keşif yapmak için grafa tıklayın</value>
     <comment>Message</comment>
   </data>
   <data name="AlertActionAcknowledge" xml:space="preserve">
@@ -997,6 +997,18 @@ Yığın izleme:
   </data>
   <data name="KpiTarget" xml:space="preserve">
     <value>Hedef</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Zaman Dizisi Öngörüleri'nde görüntüle</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>En Yüksek Eşik</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>En Düşük Eşik</value>
     <comment>Label</comment>
   </data>
 </root>

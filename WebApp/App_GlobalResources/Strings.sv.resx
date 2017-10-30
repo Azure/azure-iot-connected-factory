@@ -999,4 +999,16 @@ Stackspårning:
     <value>Mål</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Visa i Time Series Insights</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Högsta tröskelvärde</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Minsta tröskelvärde</value>
+    <comment>Label</comment>
+  </data>
 </root>

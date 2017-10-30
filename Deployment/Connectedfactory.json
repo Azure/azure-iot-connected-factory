@@ -268,73 +268,74 @@
         }
     }
   },
-  "variables": {
-    "location": "[resourceGroup().location]",
-    "storageVersion": "2016-01-01",
-    "storageId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageName'))]",
-    "webSiteVersion": "2016-08-01",
-    "webPlanVersion": "2016-09-01",
-    "bingMapsName": "[concat(parameters('suiteName'), '-map')]",
-    "bingMapsVersion": "2016-08-18",
-    "webPlanName": "[concat(parameters('suiteName'), '-plan')]",
-    "webSiteName": "[parameters('suiteName')]",
-    "storageEndpointSuffix": "[parameters('storageEndpointSuffix')]",
-    "iotHubVersion": "2016-02-03",
-    "iotHubResourceId": "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
-    "iotHubKeyName": "iothubowner",
-    "iotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('iotHubKeyName'))]",
-    "rdxVersion": "2017-02-28-preview",
-    "rdxCGName": "rdxcg",
-    "rdxIotHubKeyName": "service",
-    "rdxEventSourceName": "[parameters('rdxEnvironmentName')]",
-    "rdxEventSourceDisplayName": "[concat(parameters('suiteName'), '-Eventsource')]",
-    "rdxIotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('rdxIotHubKeyName'))]",
-    "delimiters": [ ".", "//" ],
-    "rdxEnvironmentDisplayName": "[parameters('suiteName')]",
-    "rdxEnvironmentTagsOptions": [
-      null,
-      { "displayName": "[variables('rdxEnvironmentDisplayName')]" }
-    ],
-    "rdxEnvironmentTagsValue": "[variables('rdxEnvironmentTagsOptions')[length(take(variables('rdxEnvironmentDisplayName'), 1))]]",
-    "rdxEventSourceTagsOptions": [
-      null,
-      { "displayName": "[variables('rdxEventSourceDisplayName')]" }
-    ],
-    "rdxEventSourceTagsValue": "[variables('rdxEventSourceTagsOptions')[length(take(variables('rdxEventSourceDisplayName'), 1))]]",
-    "rdxAccessPolicyName": "[concat(parameters('suiteName'),'-access')]",
-    "rdxAccessPolicyRole": "Reader",
-    "rdxOwnerPolicyRole": "Contributor",
-    "certificateVersion": "2016-03-01",
-    "certificateName": "[parameters('suiteName')]",
-    "keyVaultVersion": "2015-06-01",
-    "keyVaultName": "[concat(take(replace(parameters('suiteName'),'--',''), 11), uniqueString(subscription().id, parameters('suiteName')))]",
-    "keyVaultDisplayName": "[parameters('suiteName')]",
-    "keyVaultVmSecretName": "[concat(parameters('keyVaultSecretBaseName'), '-VM')]",
-    "keyVaultVmSecretJson": {
-      "data": "[parameters('keyVaultVmSecret')]",
-      "dataType": "pfx",
-      "password": "[parameters('uaSecretPassword')]"
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "storageVersion": "2016-01-01",
+        "storageId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageName'))]",
+        "webSiteVersion": "2016-08-01",
+        "webPlanVersion": "2016-09-01",
+        "bingMapsName": "[concat(parameters('suiteName'), '-map')]",
+        "bingMapsVersion": "2016-08-18",
+        "webPlanName": "[concat(parameters('suiteName'), '-plan')]",
+        "webSiteName": "[parameters('suiteName')]",
+        "storageEndpointSuffix": "[parameters('storageEndpointSuffix')]",
+        "iotHubVersion": "2016-02-03",
+        "iotHubResourceId": "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
+        "iotHubKeyName": "iothubowner",
+        "iotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('iotHubKeyName'))]",
+        "rdxVersion": "2017-02-28-preview",
+        "rdxCGName": "rdxcg",
+        "rdxIotHubKeyName": "service",
+        "rdxEventSourceName": "[parameters('rdxEnvironmentName')]",
+        "rdxEventSourceDisplayName": "[concat(parameters('suiteName'), '-Eventsource')]",
+        "rdxIotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('rdxIotHubKeyName'))]",
+        "delimiters": [ ".", "//" ],
+        "rdxEnvironmentDisplayName": "[parameters('suiteName')]",
+        "rdxEnvironmentTagsOptions": [
+            null,
+            { "displayName": "[variables('rdxEnvironmentDisplayName')]" }
+        ],
+        "rdxEnvironmentTagsValue": "[variables('rdxEnvironmentTagsOptions')[length(take(variables('rdxEnvironmentDisplayName'), 1))]]",
+        "rdxEventSourceTagsOptions": [
+            null,
+            { "displayName": "[variables('rdxEventSourceDisplayName')]" }
+        ],
+        "rdxEventSourceTagsValue": "[variables('rdxEventSourceTagsOptions')[length(take(variables('rdxEventSourceDisplayName'), 1))]]",
+        "rdxAccessPolicyName": "[concat(parameters('suiteName'),'-access')]",
+        "rdxAccessPolicyRole": "Reader",
+        "rdxOwnerPolicyRole": "Contributor",
+        "rdxTimestampPropertyName": "Value.SourceTimestamp",
+        "certificateVersion": "2016-03-01",
+        "certificateName": "[parameters('suiteName')]",
+        "keyVaultVersion": "2015-06-01",
+        "keyVaultName": "[concat(take(replace(parameters('suiteName'),'--',''), 11), uniqueString(subscription().id, parameters('suiteName')))]",
+        "keyVaultDisplayName": "[parameters('suiteName')]",
+        "keyVaultVmSecretName": "[concat(parameters('keyVaultSecretBaseName'), '-VM')]",
+        "keyVaultVmSecretJson": {
+            "data": "[parameters('keyVaultVmSecret')]",
+            "dataType": "pfx",
+            "password": "[parameters('uaSecretPassword')]"
+        },
+        "keyVaultVmSecretBase64": "[base64(string(variables('keyVaultVmSecretJson')))]",
+        "keyVaultWebsiteSecretName": "[concat(parameters('keyVaultSecretBaseName'), '-Website')]",
+        "keyVaultAccessPolicies": [
+            {
+                "objectId": "[parameters('webSitesServicePrincipalObjectId')]",
+                "tenantId": "[parameters('aadTenant')]",
+                "permissions": {
+                    "keys": [
+                        "get"
+                    ],
+                    "secrets": [
+                        "get"
+                    ],
+                    "certificates": [
+                        "get"
+                    ]
+                }
+            }
+        ]
     },
-    "keyVaultVmSecretBase64": "[base64(string(variables('keyVaultVmSecretJson')))]",
-    "keyVaultWebsiteSecretName": "[concat(parameters('keyVaultSecretBaseName'), '-Website')]",
-    "keyVaultAccessPolicies": [
-      {
-        "objectId": "[parameters('webSitesServicePrincipalObjectId')]",
-        "tenantId": "[parameters('aadTenant')]",
-        "permissions": {
-          "keys": [
-            "get"
-          ],
-          "secrets": [
-            "get"
-          ],
-          "certificates": [
-            "get"
-          ]
-        }
-      }
-    ]
-  },
   "resources": [
     {
       "name": "linkedVmTemplate",
@@ -482,7 +483,8 @@
             "eventHubName": "[reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.path]",
             "consumerGroupName": "[variables('rdxCGName')]",
             "keyName": "[variables('rdxIotHubKeyName')]",
-            "sharedAccessKey": "[concat(listkeys(variables('rdxIotHubKeyResource'), variables('iotHubVersion')).primaryKey)]"
+            "sharedAccessKey": "[concat(listkeys(variables('rdxIotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
+            "timestampPropertyName": "variables('rdxTimestampPropertyName')"
           },
           "tags": "[variables('rdxEventSourceTagsValue')]",
           "dependsOn": [

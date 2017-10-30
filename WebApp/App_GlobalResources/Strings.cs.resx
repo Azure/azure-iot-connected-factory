@@ -999,4 +999,16 @@ Trasování zásobníku:
     <value>Cíl</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Zobrazit v Time Series Insights</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Maximální mezní hodnota</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Minimální mezní hodnota</value>
+    <comment>Label</comment>
+  </data>
 </root>

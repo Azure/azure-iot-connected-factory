@@ -545,6 +545,15 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unpublish.
+        /// </summary>
+        public static string BrowserContextPanelHeaderUnpublish {
+            get {
+                return ResourceManager.GetString("BrowserContextPanelHeaderUnpublish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Write variable.
         /// </summary>
         public static string BrowserContextPanelHeaderWrite {
@@ -559,6 +568,15 @@ namespace GlobalResources {
         public static string BrowserContextPanelPublishing {
             get {
                 return ResourceManager.GetString("BrowserContextPanelPublishing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublishing....
+        /// </summary>
+        public static string BrowserContextPanelUnPublishing {
+            get {
+                return ResourceManager.GetString("BrowserContextPanelUnPublishing", resourceCulture);
             }
         }
         
@@ -1804,6 +1822,24 @@ namespace GlobalResources {
         public static string NodeReadInProgress {
             get {
                 return ResourceManager.GetString("NodeReadInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublish....
+        /// </summary>
+        public static string NodeUnpublish {
+            get {
+                return ResourceManager.GetString("NodeUnpublish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublish in progress....
+        /// </summary>
+        public static string NodeUnpublishInProgress {
+            get {
+                return ResourceManager.GetString("NodeUnpublishInProgress", resourceCulture);
             }
         }
         

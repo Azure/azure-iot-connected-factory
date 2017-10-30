@@ -999,4 +999,16 @@ Analisi dello stack:
     <value>Destinazione</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Visualizza in Time Series Insights</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Soglia massima</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Soglia minima</value>
+    <comment>Label</comment>
+  </data>
 </root>

@@ -999,4 +999,16 @@
     <value>目標</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>在 Time Series Insights 中檢視</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>最大閾值</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>最小閾值</value>
+    <comment>Label</comment>
+  </data>
 </root>

@@ -999,4 +999,16 @@ Acompanhamento da pilha:
     <value>Destino</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Ver Informações em Série de Tempo</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Limiar Máximo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Limiar Mínimo</value>
+    <comment>Label</comment>
+  </data>
 </root>

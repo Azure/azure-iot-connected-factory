@@ -342,14 +342,6 @@ Function ValidateResourceName()
         {
             $resourceBaseName = $resourceBaseName.Substring(0, [System.Math]::Min(40, $resourceBaseName.Length))
         }
-		"microsoft.compute/virtualmachines"
-        {
-           return  "{0}{1:x5}" -f $resourceBaseName.Substring(0, [System.Math]::Min(19, $resourceBaseName.Length)), (get-random -max 1048575)
-        }
-        "microsoft.timeseriesinsights/environments"
-        {
-           return  "{0}{1:x5}" -f $resourceBaseName.Substring(0, [System.Math]::Min(19, $resourceBaseName.Length)), (get-random -max 1048575)
-        }
         default {}
     }
     
@@ -376,7 +368,7 @@ Function GetUniqueResourceName()
 {
     Param(
         [Parameter(Mandatory=$true,Position=0)] [string] $resourceBaseName,
-		[Parameter(Mandatory=$true,Position=1)] [string] $resourceType,
+        [Parameter(Mandatory=$true,Position=1)] [string] $resourceType,
         [Parameter(Mandatory=$true,Position=2)] [string] $resourceUrl
     )
 
@@ -397,89 +389,89 @@ Function GetUniqueResourceName()
 }
 
 function AzureNameExists () {
-	 Param(
+     Param(
         [Parameter(Mandatory=$true,Position=0)] [string] $resourceBaseName,
         [Parameter(Mandatory=$true,Position=1)] [string] $resourceType,
         [Parameter(Mandatory=$true,Position=2)] [string] $resourceUrl
     )
 
-	switch ($resourceType.ToLowerInvariant())
+    switch ($resourceType.ToLowerInvariant())
     {
         "microsoft.storage/storageaccounts"
-		{
-			return Test-AzureName -Storage $resourceBaseName
-		}
-		"microsoft.eventhub/namespaces"
-		{
-		    return Test-AzureName -ServiceBusNamespace $resourceBaseName
-		}
-		"microsoft.web/sites"
-		{
-		    return Test-AzureName -Website $resourceBaseName
-		}
+        {
+            return Test-AzureName -Storage $resourceBaseName
+        }
+        "microsoft.eventhub/namespaces"
+        {
+            return Test-AzureName -ServiceBusNamespace $resourceBaseName
+        }
+        "microsoft.web/sites"
+        {
+            return Test-AzureName -Website $resourceBaseName
+        }
         "microsoft.devices/iothubs"
         {
             if($script:CorruptedIotHubDNS)
-			{
-				return HostReplyRequest("https://{0}.{1}/devices" -f $resourceBaseName, $resourceUrl)
-			}
-			else
-			{
-				return HostEntryExists ("{0}.{1}" -f $resourceBaseName, $resourceUrl)
-			}
+            {
+                return HostReplyRequest("https://{0}.{1}/devices" -f $resourceBaseName, $resourceUrl)
+            }
+            else
+            {
+                return HostEntryExists ("{0}.{1}" -f $resourceBaseName, $resourceUrl)
+            }
         }
-		default 
+        default 
         {
-			return $true
-		}
-	}
+            return $true
+        }
+    }
 }
 
 # Detect if DNS server always return fake response which corrupts DNS name availability check.
 function DetectIoTHubDNS()
 {
-	$hostName = "nonexistsitesforsure{0:x5}.$script:IotHubSuffix" -f (get-random -max 1048575)
-	$script:CorruptedIotHubDNS = $false
-	try
+    $hostName = "nonexistsitesforsure{0:x5}.$script:IotHubSuffix" -f (get-random -max 1048575)
+    $script:CorruptedIotHubDNS = $false
+    try
     {
         if ([Net.Dns]::GetHostEntry($hostName) -ne $null)
         {
-		    Write-Output ("IotHub DNS resolution corruption detected for: {0}" -f $hostName)
+            Write-Output ("IotHub DNS resolution corruption detected for: {0}" -f $hostName)
             $script:CorruptedIotHubDNS = $true
         }
     }
     catch
-	{
-	    Write-Verbose ("IotHub DNS resolution is normal for: {0}" -f $hostName)
-	}
+    {
+        Write-Verbose ("IotHub DNS resolution is normal for: {0}" -f $hostName)
+    }
 }
 
 function HostReplyRequest() 
 {
-	Param
+    Param
     (
         [Parameter(Mandatory=$true,Position=2)] [string] $resourceUrl
     )
 
-	try
-	{
-		Invoke-WebRequest -Uri $resourceUrl
-	}
-	catch [System.Net.WebException]
-	{
-		if ($_.Exception -ne $null) 
+    try
+    {
+        Invoke-WebRequest -Uri $resourceUrl
+    }
+    catch [System.Net.WebException]
+    {
+        if ($_.Exception -ne $null) 
         {
-			if ($_.Exception.Status -eq "ConnectFailure") 
+            if ($_.Exception.Status -eq "ConnectFailure") 
             {
-				return $false
-			}
-			if ($_.Exception.Response.StatusCode -eq "Unauthorized") 
+                return $false
+            }
+            if ($_.Exception.Response.StatusCode -eq "Unauthorized") 
             {
-				return $true
-			}
-		}
-	}
-	return $false
+                return $true
+            }
+        }
+    }
+    return $false
 }
 
 Function GetAzureStorageAccount()
@@ -1682,7 +1674,7 @@ function StartGWPublisher
     $volumes += "-v $script:DockerRoot/$script:DockerLogsFolder/$($hostName):/app/$script:DockerLogsFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerConfigFolder/$($hostName):/app/$script:DockerConfigFolder"
 
-    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always -e _GW_PNFP=`'/app/$script:DockerConfigFolder/publishednodes.JSON`' -e _TPC_SP=`'/app/Shared/CertificateStores/UA Applications`' -e _GW_LOGP=`'/app/$script:DockerLogsFolder/$hostName.log.txt`' " + '$DOCKER_PUBLISHER_REPO:$DOCKER_PUBLISHER_VERSION ' + "$hostName " + '"$IOTHUB_CONNECTIONSTRING"'
+    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always " + '$DOCKER_PUBLISHER_REPO:$DOCKER_PUBLISHER_VERSION ' + "$hostName " + '"$IOTHUB_CONNECTIONSTRING" ' + "--pf `'/app/$script:DockerConfigFolder/publishednodes.JSON`' --tp `'/app/Shared/CertificateStores/UA Applications`' --lf `'/app/$script:DockerLogsFolder/$hostName.log.txt`' --si 1 --ms 0 --di 60 --oi 1000 --op 1000 --fd true --tm true --as true --vc true"
     RecordVmCommand -command $vmCommand -startScript
 }
 
@@ -1946,7 +1938,7 @@ function SimulationUpdate
             Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand | Out-Null
 
             # Copy compressed simulation binaries and scripts to VM
-            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Uupload simulation files to VM")
+            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Upload simulation files to VM")
             Set-SCPFile -LocalFile "$script:SimulationPath/simulation" -RemotePath $script:DockerRoot -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
             Set-SCPFile -LocalFile "$script:SimulationBuildOutputInitScript" -RemotePath $script:DockerRoot -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
             $vmCommand = "chmod +x $script:DockerRoot/simulation"
@@ -2106,10 +2098,11 @@ $script:DockerConfigFolder = "Config"
 $script:DockerLogsFolder = "Logs"
 $script:DockerSharedFolder = "Shared"
 $script:DockerCertsFolder = "$script:DockerSharedFolder/CertificateStores/UA Applications/certs"
-$script:DockerProxyRepo = "microsoft/iot-gateway-opc-ua-proxy"
+$script:DockerProxyRepo = "microsoft/iot-edge-opc-proxy"
 $script:DockerProxyVersion = "1.0.2"
-$script:DockerPublisherRepo = "microsoft/iot-gateway-opc-ua"
-$script:DockerPublisherVersion = "2.0.0"
+$script:DockerPublisherRepo = "microsoft/iot-edge-opc-publisher"
+$script:DockerPublisherVersion = "2.1.1"
+# todo remove
 $script:UaSecretBaseName = "UAWebClient"
 # Note: The password could only be changed if it is synced with the password used in CreateCerts.exe
 $script:UaSecretPassword = "password"

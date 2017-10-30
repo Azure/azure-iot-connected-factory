@@ -999,4 +999,16 @@ Trace de la pile :
     <value>Cible</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Afficher dans Time Series Insights</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Seuil maximal</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Seuil minimal</value>
+    <comment>Label</comment>
+  </data>
 </root>

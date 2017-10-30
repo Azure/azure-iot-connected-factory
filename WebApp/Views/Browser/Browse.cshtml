@@ -65,7 +65,7 @@
 
     <div id="variablePublishContextPanel" class="overlay">
         <div class="dashboard_contextpanel_header">
-            <div class="dashboard_contextpanel_header_text">@Strings.BrowserContextPanelHeaderPublish</div>
+            <div id="publishHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserContextPanelHeaderPublish</div>
         </div>
         <a href="#" class="closebtn" onclick="$('#variablePublishContextPanel').addClass('overlay-close')">&times;</a>
         <div id="waitingForPublishing" class="browser_error_details_container">@Strings.BrowserContextPanelPublishing</div>
@@ -219,8 +219,8 @@
 
         function VariablePublish(obj) {
             $.post({
-                url: "/Browser/VariablePublish",
-                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), jstreeNode: obj.item.nodeId },
+                url: "/Browser/VariablePublishUnpublish",
+                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), jstreeNode: obj.item.nodeId, method: "publish" },
                 success: function (data) {
                     $("#variablePublish_variableData").html(data);
                     $("#variablePublish_variableName").html(obj.item.nodeName);
@@ -230,11 +230,38 @@
                     if (data == htmlDecode('@Strings.BrowserOpcMethodCallSucceeded')) {
                         var jsonNode = $('#OpcNodeTree').jstree(true).get_node(obj.item.nodeId);
                         $('#OpcNodeTree').jstree(true).set_type(jsonNode, "published");
-
+                        jsonNode.original.publishedNode = true;
                         $("#rdxLink").show();
                         linkRDXExplorer("@ContosoTopologyNode.AggregationView.Hour", null).done(function(rdxUrl) {
                             linkRDXExplorer = rdxUrl;
                         });
+                    }
+                },
+                error: function (response) {
+                    openErrorPanel();
+                    if (response.status == 403) {
+                        $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
+                    } else {
+                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                    }
+                }
+            });
+        }
+
+        function VariableUnpublish(obj) {
+            $.post({
+                url: "/Browser/VariablePublishUnpublish",
+                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), jstreeNode: obj.item.nodeId, method: "unpublish" },
+                success: function (data) {
+                    $("#variablePublish_variableData").html(data);
+                    $("#variablePublish_variableName").html(obj.item.nodeName);
+                    $("#connectLoader").hide();
+                    $("#waitingForPublishing").hide();
+                    $("#publishBody").show();
+                    if (data == htmlDecode('@Strings.BrowserOpcMethodCallSucceeded')) {
+                        var jsonNode = $('#OpcNodeTree').jstree(true).get_node(obj.item.nodeId);
+                        $('#OpcNodeTree').jstree(true).set_type(jsonNode, "default");
+                        jsonNode.original.publishedNode = false;
                     }
                 },
                 error: function (response) {
@@ -356,7 +383,7 @@
                 parameterValues.push(parameterValEncoded);
 
             }
-            $("#methodCallResul_result").text("@Strings.NodeCallInProgress");
+            $("#methodCallResult_result").text("@Strings.NodeCallInProgress");
             $("#methodCallResult_methodName").text($("#methodCall_methodName").text());
             $.post({
                 url: "/Browser/MethodCall",
@@ -393,7 +420,7 @@
             var result = {};
             @if (PermsChecker.HasPermission(Permission.PublishOpcNode))
             {
-                @:if (node.original.nodeClass === "Variable" && node.original.publishedNode == false && (node.original.accessLevel & 0x01)) {
+                @:if (node.original.nodeClass === "Variable" && node.original.publishedNode != true && (node.original.accessLevel & 0x01)) {
                 @:  $.extend(result, {
                 @:      "Publish": {
                 @:          "separator_before": false,
@@ -403,11 +430,36 @@
                 @:          "nodeName": node.text,
                 @:          "action": function (obj) {
                 @:             $("#variablePublishContextPanel").removeClass("overlay-close").addClass("overlay-right-open");
+                @:             $("#publishHeader").html('@Strings.BrowserContextPanelHeaderPublish');
                 @:             $("#publishBody").hide();
+                @:             $("#waitingForPublishing").html('@Strings.BrowserContextPanelPublishing');
                 @:             $("#rdxLink").hide();
                 @:             $("#waitingForPublishing").show();
                 @:             $("#connectLoader").show();
                 @:             VariablePublish(obj);
+                @:          }
+                @:      }
+                @:  });
+                @:}
+            }
+            @if (PermsChecker.HasPermission(Permission.PublishOpcNode))
+            {
+                @:if (node.original.nodeClass === "Variable" && node.original.publishedNode == true && node.original.relevantNode == false && (node.original.accessLevel & 0x01)) {
+                @:  $.extend(result, {
+                @:      "UnPublish": {
+                @:          "separator_before": false,
+                @:          "separator_after": false,
+                @:          "label": "@Strings.NodeUnpublish",
+                @:          "nodeId": node.id,
+                @:          "nodeName": node.text,
+                @:          "action": function (obj) {
+                @:             $("#variablePublishContextPanel").removeClass("overlay-close").addClass("overlay-right-open");
+                @:             $("#publishHeader").html('@Strings.BrowserContextPanelHeaderUnpublish');
+                @:             $("#publishBody").hide();
+                @:             $("#waitingForPublishing").html('@Strings.BrowserContextPanelUnPublishing');
+                @:             $("#waitingForPublishing").show();
+                @:             $("#connectLoader").show();
+                @:             VariableUnpublish(obj);
                 @:          }
                 @:      }
                 @:  });
@@ -541,6 +593,10 @@
                         if (nodeOriginal.publishedNode == true) {
                             var jsonNode = $(this).jstree(true).get_node(node)
                             $(this).jstree(true).set_type(jsonNode, "published")
+                        }
+                        else {
+                            var jsonNode = $(this).jstree(true).get_node(node)
+                            $(this).jstree(true).set_type(jsonNode, "default")
                         }
                     }
                 }

@@ -81,7 +81,11 @@ if ($vmPublicIp -eq $null)
     }
 }
 
+# Enable SSH access to the VM
+Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Enable SSH access to the VM.")
+. "$(Split-Path $MyInvocation.MyCommand.Path)/Enable-SimulationSshAccess.ps1" $script:DeploymentName
+
 # Get IP address
 $ipAddress = Get-AzureRmPublicIpAddress -ResourceGroupName $DeploymentName
 Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of the VM is '{0}'" -f $ipAddress.IpAddress)
-Write-Warning ("$(Get-Date –f $TIME_STAMP_FORMAT) - Your VM is now accessible from the public internet. Please make sure you have the latest security fixes applied by following the instructions here: https://wiki.ubuntu.com/Security/Upgrades")
+Write-Warning ("$(Get-Date –f $TIME_STAMP_FORMAT) - Your VM is now accessible from the public internet via SSH. Please make sure you have the latest security fixes applied by following the instructions here: https://wiki.ubuntu.com/Security/Upgrades")

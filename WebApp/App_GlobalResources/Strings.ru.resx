@@ -999,4 +999,16 @@
     <value>Цель</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Просмотреть в службе анализа временных рядов</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Максимальное пороговое значение</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Минимальное пороговое значение</value>
+    <comment>Label</comment>
+  </data>
 </root>

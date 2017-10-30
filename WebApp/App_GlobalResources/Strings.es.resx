@@ -999,4 +999,16 @@ Seguimiento de la pila:
     <value>Destino</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Ver en datos de serie temporal</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Umbral máximo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Umbral mínimo</value>
+    <comment>Label</comment>
+  </data>
 </root>

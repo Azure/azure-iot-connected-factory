@@ -999,4 +999,16 @@ Híváslánc:
     <value>Cél</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Megtekintés Time Series-elemzésekben</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Maximális küszöb</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Minimális küszöb</value>
+    <comment>Label</comment>
+  </data>
 </root>

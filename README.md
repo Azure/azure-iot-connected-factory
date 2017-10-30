@@ -30,7 +30,10 @@ Get your Bing Maps API for Enterprise QueryKey from the Azure portal:
 5.	Run a local or cloud deployment using build.ps1.
 
 #### Simulation VM security
-By default the configuration of the VM used for the production line simulation does not allow any inbound connections. This was a deliberate decision to maintain high level security for the VM. If you need to change the configuration of the production line VM to allow inbound connections, e.g. to login via SSH, please make sure you are running a vulnerability check on the VM first and also install the latest patches by following the [instructions](https://wiki.ubuntu.com/Security/Upgrades) on the Ubuntu website. 
+To upload and start the simulation in the VM, we are adding a public IP interface before we upload the VM scripts and executables. This interface is removed after the operation is completed. The network interface of the VM is protected by a network security group, which allows only outgoing connections on ports 5671 (AMPQS), 8883 (MQTTS) and 443 (TLS).
+For the upload operation, the rule is extended to also allow incoming connections on port 22 (SSH). In the directory Simulation/Factory, you will find several PowerShell scripts, which allow you to add/remove 
+public IP address or enable/disable the SSH allow rule for the VM.
+If you need to change the configuration of the production line VM to allow inbound connections, e.g. to login via SSH, please make sure you are running a vulnerability check on the VM first and also install the latest patches by following the [instructions](https://wiki.ubuntu.com/Security/Upgrades) on the Ubuntu website. 
 
 ## Documentation
 

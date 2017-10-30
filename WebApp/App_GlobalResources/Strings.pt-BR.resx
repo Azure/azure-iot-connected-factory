@@ -999,4 +999,16 @@ Rastreamento de pilha:
     <value>Destino</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Exibir no Time Series Insights</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Limite Máximo</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Limite Mínimo</value>
+    <comment>Label</comment>
+  </data>
 </root>

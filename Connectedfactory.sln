@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3E3CB1FA-112D-49FB-A60A-71085BF01992}"
 	ProjectSection(SolutionItems) = preProject
@@ -30,7 +30,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Factory", "Factory", "{FBBD
 		Simulation\Factory\Add-SimulationPublicIp.ps1 = Simulation\Factory\Add-SimulationPublicIp.ps1
 		Simulation\Factory\BuildAndRunSimulationLinux.sh = Simulation\Factory\BuildAndRunSimulationLinux.sh
 		Simulation\Factory\BuildSimulation.cmd = Simulation\Factory\BuildSimulation.cmd
+		Simulation\Factory\Disable-SimulationSshAccess.ps1 = Simulation\Factory\Disable-SimulationSshAccess.ps1
 		Simulation\Factory\Dockerfile = Simulation\Factory\Dockerfile
+		Simulation\Factory\Enable-SimulationSshAccess.ps1 = Simulation\Factory\Enable-SimulationSshAccess.ps1
 		Simulation\Factory\Get-SimulationLogs.ps1 = Simulation\Factory\Get-SimulationLogs.ps1
 		Simulation\Factory\Remove-SimulationPublicIp.ps1 = Simulation\Factory\Remove-SimulationPublicIp.ps1
 		Simulation\Factory\Update-Certificate.ps1 = Simulation\Factory\Update-Certificate.ps1
@@ -120,5 +122,8 @@ Global
 		{BB55757C-C3A2-4C1D-A1C6-1D67DE6699CA} = {FBBD7855-14C3-4046-A7D4-C58519BCE52A}
 		{5F0E884A-48AE-46FE-8105-4D8CAE4E8CB9} = {FBBD7855-14C3-4046-A7D4-C58519BCE52A}
 		{CB468D21-E239-4367-82C6-F85EA904C2CE} = {FBBD7855-14C3-4046-A7D4-C58519BCE52A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4321ACF4-D67E-49A2-AAC9-98B996541EB5}
 	EndGlobalSection
 EndGlobal

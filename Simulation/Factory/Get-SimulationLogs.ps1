@@ -155,6 +155,11 @@ if ($vmPublicIp -eq $null)
 
 try
 {
+    # Enable SSH access to the VM
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Enable SSH access to the VM.")
+    . "$(Split-Path $MyInvocation.MyCommand.Path)/Enable-SimulationSshAccess.ps1" $script:DeploymentName
+    Start-Sleep 5
+
     # Get IP address
     $ipAddress = Get-AzureRmPublicIpAddress -ResourceGroupName $DeploymentName
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of the VM is '{0}'" -f $ipAddress.IpAddress)
@@ -173,7 +178,7 @@ try
     }
 
     # Delete the old archive.
-	$remoteFile = "Logs.tar.bz2"
+    $remoteFile = "Logs.tar.bz2"
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete the old archive '$remoteFile'")
     $vmCommand = "rm -f $sourceArchiveName"
     Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand | Out-Null
@@ -182,7 +187,7 @@ try
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Compress the log files")
     $vmCommand = "tar -cjvf Logs.tar.bz2 Logs *.log"
     $status = Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand -ErrorAction SilentlyContinue
-	
+
     # Copy the logs archive.
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Download the log archive")
     $localFile = "$LocalPath/Logs_" + (Get-Date  -Format FileDateTimeUniversal) + ".tar.bz2"
@@ -193,6 +198,10 @@ finally
 {
     # Remove SSH session
     Remove-SSHSession $session.SessionId | Out-Null
+
+    # Disable SSH access to the VM
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Disable SSH access to the VM.")
+    . "$(Split-Path $MyInvocation.MyCommand.Path)/Disable-SimulationSshAccess.ps1" $script:DeploymentName
 }
 
 # Remove the public IP address from the VM if we added it.

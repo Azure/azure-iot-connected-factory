@@ -999,4 +999,16 @@ Exceptionmessage:
     <value>対象</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Time Series Insights で表示する</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>最大しきい値</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>最小しきい値</value>
+    <comment>Label</comment>
+  </data>
 </root>

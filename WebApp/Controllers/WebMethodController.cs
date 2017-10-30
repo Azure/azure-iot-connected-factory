@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿
+using GlobalResources;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
-using static Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX.RDXUtils;
-using GlobalResources;
 using Newtonsoft.Json;
 using Opc.Ua;
 using Opc.Ua.Client;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using static Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX.RDXUtils;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 {

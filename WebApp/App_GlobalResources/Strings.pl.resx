@@ -999,4 +999,16 @@ Wewnętrzny komunikat:
     <value>Obiekt docelowy</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>Wyświetl w statystykach serii czasu</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Próg maksymalny</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Próg minimalny</value>
+    <comment>Label</comment>
+  </data>
 </root>

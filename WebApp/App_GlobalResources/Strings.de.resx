@@ -968,7 +968,7 @@ Stapelüberwachung:
     <comment>Message</comment>
   </data>
   <data name="BrowserWriteWarningHeader" xml:space="preserve">
-    <value>This change will alter how your production line is configured.</value>
+    <value>Diese Änderung wirkt sich darauf aus, wie Ihre Produktionslinie konfiguriert ist.</value>
     <comment>Message</comment>
   </data>
   <data name="NewFactoryName" xml:space="preserve">
@@ -976,7 +976,7 @@ Stapelüberwachung:
     <comment>Label</comment>
   </data>
   <data name="NewProductionLineName" xml:space="preserve">
-    <value>New Production Line</value>
+    <value>Neue Produktionslinie</value>
     <comment>Label</comment>
   </data>
   <data name="UntrustedCertificate" xml:space="preserve">
@@ -997,6 +997,18 @@ Stapelüberwachung:
   </data>
   <data name="KpiTarget" xml:space="preserve">
     <value>Ziel</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>In Time Series Insights anzeigen</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Max. Schwellenwert</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Min. Schwellenwert</value>
     <comment>Label</comment>
   </data>
 </root>

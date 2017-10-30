@@ -999,4 +999,16 @@
     <value>대상</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>시계열 정보 보기</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>최대 임계값</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>최소 임계값</value>
+    <comment>Label</comment>
+  </data>
 </root>

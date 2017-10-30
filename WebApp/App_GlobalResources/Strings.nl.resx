@@ -999,4 +999,16 @@ Stack-trace:
     <value>Doel</value>
     <comment>Label</comment>
   </data>
+  <data name="Tsilink" xml:space="preserve">
+    <value>In Time Series Insights weergeven</value>
+    <comment>Hyperlink label</comment>
+  </data>
+  <data name="GraphMaxThreshold" xml:space="preserve">
+    <value>Drempel voor maximum</value>
+    <comment>Label</comment>
+  </data>
+  <data name="GraphMinThreshold" xml:space="preserve">
+    <value>Drempel voor minimum</value>
+    <comment>Label</comment>
+  </data>
 </root>

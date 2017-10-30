@@ -198,8 +198,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
             EndpointDescriptionCollection endpointCollection = DiscoverEndpoints(_configuration, endpointURI, 10);
             EndpointDescription selectedEndpoint = SelectUaTcpEndpoint(endpointCollection);
             EndpointConfiguration endpointConfiguration = EndpointConfiguration.Create(_configuration);
-            ConfiguredEndpoint endpoint = new ConfiguredEndpoint(selectedEndpoint.Server, endpointConfiguration);
-            endpoint.Update(selectedEndpoint);
+            ConfiguredEndpoint endpoint = new ConfiguredEndpoint(null, selectedEndpoint, endpointConfiguration);
 
             // Check if we have a cached endpoint with the same URL and use that one instead
             foreach (ConfiguredEndpoint cachedEndpoint in OpcCachedEndpoints)

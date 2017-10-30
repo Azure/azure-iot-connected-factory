@@ -152,6 +152,11 @@ if ($vmPublicIp -eq $null)
 
 try
 {
+    # Enable SSH access to the VM
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Enable SSH access to the VM.")
+    . "$(Split-Path $MyInvocation.MyCommand.Path)/Enable-SimulationSshAccess.ps1" $script:DeploymentName
+    Start-Sleep 5
+
     # Get IP address
     $ipAddress = Get-AzureRmPublicIpAddress -ResourceGroupName $DeploymentName
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of the VM is '{0}'" -f $ipAddress.IpAddress)
@@ -222,6 +227,10 @@ finally
         # Remove SSH session
         Remove-SSHSession $session.SessionId | Out-Null
     }
+
+    # Disable SSH access to the VM
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Disable SSH access to the VM.")
+    . "$(Split-Path $MyInvocation.MyCommand.Path)/Disable-SimulationSshAccess.ps1" $script:DeploymentName
 }
 
 # Remove the public IP address from the VM if we added it.
@@ -232,4 +241,9 @@ if ($removePublicIp -eq $true)
     Set-AzureRmNetworkInterface -NetworkInterface $vmNetworkInterface | Out-Null
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete the public IP address.")
     Remove-AzureRmPublicIpAddress -Name $script:VmName -ResourceGroupName $script:ResourceGroupName -Force | Out-Null
+    # Remove the SSH allow rule from the network security group.
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Remove the SSH allow rule from the network security group.")
+    $currentNsg = Get-AzureRmNetworkSecurityGroup -ResourceGroupName $script:ResourceGroupName -Name $script:ResourceGroupName
+    Remove-AzureRmNetworkSecurityRuleConfig -Name AllowSshInBound -NetworkSecurityGroup $currentNsg | Out-Null
+    Set-AzureRmNetworkSecurityGroup -NetworkSecurityGroup $currentNsg | Out-Null
 }
