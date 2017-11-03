@@ -344,11 +344,11 @@ Function ValidateResourceName()
         }
         "microsoft.compute/virtualmachines"
         {
-           return  $resourceBaseName.Substring(0, [System.Math]::Min(24, $resourceBaseName.Length))
+           return  $resourceBaseName.Substring(0, [System.Math]::Min(64, $resourceBaseName.Length))
         }
         "microsoft.timeseriesinsights/environments"
         {
-           return  $resourceBaseName.Substring(0, [System.Math]::Min(24, $resourceBaseName.Length))
+           return  $resourceBaseName.Substring(0, [System.Math]::Min(64, $resourceBaseName.Length))
         }
         default {}
     }
