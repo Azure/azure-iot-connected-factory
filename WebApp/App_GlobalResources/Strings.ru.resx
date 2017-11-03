@@ -999,6 +999,21 @@
     <value>Цель</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>Отменяется публикация...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>Отменить публикацию…</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>Отменяется публикация…</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>Отменить публикацию</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>Просмотреть в службе анализа временных рядов</value>
     <comment>Hyperlink label</comment>

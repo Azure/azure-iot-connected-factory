@@ -999,6 +999,21 @@
     <value>目标</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>正在取消发布...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>取消发布...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>正在取消发布...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>取消发布</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>时序见解中的视图</value>
     <comment>Hyperlink label</comment>

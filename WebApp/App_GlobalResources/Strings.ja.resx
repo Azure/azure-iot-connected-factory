@@ -999,6 +999,21 @@ Exceptionmessage:
     <value>対象</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>発行の取り消し中...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>発行の取り消し...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>発行の取り消し中...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>発行取り消し</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>Time Series Insights で表示する</value>
     <comment>Hyperlink label</comment>

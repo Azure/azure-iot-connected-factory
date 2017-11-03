@@ -999,6 +999,21 @@ Wewnętrzny komunikat:
     <value>Obiekt docelowy</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>Trwa cofanie publikowania...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>Cofnij publikowanie...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>Trwa cofanie publikowania...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>Cofnij publikowanie</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>Wyświetl w statystykach serii czasu</value>
     <comment>Hyperlink label</comment>

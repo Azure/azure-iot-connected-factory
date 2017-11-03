@@ -342,6 +342,14 @@ Function ValidateResourceName()
         {
             $resourceBaseName = $resourceBaseName.Substring(0, [System.Math]::Min(40, $resourceBaseName.Length))
         }
+        "microsoft.compute/virtualmachines"
+        {
+           return  $resourceBaseName.Substring(0, [System.Math]::Min(24, $resourceBaseName.Length))
+        }
+        "microsoft.timeseriesinsights/environments"
+        {
+           return  $resourceBaseName.Substring(0, [System.Math]::Min(24, $resourceBaseName.Length))
+        }
         default {}
     }
     

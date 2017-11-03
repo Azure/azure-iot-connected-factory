@@ -999,6 +999,21 @@
     <value>目標</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>解除發佈中...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>解除發佈...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>正在解除發佈...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>取消發行</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>在 Time Series Insights 中檢視</value>
     <comment>Hyperlink label</comment>

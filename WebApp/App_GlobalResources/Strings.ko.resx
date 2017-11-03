@@ -999,6 +999,21 @@
     <value>대상</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>게시 취소 중...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>게시 취소...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>게시 취소 진행 중...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>게시 취소</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>시계열 정보 보기</value>
     <comment>Hyperlink label</comment>

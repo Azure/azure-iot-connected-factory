@@ -295,6 +295,7 @@
         "rdxAccessPolicyName": "[concat(parameters('suiteName'),'-access')]",
         "rdxAccessPolicyRole": "Reader",
         "rdxOwnerPolicyRole": "Contributor",
+        "rdxTimestampPropertyName": "Value.SourceTimestamp",
         "certificateVersion": "2016-03-01",
         "certificateName": "[parameters('suiteName')]",
         "keyVaultVersion": "2015-06-01",
@@ -457,7 +458,8 @@
             "eventHubName": "[reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.path]",
             "consumerGroupName": "[variables('rdxCGName')]",
             "keyName": "[variables('rdxIotHubKeyName')]",
-            "sharedAccessKey": "[concat(listkeys(variables('rdxIotHubKeyResource'), variables('iotHubVersion')).primaryKey)]"
+            "sharedAccessKey": "[concat(listkeys(variables('rdxIotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
+            "timestampPropertyName": "variables('rdxTimestampPropertyName')"
           },
           "tags": "[variables('rdxEventSourceTagsValue')]",
           "dependsOn": [
@@ -560,15 +562,19 @@
       ]
     },
     {
-      "type": "Microsoft.Web/certificates",
-      "name": "[variables('certificateName')]",
-      "apiVersion": "[variables('certificateVersion')]",
-      "location": "[variables('location')]",
-      "properties": {
-        "keyVaultId": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
-        "keyVaultSecretName": "[variables('keyVaultWebsiteSecretName')]",
-        "serverFarmId": "[reference(resourceId('Microsoft.Web/serverfarms', variables('webPlanName')))]"
-      }
+        "type": "Microsoft.Web/certificates",
+        "name": "[variables('certificateName')]",
+        "apiVersion": "[variables('certificateVersion')]",
+        "location": "[variables('location')]",
+        "properties": {
+            "keyVaultId": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
+            "keyVaultSecretName": "[variables('keyVaultWebsiteSecretName')]",
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]"
+        },
+        "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
+            "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
+        ]
     },
     {
       "name": "[variables('webSiteName')]",

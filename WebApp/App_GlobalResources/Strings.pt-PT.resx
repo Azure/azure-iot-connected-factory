@@ -999,6 +999,21 @@ Acompanhamento da pilha:
     <value>Destino</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>A anular a publicação...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>Unpublish...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>Unpublish in progress...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>Anular publicação</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>Ver Informações em Série de Tempo</value>
     <comment>Hyperlink label</comment>

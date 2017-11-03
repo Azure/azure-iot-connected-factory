@@ -999,6 +999,21 @@ Seguimiento de la pila:
     <value>Destino</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>Cancelando publicación...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>Cancelar la publicación...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>Cancelando la publicación...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>Cancelar la publicación</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>Ver en datos de serie temporal</value>
     <comment>Hyperlink label</comment>

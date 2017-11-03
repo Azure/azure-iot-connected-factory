@@ -999,6 +999,21 @@ Analisi dello stack:
     <value>Destinazione</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>Annullamento della pubblicazione...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>Annulla pubblicazione...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>Annullamento della pubblicazione in corso...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>Annulla pubblicazione</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>Visualizza in Time Series Insights</value>
     <comment>Hyperlink label</comment>

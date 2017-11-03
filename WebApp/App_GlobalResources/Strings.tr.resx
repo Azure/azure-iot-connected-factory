@@ -999,6 +999,21 @@ Yığın izleme:
     <value>Hedef</value>
     <comment>Label</comment>
   </data>
+  <data name="BrowserContextPanelUnPublishing" xml:space="preserve">
+    <value>Yayımdan kaldırılıyor...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublish" xml:space="preserve">
+    <value>Yayımdan kaldır...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NodeUnpublishInProgress" xml:space="preserve">
+    <value>Yayımdan kaldırma devam ediyor...</value>
+    <comment>Label</comment>
+  </data>
+  <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
+    <value>Yayımdan kaldır</value>
+  </data>
   <data name="Tsilink" xml:space="preserve">
     <value>Zaman Dizisi Öngörüleri'nde görüntüle</value>
     <comment>Hyperlink label</comment>
