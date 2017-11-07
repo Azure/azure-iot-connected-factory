@@ -15,7 +15,12 @@
                     @Html.AntiForgeryToken();
                     <div class="row browser_connect_selection_label">@Strings.BrowserPreconfiguredListLabel</div>
                     <div class="row  browser_connect_selection_dropdown">
-                        <text>@Html.DropDownList("endpointUrl", @Model.PrepopulatedEndpoints, new { style = "width:100%" })</text>
+                        <select id="endpointUrlSelect" class="selectpicker form-control" name="endpointUrl" data-live-search="true" data-size="20">
+                            @foreach (var endpoint in Model.PrepopulatedEndpoints)
+                            {
+                                <option>@endpoint.Text</option>
+                            }  
+                        </select>
                     </div>
                     <div class="row browser_browse_connect_button">
                         <input id="connectButton" class="btn btn-default btn_browser" type="submit" onclick="openConnectContextPanel();" value=@Strings.BrowserConnect>
@@ -73,6 +78,9 @@
 <script>
     $(document).ready(function () {
         $("#connectButton").prop("disabled", false);
+        // initialize all context panels to default state closed
+        $("#connectContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
+        $("#errorContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
     });
 
     var disconnect = false;

@@ -6,19 +6,26 @@
 
 .navbar {
     height: @masthead-height;
-    z-index: 9000;
     background-color: @masthead-background-color;
+    left: 48px;
+    border-top: 1px solid @border-dark-gray;
+    border-bottom: 1px solid @border-dark-gray;
+}
+
+.navbar-left {
+    left: @contextpanel-left-width;
 }
 
 .dropdown {
-    border-right: 1px solid @masthead-separator-color;
+    border-left: 1px solid @border-dark-gray;
     background-color: @masthead-background-color;
     height: @masthead-height;
 
     .dropdown-toggle {
         overflow: hidden;
     }
-    &:hover, &:focus{
+
+    &:hover, &:focus {
         background-color: @masthead-hover-color;
     }
 }
@@ -48,6 +55,21 @@
     margin-top: 0px; 
     border-radius: 0px;
     height: @masthead-height;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    background-color: @background-color;
+}
+
+.dropdown-menu > li > a {
+    color: @lightest-gray;
+    &:hover {
+        color: white;
+    }
+}
+
+.dropdown-menu .divider {
+    background-color: @border-dark-gray;
 }
 
 .dropdown > .masthead_account_container {
@@ -96,6 +118,14 @@
     float: right;
 }
 
+.masthead_text {
+    text-align: right;
+    color: @text-mainhead-color;
+    font-size: @masthead-suitename-size; 
+    color: @text-mainhead-color;
+    margin-top: 8px;
+    margin-right: 24px;
+}
 
 /*
     Signin Masthead
@@ -106,7 +136,8 @@
     width: 100%;
     background-color: @masthead-background-color;
     color: @masthead-color;
-    &:hover{
+
+    &:hover {
         background-color: @masthead-hover-color;
     }
 }

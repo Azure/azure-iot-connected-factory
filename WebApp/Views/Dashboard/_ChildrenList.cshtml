@@ -13,7 +13,7 @@
         <a id="openFromUnfiltered" class="glyphicon glyphicon-menu-down" href="javascript:openFilterContextPanel();"></a>
     </p>
 
-    <p id="filterIcon" class="dashboard_filter_icon" hidden>
+    <p id="filterIcon" class="dashboard_children_container_header_text_glyph" hidden>
         <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" src="/Content/img/filter.svg"></a>
     </p>
 </div>
@@ -22,7 +22,7 @@
     <div class="dashboard_children_list_header_location col-xs-4 col-lg-4 overflow">@Model.ChildrenListHeaderLocation</div>
     <div class="dashboard_children_list_header_details col-xs-5 col-lg-5 overflow">@Model.ChildrenListHeaderDetails</div>
 </div>
-<div class="dashboard_children_list_container row">
+<div class="dashboard_children_list_container scrollbar-inner row">
     <div id="dashboardChildrenList" class="col-xs-12">
        
         @for (int i = 0; i < Model.Children.Count; i++)
@@ -64,6 +64,8 @@
 
 <script>
     $(document).ready(function () {
+        jQuery('.scrollbar-inner').scrollbar();
+
         @if (Model.ChildrenType != typeof(Factory).ToString())
         {
              @: $("#backIcon").show();

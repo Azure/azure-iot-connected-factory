@@ -2,7 +2,7 @@
 
 .glyphicon-ok {
     display: inline-block;
-    color: green;
+    color: #7065FD;
     font-size: 12px;
     position: relative !important;
     left: 0px !important;
@@ -120,10 +120,8 @@
 .vakata-context ul {
   margin: 0;
   position: absolute;
-  background: #e2e3e3;
-  border: 1px solid #979797;
-  box-shadow: 1px 1px 1px #999999;
-  border-radius: 4px;       /*added*/
+  background: #121416;
+  box-shadow: 0px 0.5px #242628;
 }
 .vakata-context ul {
   list-style: none;
@@ -146,14 +144,13 @@
   padding: 0 2em 0 2em;
   text-decoration: none;
   width: auto;
-  color: black;
+  color: #AFB9C3;
   white-space: nowrap;
   line-height: 2.4em;
-  border-radius: 4px;
 }
 .vakata-context li > a:hover {
   position: relative;
-  background-color: #e7f4f9;
+  background-color: #242628;
 }
 .vakata-context li > a.vakata-context-parent {
   background-image: url("data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAIORI4JlrqN1oMSnmmZDQUAOw==");
@@ -165,13 +162,13 @@
 }
 .vakata-context .vakata-context-hover > a {
   position: relative;
-  background-color: #e7f4f9;
+  background-color: #242628;
 }
 .vakata-context .vakata-context-separator > a,
 .vakata-context .vakata-context-separator > a:hover {
   background: white;
   border: 0;
-  border-top: 1px solid #e2e3e3;
+  border-top: 1px solid #242628;
   height: 1px;
   min-height: 1px;
   max-height: 1px;
@@ -222,9 +219,9 @@
   background-repeat: no-repeat;
 }
 .vakata-context-rtl .vakata-context-separator > a {
-  margin: 0 2.4em 0 0;
-  border-left: 0;
-  border-right: 1px solid #e2e3e3;
+    margin: 0 2.4em 0 0;
+    border-left: 0;
+    border-right: 1px solid #121416;
 }
 .vakata-context-rtl .vakata-context-left ul {
   right: auto;
@@ -236,9 +233,9 @@
   margin: 0 -2em 0 0;
 }
 .vakata-context-rtl li > a .vakata-contextmenu-sep {
-  margin: 0 0 0 0.5em;
-  border-left-color: white;
-  background: #e2e3e3;
+    margin: 0 0 0 0.5em;
+    border-left-color: white;
+    background: #121416;
 }
 #jstree-marker {
   position: absolute;
@@ -364,11 +361,6 @@
 }
 .jstree-PCS .jstree-wholerow-hovered {
   background: #e7f4f9;
-}
-.jstree-PCS .jstree-wholerow-clicked {
-  background: #beebff;
-  background: -webkit-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-  background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%);
 }
 .jstree-PCS .jstree-node {
   min-height: 24px;

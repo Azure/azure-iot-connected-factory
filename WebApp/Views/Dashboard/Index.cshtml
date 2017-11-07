@@ -163,7 +163,7 @@
         @for (int i = 0; i < 3; i++)
         {
             <div class="dashboard_contextpanel_list_container">
-                <label id="filterLabel@(i)" class="dashboard_contextpanel_select_list_label" for="topologySelector@(i)"></label>
+                <p id="filterLabel@(i)" class="dashboard_contextpanel_select_list_label" for="topologySelector@(i)"></p>
                 <div>
                     <select id="topologySelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
                         <option selected value="empty">@Strings.NoFilterApplied</option>
@@ -187,7 +187,7 @@
         @for (int i = 0; i < 5; i++)
         {
             <div class="dashboard_contextpanel_list_container">
-                <label id="filterAlertLabel@(i)" class="dashboard_contextpanel_select_list_label" for="alertSelector@(i)"></label>
+                <p id="filterAlertLabel@(i)" class="dashboard_contextpanel_select_list_label" for="alertSelector@(i)"></p>
                 <div>
                     <select id="alertSelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
                         <option selected value="empty">@Strings.NoFilterApplied</option>
@@ -206,6 +206,11 @@
 </div>
 
 <script>
+    // OEE/KPI Colors
+    const red = "#FC540A";
+    const blue = "#7065FD";
+    const yellow = "#FFEE91";
+
     //
     // OEE charts creation.
     //
@@ -228,7 +233,7 @@
             expand: false,
         },
         color: {
-            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            pattern: [ red, yellow, blue],
             threshold: {
                 values: [ @Model.TopNode.OeeOverallPerformanceSetting.Minimum,
                     @Model.TopNode.OeeOverallPerformanceSetting.Target,
@@ -260,7 +265,7 @@
             expand: false,
         },
         color: {
-            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            pattern: [ red, yellow, blue],
             threshold: {
                 values: [ @Model.TopNode.OeeAvailabilityPerformanceSetting.Minimum,
                     @Model.TopNode.OeeAvailabilityPerformanceSetting.Target,
@@ -292,7 +297,7 @@
             expand: false,
         },
         color: {
-            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            pattern: [ red, yellow, blue],
             threshold: {
                 values: [ @Model.TopNode.OeePerformancePerformanceSetting.Minimum,
                     @Model.TopNode.OeePerformancePerformanceSetting.Target,
@@ -324,7 +329,7 @@
             expand: false,
         },
         color: {
-            pattern: [ '#FF2339', '#FF9C23', '#65CB99'],
+            pattern: [ red, yellow, blue],
             threshold: {
                 values: [ @Model.TopNode.OeeQualityPerformanceSetting.Minimum,
                     @Model.TopNode.OeeQualityPerformanceSetting.Target,
@@ -379,9 +384,8 @@
             max: @Model.TopNode.Kpi1PerformanceSetting.Maximum,
         },
         color: {
-            // red: #FF2339, orange: #FF9C23 green: #65CB99
-            // the more units the better  (red/orange/green)
-            pattern: ['#FF2339', '#FF9C23', '#65CB99'],
+            // the more units the better  (red/yellow/blue)
+            pattern: [ red, yellow, blue],
             threshold: {
                 unit: 'value',
                 max: @Model.TopNode.Kpi1PerformanceSetting.Maximum,
@@ -420,9 +424,8 @@
             max: @Model.TopNode.Kpi2PerformanceSetting.Maximum,
         },
         color: {
-            // red: #FF2339, orange: #FF9C23 green: #65CB99
-            // the more power the worse  (red/green/orange)
-            pattern: ['#FF2339', '#65CB99', '#FF9C23'],
+            // the more power the worse  (red/blue/yellow)
+            pattern: [red, blue, yellow],
             threshold: {
                 unit: 'value',
                 max: @Model.TopNode.Kpi2PerformanceSetting.Maximum,

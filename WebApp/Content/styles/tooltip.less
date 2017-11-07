@@ -6,11 +6,13 @@
 */
 
 .tooltip > .tooltip-inner {
-    background-color: @content-background-color;
-    color: @text-color;
+    background-color: @background-color;
+    color: white;
+    border: px solid @content-background-color;
+    border-radius: 0px;
 }
 .tooltip.top .tooltip-arrow {
-      border-top-color: @content-background-color;
+    visibility: hidden;
 }
 .tooltip.in {
     opacity: 1;

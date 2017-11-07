@@ -47,7 +47,8 @@
         </div>
         <a href="#" class="closebtn" onclick="$('#attributeReadContextPanel').addClass('overlay-close')">&times;</a>
         <div class="overlay-content list-group">
-            <div class="list-group-item text-left"><b>@Strings.NodeAttribute <span id="attributeRead_variableName">@Strings.NodeVariableName</span></b></div>
+            <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeAttribute <span id="attributeRead_variableName">@Strings.NodeVariableName</span></b></div>
+            <hr />
             <span class="list-group-item text-left" id="attributeRead_variableData">@Strings.NodeReadInProgress</span>
         </div>
     </div>
@@ -58,7 +59,8 @@
         </div>
         <a href="#" class="closebtn" onclick="$('#variableReadContextPanel').addClass('overlay-close')">&times;</a>
         <div class="overlay-content list-group">
-            <div class="list-group-item text-left"><b>@Strings.NodeInfo <span id="variableRead_variableName">@Strings.NodeVariableName</span></b></div>
+            <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeInfo <span id="variableRead_variableName">@Strings.NodeVariableName</span></b></div>
+            <hr />
             <span class="list-group-item text-left" id="variableRead_variableData">@Strings.NodeReadInProgress</span>
         </div>
     </div>
@@ -71,7 +73,8 @@
         <div id="waitingForPublishing" class="browser_error_details_container">@Strings.BrowserContextPanelPublishing</div>
         <div id="connectLoader" class="loader"></div>
         <div id="publishBody" class="overlay-content list-group">
-            <div class="list-group-item text-left"><b>@Strings.NodeInfo <span id="variablePublish_variableName">@Strings.NodeVariableName</span></b></div>
+            <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeInfo <span id="variablePublish_variableName">@Strings.NodeVariableName</span></b></div>
+            <hr />
             <span class="list-group-item text-left" id="variablePublish_variableData">@Strings.NodePublishInProgress</span>
         </div>
         <div id="rdxLink" class="browser_rdxlink_container" onclick="openRDXExplorerLink(linkRDXExplorer)">@Strings.Tsilink</div>
@@ -97,11 +100,12 @@
             <p id="methodCall_parameterOriginalData" hidden></p>
             <div class="list-group-item text-left"> 
                 <form class="form-inline" role="form" id="variableMethodCall">
-                    <div class="form-group">
+                    <div class="form-group context-panel-data">
                         <span id="methodCall_parameterData">@Strings.NodeMethodMessage</span>
                     </div>
+                    <hr />
                     <div class="node-contextPanel-button-position">
-                        <button onclick="MethodCall_CallButton_Click(this)" type="button" class="btn btn-default btn_browser">@Strings.NodeButtonCall</button>
+                        <button onclick="MethodCall_CallButton_Click(this)" type="button" class="btn btn-default btn_browser_contextpanel">@Strings.NodeButtonCall</button>
                     </div>
                 </form>
             </div>
@@ -127,18 +131,20 @@
             </div>
         </div>
         <div class="overlay-content list-group">
-            <div class="list-group-item text-left"><b>@Strings.NodeUpdate <span id="variableWrite_variableName">@Strings.NodeVariableName</span></b></div>
+            <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeUpdate <span id="variableWrite_variableName">@Strings.NodeVariableName</span></b></div>
             <p id="variableWrite_variableId" hidden></p>
+            <hr />
             <div class="list-group-item text-left">
                 <form class="form-inline" role="form" id="variableWrite">
-                    <div class="form-group">
+                    <div class="form-group context-panel-data">
                         <b>@Strings.NodeWriteCurrentValue</b><br />
                         <span id="variableWrite_variableOldData">@Strings.NodeWriteInProgress</span><br/><br/>
                         <label>@Strings.NodeWriteNewValue</label>
                         <input id="variableWrite_variableNewData" type="text" class="form-control">
                     </div>
+                    <hr />
                     <div class="node-contextPanel-button-position">
-                        <button onclick="VariableWrite_WriteButton_Click(this)" type="button" class="btn btn-default">@Strings.NodeButtonWrite</button>
+                        <button onclick="VariableWrite_WriteButton_Click(this)" type="button" class="btn btn-default btn_browser_contextpanel">@Strings.NodeButtonWrite</button>
                     </div>
                 </form>
             </div>
@@ -168,7 +174,6 @@
     <script src="~/Scripts/jstree.min.js"></script>
     <script src="/signalr/hubs"></script>
     <script>
-
         $(function () {
             var status = $.connection.statusHub;
 
@@ -181,6 +186,14 @@
 
             // Start/continue the connection
             $.connection.hub.start().done(function () { });
+
+            // initialize all context panels to default state closed
+            $("#attributeReadContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+            $("#variableReadContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+            $("#variablePublishContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+            $("#methodCallContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+            $("#variableWriteContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+            $("#browserErrorContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
         });
 
         function htmlEncode(value) {

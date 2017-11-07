@@ -32,16 +32,10 @@
     <header>
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand collapse navbar-collapse" href="#">@Strings.MicrosoftAzureIoTSuite - @Strings.DefaultSolutionName</a>
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#accountMenu">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
                 <div id="accountMenu" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
+                        <li class=" masthead_text">@Strings.MicrosoftAzureIoTSuite - @Strings.DefaultSolutionName</li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_language_icon"></span>
@@ -97,7 +91,6 @@
                             </ul>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </div>
@@ -127,11 +120,13 @@
             if ($('.push_left').length) {
                 $("#dashboardContextPanelLeft").addClass("overlay-close");
                 $("#pushPanel").removeClass("push_left");
+                $(".navbar").removeClass("navbar-left");
                 $('.navigation_link').removeClass("navigation_link_text");
             }
             else {
                 $("#dashboardContextPanelLeft").removeClass("overlay-close").addClass("overlay-left-open");
                 $("#pushPanel").addClass("push_left");
+                $(".navbar").addClass("navbar-left");
                 $('.navigation_link').addClass("navigation_link_text");
             }
         }

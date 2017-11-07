@@ -589,8 +589,11 @@
     <Content Include="Content\img\assembly_station.jpg" />
     <Content Include="Content\img\beijing.jpg" />
     <Content Include="Content\img\capetown.jpg" />
+    <Content Include="Content\img\Critical.svg" />
+    <Content Include="Content\img\Dashboard.svg" />
     <Content Include="Content\img\dublin.jpg" />
     <Content Include="Content\img\filter.svg" />
+    <Content Include="Content\img\Hamburger.svg" />
     <Content Include="Content\img\icon-account.png" />
     <Content Include="Content\img\icon-globe.png" />
     <Content Include="Content\img\icon_addgateway.svg" />
@@ -600,6 +603,7 @@
     <Content Include="Content\img\icon_home.svg" />
     <Content Include="Content\img\icon_red.svg" />
     <Content Include="Content\img\icon_server.svg" />
+    <Content Include="Content\img\Info.svg" />
     <Content Include="Content\img\milan.jpg" />
     <Content Include="Content\img\mumbai.jpg" />
     <Content Include="Content\img\munich.jpg" />
@@ -616,6 +620,7 @@
     <Content Include="Content\img\world.jpg" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\img\icon_info_white.svg" />
+    <Content Include="Content\jquery.scrollbar.css" />
     <Content Include="Content\main.css">
       <DependentUpon>main.less</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -624,6 +629,7 @@
       <DependentUpon>main.css</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\simplebar.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -814,6 +820,11 @@
     <Content Include="Content\styles\tooltip.less" />
     <Content Include="Content\styles\views\addGateway.less" />
     <Content Include="Content\styles\loader.less" />
+    <Content Include="Content\fonts\selawk.ttf" />
+    <Content Include="Content\fonts\selawkb.ttf" />
+    <Content Include="Content\fonts\selawkl.ttf" />
+    <Content Include="Content\fonts\selawksb.ttf" />
+    <Content Include="Content\fonts\selawksl.ttf" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
@@ -825,6 +836,8 @@
     <Content Include="Scripts\jquery-ui-i18n.min.js" />
     <Content Include="Scripts\jquery-2.2.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.scrollbar.js" />
+    <Content Include="Scripts\jquery.scrollbar.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />

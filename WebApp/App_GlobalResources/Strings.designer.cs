@@ -134,7 +134,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Execute action.
+        ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string AlertActionExecute {
             get {
@@ -1232,7 +1232,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply Filter.
+        ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string FilterApply {
             get {
@@ -1241,7 +1241,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear Filter.
+        ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string FilterClear {
             get {

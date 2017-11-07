@@ -14,16 +14,16 @@
     top: 0;
     right: 0;
     left: auto;
-    background-color: @body-bg;
+    background-color: @secondary-color;
     border: 1px solid rgba(0, 0, 0, .5);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-    overflow-x: hidden;     /* Disable horizontal scroll */
-    transition: 0.2s;       /* overlay transition speed */
+    box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.8);
+    transition: 0.2s; /* overlay transition speed */
 }
 
 .overlay.overlay-right-open {
     width: @contextpanel-right-width;
-    background-color: @body-bg;
+    background-color: @secondary-color;
     right: 0;
     left: auto;
     z-index: 1002;
@@ -31,7 +31,7 @@
 
 .overlay.overlay-right-open-big {
     width: @contextpanel-right-width-big;
-    background-color: @body-bg;
+    background-color: @secondary-color;
     right: 0;
     left: auto;
     z-index: 1002;
@@ -49,6 +49,7 @@
 
 .overlay.overlay-close {
     width: 0%;
+    visibility: hidden;
 }
 
 .overlay.overlay-extend {
@@ -68,23 +69,19 @@
 .overlay a {
     padding: 8px;
     text-decoration: none;
-    color: @link-color;
+    color: white;
     display: block;
     transition: 0.3s;
-     /*When you mouse over the links, change their color*/ 
-    &:hover, :focus{
-        color: @link-hover-color;
-    }
 }
 
 /* Position of the close button */
 .overlay .closebtn {
     position: absolute;
-    top: 54px;
-    right: 45px;
+    top: 42px;
+    right: 5px;
     font-size: 28px;
     font-weight: 100;
-    color: @list-header-color;
+    color: white;
 }
 
 /* Position of the expand button */

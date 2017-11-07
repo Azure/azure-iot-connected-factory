@@ -19,7 +19,7 @@
                         @Html.AntiForgeryToken();
                         <div class="row browser_connect_selection_label">@Html.Raw(Strings.BrowserEnterOwn)</div>
                         <div class="browser_connect_selection_textbox">
-                            @Html.TextBox("endpointUrl", null, new { style = "width:100%" })
+                            @Html.TextBox("endpointUrl", null, new { style = "width:100%;" })
                         </div>
                         <div class="row browser_browse_connect_button">
                             <input id="connectAddOpcServerButton" class="btn btn-default btn_browser" onclick="return openConnectContextPanel();" type="submit" value=@Strings.BrowserConnect>
@@ -94,6 +94,8 @@
 <script>
     $(document).ready(function () {
         $("#connectAddOpcServerButton").prop("disabled", false);
+
+        $("#endpointUrl").autocomplete({});
     });
 
     var addOpcServerDisconnect = false;

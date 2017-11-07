@@ -21,7 +21,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                     "~/Scripts/globalize.js",
                     "~/Scripts/js.cookie-{version}.js",
                     "~/Scripts/moment-with-locales.js",
-                    "~/Scripts/bootstrap-select-{version}.js"
+                    "~/Scripts/bootstrap-select-{version}.js",
+                    "~/Scripts/jquery.scrollbar.min.js"
                 ));
 
             bundles.Add(new StyleBundle("~/content/css")
@@ -31,7 +32,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                     "~/content/themes/PCS/style.css",
                     "~/content/bootstrap.css",
                     "~/content/main.css",
-                    "~/content/bootstrap-select.min.css"
+                    "~/content/bootstrap-select.min.css",
+                    "~/content/jquery.scrollbar.css"
                 ));
         }
     }

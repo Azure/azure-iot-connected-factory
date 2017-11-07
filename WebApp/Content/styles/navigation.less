@@ -7,7 +7,7 @@
 
 .navigation {
   position: fixed;
-  top: @masthead-height;
+  top: 0;
   left: 0;
   width: @navigation-width;
   height: 100%;
@@ -31,11 +31,18 @@
   background-position: 16px 16px;
 }
 
+.navigation_logo {
+    display: block;
+    width: @navigation-width;
+    height: 48px;
+    font-size: 1.1em;
+    color: @navigation-link-color;
+}
+
 .navigation_link:hover {
-  /*background-color: @navigation-link-hover-background-color;*/
   background-color: @masthead-hover-color;
   text-decoration: none;
-  color: @text-mainhead-color;
+  color: white;
 }
 
 .navigation_link_selected {
@@ -50,22 +57,59 @@
     width: @contextpanel-left-width;
 }
 
+/**
+ * @src          The path to your SVG file
+ * @fill-default The default fill value of your referenced SVG
+ * @fill-new     The fill value you would like to replace it with
+ */
+.icon-replace-fill(@src, @fill-default, @fill-new) {
+    @escape-fill-default: escape(@fill-default);
+    @escape-fill-new: escape(@fill-new);
+    @data-uri: data-uri('image/svg+xml;charset=UTF-8', "@{src}");
+    @replace-src: replace("@{data-uri}", "@{escape-fill-default}", "@{escape-fill-new}");
+    background-image: e(@replace-src);
+}
+
 .navigation_link_hamburger {
-    background-image: url("/Content/img/icon_hamburger.svg");
+    background-image: url("/Content/img/Hamburger.svg");
+
+    &:hover {
+        .icon-replace-fill("../Content/img/Hamburger.svg", @text-mainhead-color, @text-hover-color);
+    }
 }
 
 .navigation_link_home {
-  background-image: url("/Content/img/icon_home.svg");
+    background-image: url("/Content/img/Dashboard.svg");
+
+    &:hover {
+        .icon-replace-fill("../Content/img/Dashboard.svg", @text-mainhead-color, @text-hover-color);
+        font-family: "Selawik Semibold";
+    }
 }
 
 .navigation_link_browser {
-  background-image: url("/Content/img/icon_server.svg");
+    background-image: url("/Content/img/icon_server.svg");
+
+    &:hover {
+        .icon-replace-fill("../Content/img/icon_server.svg", @text-mainhead-color, @text-hover-color);
+        font-family: "Selawik Semibold";
+    }
 }
 
 .navigation_link_add_opc_server {
-  background-image: url("/Content/img/icon_addserver.svg");
+    background-image: url("/Content/img/icon_addserver.svg");
+
+    &:hover {
+        .icon-replace-fill("../Content/img/icon_addserver.svg", @text-mainhead-color, @text-hover-color);
+        font-family: "Selawik Semibold";
+    }
 }
 
 .navigation_link_addgateway {
-  background-image: url("/Content/img/icon_addgateway.svg");
+    background-image: url("/Content/img/icon_addgateway.svg");
+
+    &:hover {
+        .icon-replace-fill("../Content/img/icon_addgateway.svg", @text-mainhead-color, @text-hover-color);
+        font-family: "Selawik Semibold";
+    }
 }

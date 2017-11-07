@@ -1,0 +1,26 @@
+<!-- Copyright (c) Microsoft. All rights reserved. -->
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="10 10 15.961 15">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fc540a;
+      }
+
+      .cls-2 {
+        filter: url(#Path_1108);
+      }
+    </style>
+    <!--<filter id="Path_1108" x="-23872.73" y="-7280.173" width="10.961" height="1" filterUnits="userSpaceOnUse">-->
+    <filter id="Path_1108" x="10" y="10" width="10.961" height="1" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1" dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.5" result="blur"/>
+      <feFlood flood-opacity="0.243"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g class="cls-2" transform="matrix(1, 0, 0, 1, 0, 0)">
+    <path id="Path_1108-2" data-name="Path 1108" class="cls-1" d="M6.481,0l6.481,12H0Z" transform="translate(-23870.23 -7279.67)"/>
+  </g>
+</svg>

@@ -5,8 +5,11 @@
 @import "../variables.less";
 
 .dashboard-contextpanel-button-base, .account-button-base {
-    width: 140px;
-    font-size: @children-subheader-text-size;
+    width: 92px;
+    color: white !important;
+    font-size: @font-size-button;
+    border: 0px;
+    background: @secondary-color !important;
 }
 
 .dashboard-contextpanel-button-color {
@@ -18,28 +21,43 @@
 }
 
 .dashboard-contextpanel-button-color-disabled {
-    color: @button-dashboard-disabled-color;
-    background: @button-dashboard-disabled-background-color;
     &:hover {
-        background: @button-dashboard-disabled-background-hover-color;
+        border: 1px dashed @lightest-gray !important;
     }
 }
 
 .btn.btn-default.btn_dashboard_contextpanel {
     .dashboard-contextpanel-button-base;
     .dashboard-contextpanel-button-color;
+    &:hover {
+        border: 1px dashed @lightest-gray !important;
+    }
 }
 
-.btn.btn-default.btn_dashboard_contextpanel.disabled {
+.btn.btn-default.btn_browser_contextpanel {
+    .dashboard-contextpanel-button-base;
+    .dashboard-contextpanel-button-color;
+    background: @content-background-color !important;
+
+    &:hover {
+        border: 1px dashed @lightest-gray !important;
+    }
+}
+
+.btn::after .btn-default.btn_dashboard_contextpanel.disabled {
     .dashboard-contextpanel-button-base;
     .dashboard-contextpanel-button-color-disabled;
 }
 
 .btn.btn_browser {
-    background: @button-browser-background-color;
-    min-width: 150px;
+    background: @lightest-gray;
+    font-size: @font-size-button;
+    min-width: 92px;
+
     &:hover {
-        background: @button-browser-background-hover-color;
+        background: @icon-dark-gray;
+        color: white;
+        border: none;
     }
 }
 
@@ -51,4 +69,15 @@
         background: @button-account-background-hover-color;
     }
 }
+
+.btn-default {
+    border-color: @border-dark-gray;
+    padding-top: 0px;
+}
+
+.btn {
+    border-radius: 0px;
+    height: 24px;
+}
+
 
