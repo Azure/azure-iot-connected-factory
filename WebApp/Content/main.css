@@ -6925,13 +6925,13 @@ main {
  * @fill-new     The fill value you would like to replace it with
  */
 .navigation_link_hamburger {
-  background-image: url("/Content/img/Hamburger.svg");
+  background-image: url("/Content/img/hamburger.svg");
 }
 .navigation_link_hamburger:hover {
   background-image: url("data:image/svg+xml;charset=UTF-8,%3C!--%20Copyright%20(c)%20Microsoft.%20All%20rights%20reserved.%20--%3E%0D%0A%0D%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%220%200%2018%2014%22%3E%0D%0A%20%20%3Ctitle%3EAsset%2014%3C%2Ftitle%3E%0D%0A%20%20%3Cg%20id%3D%22Layer_2%22%20data-name%3D%22Layer%202%22%3E%0D%0A%20%20%20%20%3Cg%20id%3D%22Layer_1-2%22%20data-name%3D%22Layer%201%22%3E%0D%0A%20%20%20%20%20%20%3Crect%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23ffffff%22%2F%3E%0D%0A%20%20%20%20%20%20%3Crect%20y%3D%226%22%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23afb9c3%22%2F%3E%0D%0A%20%20%20%20%20%20%3Crect%20y%3D%2212%22%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23afb9c3%22%2F%3E%0D%0A%20%20%20%20%3C%2Fg%3E%0D%0A%20%20%3C%2Fg%3E%0D%0A%3C%2Fsvg%3E%0D%0A");
 }
 .navigation_link_home {
-  background-image: url("/Content/img/Dashboard.svg");
+  background-image: url("/Content/img/dashboard.svg");
 }
 .navigation_link_home:hover {
   background-image: url("data:image/svg+xml;charset=UTF-8,%3C!--%20Copyright%20(c)%20Microsoft.%20All%20rights%20reserved.%20--%3E%0D%0A%0D%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%220%200%207.172%207.441%22%3E%3Ctitle%3EAsset%208%3C%2Ftitle%3E%3Cg%20id%3D%22Layer_2%22%20data-name%3D%22Layer%202%22%3E%3Cg%20id%3D%22Layer_1-2%22%20data-name%3D%22Layer%201%22%3E%3Cpath%20d%3D%22M.512%2C6.928h6.66v.512H0V0H.512ZM2.562%2C2.61V6.416H1.025V2.61ZM2.049%2C5.9V3.123H1.537V5.9ZM4.611.951V6.416H3.074V.951ZM4.1%2C5.9V1.463H3.586V5.9ZM6.66%2C1.988V6.416H5.123V1.988ZM6.148%2C5.9V2.5H5.635V5.9Z%22%20fill%3D%22%23ffffff%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E%0D%0A");
@@ -7094,7 +7094,7 @@ p {
   background-color: #1B1D1F;
 }
 .dashboard_children_listitem_container {
-  font-weight: 400;
+  font-weight: 100;
   margin-top: 0px;
   margin-bottom: 0px;
   padding-top: 4px;
@@ -7103,17 +7103,23 @@ p {
 .dashboard_children_listitem_container:hover {
   cursor: pointer;
 }
-.dashboard_children_listitem_container.dashboard_status_poor {
-  border-left: 2px solid #FC540A;
-  margin-top: 2px;
+.dashboard_status_poor {
+  background-image: url("/Content/img/critical.svg");
+  background-repeat: no-repeat;
+  background-position: 14px 12px;
+  display: block;
+  position: relative;
 }
-.dashboard_children_listitem_container.dashboard_status_good {
-  border-left: 2px solid #7065FD;
-  margin-top: 2px;
+.dashboard_status_good {
+  background-image: url("/Content/img/info.svg");
+  background-repeat: no-repeat;
+  background-position: 14px 12px;
+  display: block;
+  position: relative;
 }
 .dashboard_children_listitem_status_text {
   text-align: left;
-  padding-left: 15px;
+  padding-left: 28px;
   padding-right: 0px;
 }
 .dashboard_children_listitem_location {
@@ -7130,7 +7136,7 @@ p {
 .dashboard_map_container {
   border: 10px solid #121416;
   border-top: none;
-  height: 510px;
+  height: 556px;
 }
 .dashboard_map_container_image {
   width: 100%;
@@ -7166,22 +7172,26 @@ p {
 }
 .dashboard_alerts_listitem_container {
   cursor: pointer;
-  border-left: 2px solid #FC540A;
-  margin-top: 2px;
 }
-.dashboard_alerts_listitem_container.alert_status_active {
-  border-left: 2px solid #FC540A;
-  margin-top: 2px;
+.alert_status_active {
+  background-image: url("/Content/img/critical.svg");
+  background-repeat: no-repeat;
+  background-position: 14px 12px;
+  display: block;
+  position: relative;
 }
-.dashboard_alerts_listitem_container.alert_status_acknowledged {
-  border-left: 2px solid #FFEE91;
-  margin-top: 2px;
+.alert_status_acknowledged {
+  background-image: url("/Content/img/warning.svg");
+  background-repeat: no-repeat;
+  background-position: 14px 15px;
+  display: block;
+  position: relative;
 }
 .dashboard_alerts_listitem_source {
   font-size: 16px;
   font-weight: 400;
   margin-top: 4px;
-  margin-left: 0;
+  margin-left: 10px;
   margin-right: 0;
   color: #ffffff;
   background-color: #1B1D1F;
@@ -7552,7 +7562,7 @@ p {
     height: 620px;
   }
   .dashboard_map_container {
-    height: 660px;
+    height: 706px;
   }
 }
 @media (max-height: 768px) {
@@ -7565,7 +7575,7 @@ p {
     height: 320px;
   }
   .dashboard_map_container {
-    height: 360px;
+    height: 406px;
   }
 }
 @media (max-height: 850px) {
@@ -7575,7 +7585,6 @@ p {
   }
   .dashboard_contextpanel_clear_filter_alert_button {
     position: relative;
-    top: -8px;
   }
 }
 /* 
@@ -7939,7 +7948,7 @@ textarea {
   min-width: 92px;
 }
 .btn.btn_browser:hover {
-  background: #242628;
+  background: #3E4145;
   color: white;
   border: none;
 }
@@ -7962,6 +7971,9 @@ textarea {
 .btn {
   border-radius: 0px;
   height: 24px;
+}
+.caret {
+  color: #3E4145;
 }
 /*
     Error styles

@@ -156,7 +156,7 @@ p{
 }
 
 .dashboard_children_listitem_container {
-    font-weight: 400;
+    font-weight: 100;
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 4px;
@@ -166,19 +166,25 @@ p{
         }
 }
 
-.dashboard_children_listitem_container.dashboard_status_poor {
-    border-left: 2px solid @list-status-severity2-color;
-    margin-top: 2px;
+.dashboard_status_poor {
+    background-image: url("/Content/img/critical.svg");
+    background-repeat: no-repeat;
+    background-position: 14px 12px;
+    display: block;
+    position: relative;
 }
 
-.dashboard_children_listitem_container.dashboard_status_good {
-    border-left: 2px solid @list-status-severity0-color;
-    margin-top: 2px;
+.dashboard_status_good {
+    background-image: url("/Content/img/info.svg");
+    background-repeat: no-repeat;
+    background-position: 14px 12px;
+    display: block;
+    position: relative;
 }
 
 .dashboard_children_listitem_status_text {
     text-align: left;
-    padding-left: 15px;
+    padding-left: 28px;
     padding-right: 0px;
 }
 .dashboard_children_listitem_location {
@@ -237,25 +243,29 @@ p{
 
 .dashboard_alerts_listitem_container {
     .dashboard-link-cursor;
-    border-left: 2px solid @list-status-severity2-color;
-    margin-top: 2px;
 }
 
-.dashboard_alerts_listitem_container.alert_status_active {
-    border-left: 2px solid @list-status-severity2-color;
-    margin-top: 2px;
+.alert_status_active {
+    background-image: url("/Content/img/critical.svg");
+    background-repeat: no-repeat;
+    background-position: 14px 12px;
+    display: block;
+    position: relative;
 }
 
-.dashboard_alerts_listitem_container.alert_status_acknowledged {
-    border-left: 2px solid @list-status-severity1-color;
-    margin-top: 2px;
+.alert_status_acknowledged {
+    background-image: url("/Content/img/warning.svg");
+    background-repeat: no-repeat;
+    background-position: 14px 15px;
+    display: block;
+    position: relative;
 }
 
 .dashboard_alerts_listitem_source {
     font-size: @alerts-listitem-text-size;
     font-weight: 400;
     margin-top: 4px;
-    margin-left: 0;
+    margin-left: 10px;
     margin-right: 0;
     color: @list-header-color;
     background-color: @content-background-color;
@@ -687,6 +697,5 @@ p{
     }
 .dashboard_contextpanel_clear_filter_alert_button {
         position: relative;
-        top: -8px;
     }
 }

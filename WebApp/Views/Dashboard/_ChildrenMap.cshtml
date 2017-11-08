@@ -38,14 +38,15 @@
             allowHidingLabelsOfRoad: true,
             disablePanning: false
         });
+
         for (index = 0; index < children.length; index++)
         {
             if (children[index].Latitude != 0 && children[index].Longitude != 0) {
-                var pushPinFile = "/Content/img/icon_green.svg";
+                var pushPinFile = "/Content/img/info.svg";
                 var city = children[index].City;
                 if (children[index].Status == "@ContosoPerformanceStatus.Poor.ToString()")
                 {
-                    pushPinFile = "/Content/img/icon_red.svg";
+                    pushPinFile = "/Content/img/critical.svg";
                 }
                 var location = new Microsoft.Maps.Location(children[index].Latitude, children[index].Longitude);
                 factoryMapPushpin[index] = new Microsoft.Maps.Pushpin(location,
@@ -69,6 +70,33 @@
                 factoryMap.entities.push(factoryMapPushpin[index]);
             }
         }
+
+        getZoomRange = function () {
+            return {
+                max: 24,
+                min: 2
+            };
+        };
+        // Forcibly set the zoom to our min/max whenever the view starts to change beyond them
+        var restrictZoom = function () {
+            if (factoryMap.getZoom() <= getZoomRange().min)
+            {
+                factoryMap.setView({
+                    zoom: getZoomRange().min,
+                    animate: false
+                });
+            }
+            else if (factoryMap.getZoom() >= getZoomRange().max)
+            {
+                factoryMap.setView({
+                    zoom: getZoomRange().max,
+                    animate: false
+                });
+            }
+        };
+        // Attach a handler to the event that gets fired whenever the map's view is about to change
+        window.Microsoft.Maps.Events.addHandler(factoryMap, 'viewchangeend', restrictZoom);
+
     }
 </script>
 
