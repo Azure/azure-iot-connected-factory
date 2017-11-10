@@ -96,10 +96,12 @@
             <div class="dashboard-graph-header-text">@Strings.GraphLastHour</div>
             <div id="dashboardContextpanelOnehourHistory" class="row"></div>
         </div>
+        <div class="graph_separator"> </div>
         <div id="graph2" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerDayLink);">
             <div class="dashboard-graph-header-text">@Strings.GraphLastDay</div>
             <div id="dashboardContextpanelOnedayHistory" class="row"></div>
         </div>
+        <div class="graph_separator"> </div>
         <div id="graph3" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerWeekLink);">
             <div class="dashboard-graph-header-text">@Strings.GraphLastWeek</div>
             <div id="dashboardContextpanelOneweekHistory" class="row"></div>
@@ -725,25 +727,24 @@
     var widthGraph;
     if(window.matchMedia('(max-width: 480px)').matches) {
         // the width of browser is less or equal then 480px
-        var widthGraph = 320;
+        var widthGraph = 350;
     } else {
         // the width of browser is greater then 480px
-        var widthGraph = 390;
+        var widthGraph = 420;
     }
 
-    var heightGraph = 195;
+    var heightGraph = 215;
     var paddingTop = 10;
     var paddingLeft = 90;
-    var colorGraph1 = '#65CB99';
-    var colorGraph2 = '#ecee14';
-    var colorGraph3 = '#6490A9';
-    var colorAlertDetailChart = '#65CB99';
-    var colorAlertThreshold = '#ff0000'
+    var colorGraph1 = '#2e9b8a';
+    var colorGraph2 = '#FFEE91';
+    var colorGraph3 = '#D66FFC';
+    var colorAlertDetailChart = '#2e9b8a';
+    var colorAlertThreshold = '#fC540A'
     var gridGraph1 = initGridArray(2,60,3);
     var gridGraph2 = initGridArray(1,24,2);
     var gridGraph3 = initGridArray(0,7.5,0.5);
     var gridAlertDetailChart = initGridArray(2,60,3);
-
 
     function initGridArray(initValue, maxValue, step) {
         var line = [];
@@ -769,7 +770,7 @@
             colors: {
                 data: colorGraph1
             },
-            type: 'bar'
+            type: 'spline'
         },
         axis: {
             y: {
@@ -778,22 +779,25 @@
                     position: 'outer-middle'
                 },
                 tick: {
-                    outer: false
-                }
+                    outer: false,
+                    count: 15,
+                    format: d3.format("d")
+                },
+                padding: 0
             },
             x: {
-                label: {
-                    text: $('<div/>').html('@Strings.LastHourHistoryGraphXlabel').text(),
-                    position: 'outer-center'
-                },
                 show: true,
                 type: 'category',
                 height: 60,
                 tick: {
-                    rotate: 40,
-                    culling: true,
+                    rotate: 0,
+                    culling: {
+                        max: 3
+                    },
+                    centered: false,
+                    fit: true,
                     multiline: false,
-                    outer: false
+                    outer: false,
                 }
             },
         },
@@ -833,7 +837,7 @@
                 data: colorGraph2
 
             },
-            type: 'bar'
+            type: 'spline'
         },
         axis: {
             y: {
@@ -842,20 +846,23 @@
                     position: 'outer-middle'
                 },
                 tick: {
-                    outer: false
-                }
+                    outer: false,
+                    count: 15,
+                    format: d3.format("d")
+                },
+                padding: 0
             },
             x: {
-                label: {
-                    text: $('<div/>').html('@Strings.LastDayHistoryGraphXlabel').text(),
-                    position: 'outer-center'
-                },
                 show: true,
                 type: 'category',
                 height: 60,
                 tick: {
-                    rotate: 40,
-                    culling: true,
+                    rotate: 0,
+                    culling: {
+                        max: 3
+                    },
+                    centered: false,
+                    fit: true,
                     multiline: false,
                     outer: false
                 }
@@ -894,9 +901,9 @@
               ['data', 0, 0, 0, 0, 0, 0, 0]
             ],
             colors: {
-                pattern: [colorGraph3]
+                data: colorGraph3
             },
-            type: 'bar'
+            type: 'spline'
         },
         axis: {
             y: {
@@ -905,21 +912,24 @@
                     position: 'outer-middle'
                 },
                 tick: {
-                    outer: false
-                }
+                    outer: false,
+                    count: 15,
+                    format: d3.format("d")
+                },
+                padding: 0
             },
             x: {
-                label: {
-                    text: $('<div/>').html('@Strings.LastWeekHistoryGraphXlabel').text(),
-                    position: 'outer-center'
-                },
                 show: true,
                 type: 'category',
                 height: 65,
                 tick: {
-                    rotate: 40,
-                    culling: true,
-                    multiline: true,
+                    rotate: 0,
+                    culling: {
+                        max: 3
+                    },
+                    centered: false,
+                    fit: true,
+                    multiline: false,
                     outer: false
                 }
             },
@@ -957,7 +967,7 @@
               ['x', "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
               ['data', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             ],
-            type: 'bar',
+            type: 'spline',
             colors: {
                 data: function (d) {
                     var color = colorAlertDetailChart;
@@ -982,20 +992,22 @@
                     position: 'outer-middle'
                 },
                 tick: {
-                    outer: false
+                    outer: false,
+                    count: 15,
+                    format: d3.format("d")
                 }
             },
             x: {
-                label: {
-                    text: $('<div/>').html('@Strings.LastHourHistoryGraphXlabel').text(),
-                    position: 'outer-center'
-                },
                 show: true,
                 type: 'category',
                 height: 60,
                 tick: {
-                    rotate: 40,
-                    culling: true,
+                    rotate: 0,
+                    culling: {
+                        max: 3
+                    },
+                    centered: false,
+                    fit: true,
                     multiline: false,
                     outer: false
                 }
@@ -1028,16 +1040,48 @@
         chart3.axis.labels({ y: ylabel });
     }
 
-    function setChartThreshold(chart, data) {
-        if (chart == alertDetailChart) {
-            chart.axis.max(undefined);
+    function setChartVerticalSpan(chart, data) {
+        var maxData = 0;
+        var minData = 0;
 
+        chart.axis.max(undefined);
+
+        if (chart == alertDetailChart) {
             maxThreshold != null ? chart.ygrids.add([{ value: maxThreshold, text: '@Strings.GraphMaxThreshold' }]) : maxThreshold = 0;
             minThreshold != null ? chart.ygrids.add([{ value: minThreshold, text: '@Strings.GraphMinThreshold' }]) : minThreshold = 0;
 
-            var maxT = Math.max(Math.max.apply(Math, data.map(Number)), maxThreshold, minThreshold);
-            chart.axis.max(maxT * 1.1);         
+            maxData = Math.max(Math.max.apply(Math, data.map(Number)), maxThreshold, minThreshold);
+            if (minThreshold != 0) {
+                minData = Math.min(Math.min.apply(Math, data.map(Number)), maxThreshold, minThreshold);
+            }
+            else {
+                minData = Math.min(Math.min.apply(Math, data.map(Number)), maxThreshold);
+            }
         }
+        else {
+            maxData = Math.max(Math.max.apply(Math, data.map(Number)));
+            minData = Math.min(Math.min.apply(Math, data.map(Number)));
+        }
+        var maxDataInteger = Math.ceil(maxData * 1.03);
+        var minDataInteger = Math.floor(minData * 0.97);
+
+        chart.axis.max(maxDataInteger);
+        chart.axis.min(minDataInteger);
+
+        var step = (maxDataInteger - minDataInteger) / 15;
+        var values = Array(15).fill(minDataInteger);
+
+        for (var i = 1; i < 14; i++) {
+            // the 0.01 is added to be sure that values are not integer.
+            // Ticks label values have integer type, then only integer labels
+            // are displayed with the corresponding tick.
+            // If all the ticks, except the first one and the last one, 
+            // have a decimal part that is not zero they are not displayed 
+            values[i] = minDataInteger + step * i + 0.01;
+        }
+        values[14] = maxDataInteger
+
+        chart.internal.config.axis_y_tick_values = values;
     }
 
     function getOeeKpiData(key, aggregationView, performanceRelevance, chart) {
@@ -1075,10 +1119,10 @@
                     $("#alertDetailTimeSeriesContainer").show();
                     $("#alertDetailNoTimeSeriesContainer").hide();
 
-                    setChartThreshold(chart, data);
+                    setChartVerticalSpan(chart, data);
                     chart.flush();
                     data.unshift("data");
-                    chart.load({columns: [xlabel, data]});
+                    chart.load({ columns: [xlabel, data] });
                 } else {
                     $("#graphHeader").hide();
                     $("#graph1").hide();
@@ -1137,10 +1181,10 @@
                     $("#alertDetailTimeSeriesContainer").show();
                     $("#alertDetailNoTimeSeriesContainer").hide();
 
-                    setChartThreshold(chart, data);
+                    setChartVerticalSpan(chart, data);
                     chart.flush();
                     data.unshift("data");
-                    chart.load({columns: [xlabel, data]});
+                    chart.load({ columns: [xlabel, data] });
                 } else {
                     $("#graphHeader").hide();
                     $("#graph1").hide();
