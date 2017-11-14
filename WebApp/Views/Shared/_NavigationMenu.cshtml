@@ -5,7 +5,6 @@
 
 @model List<Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation.NavigationMenuItem>
 <nav class="navigation">
-    <div class="navigation_logo"></div>
     @foreach (var navigationMenuItem in Model)
     {
         var multipleClasses = "navigation_link " + navigationMenuItem.Class;
@@ -13,6 +12,10 @@
         if (navigationMenuItem.Class == "navigation_link_hamburger")
         {
             <div id="hamburger" class="navigation_link @navigationMenuItem.Class"></div>
+        }
+        else if (navigationMenuItem.Class == "navigation_link_contoso")
+        {
+            <div class="navigation_link @navigationMenuItem.Class">@navigationMenuItem.Text</div>
         }
         else
         {
@@ -24,7 +27,6 @@
 @foreach (var navigationMenuItem in Model.Where(navigationMenuItem => navigationMenuItem.Selected && navigationMenuItem.Children != null))
 {
     <nav class="navigation">
-        <div class="navigation_logo"></div>
         @foreach (var childNavigationItem in navigationMenuItem.Children)
         {
             if (childNavigationItem.Selected)

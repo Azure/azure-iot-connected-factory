@@ -11,13 +11,13 @@
         "Latitude": 48.13641,
         "Longitude": 11.57754
       },
-      "Image": "munich.jpg",
+      "Image": "factory.png",
       "ProductionLines": [
         {
           "Guid": "E8260A1A-DA12-473E-9955-B220B3985356",
           "Name": "Production Line 1",
           "Description": "Brake pads",
-          "Image": "assembly_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "productionline0",
             "Network": "munich0.corp.contoso",
@@ -27,7 +27,7 @@
             {
               "Name": "Assembly",
               "Description": "Brake pad assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:scada2194:ua:munich:productionline0:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -123,7 +123,7 @@
             {
               "Name": "Test",
               "Description": "Brake pad test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:scada1634:ua:munich:productionline0:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -195,7 +195,7 @@
             {
               "Name": "Packaging",
               "Description": "Brake pad packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:scada8344:ua:munich:productionline0:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -279,13 +279,13 @@
         "Latitude": -33.91909,
         "Longitude": 18.42199
       },
-      "Image": "CapeTown.jpg",
+      "Image": "factory.png",
       "ProductionLines": [
         {
           "Guid": "82DEC939-540E-4519-BF7A-93FFD93DF300",
           "Name": "Production Line 1",
           "Description": "Carburetor",
-          "Image": "assembly_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "productionline0",
             "Network": "capetown.corp.contoso",
@@ -295,7 +295,7 @@
             {
               "Name": "Assembly",
               "Description": "Carburetor assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:scadacp008:ua:capetown:productionline0:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -374,7 +374,7 @@
             {
               "Name": "Test #1",
               "Description": "Carburetor test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:cptw1634:ua:capetown:productionline0:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -446,7 +446,7 @@
             {
               "Name": "Packaging #1",
               "Description": "Carburetor packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:scada1144:ua:capetown:productionline0:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -530,13 +530,13 @@
         "Latitude": 18.93016,
         "Longitude": 72.83028
       },
-      "Image": "Mumbai.jpg",
+      "Image": "factory.png",
       "ProductionLines": [
         {
           "Guid": "D1DBB99C-9A08-4B8B-B94A-43A756A64F9D",
           "Name": "Production Line 1",
           "Description": "Gasket",
-          "Image": "assembly_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "line1",
             "Network": "mumbai.corp.contoso",
@@ -546,7 +546,7 @@
             {
               "Name": "Assembly",
               "Description": "Gasket assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:scadacp008:ua:mumbai:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -625,7 +625,7 @@
             {
               "Name": "Test",
               "Description": "Gasket test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:cptw1634:ua:mumbai:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -697,7 +697,7 @@
             {
               "Name": "Packaging",
               "Description": "Gasket packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:scada1144:ua:mumbai:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -781,13 +781,13 @@
         "Latitude": 47.60357,
         "Longitude": -122.3295
       },
-      "Image": "Seattle.jpg",
+      "Image": "factory.png",
       "ProductionLines": [
         {
           "Guid": "103A4B41-AFAE-4B5E-BAA0-18FF3FCCCB3B",
           "Name": "Production Line 1",
           "Description": "Needle bearing",
-          "Image": "assembly_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "line1",
             "Network": "seattle.corp.contoso",
@@ -797,7 +797,7 @@
             {
               "Name": "Assembly",
               "Description": "Needle bearing assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:sea103:ua:seattle:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -876,7 +876,7 @@
             {
               "Name": "Test #1",
               "Description": "Needle bearing test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:sea102:ua:seattle:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -948,7 +948,7 @@
             {
               "Name": "Packaging",
               "Description": "Needle bearing packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:sea101:ua:seattle:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -1032,13 +1032,13 @@
         "Latitude": 39.90657,
         "Longitude": 116.3876
       },
-      "Image": "Beijing.jpg",
+      "Image": "factory.png",
       "ProductionLines": [
         {
           "Guid": "ACF8783D-DFE4-4E93-8AF0-632592B52B75",
           "Name": "Production Line 1",
           "Description": "Condenser",
-          "Image": "assembly_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "line1",
             "Network": "beijing.corp.contoso",
@@ -1048,7 +1048,7 @@
             {
               "Name": "Assembly",
               "Description": "Condenser bearing assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing103:ua:beijing:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -1127,7 +1127,7 @@
             {
               "Name": "Test #1",
               "Description": "Condenser bearing test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing102:ua:beijing:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -1199,7 +1199,7 @@
             {
               "Name": "Packaging #1",
               "Description": "Condenser bearing packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing101:ua:beijing:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -1275,7 +1275,7 @@
           "Guid": "C51003AC-3DAE-4B60-A7BC-6E6A45782B9D",
           "Name": "Production Line 2",
           "Description": "Compressor",
-          "Image": "testing_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "pl2",
             "Network": "beijing.corp.contoso",
@@ -1285,7 +1285,7 @@
             {
               "Name": "Assembly",
               "Description": "Compressor assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing201:ua:beijing:pl2:assembly",
               "Simulation": {
                 "Type": "Assembly",
@@ -1364,7 +1364,7 @@
             {
               "Name": "Test",
               "Description": "Compressor test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing202:ua:beijing:pl2:test",
               "Simulation": {
                 "Type": "Test",
@@ -1436,7 +1436,7 @@
             {
               "Name": "Packaging",
               "Description": "Compressor packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing203:ua:beijing:pl2:packaging",
               "Simulation": {
                 "Type": "Packaging",
@@ -1512,7 +1512,7 @@
           "Guid": "1C2FFBE0-C0C8-4A2E-B789-7F217D2A8A87",
           "Name": "Production Line 3",
           "Description": "Cooler",
-          "Image": "packing_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "prodline3",
             "Network": "beijing.corp.contoso",
@@ -1522,7 +1522,7 @@
             {
               "Name": "Assembly",
               "Description": "Cooler converter assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing004:ua:beijing:prodline3:assembly",
               "Simulation": {
                 "Type": "Assembly",
@@ -1601,7 +1601,7 @@
             {
               "Name": "Test",
               "Description": "Cooler converter test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing005:ua:beijing:prodline3:test",
               "Simulation": {
                 "Type": "Test",
@@ -1673,7 +1673,7 @@
             {
               "Name": "Packaging",
               "Description": "Cooler converter packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:beijing006:ua:beijing:prodline3:packaging",
               "Simulation": {
                 "Type": "Packaging",
@@ -1757,13 +1757,13 @@
         "Latitude": -22.91216,
         "Longitude": -43.17501
       },
-      "Image": "rio.jpg",
+      "Image": "factory.png",
       "ProductionLines": [
         {
           "Guid": "BF1644C7-30CF-4581-BE59-43992C681756",
           "Name": "Production Line 1",
           "Description": "Beam axle",
-          "Image": "assembly_floor.jpg",
+          "Image": "factory_floor.gif",
           "Simulation": {
             "Id": "line1",
             "Network": "rio.corp.contoso",
@@ -1773,7 +1773,7 @@
             {
               "Name": "Assembly",
               "Description": "Beam axle assembly station",
-              "Image": "assembly_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:rio103:ua:rio:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -1852,7 +1852,7 @@
             {
               "Name": "Test #1",
               "Description": "Beam axle test station",
-              "Image": "testing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:rio102:ua:rio:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -1924,7 +1924,7 @@
             {
               "Name": "Packaging #1",
               "Description": "Beam axle packaging station",
-              "Image": "packing_station.jpg",
+              "Image": "station.png",
               "OpcUri": "urn:rio101:ua:rio:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",

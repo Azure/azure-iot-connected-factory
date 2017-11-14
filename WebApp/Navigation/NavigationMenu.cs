@@ -15,6 +15,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
             {
                 new NavigationMenuItem
                 {
+                    Text = "Contoso",
+                    Selected = false,
+                    Class = "navigation_link_contoso",
+                    MinimumPermission = Permission.ViewTelemetry,
+                },
+                new NavigationMenuItem
+                {
                     Text = Strings.NavigationMenuSidebarSizeToggle,
                     Action = "Index",
                     Selected = false,
