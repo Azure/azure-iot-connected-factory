@@ -1197,10 +1197,10 @@ Function SimulationBuild
     CheckCommandAvailability "dotnet.exe" | Out-Null
 
     # call BuildSimulation.cmd
-    Invoke-Expression "$script:SimulationPath/Factory/BuildSimulation.cmd -c --config $script:Configuration"
+    Invoke-Expression "$script:SimulationFactoryPath/BuildSimulation.cmd -c --config $script:Configuration"
 
     # Provide other files
-    Copy-Item -Force "$script:SimulationPath/Factory/Dockerfile" "$script:SimulationBuildOutputPath" | Out-Null
+    Copy-Item -Force "$script:SimulationFactoryPath/Dockerfile" "$script:SimulationBuildOutputPath" | Out-Null
 }
 
 function CreateStationUrl
@@ -1553,7 +1553,7 @@ function StartMES
     }
 
     # Create unique configuration for this production line's MES
-    $originalFileName = "$script:SimulationPath/Factory/MES/Opc.Ua.MES.Endpoints.xml"
+    $originalFileName = "$script:SimulationFactoryPath/MES/Opc.Ua.MES.Endpoints.xml"
     $applicationFileName = "$script:SimulationBuildOutputPath/Opc.Ua.MES.Endpoints.xml"
     Copy-Item $originalFileName $applicationFileName -Force
 
@@ -1569,7 +1569,7 @@ function StartMES
     Copy-Item -Path $applicationFileName -Destination "$script:SimulationBuildOutputPath/$script:DockerConfigFolder/$containerInstance"
 
     # Patch the application configuration file
-    $originalFileName = "$script:SimulationPath/Factory/MES/Opc.Ua.MES.Config.xml"
+    $originalFileName = "$script:SimulationFactoryPath/MES/Opc.Ua.MES.Config.xml"
     $applicationFileName = "$script:SimulationBuildOutputPath/Opc.Ua.MES.Config.xml"
     Copy-Item $originalFileName $applicationFileName -Force
     $xml = [xml] (Get-Content $applicationFileName)
@@ -1910,29 +1910,32 @@ function SimulationUpdate
     if ($vmPublicIp -eq $null)
     {
         # Add a public IP address to the VM
-        Invoke-Expression "$script:SimulationPath/Factory/Add-SimulationPublicIp -DeploymentName $script:DeploymentName"
+        Invoke-Expression "$script:SimulationFactoryPath/Add-SimulationPublicIp.ps1 -DeploymentName $script:DeploymentName"
         $removePublicIp = $true
     }
 
     try
     {
+        # Enable SSH access to VM.
+        Invoke-Expression "$script:SimulationFactoryPath/Enable-SimulationSshAccess.ps1 -DeploymentName $script:DeploymentName"
+
         # Create a PSCredential object for SSH
         $securePassword = ConvertTo-SecureString $script:VmAdminPassword -AsPlainText -Force
         $sshCredentials = New-Object System.Management.Automation.PSCredential ($script:VmAdminUsername, $securePassword)
 
         # Create SSH session
-        $ipAddress = Get-AzureRmPublicIpAddress -Name $script:VmName -ResourceGroupName $script:ResourceGroupName
-        Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of VM is '{0}'" -f $ipAddress.IpAddress)
-        $session = New-SSHSession $ipAddress.IpAddress -Credential $sshCredentials -AcceptKey -ConnectionTimeout ($script:SshTimeout * 1000)
-        if ($Session -eq $null)
+        $vmPublicIp = Get-AzureRmPublicIpAddress -Name $script:VmName -ResourceGroupName $script:ResourceGroupName
+        Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - IP address of VM is '{0}'" -f $vmPublicIp.IpAddress)
+        $session = New-SSHSession $vmPublicIp.IpAddress -Credential $sshCredentials -AcceptKey -ConnectionTimeout ($script:SshTimeout * 1000)
+        if ($session -eq $null)
         {
-            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot create SSH session to VM '{0}'" -f  $ipAddress.IpAddress)
-            throw ("Cannot create SSH session to VM '{0}'" -f  $ipAddress.IpAddress)
+            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot create SSH session to VM '{0}'" -f  $vmPublicIp.IpAddress)
+            throw ("Cannot create SSH session to VM '{0}'" -f  $vmPublicIp.IpAddress)
         }
         try
         {
             # Upload delete script and delete simulation.
-            Set-SCPFile -LocalFile "$script:SimulationBuildOutputDeleteScript" -RemotePath $script:DockerRoot -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
+            Set-SCPFile -LocalFile "$script:SimulationBuildOutputDeleteScript" -RemotePath $script:DockerRoot -ComputerName $vmPublicIp.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
             Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete simulation.")
             $vmCommand = "chmod +x $script:DockerRoot/deletesimulation"
             $status = Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut ($script:SshTimeout * 5) -Command $vmCommand
@@ -1947,8 +1950,8 @@ function SimulationUpdate
 
             # Copy compressed simulation binaries and scripts to VM
             Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Upload simulation files to VM")
-            Set-SCPFile -LocalFile "$script:SimulationPath/simulation" -RemotePath $script:DockerRoot -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
-            Set-SCPFile -LocalFile "$script:SimulationBuildOutputInitScript" -RemotePath $script:DockerRoot -ComputerName $ipAddress.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
+            Set-SCPFile -LocalFile "$script:SimulationPath/simulation" -RemotePath $script:DockerRoot -ComputerName $vmPublicIp.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
+            Set-SCPFile -LocalFile "$script:SimulationBuildOutputInitScript" -RemotePath $script:DockerRoot -ComputerName $vmPublicIp.IpAddress -Credential $sshCredentials -NoProgress -OperationTimeout ($script:SshTimeout * 3)
             $vmCommand = "chmod +x $script:DockerRoot/simulation"
             $status = Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand
             if ($status.ExitStatus -ne 0)
@@ -1978,18 +1981,22 @@ function SimulationUpdate
         {
             throw $_
         }
-        finally
-        {
-            # Remove SSH session
-            Remove-SSHSession $session.SessionId | Out-Null
-        }
     }
     finally
     {
+        # Disable SSH access to VM.
+        Invoke-Expression "$script:SimulationFactoryPath/Disable-SimulationSshAccess.ps1 -DeploymentName $script:DeploymentName"
+
         # Remove the public IP address from the VM if we added it.
         if ($removePublicIp -eq $true)
         {
-            Invoke-Expression "$script:SimulationPath/Factory/Remove-SimulationPublicIp -DeploymentName $script:DeploymentName"
+            Invoke-Expression "$script:SimulationFactoryPath/Remove-SimulationPublicIp.ps1 -DeploymentName $script:DeploymentName"
+        }
+
+        # Remove SSH session
+        if ($session)
+        {
+            Remove-SSHSession $session.SessionId | Out-Null
         }
     }
 }
@@ -2015,7 +2022,8 @@ $EXPECTED_POSHSSH_MODULE_VERSION = "1.7.7"
 # Variable initialization
 $script:IoTSuiteRootPath = Split-Path $MyInvocation.MyCommand.Path
 $script:SimulationPath = "$script:IoTSuiteRootPath/Simulation"
-$script:CreateCertsPath = "$script:SimulationPath/Factory/CreateCerts"
+$script:SimulationFactoryPath = "$script:SimulationPath/Factory"
+$script:CreateCertsPath = "$script:SimulationFactoryPath/CreateCerts"
 $script:WebAppPath = "$script:IoTSuiteRootPath/WebApp"
 $script:DeploymentConfigPath = "$script:IoTSuiteRootPath/Deployment"
 $script:IotSuiteVersion = Get-Content ("{0}/VERSION.txt" -f $script:IoTSuiteRootPath)
@@ -2023,7 +2031,7 @@ $script:IotSuiteVersion = Get-Content ("{0}/VERSION.txt" -f $script:IoTSuiteRoot
 $script:OptionIndex = 0;
 # Timeout in seconds for SSH operations
 $script:SshTimeout = 120
-$script:SimulationBuildOutputPath = "$script:SimulationPath/Factory/buildOutput"
+$script:SimulationBuildOutputPath = "$script:SimulationFactoryPath/buildOutput"
 $script:SimulationBuildOutputInitScript = "$script:SimulationBuildOutputPath/initsimulation"
 $script:SimulationBuildOutputDeleteScript = "$script:SimulationBuildOutputPath/deletesimulation"
 $script:SimulationBuildOutputStartScript = "$script:SimulationBuildOutputPath/startsimulation"
