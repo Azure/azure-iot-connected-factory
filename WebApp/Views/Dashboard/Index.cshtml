@@ -88,7 +88,7 @@
         <div class="dashboard_contextpanel_header-big">
             <div id="dashboardContextpanelGraphHeader" class="dashboard_contextpanel_header_text"></div>
         </div>
-        <a href="#" class="closebtn" onclick="closeChartContextPanel();">&times;</a>
+        <a href="#" class="closebtn" onclick="closeChartContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
         <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
         <div id="nodeMsg" class="msg-container"></div>
         <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
@@ -112,7 +112,7 @@
         <div class="dashboard_contextpanel_header-big">
             <div id="alertContextpanelHeader" class="alert_contextpanel_header_text"></div>
         </div>
-        <a href="#" class="closebtn" onclick="closeAlertContextPanel();">&times;</a>
+        <a href="#" class="closebtn" onclick="closeAlertContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
         <div class="alert_contextpanel_details_container">
             <p id="alertDetailAlertId" hidden></p>
             <div id="alertDetailDescriptionHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsDescriptionHeader</div>
@@ -161,7 +161,7 @@
         <div class="dashboard_contextpanel_header">
             <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
         </div>
-        <a href="#" class="closebtn" onclick="closeFilterPanel()">&times;</a>
+        <a href="#" class="closebtn" onclick="closeFilterPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
         @for (int i = 0; i < 3; i++)
         {
             <div class="dashboard_contextpanel_list_container">
@@ -185,7 +185,7 @@
         <div class="dashboard_contextpanel_header">
             <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
         </div>
-        <a href="#" class="closebtn" onclick="closeFilterAlertsPanel()">&times;</a>
+        <a href="#" class="closebtn" onclick="closeFilterAlertsPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
         @for (int i = 0; i < 5; i++)
         {
             <div class="dashboard_contextpanel_list_container">
@@ -1075,8 +1075,8 @@
             // the 0.01 is added to be sure that values are not integer.
             // Ticks label values have integer type, then only integer labels
             // are displayed with the corresponding tick.
-            // If all the ticks, except the first one and the last one, 
-            // have a decimal part that is not zero they are not displayed 
+            // If all the ticks, except the first one and the last one,
+            // have a decimal part that is not zero they are not displayed
             values[i] = minDataInteger + step * i + 0.01;
         }
         values[14] = maxDataInteger

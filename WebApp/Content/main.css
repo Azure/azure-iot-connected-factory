@@ -6955,7 +6955,7 @@ main {
   background-image: url("/Content/img/contosoLogo.svg");
 }
 .navigation_link_contoso:hover {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%22-12955.338%20-22387.842%2022.493%2024%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.cls-1%20%7B%0A%20%20%20%20%20%20fill%3A%20%23ffffff%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpath%20id%3D%22Path_421%22%20data-name%3D%22Path%20421%22%20class%3D%22cls-1%22%20d%3D%22M20.024%2C4.231%2C13.734.675a5.049%2C5.049%2C0%2C0%2C0-4.956%2C0L2.487%2C4.231A4.887%2C4.887%2C0%2C0%2C0%2C0%2C8.458v7.129A4.859%2C4.859%2C0%2C0%2C0%2C2.487%2C19.8l6.29%2C3.573a5.1%2C5.1%2C0%2C0%2C0%2C2.469.655%2C4.977%2C4.977%2C0%2C0%2C0%2C2.487-.655l6.29-3.573a4.842%2C4.842%2C0%2C0%2C0%2C2.469-4.21V8.458A4.833%2C4.833%2C0%2C0%2C0%2C20.024%2C4.231ZM9.895%2C20.947%2C3.839%2C17.5A2.2%2C2.2%2C0%2C0%2C1%2C2.7%2C15.587V8.458a2.2%2C2.2%2C0%2C0%2C1%2C1.117-1.91L9.895%2C3.116Zm9.913-5.36A2.2%2C2.2%2C0%2C0%2C1%2C18.69%2C17.5l-6.074%2C3.432V13.341h7.191Zm0-4.9H12.6V3.1L18.672%2C6.53a2.183%2C2.183%2C0%2C0%2C1%2C1.117%2C1.91v2.247Z%22%20transform%3D%22translate(-12955.338%20-22387.867)%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%22-12955.338%20-22387.842%2022.493%2024%22%3E%0D%0A%20%20%3Cdefs%3E%0D%0A%20%20%20%20%3Cstyle%3E%0D%0A%20%20%20%20%20%20.cls-1%20%7B%0D%0A%20%20%20%20%20%20fill%3A%20%23ffffff%3B%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%3C%2Fstyle%3E%0D%0A%20%20%3C%2Fdefs%3E%0D%0A%20%20%3Cpath%20id%3D%22Path_421%22%20data-name%3D%22Path%20421%22%20class%3D%22cls-1%22%20d%3D%22M20.024%2C4.231%2C13.734.675a5.049%2C5.049%2C0%2C0%2C0-4.956%2C0L2.487%2C4.231A4.887%2C4.887%2C0%2C0%2C0%2C0%2C8.458v7.129A4.859%2C4.859%2C0%2C0%2C0%2C2.487%2C19.8l6.29%2C3.573a5.1%2C5.1%2C0%2C0%2C0%2C2.469.655%2C4.977%2C4.977%2C0%2C0%2C0%2C2.487-.655l6.29-3.573a4.842%2C4.842%2C0%2C0%2C0%2C2.469-4.21V8.458A4.833%2C4.833%2C0%2C0%2C0%2C20.024%2C4.231ZM9.895%2C20.947%2C3.839%2C17.5A2.2%2C2.2%2C0%2C0%2C1%2C2.7%2C15.587V8.458a2.2%2C2.2%2C0%2C0%2C1%2C1.117-1.91L9.895%2C3.116Zm9.913-5.36A2.2%2C2.2%2C0%2C0%2C1%2C18.69%2C17.5l-6.074%2C3.432V13.341h7.191Zm0-4.9H12.6V3.1L18.672%2C6.53a2.183%2C2.183%2C0%2C0%2C1%2C1.117%2C1.91v2.247Z%22%20transform%3D%22translate(-12955.338%20-22387.867)%22%2F%3E%0D%0A%3C%2Fsvg%3E%0D%0A");
   font-family: "Selawik Semibold";
 }
 .scrollbar {
@@ -7057,6 +7057,13 @@ p {
 .glyphicon-menu-down:hover,
 .glyphicon-menu-down :focus {
   color: #cccccc;
+  outline: none;
+}
+.dashboard-cancel-icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  color: #ffffff;
   outline: none;
 }
 .dashboard_filter_icon {
@@ -7168,7 +7175,7 @@ p {
 }
 .dashboard_alerts_list_container {
   overflow-y: scroll;
-  height: 470px;
+  height: 496px;
 }
 .dashboard_alerts_listitem_container {
   cursor: pointer;
@@ -7565,7 +7572,7 @@ p {
   }
   .dashboard_alerts_list_container {
     overflow-y: scroll;
-    height: 620px;
+    height: 646px;
   }
   .dashboard_map_container {
     height: 706px;
@@ -7578,7 +7585,7 @@ p {
   }
   .dashboard_alerts_list_container {
     overflow-y: scroll;
-    height: 320px;
+    height: 346px;
   }
   .dashboard_map_container {
     height: 406px;
@@ -8037,6 +8044,9 @@ textarea {
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
   background-color: #1B1D1F;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #afb9c3;
 }
 .navbar-toggle {
   overflow: hidden;

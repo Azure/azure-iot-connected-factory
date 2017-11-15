@@ -587,6 +587,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\assembly_floor.jpg" />
     <Content Include="Content\img\assembly_station.jpg" />
+    <Content Include="Content\img\cancel.svg" />
     <Content Include="Content\img\contosoLogo.svg" />
     <Content Include="Content\img\critical.svg" />
     <Content Include="Content\img\dashboard.svg" />
