@@ -16,10 +16,13 @@ set MYIP=10.123.45.26
 docker network create -d bridge iot_edge
 ::# Initially run the publisher to register itself at the IoT-hub:
 
+docker run -it --rm --name proxy --network iot_edge -v %DOCKER_SHARED_ROOT%:/mapped microsoft/iot-gateway-opc-ua-proxy:1.0.2 -i -c "%_HUB_CS%" -D /mapped/cs.db
+::# Run the proxy permanently, so that the connected factory could connect to OPC UA servers through the proxy tunnel:
+::# Workaround for https://github.com/Azure/iot-edge-opc-proxy/issues/79 :
+::# Use docker option --restart always
+docker run -it --restart always --name proxy --network iot_edge -v %DOCKER_SHARED_ROOT%:/mapped --add-host "%MYHOSTNAME%":%MYIP% microsoft/iot-gateway-opc-ua-proxy:1.0.2 -D /mapped/cs.db
+
 :foreverloop
-
-	docker run -it --rm --name proxy --network iot_edge -v %DOCKER_SHARED_ROOT%:/mapped microsoft/iot-gateway-opc-ua-proxy:1.0.2 -i -c "%_HUB_CS%" -D /mapped/cs.db
-	::# Run the proxy permanently, so that the connected factory could connect to OPC UA servers through the proxy tunnel:
-	docker run -it --rm --name proxy --network iot_edge -v %DOCKER_SHARED_ROOT%:/mapped --add-host "%MYHOSTNAME%":%MYIP% microsoft/iot-gateway-opc-ua-proxy:1.0.2 -D /mapped/cs.db
-
+	::# Get output of the restarted docker container proxy:
+	docker container attach proxy
 goto foreverloop
