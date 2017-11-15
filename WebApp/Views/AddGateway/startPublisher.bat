@@ -11,4 +11,4 @@ set DOCKER_SHARED_ROOT=//C/docker
 
 docker network create -d bridge iot_edge
 ::# Run the publisher permanently, so that it is accessible by port 62222 from the "outside"
-docker run -it --rm --network iot_edge -h publisher --name publisher -p 62222:62222 -v %DOCKER_SHARED_ROOT%:/docker -v myx509certstore:/root/.dotnet/corefx/cryptography/x509stores microsoft/iot-edge-opc-publisher:2.1.1 publisher.example.com "%_HUB_CS%" --lf ./publisher.log.txt --pf /docker/publishednodes.json --ih Http1 --as true --tm true --si 0 --ms 0 --sd "example.com" --trustedcertstorepath=/docker/CertificateStores/trusted --rejectedcertstorepath=/docker/CertificateStores/rejected
+docker run -it --rm --network iot_edge -h publisher --name publisher -p 62222:62222 -v %DOCKER_SHARED_ROOT%:/docker -v myx509certstore:/root/.dotnet/corefx/cryptography/x509stores microsoft/iot-edge-opc-publisher:2.1.2 publisher.example.com "%_HUB_CS%" --lf ./publisher.log.txt --ns true --pf /docker/publishednodes.json --ih Http1 --as true --tm true --si 0 --ms 0 --sd "example.com" --trustedcertstorepath=/docker/CertificateStores/trusted --rejectedcertstorepath=/docker/CertificateStores/rejected
