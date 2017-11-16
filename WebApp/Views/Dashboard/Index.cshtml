@@ -85,126 +85,132 @@
     </div>
 
     <div id="dashboardContextpanel" class="overlay">
-        <div class="dashboard_contextpanel_header-big">
-            <div id="dashboardContextpanelGraphHeader" class="dashboard_contextpanel_header_text"></div>
-        </div>
-        <a href="#" class="closebtn" onclick="closeChartContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
-        <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
-        <div id="nodeMsg" class="msg-container"></div>
-        <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
-        <div id="graph1" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerHourLink);">
-            <div class="dashboard-graph-header-text">@Strings.GraphLastHour</div>
-            <div id="dashboardContextpanelOnehourHistory" class="row"></div>
-        </div>
-        <div class="graph_separator"> </div>
-        <div id="graph2" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerDayLink);">
-            <div class="dashboard-graph-header-text">@Strings.GraphLastDay</div>
-            <div id="dashboardContextpanelOnedayHistory" class="row"></div>
-        </div>
-        <div class="graph_separator"> </div>
-        <div id="graph3" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerWeekLink);">
-            <div class="dashboard-graph-header-text">@Strings.GraphLastWeek</div>
-            <div id="dashboardContextpanelOneweekHistory" class="row"></div>
+        <div class="overlay-scroll scrollbar-macosx">
+            <div class="dashboard_contextpanel_header-big">
+                <div id="dashboardContextpanelGraphHeader" class="dashboard_contextpanel_header_text"></div>
+            </div>
+            <a href="#" class="closebtn" onclick="closeChartContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
+            <div id="nodeMsg" class="msg-container"></div>
+            <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
+            <div id="graph1" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerHourLink);">
+                <div class="dashboard-graph-header-text">@Strings.GraphLastHour</div>
+                <div id="dashboardContextpanelOnehourHistory" class="row"></div>
+            </div>
+            <div class="graph_separator"> </div>
+            <div id="graph2" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerDayLink);">
+                <div class="dashboard-graph-header-text">@Strings.GraphLastDay</div>
+                <div id="dashboardContextpanelOnedayHistory" class="row"></div>
+            </div>
+            <div class="graph_separator"> </div>
+            <div id="graph3" class="graph_container" onclick="openRDXExplorerLink(rdxExplorerWeekLink);">
+                <div class="dashboard-graph-header-text">@Strings.GraphLastWeek</div>
+                <div id="dashboardContextpanelOneweekHistory" class="row"></div>
+            </div>
         </div>
     </div>
 
     <div id="alertContextpanel" class="overlay">
-        <div class="dashboard_contextpanel_header-big">
-            <div id="alertContextpanelHeader" class="alert_contextpanel_header_text"></div>
-        </div>
-        <a href="#" class="closebtn" onclick="closeAlertContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
-        <div class="alert_contextpanel_details_container">
-            <p id="alertDetailAlertId" hidden></p>
-            <div id="alertDetailDescriptionHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsDescriptionHeader</div>
-            <div id="alertDetailDescription" class="alert_contextpanel_details_value"></div>
-            <div id="alertDetailTimeHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsTimeHeader</div>
-            <div id="alertDetailTime" class="alert_contextpanel_details_value"></div>
-            <div id="alertDetailLocationHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsLocationHeader</div>
-            <div id="alertDetailLocation" class="alert_contextpanel_details_value"></div>
-            <div id="alertDetailOccurencesHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsOccurencesHeader</div>
-            <div id="alertDetailOccurences" class="alert_contextpanel_details_value"></div>
-        </div>
-        <div id="timeSeriesLoadingContainer">
-            <div id="timeSeriesLoadingText" class="alert_contextpanel_timeseries_loading">@Strings.AnimationTimeSeriesLoading</div>
-        </div>
-        <div id="alertDetailNoTimeSeriesContainer">
-            <div id="alertDetailNoTimeSeriesHeader" class="alert_contextpanel_notimeseries_label">@Strings.NoDataSeries</div>
-            <div id="alertDetailNoTimeSeriesValue" class="alert_contextpanel_notimeseries_value"></div>
-        </div>
-        <div id="alertDetailTimeSeriesContainer">
-            <div id="alertDetailChartHeader" class="alert_contextpanel_chart_header">@Strings.GraphRDXLinkHeader</div>
-            <div id="alertDetailChartContainer" class="alert_contextpanel_chart_container" onclick="openRDXExplorerLink(alertDetailRdxUrl);">
-                <div class="alert_contextpanel_chart_label">@Strings.GraphLastHour</div>
-                <div id="alertDetailChart" class="row"></div>
+        <div class="overlay-scroll scrollbar-macosx">
+            <div class="dashboard_contextpanel_header-big">
+                <div id="alertContextpanelHeader" class="alert_contextpanel_header_text"></div>
             </div>
-        </div>
-        @if (PermsChecker.HasPermission(Permission.ActionAlerts))
-        {
-            <div id="alertDetailActionContainer" class="alert_contextpanel_details_container">
-                <div class="alert_contextpanel_details_label">@Strings.AlertSelectAction</div>
-                <div>
-                    <select id="alertContextpanelActionPicker" class="selectpicker form-control">
-                        <option selected="selected" value="empty">@Strings.AlertDetailsNoActionAvailable</option>
-                    </select>
-                </div>
-                <div class="alert_contextpanel_execute_action_button">
-                    <input id="alertDetailExecuteActionButton" class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="alertExecuteAction($('#alertDetailAlertId').text(), $('#alertContextpanelActionPicker').val())" value="@Strings.AlertActionExecute">
-                </div>
-                <div id="alertDetailActionResultHeader" class="alert_contextpanel_details_label" display="none"> @Strings.AlertDetailsActionResultHeader</div>
-                <div id="alertDetailActionResult" class="alert_contextpanel_details_value" display="none">@Strings.ActionDetailResultExecuting</div>
+            <a href="#" class="closebtn" onclick="closeAlertContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <div class="alert_contextpanel_details_container">
+                <p id="alertDetailAlertId" hidden></p>
+                <div id="alertDetailDescriptionHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsDescriptionHeader</div>
+                <div id="alertDetailDescription" class="alert_contextpanel_details_value"></div>
+                <div id="alertDetailTimeHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsTimeHeader</div>
+                <div id="alertDetailTime" class="alert_contextpanel_details_value"></div>
+                <div id="alertDetailLocationHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsLocationHeader</div>
+                <div id="alertDetailLocation" class="alert_contextpanel_details_value"></div>
+                <div id="alertDetailOccurencesHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsOccurencesHeader</div>
+                <div id="alertDetailOccurences" class="alert_contextpanel_details_value"></div>
             </div>
-        }
-
+            <div id="timeSeriesLoadingContainer">
+                <div id="timeSeriesLoadingText" class="alert_contextpanel_timeseries_loading">@Strings.AnimationTimeSeriesLoading</div>
+            </div>
+            <div id="alertDetailNoTimeSeriesContainer">
+                <div id="alertDetailNoTimeSeriesHeader" class="alert_contextpanel_notimeseries_label">@Strings.NoDataSeries</div>
+                <div id="alertDetailNoTimeSeriesValue" class="alert_contextpanel_notimeseries_value"></div>
+            </div>
+            <div id="alertDetailTimeSeriesContainer">
+                <div id="alertDetailChartHeader" class="alert_contextpanel_chart_header">@Strings.GraphRDXLinkHeader</div>
+                <div id="alertDetailChartContainer" class="alert_contextpanel_chart_container" onclick="openRDXExplorerLink(alertDetailRdxUrl);">
+                    <div class="alert_contextpanel_chart_label">@Strings.GraphLastHour</div>
+                    <div id="alertDetailChart" class="row"></div>
+                </div>
+            </div>
+            @if (PermsChecker.HasPermission(Permission.ActionAlerts))
+            {
+                <div id="alertDetailActionContainer" class="alert_contextpanel_details_container">
+                    <div class="alert_contextpanel_details_label">@Strings.AlertSelectAction</div>
+                    <div>
+                        <select id="alertContextpanelActionPicker" class="selectpicker form-control">
+                            <option selected="selected" value="empty">@Strings.AlertDetailsNoActionAvailable</option>
+                        </select>
+                    </div>
+                    <div class="alert_contextpanel_execute_action_button">
+                        <input id="alertDetailExecuteActionButton" class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="alertExecuteAction($('#alertDetailAlertId').text(), $('#alertContextpanelActionPicker').val())" value="@Strings.AlertActionExecute">
+                    </div>
+                    <div id="alertDetailActionResultHeader" class="alert_contextpanel_details_label" display="none"> @Strings.AlertDetailsActionResultHeader</div>
+                    <div id="alertDetailActionResult" class="alert_contextpanel_details_value" display="none">@Strings.ActionDetailResultExecuting</div>
+                </div>
+            }
+        </div>
     </div>
 
     <div id="dashboardFilterContextpanel" class="overlay">
-        <div class="dashboard_contextpanel_header">
-            <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
-        </div>
-        <a href="#" class="closebtn" onclick="closeFilterPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
-        @for (int i = 0; i < 3; i++)
-        {
-            <div class="dashboard_contextpanel_list_container">
-                <p id="filterLabel@(i)" class="dashboard_contextpanel_select_list_label" for="topologySelector@(i)"></p>
-                <div>
-                    <select id="topologySelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
-                        <option selected value="empty">@Strings.NoFilterApplied</option>
-                    </select>
-                </div>
+        <div class="overlay-scroll scrollbar-macosx">
+            <div class="dashboard_contextpanel_header">
+                <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
             </div>
-        }
-        <div class="dashboard_contextpanel_select_filter_button">
-            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="applyFilter(topologyListInformation)" value="@Strings.FilterApply">
-        </div>
-        <div class="dashboard_contextpanel_clear_filter_button">
-            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(topologyListInformation)" value="@Strings.FilterClear">
+            <a href="#" class="closebtn" onclick="closeFilterPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="dashboard_contextpanel_list_container">
+                    <p id="filterLabel@(i)" class="dashboard_contextpanel_select_list_label" for="topologySelector@(i)"></p>
+                    <div>
+                        <select id="topologySelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
+                            <option selected value="empty">@Strings.NoFilterApplied</option>
+                        </select>
+                    </div>
+                </div>
+            }
+            <div class="dashboard_contextpanel_select_filter_button">
+                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="applyFilter(topologyListInformation)" value="@Strings.FilterApply">
+            </div>
+            <div class="dashboard_contextpanel_clear_filter_button">
+                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(topologyListInformation)" value="@Strings.FilterClear">
+            </div>
         </div>
     </div>
 
     <div id="dashboardFilterAlertContextpanel" class="overlay">
-        <div class="dashboard_contextpanel_header">
-            <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
-        </div>
-        <a href="#" class="closebtn" onclick="closeFilterAlertsPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
-        @for (int i = 0; i < 5; i++)
-        {
-            <div class="dashboard_contextpanel_list_container">
-                <p id="filterAlertLabel@(i)" class="dashboard_contextpanel_select_list_label" for="alertSelector@(i)"></p>
-                <div>
-                    <select id="alertSelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
-                        <option selected value="empty">@Strings.NoFilterApplied</option>
-                    </select>
-                </div>
+        <div class="overlay-scroll scrollbar-macosx">
+            <div class="dashboard_contextpanel_header">
+                <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
             </div>
-        }
-        <div class="dashboard_contextpanel_select_filter_alert_button">
-            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="applyFilter(alertListInformation)" value="@Strings.FilterApply">
-        </div>
-        <div class="dashboard_contextpanel_clear_filter_alert_button">
-            <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(alertListInformation)" value="@Strings.FilterClear">
+            <a href="#" class="closebtn" onclick="closeFilterAlertsPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            @for (int i = 0; i < 5; i++)
+            {
+                <div class="dashboard_contextpanel_list_container">
+                    <p id="filterAlertLabel@(i)" class="dashboard_contextpanel_select_list_label" for="alertSelector@(i)"></p>
+                    <div>
+                        <select id="alertSelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
+                            <option selected value="empty">@Strings.NoFilterApplied</option>
+                        </select>
+                    </div>
+                </div>
+            }
+            <div class="dashboard_contextpanel_select_filter_alert_button">
+                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="applyFilter(alertListInformation)" value="@Strings.FilterApply">
+            </div>
+            <div class="dashboard_contextpanel_clear_filter_alert_button">
+                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(alertListInformation)" value="@Strings.FilterClear">
+            </div>
         </div>
     </div>
-
 </div>
 
 <script>
@@ -462,6 +468,7 @@
         $("#graph3").show();
         $("#nodeMsgHeader").hide();
         $("#nodeMsg").hide();
+        $(".dashboard-cancel-icon").show();
 
         $("#dashboardContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
         setLabel(label);
@@ -491,6 +498,7 @@
         $("#graph3").show();
         $("#nodeMsgHeader").hide();
         $("#nodeMsg").hide();
+        $(".dashboard-cancel-icon").show();
 
         $("#dashboardContextpanel").removeClass("overlay-close").addClass("overlay-right-open-big");
         setLabel(name);
@@ -575,6 +583,7 @@
         $("#timeSeriesLoadingContainer").show();
         $('#alertDetailExecuteActionButton').removeClass('disabled');
         $('#alertDetailExecuteActionButton').addClass('enabled');
+        $(".dashboard-cancel-icon").show();
 
         var i = 0
         for (i = 0; i < alertInformation.length; i++) {
@@ -1527,6 +1536,8 @@
 
         applyFilter(topologyListInformation);
         applyFilter(alertListInformation);
+
+        jQuery('.scrollbar-macosx').scrollbar();
     });
 
     function updateTopologyListInformation() {
@@ -1576,6 +1587,7 @@
         }
 
         $("#dashboardFilterContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
+        $(".dashboard-cancel-icon").show();
     }
 
     function openFilterAlertsContextPanel() {
@@ -1589,6 +1601,7 @@
         }
 
         $("#dashboardFilterAlertContextpanel").removeClass("overlay-close").addClass("overlay-right-open");
+        $(".dashboard-cancel-icon").show();
     }
 
     function closeFilterPanel() {

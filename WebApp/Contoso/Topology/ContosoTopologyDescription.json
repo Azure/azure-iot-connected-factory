@@ -27,7 +27,7 @@
             {
               "Name": "Assembly",
               "Description": "Brake pad assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:scada2194:ua:munich:productionline0:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -123,7 +123,7 @@
             {
               "Name": "Test",
               "Description": "Brake pad test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:scada1634:ua:munich:productionline0:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -195,7 +195,7 @@
             {
               "Name": "Packaging",
               "Description": "Brake pad packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:scada8344:ua:munich:productionline0:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -295,7 +295,7 @@
             {
               "Name": "Assembly",
               "Description": "Carburetor assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:scadacp008:ua:capetown:productionline0:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -374,7 +374,7 @@
             {
               "Name": "Test #1",
               "Description": "Carburetor test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:cptw1634:ua:capetown:productionline0:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -446,7 +446,7 @@
             {
               "Name": "Packaging #1",
               "Description": "Carburetor packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:scada1144:ua:capetown:productionline0:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -546,7 +546,7 @@
             {
               "Name": "Assembly",
               "Description": "Gasket assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:scadacp008:ua:mumbai:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -625,7 +625,7 @@
             {
               "Name": "Test",
               "Description": "Gasket test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:cptw1634:ua:mumbai:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -697,7 +697,7 @@
             {
               "Name": "Packaging",
               "Description": "Gasket packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:scada1144:ua:mumbai:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -797,7 +797,7 @@
             {
               "Name": "Assembly",
               "Description": "Needle bearing assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:sea103:ua:seattle:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -876,7 +876,7 @@
             {
               "Name": "Test #1",
               "Description": "Needle bearing test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:sea102:ua:seattle:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -948,7 +948,7 @@
             {
               "Name": "Packaging",
               "Description": "Needle bearing packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:sea101:ua:seattle:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -1048,7 +1048,7 @@
             {
               "Name": "Assembly",
               "Description": "Condenser bearing assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:beijing103:ua:beijing:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -1127,7 +1127,7 @@
             {
               "Name": "Test #1",
               "Description": "Condenser bearing test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:beijing102:ua:beijing:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -1199,7 +1199,7 @@
             {
               "Name": "Packaging #1",
               "Description": "Condenser bearing packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:beijing101:ua:beijing:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",
@@ -1285,7 +1285,7 @@
             {
               "Name": "Assembly",
               "Description": "Compressor assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:beijing201:ua:beijing:pl2:assembly",
               "Simulation": {
                 "Type": "Assembly",
@@ -1364,7 +1364,7 @@
             {
               "Name": "Test",
               "Description": "Compressor test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:beijing202:ua:beijing:pl2:test",
               "Simulation": {
                 "Type": "Test",
@@ -1436,7 +1436,7 @@
             {
               "Name": "Packaging",
               "Description": "Compressor packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:beijing203:ua:beijing:pl2:packaging",
               "Simulation": {
                 "Type": "Packaging",
@@ -1522,7 +1522,7 @@
             {
               "Name": "Assembly",
               "Description": "Cooler converter assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:beijing004:ua:beijing:prodline3:assembly",
               "Simulation": {
                 "Type": "Assembly",
@@ -1601,7 +1601,7 @@
             {
               "Name": "Test",
               "Description": "Cooler converter test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:beijing005:ua:beijing:prodline3:test",
               "Simulation": {
                 "Type": "Test",
@@ -1673,7 +1673,7 @@
             {
               "Name": "Packaging",
               "Description": "Cooler converter packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:beijing006:ua:beijing:prodline3:packaging",
               "Simulation": {
                 "Type": "Packaging",
@@ -1773,7 +1773,7 @@
             {
               "Name": "Assembly",
               "Description": "Beam axle assembly station",
-              "Image": "station.png",
+              "Image": "assembly_station.png",
               "OpcUri": "urn:rio103:ua:rio:line1:assemblystation",
               "Simulation": {
                 "Type": "Assembly",
@@ -1852,7 +1852,7 @@
             {
               "Name": "Test #1",
               "Description": "Beam axle test station",
-              "Image": "station.png",
+              "Image": "testing_station.png",
               "OpcUri": "urn:rio102:ua:rio:line1:teststation",
               "Simulation": {
                 "Type": "Test",
@@ -1924,7 +1924,7 @@
             {
               "Name": "Packaging #1",
               "Description": "Beam axle packaging station",
-              "Image": "station.png",
+              "Image": "packing_station.png",
               "OpcUri": "urn:rio101:ua:rio:line1:packagingstation",
               "Simulation": {
                 "Type": "Packaging",

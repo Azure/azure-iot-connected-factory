@@ -8234,6 +8234,11 @@ textarea {
   right: auto;
   left: 0;
 }
+.overlay-scroll {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .push_left {
   margin-left: 200px;
 }

@@ -29,7 +29,7 @@
             </div>
         </div>
         <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
-            <img class="img-responsive" src="~/Content/img/station.png"/>
+            <img class="img-responsive" src="~/Content/img/packing_station.png"/>
         </div>
     </div>
 
@@ -37,7 +37,7 @@
         <div class="dashboard_contextpanel_header">
             <div id="connectContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecurityWarning</div>
         </div>
-            <a href="#" class="closebtn" onclick="closeConnectContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
+            <a href="#" class="closebtn" onclick="closeConnectContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
         <div id="connectBodyContextPanel" class="browser_error_details_container">
             <div class="row browser_error_details_line_header" >
                 <span class="glyphicon glyphicon-alert"></span>
@@ -130,6 +130,7 @@
         $("#proceedButton").hide();
         $("#cancelButton").hide();
         $("#waitingForConnect").show();
+        $(".dashboard-cancel-icon").show();
     }
 
     $('form').submit(function () {

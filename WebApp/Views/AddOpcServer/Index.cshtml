@@ -42,7 +42,7 @@
             }
         </div>
         <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
-            <img class="img-responsive" src="~/Content/img/station.png" />
+            <img class="img-responsive" src="~/Content/img/packing_station.png" />
         </div>
     </div>
 
@@ -52,7 +52,7 @@
             <div class="dashboard_contextpanel_header">
                 <div id="addOpcServerContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecurityWarning</div>
             </div>
-            <a href="#" class="closebtn" onclick="closeAddOpcServerContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
+            <a href="#" class="closebtn" onclick="closeAddOpcServerContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div id="addOpcServerBodyContextPanel" class="browser_error_details_container">
                 <div class="row browser_error_details_line_header">
                     <span class="glyphicon glyphicon-alert"></span>
@@ -93,6 +93,7 @@
 
 <script>
     $(document).ready(function () {
+        $("#addOpcServerContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
         $("#connectAddOpcServerButton").prop("disabled", false);
 
         $("#endpointUrl").autocomplete({});
@@ -147,6 +148,7 @@
         $("#proceedButton").hide();
         $("#cancelButton").hide();
         $("#waitingForConnect").show();
+        $(".dashboard-cancel-icon").show();
         return true;
     }
 

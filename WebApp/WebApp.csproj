@@ -586,7 +586,7 @@
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\assembly_floor.jpg" />
-    <Content Include="Content\img\assembly_station.jpg" />
+    <Content Include="Content\img\assembly_station.png" />
     <Content Include="Content\img\cancel.svg" />
     <Content Include="Content\img\contosoLogo.svg" />
     <Content Include="Content\img\critical.svg" />
@@ -604,7 +604,8 @@
     <Content Include="Content\img\icon_server.svg" />
     <Content Include="Content\img\info.svg" />
     <Content Include="Content\img\newfactory.jpg" />
-    <Content Include="Content\img\station.png" />
+    <Content Include="Content\img\packing_station.png" />
+    <Content Include="Content\img\testing_station.png" />
     <Content Include="Content\img\warning.svg" />
     <Content Include="Content\img\world.jpg" />
     <Content Include="Content\favicon.ico" />
