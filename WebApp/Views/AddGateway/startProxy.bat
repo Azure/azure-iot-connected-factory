@@ -14,8 +14,9 @@ set MYHOSTNAME=publisher.example.com
 set MYIP=10.123.45.26
 
 docker network create -d bridge iot_edge
+::# Stop any preiviously started proxy instance
+docker container stop proxy
 ::# Initially run the publisher to register itself at the IoT-hub:
-
 docker run -it --rm --name proxy --network iot_edge -v %DOCKER_SHARED_ROOT%:/mapped microsoft/iot-gateway-opc-ua-proxy:1.0.2 -i -c "%_HUB_CS%" -D /mapped/cs.db
 ::# Run the proxy permanently, so that the connected factory could connect to OPC UA servers through the proxy tunnel:
 ::# Workaround for https://github.com/Azure/iot-edge-opc-proxy/issues/79 :
