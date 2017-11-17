@@ -6921,7 +6921,7 @@ main {
   background-image: url("/Content/img/hamburger.svg");
 }
 .navigation_link_hamburger:hover {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3C!--%20Copyright%20(c)%20Microsoft.%20All%20rights%20reserved.%20--%3E%0D%0A%0D%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%220%200%2018%2014%22%3E%0D%0A%20%20%3Ctitle%3EAsset%2014%3C%2Ftitle%3E%0D%0A%20%20%3Cg%20id%3D%22Layer_2%22%20data-name%3D%22Layer%202%22%3E%0D%0A%20%20%20%20%3Cg%20id%3D%22Layer_1-2%22%20data-name%3D%22Layer%201%22%3E%0D%0A%20%20%20%20%20%20%3Crect%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23ffffff%22%2F%3E%0D%0A%20%20%20%20%20%20%3Crect%20y%3D%226%22%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23afb9c3%22%2F%3E%0D%0A%20%20%20%20%20%20%3Crect%20y%3D%2212%22%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23afb9c3%22%2F%3E%0D%0A%20%20%20%20%3C%2Fg%3E%0D%0A%20%20%3C%2Fg%3E%0D%0A%3C%2Fsvg%3E%0D%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3C!--%20Copyright%20(c)%20Microsoft.%20All%20rights%20reserved.%20--%3E%0D%0A%0D%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%220%200%2018%2014%22%3E%0D%0A%20%20%3Ctitle%3EAsset%2014%3C%2Ftitle%3E%0D%0A%20%20%3Cg%20id%3D%22Layer_2%22%20data-name%3D%22Layer%202%22%3E%0D%0A%20%20%20%20%3Cg%20id%3D%22Layer_1-2%22%20data-name%3D%22Layer%201%22%3E%0D%0A%20%20%20%20%20%20%3Crect%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23ffffff%22%2F%3E%0D%0A%20%20%20%20%20%20%3Crect%20y%3D%226%22%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23ffffff%22%2F%3E%0D%0A%20%20%20%20%20%20%3Crect%20y%3D%2212%22%20width%3D%2218%22%20height%3D%222%22%20fill%3D%22%23ffffff%22%2F%3E%0D%0A%20%20%20%20%3C%2Fg%3E%0D%0A%20%20%3C%2Fg%3E%0D%0A%3C%2Fsvg%3E%0D%0A");
 }
 .navigation_link_home {
   background-image: url("/Content/img/dashboard.svg");
@@ -7120,7 +7120,7 @@ p {
 .dashboard_status_good {
   background-image: url("/Content/img/info.svg");
   background-repeat: no-repeat;
-  background-position: 14px 12px;
+  background-position: 13px 12px;
   display: block;
   position: relative;
 }
@@ -8106,6 +8106,10 @@ textarea {
   width: 24px;
   height: 24px;
   float: right;
+}
+.masthead_language_icon:hover {
+  filter: brightness(0) invert(1);
+  -webkit-filter: brightness(0) invert(1);
 }
 .masthead_text {
   text-align: right;

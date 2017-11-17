@@ -2051,6 +2051,42 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect gateway.
+        /// </summary>
+        public static string TitleAddGateway {
+            get {
+                return ResourceManager.GetString("TitleAddGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect OPC UA server.
+        /// </summary>
+        public static string TitleAddOpcServer {
+            get {
+                return ResourceManager.GetString("TitleAddOpcServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browser.
+        /// </summary>
+        public static string TitleBrowser {
+            get {
+                return ResourceManager.GetString("TitleBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string TitleDashboard {
+            get {
+                return ResourceManager.GetString("TitleDashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View in Time Series Insights.
         /// </summary>
         public static string Tsilink {

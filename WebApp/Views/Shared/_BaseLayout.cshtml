@@ -117,8 +117,7 @@
     <script>
         $("#hamburger").click(function () { toggleContextPanelHamburger(); });
 
-        var title = window.location.pathname;
-        $("#title").text(title.substring(title.indexOf("/")+1, title.lastIndexOf("/")));
+        $("#title").text(title);
 
         function toggleContextPanelHamburger() {
             if ($('.push_left').length) {

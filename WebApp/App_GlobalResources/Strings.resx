@@ -1026,4 +1026,20 @@ Stack trace:
     <value>Min Threshold</value>
     <comment>Label</comment>
   </data>
+  <data name="TitleAddGateway" xml:space="preserve">
+    <value>Connect gateway</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleAddOpcServer" xml:space="preserve">
+    <value>Connect OPC UA server</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleBrowser" xml:space="preserve">
+    <value>Browser</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>Dashboard</value>
+    <comment>message</comment>
+  </data>
 </root>
