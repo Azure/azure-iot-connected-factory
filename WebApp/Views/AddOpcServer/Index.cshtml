@@ -84,7 +84,10 @@
                 @using (Html.BeginForm("Disconnect", "Browser"))
                 {
                     @Html.AntiForgeryToken();
-                    <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="closeAddOpcServerContextPanel();" value="@Strings.BrowserDontTrustButton">
+                    <button class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="closeAddOpcServerContextPanel();" value="@Strings.BrowserDontTrustButton">
+                        <img class="dashboard-cancel-icon" src="~/Content/img/cancelX.svg">
+                        @Strings.BrowserDontTrustButton
+                    </button>
                 }
             </div>
         </div>

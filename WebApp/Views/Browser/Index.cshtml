@@ -66,12 +66,16 @@
             }
         </div>
         <div id="cancelButton" class="dashboard_contextpanel_clear_filter_button">
+            
             @using (Html.BeginForm("Disconnect", "Browser"))
             {
                 @Html.AntiForgeryToken();
-                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="closeConnectContextPanel();" value="@Strings.BrowserDontTrustButton">
+                <button class="btn btn-default btn_dashboard_contextpanel btn-cancel" type="submit" onclick="closeConnectContextPanel();" > 
+                    <img class="dashboard-cancel-icon" src="~/Content/img/cancelX.svg">
+                    @Strings.BrowserDontTrustButton
+                </button>
             }
-        </div>
+</div>
     </div>
 </div>
 
