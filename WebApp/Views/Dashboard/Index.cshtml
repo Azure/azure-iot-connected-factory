@@ -1402,7 +1402,6 @@
                                 } else {
                                     alertsList += '<div class="dashboard_alerts_listitem_container alert_status_active row" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')">';
                                 }
-                                alertsList += '<div class="col-xs-12">';
                                 alertsList += '<div class="dashboard_alerts_listitem_source overflow row">' + getAlertDescription(session.Alerts[j].Cause) + '</div>';
                                 alertsList += '<div class="dashboard_alerts_listitem_source_details_container row">';
                                 alertsList += '<div class="dashboard_alerts_listitem_source_details overflow col-xs-7">';
@@ -1422,7 +1421,6 @@
                                 alertsList += alertLocation;
                                 alertsList += '</div>';
                                 alertsList += '<div id="alertsSourceDetailsTime" class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">' + session.Alerts[j].UxTime + '</div>';
-                                alertsList += '</div>';
                                 alertsList += '</div>';
                                 alertsList += '</div>';
                             }
