@@ -915,8 +915,8 @@
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;li&gt;Windows에 대한 지침은 &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;여기&lt;/a&gt;에서 찾을 수 있습니다.&lt;/li&gt;
-&lt;li&gt;Linux에 대한 지침은 &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;여기&lt;/a&gt;에서 찾을 수 있습니다.&lt;/li&gt; &lt;li&gt;조립 라인 정보 편집에 대한 지침은 &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;여기&lt;/a&gt;에서 찾을 수 있습니다.&lt;/li&gt;</value>
+    <value>&lt;div&gt;Windows에 대한 지침은 &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;여기&lt;/a&gt;에서 찾을 수 있습니다.&lt;/div&gt;
+&lt;div&gt;Linux에 대한 지침은 &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;여기&lt;/a&gt;에서 찾을 수 있습니다.&lt;/div&gt; &lt;div&gt;조립 라인 정보 편집에 대한 지침은 &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;여기&lt;/a&gt;에서 찾을 수 있습니다.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">

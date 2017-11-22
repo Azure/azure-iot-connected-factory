@@ -27,7 +27,7 @@
                 {
                     @Html.AntiForgeryToken();
                     @Html.HiddenFor(model => model.BackUrl, new { id = "hiddenBackUrl" })
-                    <input id="disconnectButton" class="btn btn-default btn_browser" type="submit" value=@Strings.BrowserDisconnectButton />
+                    <input id="disconnectButton" class="btn btn-default btn_browser" type="submit" value="@Strings.BrowserDisconnectButton" />
                 }
             </div>
         </div>

@@ -151,6 +151,7 @@
 .vakata-context li > a:hover {
   position: relative;
   background-color: #242628;
+  color: white;
 }
 .vakata-context li > a.vakata-context-parent {
   background-image: url("data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAIORI4JlrqN1oMSnmmZDQUAOw==");
@@ -285,14 +286,16 @@
   transition: background-color 0.15s, box-shadow 0.15s;
 }
 .jstree-PCS .jstree-hovered {
-  background: #e7f4f9;
+  background:  #242628;
   border-radius: 2px;
   box-shadow: inset 0 0 1px #cccccc;
+  color: white;
 }
 .jstree-PCS .jstree-context {
-  background: #e7f4f9;
+  background:  #242628;
   border-radius: 2px;
   box-shadow: inset 0 0 1px #cccccc;
+  color: white;
 }
 .jstree-PCS .jstree-clicked {
   background: #beebff;
@@ -313,15 +316,15 @@
 .jstree-PCS .jstree-disabled.jstree-clicked {
   background: #efefef;
 }
-.jstree-PCS .jstree-disabled > .jstree-icon {
-  opacity: 0.8;
-  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'jstree-grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#jstree-grayscale");
-  /* Firefox 10+ */
-  filter: gray;
-  /* IE6-9 */
-  -webkit-filter: grayscale(100%);
-  /* Chrome 19+ & Safari 6+ */
-}
+    .jstree-PCS .jstree-disabled > .jstree-icon {
+        opacity: 0.8;
+        filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'jstree-grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#jstree-grayscale");
+        /* Firefox 10+ */
+        filter: gray;
+        /* IE6-9 */
+        -webkit-filter: grayscale(100%);
+        /* Chrome 19+ & Safari 6+ */
+    }
 .jstree-PCS .jstree-search {
   font-style: italic;
   color: #8b0000;
@@ -335,13 +338,13 @@
   box-shadow: none;
 }
 .jstree-PCS.jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
-  background: #e7f4f9;
+  background: #242628;
 }
 .jstree-PCS.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked {
   background: transparent;
 }
 .jstree-PCS.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
-  background: #e7f4f9;
+  background: #242628;
 }
 .jstree-PCS > .jstree-striped {
   min-width: 100%;
@@ -360,7 +363,7 @@
   box-sizing: border-box;
 }
 .jstree-PCS .jstree-wholerow-hovered {
-  background: #e7f4f9;
+  background: #242628;
 }
 .jstree-PCS .jstree-node {
   min-height: 24px;

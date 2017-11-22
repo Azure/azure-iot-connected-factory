@@ -10,23 +10,38 @@
     background-color: @secondary-color;
     margin-left: @navigation-width;
     margin-right: @navigation-width;
-    padding-top: 50px;
+    padding-top: 12px;
     padding-left: 5*@gutter;
 }
 .browser_connect_selection_preconfigured_container {
     padding-top: 20px;
     margin-left: -30px;
 }
-.browser_connect_selection_dropdown, .browser_connect_selection_textbox, .browser_connect_selection_label {
+.browser_connect_selection_dropdown {
     margin-right: @gutter;
-    margin-left: -25px;
-    margin-top: @gutter;
-    padding-bottom: @gutter/2;
+    margin-left: 16px;
+    margin-top: 4px;
     font-size: @browser-text-size;
     word-wrap: break-word;
     color: @lightest-gray;
-   
 }
+.browser_connect_selection_textbox {
+    margin-right: @gutter;
+    margin-left: 16px;
+    margin-top: 11px;
+    font-size: @browser-text-size;
+    word-wrap: break-word;
+    color: @lightest-gray;
+}
+.browser_connect_selection_label {
+    margin-right: @gutter;
+    margin-left: 16px;
+    margin-top: 0px;
+    font-size: @browser-text-size;
+    word-wrap: break-word;
+    color: @lightest-gray;
+}
+
 .browser_connect_selection_dropdown .bootstrap-select {
     max-width: unset;
 }
@@ -48,17 +63,18 @@
     font-size: @browser-header-text-size;
     color: white;
     margin-right: 0px;
-    margin-left: 15px;
+    margin-left: 16px;
     height: 48px;
-    padding-top: 10px;
+    padding-top: 12px;
+    padding-left: 1px;
 }
 .browser_image_container {
     border: none;
     border-top: none;
 }
 .browser_browse_connect_button {
-    margin-left: -25px;
-    padding-top: 10px;
+    margin-left: 16px;
+    padding-top: 48px;
     padding-bottom: 10px;
 }
 
@@ -100,36 +116,34 @@
  *  browser error area
 */
 .browser_error_details_container {
-    padding-top: 35px;
-    margin-left: 10px;
-    margin-right: 15px;
+    padding-top: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
     margin-bottom: 10px;
     font-size: @browser-header-text-size;
     word-wrap: break-word;
     color:@lightest-gray;
 }
 .browser_error_details_line_header {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
     color: @error-color;
     font-size: @browser-header-text-size;
     text-align: justify;
     text-justify: inter-word;
 }
 .browser_error_details_line {
-    margin-left: 10px;
-    margin-right: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
     padding-top: 20px;
     font-size: @browser-text-size;
     text-align: justify;
     text-justify: inter-word;
 }
 .browser_error_details_label {
-    margin-left: 5px;
-    margin-right: 5px;
-    padding-top: 25px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 24px;
     font-size: @h3-font-size;
     text-align: justify;
     text-justify: inter-word;
@@ -157,15 +171,16 @@
     margin-left: @navigation-width;
     margin-right: @navigation-width;
     margin-bottom: 10px;
-    padding-top: 50px;
+    padding-top: 12px;
     padding-left: 5*@gutter;
 }
 .browser_browse_nodetree_container, .browser_select_connect_container {
-    padding-left: 5*@gutter;
+    padding-left: 1px;
+    padding-top: 32px;
 }
 .browser_browse_disconnect_button {
-    padding-left: 65px;
-    padding-top: 25px;
+    padding-left: 16px;
+    padding-top: 32px;
     padding-bottom: 10px;
 }
 .browser_browse_status_message_container {

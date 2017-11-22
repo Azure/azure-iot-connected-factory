@@ -6978,7 +6978,7 @@ main {
 }
 .dashboard_top_container {
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .dashboard_bottom_container {
   background-color: #1B1D1F;
@@ -6993,9 +6993,10 @@ main {
 }
 .dashboard_children_container_header {
   background-color: #242628;
-  font-size: 19px;
+  font-size: 16px;
   font-family: "Selawik";
   height: 48px;
+  padding-top: 4px;
 }
 .dashboard_children_container_header_text {
   display: inline-block;
@@ -7011,29 +7012,31 @@ p {
   display: inline-block;
 }
 #dashboardChildrenContainerHeaderFilter {
-  width: 24px;
-  height: 24px;
+  width: 14px;
+  height: 14px;
   position: relative;
-  right: -15px;
-  bottom: -2px;
-  color: #ffffff;
+  right: -12px;
+  bottom: 1px;
   outline: none;
+}
+.dashboard_container_filter {
+  right: 4px !important;
 }
 .dashboard_children_container_header_text_glyph {
   color: #ffffff;
   font-size: 16px;
-  margin-right: 30px;
+  margin-right: 16px;
   float: right;
   padding-top: 8px;
-  color: #AFB9C3;
+  color: white;
 }
 .dashboard_alerts_container_header_text_glyph {
   color: #ffffff;
   font-size: 16px;
-  margin-right: 30px;
+  margin-right: 16px;
   float: right;
   padding-top: 2px;
-  color: #AFB9C3;
+  color: white;
 }
 .glyphicon-menu-left {
   display: inline-block;
@@ -7045,13 +7048,17 @@ p {
   color: #cccccc;
   outline: none;
 }
+a {
+  text-decoration: none !important;
+  outline: none !important;
+}
 .dashboard_children_back_icon {
   margin-right: -15px !important;
   padding-top: 6px;
 }
 .glyphicon-menu-down {
   display: inline-block;
-  color: #AFB9C3;
+  color: white;
   font-size: 12px;
 }
 .glyphicon-menu-down:hover,
@@ -7067,83 +7074,90 @@ p {
   outline: none;
 }
 .dashboard_filter_icon {
-  margin-right: 30px;
-  float: right;
+  margin-right: 12px;
+  margin-bottom: 4px;
   color: #AFB9C3;
 }
 .dashboard_children_list_header {
-  background-color: #383B3E;
+  background-color: #121416;
   color: #AFB9C3;
-  font-size: 16px;
+  font-size: 12px;
   font-family: "Selawik";
-  height: 48px;
+  padding-top: 15px;
+  padding-bottom: 8px;
 }
 .dashboard_children_list_header_status {
   padding-left: 15px;
   padding-right: 0px;
-  padding-top: 11px;
 }
 .dashboard_children_list_header_location {
   padding-left: 5px;
   padding-right: 0px;
-  padding-top: 11px;
 }
 .dashboard_children_list_header_details {
   padding-left: 0px;
   padding-right: 5px;
-  padding-top: 11px;
 }
 .dashboard_children_list_container {
   overflow-y: scroll;
   height: 450px;
-  font-size: 16px;
+  font-size: 14px;
   color: #ffffff;
-  background-color: #1B1D1F;
+  background-color: #121416;
 }
 .dashboard_children_listitem_container {
   font-weight: 100;
   margin-top: 0px;
   margin-bottom: 0px;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  height: 40px;
+  border-bottom: 4px solid #121416;
+  background-color: #1B1D1F;
 }
 .dashboard_children_listitem_container:hover {
   cursor: pointer;
+  background-color: #242628;
+}
+.dashboard_children_listitem_container:hover .dashboard_chevron_rigth {
+  filter: brightness(0) invert(1);
+  -webkit-filter: brightness(0) invert(1);
 }
 .dashboard_status_poor {
   background-image: url("/Content/img/critical.svg");
   background-repeat: no-repeat;
-  background-position: 14px 12px;
+  background-position: 16px 12px;
   display: block;
   position: relative;
 }
 .dashboard_status_good {
   background-image: url("/Content/img/info.svg");
   background-repeat: no-repeat;
-  background-position: 13px 12px;
+  background-position: 15px 12px;
   display: block;
   position: relative;
 }
 .dashboard_children_listitem_status_text {
   text-align: left;
-  padding-left: 28px;
+  padding-left: 34px;
   padding-right: 0px;
+  padding-top: 7px;
 }
 .dashboard_children_listitem_location {
-  padding-left: 8px;
+  padding-left: 6px;
   padding-right: 0px;
+  padding-top: 7px;
 }
 .dashboard_children_listitem_details {
-  padding-left: 8px;
+  padding-left: 1px;
   padding-right: 0px;
+  padding-top: 7px;
 }
 /* 
  *  dashboard map
 */
 .dashboard_map_container {
-  border: 10px solid #121416;
+  border: 16px solid #121416;
   border-top: none;
-  height: 556px;
+  height: 561px;
 }
 .dashboard_map_container_image {
   width: 100%;
@@ -7160,15 +7174,15 @@ p {
 .dashboard_alerts_container_header {
   background-color: #242628;
   color: #ffffff;
-  font-size: 19px;
+  font-size: 16px;
   height: 48px;
-  padding-top: 7px;
+  padding-top: 11px;
 }
 .dashboard_alerts_container_header_text {
   display: inline-block;
   color: #ffffff;
   vertical-align: text-top;
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .dashboard_alerts_container_header_filter {
   text-align: right;
@@ -7176,16 +7190,29 @@ p {
 .dashboard_alerts_list_container {
   overflow-y: scroll;
   height: 496px;
+  background-color: #121416;
 }
 .dashboard_alerts_listitem_container {
+  height: 48px;
+  border-bottom: 4px solid #121416;
+  background-color: #1B1D1F;
+  margin-right: 0px;
+}
+.dashboard_alerts_listitem_container:hover {
   cursor: pointer;
+  background-color: #242628;
+}
+.dashboard-padding {
+  background-color: #121416;
+  height: 16px;
 }
 .alert_status_active {
   background-image: url("/Content/img/critical.svg");
   background-repeat: no-repeat;
-  background-position: 14px 12px;
+  background-position: 15px 8px;
   display: block;
   position: relative;
+  padding-left: 16px;
 }
 .alert_status_acknowledged {
   background-image: url("/Content/img/warning.svg");
@@ -7195,33 +7222,33 @@ p {
   position: relative;
 }
 .dashboard_alerts_listitem_source {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  margin-top: 4px;
-  margin-left: 10px;
+  margin-top: 3px;
+  margin-left: 14px;
   margin-right: 0;
   color: #ffffff;
-  background-color: #1B1D1F;
 }
 .dashboard_alerts_listitem_source_details_container {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   margin-bottom: 4px;
   color: #ffffff;
-  background-color: #1B1D1F;
 }
 .dashboard_alerts_listitem_source_details_time {
   text-align: right;
+  margin-top: -10px;
+  font-size: 14px;
 }
 /* 
  *  dashboard OEE/KPI area
 */
 .dashboard_oee_container {
   color: #ffffff;
-  font-size: 19px;
+  font-size: 16px;
 }
 .dashboard_oee_header {
-  padding-top: 10px;
+  padding-top: 12px;
   padding-left: 15px;
   height: 48px;
   background-color: #242628;
@@ -7232,7 +7259,7 @@ p {
   color: #afb9c3;
 }
 .dashboard_oee_overall_header {
-  font-size: 16px;
+  font-size: 14px;
 }
 .dashboard_oee_factor_chart_control:hover {
   cursor: pointer;
@@ -7258,12 +7285,12 @@ p {
   font-size: 30px;
 }
 .dashboard_oee_factor_header {
-  font-size: 16px;
+  font-size: 14px;
 }
 /* dashboard kpi area */
 .dashboard_kpi_container {
   color: #ffffff;
-  font-size: 19px;
+  font-size: 16px;
 }
 .dashboard_kpi_header {
   padding-top: 10px;
@@ -7277,7 +7304,14 @@ p {
   color: #afb9c3;
 }
 .dashboard_kpi_details_header {
-  font-size: 16px;
+  font-size: 14px;
+}
+.dashboard_chevron_rigth {
+  padding-left: 10px;
+  padding-top: 8px;
+  width: 16px;
+  height: 16px;
+  color: #AFB9C3;
 }
 .dashboard_contextpanel_header {
   height: 48px;
@@ -7298,16 +7332,16 @@ p {
 .dashboard_contextpanel_header_text,
 .alert_contextpanel_header_text {
   color: #ffffff;
-  font-size: 19px;
+  font-size: 16px;
   text-align: left;
-  margin-left: 25px;
-  padding-top: 8px;
+  margin-left: 24px;
+  padding-top: 11px;
 }
 .dashboard_contextpanel_list_container {
   position: relative;
   margin-top: 30px;
-  margin-left: 25px;
-  font-size: 16px;
+  margin-left: 24px;
+  font-size: 14px;
 }
 .bootstrap-select {
   max-width: 270px;
@@ -7315,14 +7349,14 @@ p {
 .bootstrap-select .btn {
   background: #121416;
   width: 300px;
-  font-size: 16px;
+  font-size: 14px;
   color: #afb9c3;
   padding: 6px 6px;
   display: block;
 }
 .bootstrap-select .dropdown-menu {
   width: 274px;
-  font-size: 16px;
+  font-size: 14px;
   top: -3px;
   background-color: #121416;
 }
@@ -7348,7 +7382,7 @@ p {
   border-radius: 0px;
   border: none;
   color: white !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
 }
 .form-control:focus {
   border-color: #242628;
@@ -7398,22 +7432,22 @@ p {
   position: relative;
   margin-top: 25px;
   margin-left: 30px;
-  font-size: 16px;
+  font-size: 14px;
 }
 .alert_contextpanel_details_value {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
   color: #AFB9C3;
 }
 .contextpanel_label,
 .alert_contextpanel_details_label {
+  font-size: 14px;
   font-size: 16px;
-  font-size: 19px;
   color: white;
 }
 .dashboard_contextpanel_select_list_label {
+  font-size: 14px;
   font-size: 16px;
-  font-size: 19px;
   color: white;
   text-transform: lowercase;
   padding-bottom: 6px;
@@ -7425,7 +7459,6 @@ p {
 .dashboard_contextpanel_select_filter_alert_button {
   position: relative;
   top: 30px;
-  left: 150px;
 }
 .alert_contextpanel_execute_action_button {
   top: 20px;
@@ -7442,24 +7475,27 @@ p {
   top: 10px;
 }
 .alert_contextpanel_notimeseries_label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
+  color: #AFB9C3;
   margin-left: 30px;
   top: 10px;
 }
 .alert_contextpanel_notimeseries_value {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
+  color: white;
   margin-left: 30px;
   top: 10px;
 }
 .alert_contextpanel_timeseries_loading {
-  font-size: 16px;
+  font-size: 14px;
+  color: #AFB9C3;
   margin-left: 30px;
   top: 10px;
 }
 .alert_contextpanel_chart_header {
-  font-size: 16px;
+  font-size: 14px;
   margin-left: 30px;
   top: 10px;
   color: #AFB9C3;
@@ -7495,12 +7531,12 @@ p {
   top: 50px;
 }
 .msg-container {
-  font-size: 16px;
+  font-size: 14px;
   left: 40px;
   top: 80px;
 }
 .graph_header {
-  font-size: 16px;
+  font-size: 14px;
   left: 25px;
   margin-right: 25px;
   top: 10px;
@@ -7538,7 +7574,7 @@ p {
   .dashboard_alerts_list_container {
     overflow-y: auto;
     max-height: none;
-    background-color: #1B1D1F;
+    background-color: #121416;
   }
 }
 /* Landscape phone to portrait tablet (using definitions from bootstrap)*/
@@ -7575,7 +7611,7 @@ p {
     height: 646px;
   }
   .dashboard_map_container {
-    height: 706px;
+    height: 711px;
   }
 }
 @media (max-height: 768px) {
@@ -7588,7 +7624,7 @@ p {
     height: 346px;
   }
   .dashboard_map_container {
-    height: 406px;
+    height: 411px;
   }
 }
 @media (max-height: 850px) {
@@ -7608,21 +7644,34 @@ p {
   background-color: #121416;
   margin-left: 48px;
   margin-right: 48px;
-  padding-top: 50px;
+  padding-top: 12px;
   padding-left: 50px;
 }
 .browser_connect_selection_preconfigured_container {
   padding-top: 20px;
   margin-left: -30px;
 }
-.browser_connect_selection_dropdown,
-.browser_connect_selection_textbox,
+.browser_connect_selection_dropdown {
+  margin-right: 10px;
+  margin-left: 16px;
+  margin-top: 4px;
+  font-size: 14px;
+  word-wrap: break-word;
+  color: #AFB9C3;
+}
+.browser_connect_selection_textbox {
+  margin-right: 10px;
+  margin-left: 16px;
+  margin-top: 11px;
+  font-size: 14px;
+  word-wrap: break-word;
+  color: #AFB9C3;
+}
 .browser_connect_selection_label {
   margin-right: 10px;
-  margin-left: -25px;
-  margin-top: 10px;
-  padding-bottom: 5px;
-  font-size: 16px;
+  margin-left: 16px;
+  margin-top: 0px;
+  font-size: 14px;
   word-wrap: break-word;
   color: #AFB9C3;
 }
@@ -7647,20 +7696,21 @@ p {
 .browser_container_header_text,
 .browser_connect_header_text,
 .browser_error_header_text {
-  font-size: 19px;
+  font-size: 16px;
   color: white;
   margin-right: 0px;
-  margin-left: 15px;
+  margin-left: 16px;
   height: 48px;
-  padding-top: 10px;
+  padding-top: 12px;
+  padding-left: 1px;
 }
 .browser_image_container {
   border: none;
   border-top: none;
 }
 .browser_browse_connect_button {
-  margin-left: -25px;
-  padding-top: 10px;
+  margin-left: 16px;
+  padding-top: 48px;
   padding-bottom: 10px;
 }
 .browser_rdxlink_container {
@@ -7669,7 +7719,7 @@ p {
   margin-top: 70px;
   margin-left: 25px;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   color: #AFB9C3;
   text-decoration: underline;
   cursor: pointer;
@@ -7692,42 +7742,40 @@ p {
 .glyphicon-alert {
   display: inline-block;
   color: #FC540A;
-  font-size: 19px;
+  font-size: 16px;
 }
 /* 
  *  browser error area
 */
 .browser_error_details_container {
-  padding-top: 35px;
-  margin-left: 10px;
-  margin-right: 15px;
+  padding-top: 32px;
+  margin-left: 24px;
+  margin-right: 24px;
   margin-bottom: 10px;
-  font-size: 19px;
+  font-size: 16px;
   word-wrap: break-word;
   color: #AFB9C3;
 }
 .browser_error_details_line_header {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
   color: #FC540A;
-  font-size: 19px;
-  text-align: justify;
-  text-justify: inter-word;
-}
-.browser_error_details_line {
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 20px;
   font-size: 16px;
   text-align: justify;
   text-justify: inter-word;
 }
+.browser_error_details_line {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: 20px;
+  font-size: 14px;
+  text-align: justify;
+  text-justify: inter-word;
+}
 .browser_error_details_label {
-  margin-left: 5px;
-  margin-right: 5px;
-  padding-top: 25px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: 24px;
   font-size: 18px;
   text-align: justify;
   text-justify: inter-word;
@@ -7752,16 +7800,17 @@ p {
   margin-left: 48px;
   margin-right: 48px;
   margin-bottom: 10px;
-  padding-top: 50px;
+  padding-top: 12px;
   padding-left: 50px;
 }
 .browser_browse_nodetree_container,
 .browser_select_connect_container {
-  padding-left: 50px;
+  padding-left: 1px;
+  padding-top: 32px;
 }
 .browser_browse_disconnect_button {
-  padding-left: 65px;
-  padding-top: 25px;
+  padding-left: 16px;
+  padding-top: 32px;
   padding-bottom: 10px;
 }
 .browser_browse_status_message_container {
@@ -7772,7 +7821,7 @@ p {
   padding-top: 20px;
 }
 .list-group {
-  font-size: 16px;
+  font-size: 14px;
   background-color: #1B1D1F;
   margin-left: 12px !important;
   width: 335px !important;
@@ -7812,15 +7861,15 @@ hr {
   margin-top: 30px;
   margin-left: 25px;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   color: #AFB9C3;
 }
 .browser_error_contextpanel_header {
-  font-size: 19px;
+  font-size: 16px;
   font-weight: bold;
 }
 .browser_error_contextpanel_message {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
 }
 .context-panel-data {
@@ -7850,12 +7899,13 @@ hr {
 }
 .add_gateway_instruction_textbox {
   margin-right: 10px;
-  margin-left: 10px;
-  margin-top: 10px;
+  margin-left: 1px;
+  margin-top: -27px;
   padding-bottom: 5px;
   font-size: 14px;
   text-align: justify;
   text-justify: inter-word;
+  line-height: 300%;
 }
 .add_gateway_instruction_header {
   font-weight: 600;
@@ -7898,7 +7948,7 @@ textarea {
 */
 .dashboard-contextpanel-button-base,
 .account-button-base {
-  width: 92px;
+  min-width: 92px;
   color: white !important;
   font-size: 14px;
   border: 0px;
@@ -7915,7 +7965,7 @@ textarea {
   border: 1px dashed #AFB9C3 !important;
 }
 .btn.btn-default.btn_dashboard_contextpanel {
-  width: 92px;
+  min-width: 92px;
   color: white !important;
   font-size: 14px;
   border: 0px;
@@ -7930,7 +7980,7 @@ textarea {
   border: 1px dashed #AFB9C3 !important;
 }
 .btn.btn-default.btn_browser_contextpanel {
-  width: 92px;
+  min-width: 92px;
   color: white !important;
   font-size: 14px;
   border: 0px;
@@ -7946,7 +7996,7 @@ textarea {
   border: 1px dashed #AFB9C3 !important;
 }
 .btn::after .btn-default.btn_dashboard_contextpanel.disabled {
-  width: 92px;
+  min-width: 92px;
   color: white !important;
   font-size: 14px;
   border: 0px;
@@ -7966,7 +8016,7 @@ textarea {
   border: none;
 }
 .btn.btn_account {
-  width: 92px;
+  min-width: 92px;
   color: white !important;
   font-size: 14px;
   border: 0px;
@@ -8104,7 +8154,7 @@ textarea {
   background-repeat: no-repeat;
   background-position: center;
   width: 24px;
-  height: 24px;
+  height: 20px;
   float: right;
 }
 .masthead_language_icon:hover {
@@ -8123,7 +8173,7 @@ textarea {
   font-size: 22px;
   color: #afb9c3;
   margin-top: 8px;
-  margin-left: 9px;
+  margin-left: 16px;
 }
 /*
     Signin Masthead
@@ -8157,6 +8207,13 @@ textarea {
   padding-top: 15px;
   padding-bottom: 15px;
   border-left: 2px solid #373b3d;
+}
+.container-fluid {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+main {
+  padding-top: 36px;
 }
 /*
     Content area

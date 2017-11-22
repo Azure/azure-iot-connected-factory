@@ -9,12 +9,13 @@
         <a class="glyphicon glyphicon-menu-left" href="#" onclick="javascript: gotoParentNode();"></a>
     </p>
     <p id="headerText" class="dashboard_children_container_header_text col-xs-8 col-md-8 col-lg-8 overflow">@Model.ChildrenContainerHeader</p>
-    <p id="allIcon" class="dashboard_children_container_header_text_glyph" align="right">@Strings.NoFilterApplied 
-        <a id="openFromUnfiltered" class="glyphicon glyphicon-menu-down" href="javascript:openFilterContextPanel();"></a>
-    </p>
+    <a id="allIcon" class="dashboard_children_container_header_text_glyph" align="right" href="#" onclick="openFilterContextPanel();">
+        <img id="dashboardChildrenContainerHeaderFilter" class="dashboard_filter_icon" src="/Content/img/filter.svg">
+        @Strings.NoFilterApplied 
+    </a>
 
     <p id="filterIcon" class="dashboard_children_container_header_text_glyph" hidden>
-        <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" src="/Content/img/filter.svg"></a>
+        <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" class="dashboard_container_filter" src="/Content/img/filter.svg"></a>
     </p>
 </div>
 <div class="dashboard_children_list_header row">
@@ -45,7 +46,7 @@
                         <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');">
                             <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                             <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
-                            <div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">@child.Last @child.Unit</div>
+                            <div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">@child.Last @child.Unit</div>
                         </div>
                     }
                 }
@@ -54,7 +55,10 @@
                     <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:gotoChildrenNode('@dashboardUrl');">
                         <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                         <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
-                        <div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">@child.Description</div>
+                        <div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">@child.Description</div>
+                        <div class="dashboard_chevron_rigth col-xs-1 col-lg-1">
+                            <img id="dashboardChildrenContainerHeaderFilter"  src="/Content/img/chevron_right.svg">
+                        </div>
                     </div>
                 }
              </div>

@@ -915,8 +915,8 @@ Trace de la pile :
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;li&gt;Les instructions pour Windows sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;ici&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Les instructions pour Linux sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;ici&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;Les instructions pour modifier les informations de la chaîne de montage sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;ici&lt;/a&gt;.&lt;/li&gt;</value>
+    <value>&lt;div&gt;Les instructions pour Windows sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;ici&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Les instructions pour Linux sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;ici&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Les instructions pour modifier les informations de la chaîne de montage sont disponibles &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;ici&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">

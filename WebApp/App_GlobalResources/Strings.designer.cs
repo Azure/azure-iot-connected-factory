@@ -70,8 +70,8 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;li&gt;Instructions for Windows can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846367&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-        ///&lt;li&gt;Instructions for Linux be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846368&quot;&gt;here&lt;/a&gt;.&lt;/li&gt; &lt;li&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846688&quot;&gt;here&lt;/a&gt; [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;div&gt;Instructions for Windows can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846367&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
+        ///&lt;div&gt;Instructions for Linux be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846368&quot;&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846688&quot;&gt;her [rest of string was truncated]&quot;;.
         /// </summary>
         public static string AddGatewayBodyPoint1 {
             get {
@@ -377,7 +377,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alerts.
+        ///   Looks up a localized string similar to Alarms.
         /// </summary>
         public static string AlertsContainerHeader {
             get {

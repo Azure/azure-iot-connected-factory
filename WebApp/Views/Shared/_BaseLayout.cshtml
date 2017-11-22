@@ -167,6 +167,23 @@
             });
         }
 
+        var marginLeft;
+        // The length of the text inside the button (and the button length)
+        // changes with the languages.
+        // Left margin is set accordingly to text length.
+        function checkButtonTextLength() {
+            var textLength = @Strings.BrowserTrustButton.Length;
+            if (textLength > 10) {
+                marginLeft = "110px";
+            } else {
+                marginLeft = "150px";
+            }
+        }
+
+        $(document).ready(function () {
+            checkButtonTextLength();
+        });
+
     </script>
 </body>
 </html>

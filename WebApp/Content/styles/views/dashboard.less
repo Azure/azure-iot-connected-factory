@@ -27,7 +27,7 @@
 
 .dashboard_top_container {
     margin-top: @gutter;
-    margin-bottom: @gutter;
+    margin-bottom: 6px;
 }
 
 .dashboard_bottom_container {
@@ -47,6 +47,7 @@
     font-size: @list-subheader-text-size;
     font-family: "Selawik";
     height: 48px;
+    padding-top: 4px;
 }
 .dashboard_children_container_header_text {
     display: inline-block;
@@ -64,31 +65,34 @@ p{
 }
 
 #dashboardChildrenContainerHeaderFilter {
-    width: 24px;
-    height: 24px;
+    width: 14px;
+    height: 14px;
     position: relative;
-    right: -15px;
-    bottom: -2px;
-    color: @list-header-color;
+    right: -12px;
+    bottom: 1px;
     outline: none;
+}
+
+.dashboard_container_filter {
+    right: 4px !important;
 }
 
 .dashboard_children_container_header_text_glyph {
     color: @list-header-color;
-    font-size: @children-subheader-text-size;
-    margin-right: 30px;
+    font-size: @list-subheader-text-size;
+    margin-right: 16px;
     float: right;
     padding-top: 8px;
-    color: @children-subheader-color;
+    color: white;
 }
 
 .dashboard_alerts_container_header_text_glyph {
     color: @list-header-color;
-    font-size: @children-subheader-text-size;
-    margin-right: 30px;
+    font-size: @list-subheader-text-size;
+    margin-right: 16px;
     float: right;
     padding-top: 2px;
-    color: @children-subheader-color;
+    color: white;
 }
 
 .glyphicon-menu-left {
@@ -102,6 +106,11 @@ p{
     }
 }
 
+a {
+    text-decoration: none !important;
+    outline: none !important;
+}
+
 .dashboard_children_back_icon {
     margin-right: -15px !important;
     padding-top: 6px;
@@ -109,7 +118,7 @@ p{
 
 .glyphicon-menu-down {
     display: inline-block;
-    color: @children-subheader-color;
+    color: white;
     font-size: 12px;
 
     &:hover, :focus {
@@ -127,32 +136,30 @@ p{
 }
 
 .dashboard_filter_icon {
-    margin-right: 30px;
-    float: right;
+    margin-right: 12px;
+    margin-bottom: 4px;
     color: @children-subheader-color;
 }
 
 .dashboard_children_list_header {
-    background-color: @children-subheader-background-color;
+    background-color: @background-color;
     color: @children-subheader-color;
     font-size: @children-subheader-text-size;
     font-family: "Selawik";
-    height: 48px;
+    padding-top: 15px;
+    padding-bottom: 8px;
 }
 .dashboard_children_list_header_status {
     padding-left: 15px;
     padding-right: 0px;
-    padding-top: 11px;
 }
 .dashboard_children_list_header_location {
     padding-left: 5px;
     padding-right: 0px;
-    padding-top: 11px;
 }
 .dashboard_children_list_header_details {
     padding-left: 0px;
     padding-right: 5px;
-    padding-top: 11px;
 }
 
 .dashboard_children_list_container {
@@ -160,24 +167,32 @@ p{
     height: @container-height;
     font-size: @children-listitem-text-size;
     color: @list-header-color;
-    background-color: @content-background-color;
+    background-color: @background-color;
 }
 
 .dashboard_children_listitem_container {
     font-weight: 100;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    &:hover{
+    height: 40px;
+    border-bottom: 4px solid @background-color;
+    background-color: @content-background-color;
+
+    &:hover {
         cursor: pointer;
-        }
+        background-color: @grid-tile-light;
+    }
+}
+
+.dashboard_children_listitem_container:hover .dashboard_chevron_rigth {
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
 }
 
 .dashboard_status_poor {
     background-image: url("/Content/img/critical.svg");
     background-repeat: no-repeat;
-    background-position: 14px 12px;
+    background-position: 16px 12px;
     display: block;
     position: relative;
 }
@@ -185,31 +200,34 @@ p{
 .dashboard_status_good {
     background-image: url("/Content/img/info.svg");
     background-repeat: no-repeat;
-    background-position: 13px 12px;
+    background-position: 15px 12px;
     display: block;
     position: relative;
 }
 
 .dashboard_children_listitem_status_text {
     text-align: left;
-    padding-left: 28px;
+    padding-left: 34px;
     padding-right: 0px;
+    padding-top: 7px;
 }
 .dashboard_children_listitem_location {
-    padding-left: 8px;
+    padding-left: 6px;
     padding-right: 0px;
+    padding-top: 7px;
 }
 
 .dashboard_children_listitem_details {
-    padding-left: 8px;
+    padding-left: 1px;
     padding-right: 0px;
+    padding-top: 7px;
 }
 
 /* 
  *  dashboard map
 */
 .dashboard_map_container {
-    border: 10px solid @secondary-color;
+    border: 16px solid @secondary-color;
     border-top: none;
     height: @map-container-height;
 }
@@ -223,7 +241,7 @@ p{
  *  dashboard information area with alerts
 */
 .dashboard_alerts_container {
-    background-color: @list-background-color;
+    background-color: @background-color;
     margin-bottom: 10px;
     margin-left: 1px;
 }
@@ -232,13 +250,13 @@ p{
     color: @list-header-color;
     font-size: @list-subheader-text-size;
     height: 48px;
-    padding-top: 7px;
+    padding-top: 11px;
 }
 .dashboard_alerts_container_header_text {
     display: inline-block;
     color: @list-header-color;
     vertical-align: text-top;
-    margin-left: 15px;
+    margin-left: 16px;
 }
 .dashboard_alerts_container_header_filter {
     text-align: right;
@@ -247,18 +265,34 @@ p{
 .dashboard_alerts_list_container {
     overflow-y: scroll;
     height: @container-height-alerts;
+    background-color: @background-color;
 }
 
 .dashboard_alerts_listitem_container {
-    .dashboard-link-cursor;
+    height: 48px;
+    border-bottom: 4px solid @background-color;
+    background-color: @content-background-color;
+    margin-right: 0px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: @navigation-background-color;
+    }
 }
+
+.dashboard-padding {
+    background-color: @background-color;
+    height: 16px;
+}
+
 
 .alert_status_active {
     background-image: url("/Content/img/critical.svg");
     background-repeat: no-repeat;
-    background-position: 14px 12px;
+    background-position: 15px 8px;
     display: block;
     position: relative;
+    padding-left: 16px;
 }
 
 .alert_status_acknowledged {
@@ -272,23 +306,23 @@ p{
 .dashboard_alerts_listitem_source {
     font-size: @alerts-listitem-text-size;
     font-weight: 400;
-    margin-top: 4px;
-    margin-left: 10px;
+    margin-top: 3px;
+    margin-left: 14px;
     margin-right: 0;
     color: @list-header-color;
-    background-color: @content-background-color;
 }
 .dashboard_alerts_listitem_source_details_container {
-    font-size: @alerts-listitem-source-details-text-size;
+    font-size: @children-subheader-text-size;
     font-weight: 400;
     margin-bottom: 4px;
     color: @list-header-color;
-    background-color: @content-background-color;
 }
 .dashboard_alerts_listitem_source_details {
 }
 .dashboard_alerts_listitem_source_details_time {
     text-align: right;
+    margin-top: -10px;
+    font-size: @children-listitem-text-size;
 }
 
 /* 
@@ -301,7 +335,7 @@ p{
 }
 
 .dashboard_oee_header {
-    padding-top: 10px;
+    padding-top: 12px;
     padding-left: 15px;
     height: 48px;
     background-color: @list-header-background-color;
@@ -312,7 +346,7 @@ p{
     color: @text-mainhead-color;
 }
 .dashboard_oee_overall_header {
-    font-size: @children-subheader-text-size;
+    font-size: @children-listitem-text-size;
 }
 .dashboard_oee_factor_chart_control {
     &:hover{
@@ -346,7 +380,7 @@ p{
     font-size: @gauge-value-font-size;
 }
 .dashboard_oee_factor_header {
-    font-size: @children-subheader-text-size;
+    font-size: @children-listitem-text-size;
 }
 /* dashboard kpi area */
 .dashboard_kpi_container {
@@ -366,8 +400,16 @@ p{
     color: @text-mainhead-color;
 }
 .dashboard_kpi_details_header {
-    font-size: @children-subheader-text-size;
+    font-size: @children-listitem-text-size;
 }
+
+.dashboard_chevron_rigth {
+    padding-left: 10px;
+    padding-top: 8px;
+    width: 16px;
+    height: 16px;
+    color: @lightest-gray;
+} 
 
 .dashboard_contextpanel_header {
     height: 48px;
@@ -389,13 +431,13 @@ p{
     color: @list-header-color;
     font-size: @list-subheader-text-size;
     text-align: left;
-    margin-left: 25px;
-    padding-top: 8px;
+    margin-left: 24px;
+    padding-top: 11px;
 }
 .dashboard_contextpanel_list_container {
     position: relative;
     margin-top: 30px;
-    margin-left: 25px;
+    margin-left: 24px;
     font-size: @children-listitem-text-size;
 }
 
@@ -518,7 +560,6 @@ p{
 .dashboard_contextpanel_select_filter_button, .dashboard_contextpanel_select_filter_alert_button {
     position: relative;
     top: 30px;
-    left: 150px;
 }
 
 .alert_contextpanel_execute_action_button {
@@ -540,17 +581,20 @@ p{
 .alert_contextpanel_notimeseries_label {
     font-size: @children-listitem-text-size;
     font-weight: bold;
+    color: @lightest-gray;
     .alert_contextpanel_timeseries_border
 }
 
 .alert_contextpanel_notimeseries_value {
     font-size: @children-listitem-text-size;
     font-weight: normal;
+    color: white;
     .alert_contextpanel_timeseries_border;
 }
 
 .alert_contextpanel_timeseries_loading {
     font-size: @children-listitem-text-size;
+    color: @lightest-gray;
     .alert_contextpanel_timeseries_border
 }
 
@@ -645,7 +689,7 @@ p{
     .dashboard_alerts_list_container {
         overflow-y: auto;
         max-height: none;
-        background-color: @content-background-color;
+        background-color: @background-color;
     }
 }
  

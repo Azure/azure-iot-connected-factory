@@ -915,8 +915,8 @@ Yığın izleme:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;li&gt;Windows yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/li&gt;
-&lt;li&gt;Linux yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/li&gt; &lt;li&gt;Derleme satırı bilgilerini düzenlemeye yönelik yönergelere &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/li&gt;</value>
+    <value>&lt;div&gt;Windows yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/div&gt;
+&lt;div&gt;Linux yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/div&gt; &lt;div&gt;Derleme satırı bilgilerini düzenlemeye yönelik yönergelere &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">

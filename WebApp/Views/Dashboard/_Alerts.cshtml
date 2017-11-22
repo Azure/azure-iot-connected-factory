@@ -7,13 +7,15 @@
 <div class="dashboard_alerts_container_header row">
     <p class="dashboard_alerts_container_header_text overflow">@Strings.AlertsContainerHeader</p>
     <div class="dashboard_alerts_container_header_filter" hidden>v</div>
-    <p id="allIconAlert" class="dashboard_alerts_container_header_text_glyph">@Strings.NoFilterApplied
-        <a id="openFromUnfiltered" class="glyphicon glyphicon-menu-down" href="javascript:openFilterAlertsContextPanel();"></a>
-    </p>
+    <a id="allIconAlert" class="dashboard_alerts_container_header_text_glyph" href="#" onclick="openFilterAlertsContextPanel();">
+        <img id="dashboardChildrenContainerHeaderFilter" class="dashboard_filter_icon" src="/Content/img/filter.svg">
+        @Strings.NoFilterApplied
+    </a>
     <p id="filterIconAlert" class="dashboard_alerts_container_header_text_glyph" hidden>
-        <a id="openFromFiltered" href="javascript:openFilterAlertsContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" src="/Content/img/filter.svg"></a>
+        <a id="openFromFiltered" href="javascript:openFilterAlertsContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" class="dashboard_container_filter" src="/Content/img/filter.svg"></a>
     </p>
 </div>
+<div class="dashboard-padding"></div>
 <div class="dashboard_alerts_list_container scrollbar-inner row">
     <div id="dashboardAlertsList" class="col-xs-12">
         @foreach (var alert in Model.Alerts)
@@ -29,8 +31,8 @@
             }
             var alertDescription = Strings.AlertDetailsUnknown;
             alertDescription = ContosoAlert.GetAlertCauseDescription(alert.Cause);
-            <div class="dashboard_alerts_listitem_container @alertStatusClass row" onclick="openContextPanelFromAlert(@alert.AlertId)">
-                <div class="col-xs-12">
+            <div >
+                <div class="dashboard_alerts_listitem_container @alertStatusClass row" onclick="openContextPanelFromAlert(@alert.AlertId)">
                     <div class="dashboard_alerts_listitem_source overflow row">@alertDescription</div>
                     <div class="dashboard_alerts_listitem_source_details_container row">
                         <div class="dashboard_alerts_listitem_source_details overflow col-xs-7">
@@ -45,12 +47,12 @@
                                     }
                                     <span class="dashboard_alerts_details@(i)">@detail</span>
                                 }
-                            }
+                             }
                         </div>
                         <div id="alertsSourceDetailsTime" class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">@alert.UxTime</div>
-                    </div>
+                    </div>              
                 </div>
             </div>
-        }
+         }
     </div>
 </div>
