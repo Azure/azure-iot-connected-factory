@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>警告</value>
+    <value>Alarms</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -631,11 +631,11 @@ Exceptionmessage:
     <comment>Label</comment>
   </data>
   <data name="FilterApply" xml:space="preserve">
-    <value>フィルターの適用</value>
+    <value>適用</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterClear" xml:space="preserve">
-    <value>フィルターのクリア</value>
+    <value>クリア</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterLabel" xml:space="preserve">
@@ -851,7 +851,7 @@ Exceptionmessage:
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
-    <value>アクションの実行</value>
+    <value>適用</value>
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
@@ -915,8 +915,8 @@ Exceptionmessage:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Windows での手順は、&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;こちら&lt;/a&gt;で参照できます。&lt;/div&gt;
-&lt;div&gt;Linux での手順は、&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;こちら&lt;/a&gt;で参照できます。&lt;/div&gt; &lt;div&gt;組立ライン情報を編集するための手順は、&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;こちら&lt;/a&gt;で参照できます。&lt;/div&gt;</value>
+    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
@@ -1025,5 +1025,21 @@ Exceptionmessage:
   <data name="GraphMinThreshold" xml:space="preserve">
     <value>最小しきい値</value>
     <comment>Label</comment>
+  </data>
+  <data name="TitleAddGateway" xml:space="preserve">
+    <value>ゲートウェイの接続</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleAddOpcServer" xml:space="preserve">
+    <value>OPC UA サーバーの接続</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleBrowser" xml:space="preserve">
+    <value>ブラウザー</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>ダッシュボード</value>
+    <comment>message</comment>
   </data>
 </root>

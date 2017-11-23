@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>Alertas</value>
+    <value>Alarms</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -631,11 +631,11 @@ Rastreamento de pilha:
     <comment>Label</comment>
   </data>
   <data name="FilterApply" xml:space="preserve">
-    <value>Aplicar Filtro</value>
+    <value>Aplicar</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterClear" xml:space="preserve">
-    <value>Limpar Filtro</value>
+    <value>Limpar</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterLabel" xml:space="preserve">
@@ -851,7 +851,7 @@ Rastreamento de pilha:
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
-    <value>Executar ação</value>
+    <value>Aplicar</value>
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
@@ -915,8 +915,8 @@ Rastreamento de pilha:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Instruções para Windows podem ser encontradas &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;aqui&lt;/a&gt;.&lt;/div&gt;
-&lt;div&gt;Instruções para Linux podem ser encontradas &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;aqui&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instruções para editar informações da linha de assembly podem ser encontradas &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;aqui&lt;/a&gt;.&lt;/div&gt;</value>
+    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
@@ -1025,5 +1025,21 @@ Rastreamento de pilha:
   <data name="GraphMinThreshold" xml:space="preserve">
     <value>Limite Mínimo</value>
     <comment>Label</comment>
+  </data>
+  <data name="TitleAddGateway" xml:space="preserve">
+    <value>Conectar gateway</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleAddOpcServer" xml:space="preserve">
+    <value>Conectar o servidor OPC UA</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleBrowser" xml:space="preserve">
+    <value>Navegador</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>Painel</value>
+    <comment>message</comment>
   </data>
 </root>

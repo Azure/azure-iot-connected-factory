@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>Uyarılar</value>
+    <value>Alarms</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -631,11 +631,11 @@ Yığın izleme:
     <comment>Label</comment>
   </data>
   <data name="FilterApply" xml:space="preserve">
-    <value>Filtre Uygula</value>
+    <value>Uygula</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterClear" xml:space="preserve">
-    <value>Filtreyi Temizle</value>
+    <value>Temizle</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterLabel" xml:space="preserve">
@@ -851,7 +851,7 @@ Yığın izleme:
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
-    <value>Eylemi yürüt</value>
+    <value>Uygula</value>
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
@@ -915,8 +915,8 @@ Yığın izleme:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Windows yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/div&gt;
-&lt;div&gt;Linux yönergelerine &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/div&gt; &lt;div&gt;Derleme satırı bilgilerini düzenlemeye yönelik yönergelere &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;buradan&lt;/a&gt; erişebilirsiniz.&lt;/div&gt;</value>
+    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
@@ -1025,5 +1025,21 @@ Yığın izleme:
   <data name="GraphMinThreshold" xml:space="preserve">
     <value>En Düşük Eşik</value>
     <comment>Label</comment>
+  </data>
+  <data name="TitleAddGateway" xml:space="preserve">
+    <value>Ağ geçidini bağlama</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleAddOpcServer" xml:space="preserve">
+    <value>OPC UA sunucusunu bağlama</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleBrowser" xml:space="preserve">
+    <value>Tarayıcı</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>Pano</value>
+    <comment>message</comment>
   </data>
 </root>

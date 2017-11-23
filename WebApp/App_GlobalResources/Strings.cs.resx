@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>Výstrahy</value>
+    <value>Alarms</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -631,11 +631,11 @@ Trasování zásobníku:
     <comment>Label</comment>
   </data>
   <data name="FilterApply" xml:space="preserve">
-    <value>Použít filtr</value>
+    <value>Použít</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterClear" xml:space="preserve">
-    <value>Vymazat filtr</value>
+    <value>Vymazat</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterLabel" xml:space="preserve">
@@ -851,7 +851,7 @@ Trasování zásobníku:
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
-    <value>Provést akci</value>
+    <value>Použít</value>
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
@@ -915,8 +915,8 @@ Trasování zásobníku:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Pokyny pro Windows najdete &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;tady&lt;/a&gt;.&lt;/div&gt;
-&lt;div&gt;Pokyny pro Linux najdete &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;tady&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Pokyny, jak upravit údaje výrobní linky, najdete &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;tady&lt;/a&gt;.&lt;/div&gt;</value>
+    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
@@ -1025,5 +1025,21 @@ Trasování zásobníku:
   <data name="GraphMinThreshold" xml:space="preserve">
     <value>Minimální mezní hodnota</value>
     <comment>Label</comment>
+  </data>
+  <data name="TitleAddGateway" xml:space="preserve">
+    <value>Připojit bránu</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleAddOpcServer" xml:space="preserve">
+    <value>Připojit server OPC UA</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleBrowser" xml:space="preserve">
+    <value>Prohlížeč</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>Řídicí panel</value>
+    <comment>message</comment>
   </data>
 </root>

@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>警报</value>
+    <value>Alarms</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -631,11 +631,11 @@
     <comment>Label</comment>
   </data>
   <data name="FilterApply" xml:space="preserve">
-    <value>应用筛选器</value>
+    <value>应用</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterClear" xml:space="preserve">
-    <value>清除筛选器</value>
+    <value>清除</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterLabel" xml:space="preserve">
@@ -851,7 +851,7 @@
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
-    <value>执行操作</value>
+    <value>应用</value>
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
@@ -915,8 +915,8 @@
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;可在&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;此处&lt;/a&gt;找到有关 Windows 的说明 。&lt;/div&gt;
-&lt;div&gt;可在&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;此处&lt;/a&gt;找到有关 Linux 的说明 。&lt;/div&gt; &lt;div&gt;可在&lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;此处&lt;/a&gt;找到有关编辑装配线信息的说明 。&lt;/div&gt;</value>
+    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
@@ -1025,5 +1025,21 @@
   <data name="GraphMinThreshold" xml:space="preserve">
     <value>最小阈值</value>
     <comment>Label</comment>
+  </data>
+  <data name="TitleAddGateway" xml:space="preserve">
+    <value>连接网关</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleAddOpcServer" xml:space="preserve">
+    <value>连接 OPC UA 服务器</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleBrowser" xml:space="preserve">
+    <value>浏览器</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>仪表板</value>
+    <comment>message</comment>
   </data>
 </root>

@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>Riasztások</value>
+    <value>Alarms</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -631,11 +631,11 @@ Híváslánc:
     <comment>Label</comment>
   </data>
   <data name="FilterApply" xml:space="preserve">
-    <value>Szűrő alkalmazása</value>
+    <value>Alkalmaz</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterClear" xml:space="preserve">
-    <value>Szűrő törlése</value>
+    <value>Törlés</value>
     <comment>ButtonLabel</comment>
   </data>
   <data name="FilterLabel" xml:space="preserve">
@@ -851,7 +851,7 @@ Híváslánc:
     <comment>Error message.</comment>
   </data>
   <data name="AlertActionExecute" xml:space="preserve">
-    <value>Művelet végrehajtása</value>
+    <value>Alkalmaz</value>
     <comment>Label</comment>
   </data>
   <data name="AlertSelectAction" xml:space="preserve">
@@ -915,8 +915,8 @@ Híváslánc:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;A Windowsra vonatkozó tudnivalók &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;itt&lt;/a&gt; találhatók.&lt;/div&gt;
-&lt;div&gt;A Linuxra vonatkozó tudnivalók &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;itt&lt;/a&gt; találhatók.&lt;/div&gt; &lt;div&gt;A gyártósor adatainak szerkesztésére vonatkozó információk &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;itt&lt;/a&gt; találhatók.&lt;/div&gt;</value>
+    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
@@ -1004,11 +1004,11 @@ Híváslánc:
     <comment>Label</comment>
   </data>
   <data name="NodeUnpublish" xml:space="preserve">
-    <value>Unpublish...</value>
+    <value>Közzététel visszavonása...</value>
     <comment>Label</comment>
   </data>
   <data name="NodeUnpublishInProgress" xml:space="preserve">
-    <value>Unpublish in progress...</value>
+    <value>Folyamatban van a közzététel visszavonása...</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderUnpublish" xml:space="preserve">
@@ -1025,5 +1025,21 @@ Híváslánc:
   <data name="GraphMinThreshold" xml:space="preserve">
     <value>Minimális küszöb</value>
     <comment>Label</comment>
+  </data>
+  <data name="TitleAddGateway" xml:space="preserve">
+    <value>Átjáró csatlakoztatása</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleAddOpcServer" xml:space="preserve">
+    <value>OPC UA-kiszolgáló csatlakoztatása</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleBrowser" xml:space="preserve">
+    <value>Böngésző</value>
+    <comment>message</comment>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>Irányítópult</value>
+    <comment>message</comment>
   </data>
 </root>
