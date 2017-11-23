@@ -7217,9 +7217,10 @@ a {
 .alert_status_acknowledged {
   background-image: url("/Content/img/warning.svg");
   background-repeat: no-repeat;
-  background-position: 14px 15px;
+  background-position: 16px 11px;
   display: block;
   position: relative;
+  padding-left: 16px;
 }
 .dashboard_alerts_listitem_source {
   font-size: 14px;
