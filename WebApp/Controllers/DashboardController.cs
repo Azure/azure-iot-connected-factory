@@ -127,7 +127,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                     }
                     else
                     {
-                        Trace.TraceInformation($"Type of TopNode is unknown '{topNodeType}'");
+                        // We must be at root
+                        _sessionsViewingStations.Remove(Session.SessionID);
+                        dashboardModel.TopNode = (ContosoTopologyNode)Startup.Topology.TopologyRoot;
+                        dashboardModel.ChildrenType = typeof(Factory);
                     }
                     Trace.TraceInformation($"{_sessionsViewingStations.Count} session(s) viewing at Station nodes");
                 }
@@ -164,8 +167,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             dashboardModel.Alerts = Startup.Topology.GetAlerts(topNode);
 
             // Update the children info.
-            dashboardModel.Children = Startup.Topology.GetChildrenInfo(topNode);
-
+            Trace.TraceInformation($"Show dashboard view for ({dashboardModel.TopNode.Key})");
+            dashboardModel.Children = Startup.Topology.GetChildrenInfo(dashboardModel.TopNode.Key);
             if (dashboardModel.ChildrenType == typeof(Factory))
             {
                 dashboardModel.ChildrenContainerHeader = Strings.ChildrenFactoryListContainerHeaderPostfix;

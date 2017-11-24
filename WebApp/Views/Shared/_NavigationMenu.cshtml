@@ -19,7 +19,7 @@
         }
         else
         {
-           @Html.ActionLink(navigationMenuItem.Text, navigationMenuItem.Action, navigationMenuItem.Controller, null, new { @class = multipleClasses })
+            @Html.ActionLink(navigationMenuItem.Text, navigationMenuItem.Action, navigationMenuItem.Controller, null, new { @class = multipleClasses })
         }
     }
 </nav>
@@ -29,14 +29,19 @@
     <nav class="navigation">
         @foreach (var childNavigationItem in navigationMenuItem.Children)
         {
+            RouteValueDictionary valueDictionary = null;
             if (childNavigationItem.Selected)
             {
                 <a class="@childNavigationItem.Class">@childNavigationItem.Text</a>
             }
             else
             {
-                @Html.ActionLink(childNavigationItem.Text, childNavigationItem.Action, childNavigationItem.Controller, null, new { @class = childNavigationItem.Class })
+                if (childNavigationItem.Controller.Equals("Dashboard", StringComparison.OrdinalIgnoreCase) && childNavigationItem.Action.Equals("Index", StringComparison.OrdinalIgnoreCase))
+                {
+                    valueDictionary = new RouteValueDictionary { { "topNode", "" } };
+                }
             }
+            @Html.ActionLink(childNavigationItem.Text, childNavigationItem.Action, childNavigationItem.Controller, valueDictionary, new { @class = childNavigationItem.Class })
         }
     </nav>
 }
