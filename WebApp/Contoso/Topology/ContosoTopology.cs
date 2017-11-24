@@ -1,14 +1,12 @@
-﻿using System;
-using System.IO;
+﻿
+using GlobalResources;
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Topology;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Topology;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.OpcUa;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
-using Newtonsoft.Json;
-using GlobalResources;
-using System.Globalization;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 {
@@ -415,24 +413,24 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
             // Update type of children for the given key.
             ContosoTopologyNode parent = (ContosoTopologyNode)TopologyTable[parentKey];
-            string childrenType;
+            Type childrenType = null;
             Type parentType = parent.GetType();
-            childrenType = typeof(Factory).ToString();
+            childrenType = typeof(Factory);
             if (parentType == typeof(Factory))
             {
-                childrenType = typeof(ProductionLine).ToString();
+                childrenType = typeof(ProductionLine);
             }
             else if (parentType == typeof(ProductionLine))
             {
-                childrenType = typeof(Station).ToString();
+                childrenType = typeof(Station);
             }
             else if (parentType == typeof(Station))
             {
-                childrenType = typeof(ContosoOpcUaNode).ToString();
+                childrenType = typeof(ContosoOpcUaNode);
             }
 
             // Prepare the list with the child objects for the view.
-            if (childrenType == typeof(ContosoOpcUaNode).ToString())
+            if (childrenType == typeof(ContosoOpcUaNode))
             {
                 Station station = (Station)TopologyTable[parentKey];
                 foreach (ContosoOpcUaNode opcUaNode in station.NodeList)
@@ -446,7 +444,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                                                                       station.Location.Latitude, 
                                                                       station.Location.Longitude, 
                                                                       opcUaNode.Visible, 
-                                                                      opcUaNode.Last.Value.ToString("0.###",CultureInfo.InvariantCulture), 
+                                                                      opcUaNode.LastValueToUxString(), 
                                                                       opcUaNode.Units);
                     childrenInfo.Add(childInfo);
                 }
@@ -456,21 +454,21 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                 var childrenKeys = ((ContosoTopologyNode)TopologyTable[parentKey]).GetChildren();
                 foreach (string key in childrenKeys)
                 {
-                    if (childrenType == typeof(Factory).ToString())
+                    if (childrenType == typeof(Factory))
                     {
                         Factory factory = (Factory)TopologyTable[key];
                         ContosoChildInfo dashboardChild = new ContosoChildInfo(factory.Key, factory.Status.ToString(), factory.Name, factory.Description,
                                                                     factory.Location.City, factory.Location.Latitude, factory.Location.Longitude, true);
                         childrenInfo.Add(dashboardChild);
                     }
-                    if (childrenType == typeof(ProductionLine).ToString())
+                    if (childrenType == typeof(ProductionLine))
                     {
                         ProductionLine productionLine = (ProductionLine)TopologyTable[key];
                         ContosoChildInfo dashboardChild = new ContosoChildInfo(productionLine.Key, productionLine.Status.ToString(), productionLine.Name, productionLine.Description,
                                                                     productionLine.Location.City, productionLine.Location.Latitude, productionLine.Location.Longitude, true);
                         childrenInfo.Add(dashboardChild);
                     }
-                    if (childrenType == typeof(Station).ToString())
+                    if (childrenType == typeof(Station))
                     {
                         Station station = (Station)TopologyTable[key];
                         ContosoChildInfo dashboardChild = new ContosoChildInfo(station.Key, station.Status.ToString(), station.Name, station.Description,

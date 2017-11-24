@@ -97,11 +97,23 @@
     <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.1.1.2\lib\net451\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.Amqp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Amqp.2.1.1\lib\net45\Microsoft.Azure.Amqp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.Devices.Proxy, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.Devices.Proxy.1.0.2.1\lib\net46\Microsoft.Azure.Devices.Proxy.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Devices.Proxy.Opc.Ua, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.Devices.Proxy.Opc.Ua.1.0.2.1\lib\net46\Microsoft.Azure.Devices.Proxy.Opc.Ua.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.EventHubs, Version=1.0.3.0, Culture=neutral, PublicKeyToken=7e34167dcc6d6d8c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.EventHubs.1.0.3\lib\net451\Microsoft.Azure.EventHubs.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.EventHubs.Processor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=7e34167dcc6d6d8c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.EventHubs.Processor.1.0.3\lib\net451\Microsoft.Azure.EventHubs.Processor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
@@ -226,6 +238,9 @@
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.1.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -512,6 +527,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.zh-HANT.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_Start\Startup.IotHub.cs" />
     <Compile Include="App_Start\Startup.Json.cs" />
     <Compile Include="App_Start\Startup.OPC.cs" />
     <Compile Include="App_Start\Startup.RDX.cs" />
@@ -541,6 +557,7 @@
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Filters\ErrorHandlingFilter.cs" />
     <Compile Include="Helpers\OpcSessionHelper.cs" />
+    <Compile Include="IoTHub\MessageProcessor.cs" />
     <Compile Include="Models\OpcSessionModel.cs" />
     <Compile Include="Models\DataUpdateModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
@@ -572,6 +589,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionUpdate\SessionUpdate.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Topology\ITopologyNode.cs" />
     <Compile Include="Topology\ITopologyTree.cs" />
@@ -818,6 +836,7 @@
     <Content Include="Content\fonts\selawkl.ttf" />
     <Content Include="Content\fonts\selawksb.ttf" />
     <Content Include="Content\fonts\selawksl.ttf" />
+    <None Include="Properties\PublishProfiles\johanngtest024 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />

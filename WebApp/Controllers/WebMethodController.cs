@@ -12,7 +12,6 @@ using Opc.Ua.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using static Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX.RDXUtils;
@@ -65,12 +64,11 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             if (!(RDXUtils.IsAggregatedOperator(contosoOpcUaNode.OpCode)))
             {
                 data[0] = "NoTimeSeries";
-                // Non aggregating opcodes are not updated unless they have a relevance
-                data[1] = contosoOpcUaNode.Last.Value.ToString("0.###", CultureInfo.InvariantCulture);
+                data[1] = contosoOpcUaNode.LastValueToUxString();
 
                 if (contosoOpcUaNode.Units != null)
                 {
-                    data[2] = contosoOpcUaNode.Units.ToString();
+                    data[2] = contosoOpcUaNode.Units;
                 }
                 else
                 {

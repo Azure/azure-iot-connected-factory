@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso;
-using Microsoft.Rdx.SystemExtensions;
 using Microsoft.Rdx.Client.Query.ObjectModel.Aggregates;
+using Microsoft.Rdx.SystemExtensions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
 {

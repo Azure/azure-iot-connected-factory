@@ -1,16 +1,17 @@
-﻿using System;
+﻿
+using Microsoft.Rdx.Client.Events;
+using Microsoft.Rdx.Client.Query;
+using Microsoft.Rdx.Client.Query.Expressions;
+using Microsoft.Rdx.Client.Query.ObjectModel.Aggregates;
+using Microsoft.Rdx.Client.Query.ObjectModel.LimitExpressions;
+using Microsoft.Rdx.Client.Query.ObjectModel.Predicates;
+using Microsoft.Rdx.SystemExtensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Rdx.SystemExtensions;
-using Microsoft.Rdx.Client.Events;
-using Microsoft.Rdx.Client.Query;
-using Microsoft.Rdx.Client.Query.Expressions;
-using Microsoft.Rdx.Client.Query.ObjectModel.LimitExpressions;
-using Microsoft.Rdx.Client.Query.ObjectModel.Aggregates;
-using Microsoft.Rdx.Client.Query.ObjectModel.Predicates;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
 {
@@ -125,54 +126,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
             {
                 RDXTrace.TraceError("DiffQuery Exception {0}", e.Message);
                 return 0;
-            }
-        }
-
-        /// <summary>
-        /// Query for aggregation of count, min, max, sum and average for all active 
-        /// nodes of the given OPC UA server in the given search span
-        /// </summary>
-        /// <param name="searchSpan">Date and time span for the query</param>
-        /// <param name="appUri">The OPC UA server application Uri</param>
-        /// <returns>The aggregated nodes</returns>
-        public async Task<AggregateResult> GetAllAggregatedNodes(DateTimeRange searchSpan, string appUri)
-        {
-            try
-            {
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-
-                PredicateStringExpression predicate = new PredicateStringExpression(
-                    String.Format(OpcServerPredicate, appUri));
-
-                Aggregate aggregate = new Aggregate(
-                    Expression.UniqueValues(OpcMonitoredItemId, PropertyType.String, opcMaxMonitoredItemId),
-                    new Aggregate(
-                        Expression.Count(),
-                        Expression.Min(OpcMonitoredItemValue, PropertyType.Double),
-                        Expression.Max(OpcMonitoredItemValue, PropertyType.Double),
-                        Expression.Average(OpcMonitoredItemValue, PropertyType.Double),
-                        Expression.Sum(OpcMonitoredItemValue, PropertyType.Double)
-                ));
-
-                AggregatesResult aggregateResults = await RDXQueryClient.GetAggregatesAsync(
-                    searchSpan,
-                    predicate,
-                    new[] { aggregate },
-                    _cancellationToken);
-
-                // Since there was 1 top level aggregate in request, there is 1 aggregate result.
-                AggregateResult aggregateResult = aggregateResults[0];
-
-                stopwatch.Stop();
-                RDXTrace.TraceInformation("GetAllAggregatedNodes query took {0} ms", stopwatch.ElapsedMilliseconds);
-
-                return aggregateResult;
-            }
-            catch (Exception e)
-            {
-                RDXTrace.TraceError("GetAllAggregatedNodes: Exception {0}", e.Message);
-                return null;
             }
         }
 

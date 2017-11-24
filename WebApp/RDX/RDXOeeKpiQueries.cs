@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.OpcUa;
-using Microsoft.Rdx.SystemExtensions;
 using Microsoft.Rdx.Client.Query.Expressions;
+using Microsoft.Rdx.SystemExtensions;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
 {

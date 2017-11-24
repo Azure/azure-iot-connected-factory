@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using System.ComponentModel;
+﻿
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.OpcUa;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 {
@@ -98,6 +100,16 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         /// The last value obtained by a query.
         /// </summary>
         public ContosoDataItem Last;
+
+        /// <summary>
+        /// The last value ingested to IoTHub.
+        /// </summary>
+        public string LastValue;
+
+        /// <summary>
+        /// The timestamp of the last value ingested to IoTHub.
+        /// </summary>
+        public string LastValueTimestamp;
 
         /// <summary>
         /// Physical unit for value, optional.
@@ -263,6 +275,46 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                     UpdateRelevanceItem(topologyNode, relevance, Last);
                 }
             }
+        }
+
+        /// <summary>
+        /// Formats the last value to display it in the dashboard UX.
+        /// </summary>
+        public string LastValueToUxString()
+        {
+            // Set the last value with a UX conform formatting
+            bool boolValue;
+            int intValue;
+            double doubleValue;
+            string value = LastValue == null ? "-" : LastValue;
+            string uxString = string.Empty;
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("en-en");
+
+            if (!Boolean.TryParse(value, out boolValue))
+            {
+                if (!Int32.TryParse(value, out intValue))
+                {
+                    if (!Double.TryParse(value, NumberStyles.Float, culture, out doubleValue))
+                    {
+                        // stick with a string for all non parsable values
+                        uxString = value;
+                    }
+                    else
+                    {
+                        uxString = doubleValue.ToString("F2");
+                    }
+                }
+                else
+                {
+                    uxString = intValue.ToString();
+                }
+            }
+            else
+            {
+                // very use case dependent, go with digits here
+                uxString = boolValue ? "1" : "0";
+            }
+            return uxString;
         }
     }
 

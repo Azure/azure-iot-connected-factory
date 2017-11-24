@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso;
+using System;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
 {
@@ -18,7 +20,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
         /// </summary>
         public ContosoTopologyNode TopNode { get; set; }
 
-        public string ChildrenType { get; set; }
+        public Type ChildrenType { get; set; }
 
         public List<ContosoChildInfo> Children;
 

@@ -833,6 +833,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                         {
                             if (!retry)
                             {
+                                try
+                                {
+                                    OpcSessionHelper.Instance.Disconnect(publisherSessionId);
+                                }
+                                catch
+                                {
+                                }
                                 return Content(CreateOpcExceptionActionString(exception));
                             }
                             retry = false;

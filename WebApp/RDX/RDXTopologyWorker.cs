@@ -1,19 +1,19 @@
-﻿using System;
+﻿
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso;
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Topology;
+using Microsoft.Rdx.Client.Query.ObjectModel.Aggregates;
+using Microsoft.Rdx.SystemExtensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Topology;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Rdx.SystemExtensions;
-using Microsoft.Rdx.Client.Query.ObjectModel.Aggregates;
-using Newtonsoft.Json;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
 {
+    using static Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.SessionUpdate;
+
     /// <summary>
     /// Topology query worker to update Oee and Kpi values
     /// </summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
             {
                 Stopwatch stopWatch = new Stopwatch();
                 DateTime nextUpdate = DateTime.MaxValue;
-                bool resetStartDelayed = false; 
+                bool resetStartDelayed = false;
 
                 stopWatch.Start();
 
@@ -152,9 +152,16 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                     if (aggregatedTimeSpan.UpdateBrowser)
                     {
                         // Push updates to dashboard
-                        BrowserUpdate();
-                        RDXTrace.TraceInformation("BrowserUpdate finished after {0}ms",
-                            stopWatch.ElapsedMilliseconds);
+                        try
+                        {
+                            TriggerSessionOeeKpiDataUpdate();
+                            TriggerSessionAlertDataUpdate();
+                            TriggerSessionChildrenDataUpdate();
+                        }
+                        catch (Exception e)
+                        {
+                            RDXTrace.TraceError($"Exception {e.Message} in Worker while updating browser sessions");
+                        }
                     }
 
                     // add new stations and nodes to topology
@@ -255,71 +262,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                         }
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Update the browser content using SignalR
-        /// </summary>
-        private void BrowserUpdate()
-        {
-            ChildrenDataUpdate[] sessionChildrenDataUpdate = new ChildrenDataUpdate[Startup.SessionList.Count];
-            OeeKpiDataUpdate[] sessionOeeKpiDataUpdate = new OeeKpiDataUpdate[Startup.SessionList.Count];
-            AlertDataUpdate[] sessionAlertDataUpdate = new AlertDataUpdate[Startup.SessionList.Count];
-            int sessionUpdateIndex = 0;
-            foreach (KeyValuePair<string, DashboardModel> session in Startup.SessionList)
-            {
-                ChildrenDataUpdate sessionChildrenData = new ChildrenDataUpdate();
-                OeeKpiDataUpdate sessionOeeKpiData = new OeeKpiDataUpdate();
-                AlertDataUpdate sessionAlertData = new AlertDataUpdate();
-                string topNodeKey = session.Value.TopNode.Key;
-
-                // Update the OEE/KPI relevant data.
-                sessionOeeKpiData.SessionId = session.Key;
-                sessionOeeKpiData.TopNode = topNodeKey;
-
-                // Add the performance data relevant for the session.
-                ContosoTopologyNode topNode = (ContosoTopologyNode)Startup.Topology[topNodeKey];
-                ContosoAggregatedOeeKpiTimeSpan oeeKpiLast = topNode.Last;
-                sessionOeeKpiData.Kpi1Last = oeeKpiLast.Kpi1;
-                sessionOeeKpiData.Kpi1PerformanceSetting = topNode.Kpi1PerformanceSetting;
-                sessionOeeKpiData.Kpi2Last = oeeKpiLast.Kpi2;
-                sessionOeeKpiData.Kpi2PerformanceSetting = topNode.Kpi2PerformanceSetting;
-                sessionOeeKpiData.OeeAvailabilityLast = oeeKpiLast.OeeAvailability;
-                sessionOeeKpiData.OeeAvailabilityPerformanceSetting = topNode.OeeAvailabilityPerformanceSetting;
-                sessionOeeKpiData.OeePerformanceLast = oeeKpiLast.OeePerformance;
-                sessionOeeKpiData.OeePerformancePerformanceSetting = topNode.OeePerformancePerformanceSetting;
-                sessionOeeKpiData.OeeQualityLast = oeeKpiLast.OeeQuality;
-                sessionOeeKpiData.OeeQualityPerformanceSetting = topNode.OeeQualityPerformanceSetting;
-                sessionOeeKpiData.OeeOverallLast = oeeKpiLast.OeeOverall;
-                sessionOeeKpiData.OeeOverallPerformanceSetting = topNode.OeeOverallPerformanceSetting;
-
-                // Update the alert data.
-                sessionAlertData.SessionId = session.Key;
-                sessionAlertData.TopNode = topNodeKey;
-                sessionAlertData.Alerts = Startup.Topology.GetAlerts(topNodeKey);
-
-                // Update the children data.
-                sessionChildrenData.SessionId = session.Key;
-                sessionChildrenData.TopNode = topNodeKey;
-                sessionChildrenData.Children = Startup.Topology.GetChildrenInfo(topNodeKey);
-
-                // Update the data sent to the clients.
-                sessionChildrenDataUpdate[sessionUpdateIndex] = sessionChildrenData;
-                sessionOeeKpiDataUpdate[sessionUpdateIndex] = sessionOeeKpiData;
-                sessionAlertDataUpdate[sessionUpdateIndex] = sessionAlertData;
-                sessionUpdateIndex++;
-            }
-
-            if (Startup.SessionList.Count > 0 && sessionUpdateIndex > 0)
-            {
-                string _sessionChildrenDataUpdateJson = JsonConvert.SerializeObject(sessionChildrenDataUpdate);
-                string _sessionOeeKpiDataUpdateJson = JsonConvert.SerializeObject(sessionOeeKpiDataUpdate);
-                string _sessionAlertDataUpdateJson = JsonConvert.SerializeObject(sessionAlertDataUpdate);
-                IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<TelemetryHub>();
-                hubContext.Clients.All.updateSessionChildrenData(_sessionChildrenDataUpdateJson);
-                hubContext.Clients.All.updateSessionOeeKpiData(_sessionOeeKpiDataUpdateJson);
-                hubContext.Clients.All.updateSessionAlertData(_sessionAlertDataUpdateJson);
             }
         }
     }

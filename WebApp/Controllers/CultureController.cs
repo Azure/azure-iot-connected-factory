@@ -1,7 +1,10 @@
-﻿using System;
+﻿
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models;
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
+using System;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
+using System.Web.Routing;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 {
@@ -34,7 +37,15 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 
             Response.Cookies.Add(cookie);
 
-            return RedirectToAction("Index", "Dashboard");
+            string topNodeKey = null;
+            if (Session != null && Session.SessionID != null && Startup.SessionList.ContainsKey(Session.SessionID))
+            {
+                DashboardModel dashboardModel = null;
+                dashboardModel = Startup.SessionList[Session.SessionID];
+                topNodeKey = dashboardModel?.TopNode.Key;
+            }
+            RouteValueDictionary valueDictionary = new RouteValueDictionary { { "topNode", topNodeKey } };
+            return RedirectToAction("Index", "Dashboard", valueDictionary);
         }
     }
 }

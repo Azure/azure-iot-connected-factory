@@ -26,7 +26,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         /// <summary>
         /// Ctor of the node using topology description data.
         /// </summary>
-        /// <param name="stationDescription">The topology description for the station.</param>
         public Station(StationDescription stationDescription) : base(stationDescription.OpcUri, stationDescription.Name, stationDescription.Description, stationDescription)
         {
             // List of node relevances.

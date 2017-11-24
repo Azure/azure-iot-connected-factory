@@ -230,7 +230,8 @@
         },
         data: {
             columns: [
-                ['Actual', @Model.TopNode.OeeOverallLast.OeeOverall]
+                // we need to force a locale, which has JS compatible decimal point
+                ['Actual', @Model.TopNode.OeeOverallLast.OeeOverall.ToString(CultureInfo.CreateSpecificCulture("en-en"))]
             ],
             type: 'gauge',
         },
@@ -262,7 +263,7 @@
         },
         data: {
             columns: [
-                ['Actual', @Model.TopNode.OeeAvailabilityLast.OeeAvailability]
+                ['Actual', @Model.TopNode.OeeAvailabilityLast.OeeAvailability.ToString(CultureInfo.CreateSpecificCulture("en-en"))]
             ],
             type: 'gauge',
         },
@@ -294,7 +295,7 @@
         },
         data: {
             columns: [
-                ['Actual', @Model.TopNode.OeePerformanceLast.OeePerformance]
+                ['Actual', @Model.TopNode.OeePerformanceLast.OeePerformance.ToString(CultureInfo.CreateSpecificCulture("en-en"))]
             ],
             type: 'gauge',
         },
@@ -326,7 +327,7 @@
         },
         data: {
             columns: [
-                ['Actual', @Model.TopNode.OeeQualityLast.OeeQuality]
+                ['Actual', @Model.TopNode.OeeQualityLast.OeeQuality.ToString(CultureInfo.CreateSpecificCulture("en-en"))]
             ],
             type: 'gauge',
         },
@@ -377,7 +378,7 @@
         },
         data: {
             columns: [
-                    ['Actual', @Model.TopNode.Kpi1Last.Kpi ]
+                    ['Actual', @Model.TopNode.Kpi1Last.Kpi.ToString(CultureInfo.CreateSpecificCulture("en-en"))]
             ],
             type: 'gauge',
         },
@@ -416,8 +417,7 @@
         },
         data: {
             columns: [
-                // we need to force en-US locale, since the app runs in the locale the user has selected.
-                ['Actual', @Math.Round(Model.TopNode.Kpi2Last.Kpi, 1).ToString(new CultureInfo("en-US")) ]
+                ['Actual', @Math.Round(Model.TopNode.Kpi2Last.Kpi, 1).ToString(CultureInfo.CreateSpecificCulture("en-en"))]
             ],
             type: 'gauge',
         },
@@ -1269,7 +1269,7 @@
             if (sessionUpdate != undefined) {
                 for (i = 0; i < sessionUpdate.length; i++) {
                     var session = sessionUpdate[i];
-                    if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
+                    if (session != undefined && session.SessionId != undefined && session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
                         // Only update if the filter panel is closed.
                         if ($("#dashboardFilterContextpanel").hasClass('overlay-close') && session.Children != undefined) {
                             var childrenList = '';
@@ -1298,9 +1298,9 @@
                                     }
                                 }
 
-                                var url = '@Url.Action("Index", "Dashboard")' + "?topNode=" + session.Children[j].Key;
-
-                                if ("@Model.ChildrenType" == "@typeof(ContosoOpcUaNode).ToString()") {
+                                var url = '@Url.Action("Index", "Dashboard")' + "?topNode=" + encodeURI(session.Children[j].Key);
+                                if ("@Model.ChildrenType" == "@typeof(ContosoOpcUaNode)")
+                                {
                                     if (session.Children[j].Visible == true) {
                                         childrenList += '<div id="dashboard_children_listitem' + j +'" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick="openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');">';
                                         childrenList += '<div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
@@ -1346,7 +1346,7 @@
             if (sessionUpdate != undefined) {
                 for (i = 0; i < sessionUpdate.length; i++) {
                     var session = sessionUpdate[i];
-                    if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
+                    if (session != undefined && session.SessionId != undefined && session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
                         if (session.OeeOverallLast != undefined && session.OeeOverallLast.OeeOverall != null) {
                             oeeOverall.load({
                                 columns: [['Actual', session.OeeOverallLast.OeeOverall]]
@@ -1391,7 +1391,7 @@
             if (sessionUpdate != undefined) {
                 for (var i = 0; i < sessionUpdate.length; i++) {
                     var session = sessionUpdate[i];
-                    if (session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
+                    if (session != undefined && session.SessionId != undefined && session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
                         // Only update if the alerts filter panel is closed.
                         if ($("#dashboardFilterAlertContextpanel").hasClass('overlay-close') && session.Alerts != undefined) {
                             var alertsList = '';

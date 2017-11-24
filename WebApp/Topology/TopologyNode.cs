@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Topology
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Topology
         public TopologyNode(string key)
         {
             Children = new List<string>();
-            Key = key;
+            Key = key.ToLower();
             Parent = null;
         }
 

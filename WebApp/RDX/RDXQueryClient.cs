@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Net;
-using System.Threading.Tasks;
+﻿
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Configuration;
 using Microsoft.Rdx.Client;
 using Microsoft.Rdx.Client.Authentication;
 using Microsoft.Rdx.Client.Events;
@@ -13,7 +9,12 @@ using Microsoft.Rdx.Client.Query.ObjectModel.Aggregates;
 using Microsoft.Rdx.Client.Query.ObjectModel.LimitExpressions;
 using Microsoft.Rdx.Logging;
 using Microsoft.Rdx.SystemExtensions;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
 {

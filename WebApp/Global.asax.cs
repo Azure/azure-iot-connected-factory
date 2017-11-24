@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IdentityModel.Claims;
@@ -8,18 +10,13 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 {
+    using static Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers.DashboardController;
+
     public class MvcApplication : HttpApplication
     {
-        /// <summary>
-        /// The event processor host reading from the IoTHub of this deployment.
-        /// </summary>
-        private const int _maxRegisterEventProcessorRetries = 3;
-        private const int _sleepRegisterRetry = 2000;
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -32,18 +29,28 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
             MvcHandler.DisableMvcResponseHeader = true;
         }
 
+        protected void Application_End()
+        {
+            Startup.End();
+        }
+
+        protected void Application_Dispose()
+        {
+            Startup.Dispose();
+        }
+
         protected void Session_OnStart()
         {
-            // Save the start time of the session and set the timeout to 5 minutes
-            DateTime currentTime = DateTime.UtcNow;
-            Session.Add("SessionStart", currentTime);
-            Session.Timeout = 360;
             Trace.TraceInformation("Session_OnStart - SessionID: {0}", Session.SessionID);
         }
 
         protected void Session_OnEnd()
         {
+            // Disconnect from sessions OPC UA server
             OpcSessionHelper.Instance.Disconnect(Session.SessionID);
+
+            // If session is known check if was on a Station
+            RemoveSessionFromSessionsViewingStations(Session.SessionID);
             Trace.TraceInformation("Session_OnEnd - SessionID: {0}", Session.SessionID);
         }
 

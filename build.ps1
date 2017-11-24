@@ -2117,7 +2117,7 @@ $script:DockerCertsFolder = "$script:DockerSharedFolder/CertificateStores/UA App
 $script:DockerProxyRepo = "microsoft/iot-edge-opc-proxy"
 $script:DockerProxyVersion = "1.0.2"
 $script:DockerPublisherRepo = "microsoft/iot-edge-opc-publisher"
-$script:DockerPublisherVersion = "2.1.1"
+$script:DockerPublisherVersion = "2.1.3"
 # todo remove
 $script:UaSecretBaseName = "UAWebClient"
 # Note: The password could only be changed if it is synced with the password used in CreateCerts.exe
@@ -2532,6 +2532,9 @@ Write-Verbose  "$(Get-Date –f $TIME_STAMP_FORMAT) - Updating config file setti
 UpdateEnvSetting "ServiceStoreAccountName" $script:StorageAccount.StorageAccountName
 UpdateEnvSetting "SolutionStorageAccountConnectionString" $script:ArmResult.Outputs['storageConnectionString'].Value
 UpdateEnvSetting "IotHubOwnerConnectionString" $script:ArmResult.Outputs['iotHubOwnerConnectionString'].Value
+UpdateEnvSetting "IotHubEventHubName" $script:ArmResult.Outputs['iotHubEventHubName'].Value
+UpdateEnvSetting "IotHubEventHubEndpointIotHubOwnerConnectionString" $script:ArmResult.Outputs['iotHubEventHubEndpointIotHubOwnerConnectionString'].Value
+UpdateEnvSetting "IotHubTelemetryConsumerGroup" $script:ArmResult.Outputs['iotHubTelemetryConsumerGroup'].Value
 UpdateEnvSetting "RdxAuthenticationClientSecret" $script:RdxAuthenticationClientSecret
 UpdateEnvSetting "RdxDnsName" $script:ArmResult.Outputs['rdxDnsName'].Value
 UpdateEnvSetting "RdxEnvironmentId" $script:ArmResult.Outputs['rdxEnvironmentId'].Value
