@@ -7038,15 +7038,31 @@ p {
   padding-top: 2px;
   color: white;
 }
-.glyphicon-menu-left {
-  display: inline-block;
-  color: #AFB9C3;
-  font-size: 12px;
-}
-.glyphicon-menu-left:hover,
-.glyphicon-menu-left :focus {
-  color: #cccccc;
+.dashboard-chevron-right {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  left: -16px;
+  bottom: -10px;
   outline: none;
+}
+.dashboard_children_container_header_icon {
+  margin-right: 0px;
+  float: right;
+  padding-top: 8px;
+}
+.dashboard-chevron-left {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  right: 0px;
+  bottom: 8px;
+  outline: none;
+}
+.dashboard-chevron-left:hover,
+.dashboard-chevron-left :focus {
+  filter: brightness(0) invert(1);
+  -webkit-filter: brightness(0) invert(1);
 }
 a {
   text-decoration: none !important;
@@ -7055,16 +7071,6 @@ a {
 .dashboard_children_back_icon {
   margin-right: -15px !important;
   padding-top: 6px;
-}
-.glyphicon-menu-down {
-  display: inline-block;
-  color: white;
-  font-size: 12px;
-}
-.glyphicon-menu-down:hover,
-.glyphicon-menu-down :focus {
-  color: #cccccc;
-  outline: none;
 }
 .dashboard-cancel-icon {
   width: 16px;
@@ -7196,7 +7202,7 @@ a {
   height: 48px;
   border-bottom: 4px solid #121416;
   background-color: #1B1D1F;
-  margin-right: 0px;
+  padding-right: 16px;
 }
 .dashboard_alerts_listitem_container:hover {
   cursor: pointer;
@@ -7238,7 +7244,7 @@ a {
 }
 .dashboard_alerts_listitem_source_details_time {
   text-align: right;
-  margin-top: -10px;
+  margin-top: -2px;
   font-size: 14px;
 }
 /* 
@@ -7577,6 +7583,9 @@ a {
     max-height: none;
     background-color: #121416;
   }
+  .masthead_text {
+    width: 250px;
+  }
 }
 /* Landscape phone to portrait tablet (using definitions from bootstrap)*/
 @media (max-width: 767px) {
@@ -7584,6 +7593,9 @@ a {
   .dashboard_alerts_list_container {
     overflow-y: auto;
     max-height: none;
+  }
+  .masthead_text {
+    width: 0px;
   }
 }
 /* Landscape phones and down (using definitions from bootstrap)*/
@@ -7600,6 +7612,9 @@ a {
     margin-left: auto;
     margin-right: auto;
     width: 330px;
+  }
+  .dashboard-chevron-right {
+    width: 0;
   }
 }
 @media (min-height: 992px) {

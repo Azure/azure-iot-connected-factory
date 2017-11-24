@@ -95,14 +95,33 @@ p{
     color: white;
 }
 
-.glyphicon-menu-left {
-    display: inline-block;
-    color: @children-subheader-color;
-    font-size: 12px;
+.dashboard-chevron-right {
+    width: 14px;
+    height: 14px;
+    position: relative;
+    left: -16px;
+    bottom: -10px;
+    outline: none;
+}
 
+
+.dashboard_children_container_header_icon {
+    margin-right: 0px;
+    float: right;
+    padding-top: 8px;
+} 
+
+.dashboard-chevron-left {
+    width: 14px;
+    height: 14px;
+    position: relative;
+    right: 0px;
+    bottom: 8px;
+    outline: none;
+    
     &:hover, :focus {
-        color: darken(@list-header-color, 20%);
-        outline: none;
+        filter: brightness(0) invert(1);
+        -webkit-filter: brightness(0) invert(1);
     }
 }
 
@@ -114,17 +133,6 @@ a {
 .dashboard_children_back_icon {
     margin-right: -15px !important;
     padding-top: 6px;
-}
-
-.glyphicon-menu-down {
-    display: inline-block;
-    color: white;
-    font-size: 12px;
-
-    &:hover, :focus {
-        color: darken(@list-header-color, 20%);
-        outline: none;
-    }
 }
 
 .dashboard-cancel-icon {
@@ -272,7 +280,7 @@ a {
     height: 48px;
     border-bottom: 4px solid @background-color;
     background-color: @content-background-color;
-    margin-right: 0px;
+    padding-right: 16px;
 
     &:hover {
         cursor: pointer;
@@ -322,7 +330,7 @@ a {
 }
 .dashboard_alerts_listitem_source_details_time {
     text-align: right;
-    margin-top: -10px;
+    margin-top: -2px;
     font-size: @children-listitem-text-size;
 }
 
@@ -674,7 +682,6 @@ a {
     color: @list-header-color;
 }
 
-
 /* Large desktop (using definitions from bootstrap)*/
 @media (min-width: @screen-md) {
   .dashboard_top_container {
@@ -692,6 +699,10 @@ a {
         max-height: none;
         background-color: @background-color;
     }
+
+    .masthead_text {
+        width: 250px;
+    }
 }
  
 /* Landscape phone to portrait tablet (using definitions from bootstrap)*/
@@ -700,6 +711,9 @@ a {
  .dashboard_alerts_list_container {
         overflow-y: auto;
         max-height: none;
+    }
+    .masthead_text {
+        width: 0px;
     }
 }
  
@@ -715,10 +729,14 @@ a {
     left: 15px;
     }
 
-.graph_container {
+ .graph_container {
     margin-left: auto;
     margin-right: auto;
     width: 330px;
+    }
+
+  .dashboard-chevron-right {
+        width: 0;
     }
 }
 

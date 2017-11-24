@@ -5,15 +5,16 @@
 @model DashboardModel
 
 <div class="dashboard_children_container_header row">
-    <p id="backIcon" class="dashboard_children_back_icon col-xs-1 " hidden>
-        <a class="glyphicon glyphicon-menu-left" href="#" onclick="javascript: gotoParentNode();"></a>
-    </p>
+    <div id="backIcon" class="dashboard_children_back_icon col-xs-1 col-md-1 col-lg-1 " hidden>
+        <a id="allIcon" class="dashboard_children_container_header_icon" align="left" href="#" onclick="gotoParentNode();">
+            <img  class="dashboard-chevron-left" src="/Content/img/chevron_left.svg">
+        </a>
+    </div>
     <p id="headerText" class="dashboard_children_container_header_text col-xs-8 col-md-8 col-lg-8 overflow">@Model.ChildrenContainerHeader</p>
     <a id="allIcon" class="dashboard_children_container_header_text_glyph" align="right" href="#" onclick="openFilterContextPanel();">
         <img id="dashboardChildrenContainerHeaderFilter" class="dashboard_filter_icon" src="/Content/img/filter.svg">
         @Strings.NoFilterApplied 
     </a>
-
     <p id="filterIcon" class="dashboard_children_container_header_text_glyph" hidden>
         <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" class="dashboard_container_filter" src="/Content/img/filter.svg"></a>
     </p>
@@ -56,9 +57,7 @@
                         <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                         <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
                         <div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">@child.Description</div>
-                        <div class="dashboard_chevron_rigth col-xs-1 col-lg-1">
-                            <img id="dashboardChildrenContainerHeaderFilter"  src="/Content/img/chevron_right.svg">
-                        </div>
+                        <img class="dashboard-chevron-right" align="right" src="/Content/img/chevron_right.svg">
                     </div>
                 }
              </div>

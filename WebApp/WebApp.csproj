@@ -589,6 +589,7 @@
     <Content Include="Content\img\assembly_station.png" />
     <Content Include="Content\img\cancel.svg" />
     <Content Include="Content\img\cancelX.svg" />
+    <Content Include="Content\img\chevron_left.svg" />
     <Content Include="Content\img\chevron_right.svg" />
     <Content Include="Content\img\contosoLogo.svg" />
     <Content Include="Content\img\critical.svg" />
