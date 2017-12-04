@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
@@ -19,19 +20,23 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
         /// <summary>
         /// Call this method in code to determine if a user has a given permission
         /// </summary>
-        /// <param name="permission">Permission to check for</param>
-        /// <returns>True if they have it</returns>
         public static bool HasPermission(Permission permission)
         {
+#if GRANT_FULL_ACCESS_PERMISSIONS
+            return true;
+#else
             return _rolePermissions.HasPermission(permission, new HttpContextWrapper(HttpContext.Current));
+#endif
         }
 
         /// <summary>
         /// Call this method in code to determine if a user has a given permissions
         /// </summary>
-        /// <param name="permissions"></param>
         public static bool HasPermission(List<Permission> permissions) 
         {
+#if GRANT_FULL_ACCESS_PERMISSIONS
+            return true;
+#else
             var httpContext = new HttpContextWrapper(HttpContext.Current);
 
             if (permissions == null || !permissions.Any())
@@ -43,6 +48,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
             return permissions
                     .Select(p => _rolePermissions.HasPermission(p, httpContext))
                     .All(val => val == true);
+#endif
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Web;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
@@ -84,17 +85,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
                 ADMIN_ROLE_NAME);
 
             AssignRolesToPermission(Permission.ActionAlerts,
-#if GRANT_FULL_ACCESS_PERMISSIONS
-                NATIVE_CLIENT_ROLE_NAME,
-                READ_ONLY_ROLE_NAME,
-#endif
                 ADMIN_ROLE_NAME);
 
             AssignRolesToPermission(Permission.AddOpcServer,
-#if GRANT_FULL_ACCESS_PERMISSIONS
-                NATIVE_CLIENT_ROLE_NAME,
-                READ_ONLY_ROLE_NAME,
-#endif
                 ADMIN_ROLE_NAME);
 
             AssignRolesToPermission(Permission.BrowseOpcServer,
@@ -103,24 +96,12 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
                 ADMIN_ROLE_NAME);
 
             AssignRolesToPermission(Permission.ControlOpcServer,
-#if GRANT_FULL_ACCESS_PERMISSIONS
-                NATIVE_CLIENT_ROLE_NAME,
-                READ_ONLY_ROLE_NAME,
-#endif
                 ADMIN_ROLE_NAME);
 
             AssignRolesToPermission(Permission.PublishOpcNode,
-#if GRANT_FULL_ACCESS_PERMISSIONS
-                NATIVE_CLIENT_ROLE_NAME,
-                READ_ONLY_ROLE_NAME,
-#endif
                 ADMIN_ROLE_NAME);
 
             AssignRolesToPermission(Permission.DownloadCertificate,
-#if GRANT_FULL_ACCESS_PERMISSIONS
-                NATIVE_CLIENT_ROLE_NAME,
-                READ_ONLY_ROLE_NAME,
-#endif
                 ADMIN_ROLE_NAME);
 
         }
