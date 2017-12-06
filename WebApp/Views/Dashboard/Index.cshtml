@@ -1267,6 +1267,7 @@
         telemetry.client.updateSessionChildrenData = function (sessionUpdateJson) {
             sessionUpdate = JSON.parse(sessionUpdateJson);
             if (sessionUpdate != undefined) {
+                var scrollPosition = $("#childrenListContainer").scrollTop();
                 for (i = 0; i < sessionUpdate.length; i++) {
                     var session = sessionUpdate[i];
                     if (session != undefined && session.SessionId != undefined && session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
@@ -1335,6 +1336,7 @@
                         }
                     };
                 };
+                $("#childrenListContainer").scrollTop(scrollPosition);
             };
         }
 
@@ -1389,6 +1391,7 @@
         telemetry.client.updateSessionAlertData = function (sessionUpdateJson) {
             sessionUpdate = JSON.parse(sessionUpdateJson);
             if (sessionUpdate != undefined) {
+                var scrollPosition = $("#alertsListContainer").scrollTop();
                 for (var i = 0; i < sessionUpdate.length; i++) {
                     var session = sessionUpdate[i];
                     if (session != undefined && session.SessionId != undefined && session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
@@ -1438,6 +1441,7 @@
                         }
                     };
                 }
+                $("#alertsListContainer").scrollTop(scrollPosition);
             }
         }
 
