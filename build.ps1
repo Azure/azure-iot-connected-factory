@@ -1316,7 +1316,7 @@ Function Package()
     # Check installation of required tools.
     CheckCommandAvailability "msbuild.exe" | Out-Null
 
-    Invoke-Expression "msbuild $script:IotSuiteRootPath/WebApp/WebApp.csproj /v:m /T:Package /p:Configuration=$script:Configuration"
+    Invoke-Expression "msbuild `"$script:IotSuiteRootPath/WebApp/WebApp.csproj`" /v:m /T:Package /p:Configuration=$script:Configuration"
     if ($LASTEXITCODE -ne 0)
     {
         Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Building WebApp.csproj failed.")
