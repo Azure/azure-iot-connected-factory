@@ -175,7 +175,7 @@
         },
         "webPlanWorkerCount": {
             "type": "int",
-            "defaultValue": 3,
+            "defaultValue": 1,
             "metadata": {
                 "description": "The number of instances supported by the serverfarm running the webapp."
             }
