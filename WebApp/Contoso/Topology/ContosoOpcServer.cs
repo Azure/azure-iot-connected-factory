@@ -220,12 +220,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             switch (relevance)
             {
                 case ContosoPerformanceRelevance.Kpi2:
-                case ContosoPerformanceRelevance.Kpi2_Station:
                     topologyNode.Kpi2.Kpi = data.Value;
                     topologyNode.Kpi2.Time = data.Time;
                     break;
                 case ContosoPerformanceRelevance.Kpi1:
-                case ContosoPerformanceRelevance.Kpi1_Station:
                     topologyNode.Kpi1.Kpi = data.Value;
                     topologyNode.Kpi1.Time = data.Time;
                     break;
@@ -234,7 +232,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                     topologyNode.OeeQuality.Time = new DateTime(Math.Max(topologyNode.OeeQuality.Time.Ticks, data.Time.Ticks), DateTimeKind.Utc);
                     topologyNode.OeeOverall.Quality = topologyNode.OeeQuality.OeeQuality;
                     break;
-                case ContosoPerformanceRelevance.OeeQuality_Station_Good:
                 case ContosoPerformanceRelevance.OeeQuality_Good:
                     topologyNode.OeeQuality.Good = data.Value;
                     topologyNode.OeeQuality.Time = new DateTime(Math.Max(topologyNode.OeeQuality.Time.Ticks, data.Time.Ticks), DateTimeKind.Utc);

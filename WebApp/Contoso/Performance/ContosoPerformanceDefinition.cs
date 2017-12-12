@@ -17,67 +17,38 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         // OeeAvailability is used for internal processing. No OPC UA nodes should be tagged with this relevance.
         OeeAvailability,
 
-        // OeeAvailablility_Running and OeeAvailability_Fault are tags used for calculation of the OEE Availability for global, factory and
-        // production line.
+        // OeeAvailablility_Running and OeeAvailability_Fault are tags used for calculation of the OEE Availability
+        //.
         // OEE Availability is the availability rate of the equipment and is calculated as: Actual production time / Potential production time
         // in our case this means: (Overall running time - Fault time) / Overall running time
-        // The node values with these tags are for station metrics only and used to tag the Overall running time and Fault time of a station.
         OeeAvailability_Running,
         OeeAvailability_Fault,
-
-        // OeeAvailablility_Station_Running and OeeAvailability_Station_Fault are tags used for calculation of the OEE Availability for a station.
-        // OEE Availability is the availability rate of the equipment and is calculated as: Actual production time / Potential production time
-        // in our case this means: (Overall running time - Fault time) / Overall running time
-        // The node values with these tags are rolled into global, factory and production line level. It is important to tag only one stations
-        // OPC UA node for Overall running time, but each stations Fault time with these tags.
-        OeeAvailability_Station_Running,
-        OeeAvailability_Station_Fault,
 
         // OeePerformance is used for internal processing. No OPC UA nodes should be tagged with this relevance.
         OeePerformance,
 
-        // OeePerformance_Ideal and OeePerformance_Actual are tags used for calculation of the OEE Performance for global, factory,
-        // production line and station level.
+        // OeePerformance_Ideal and OeePerformance_Actual are tags used for calculation of the OEE Performance
+        //
         // OEE Performance is the performance rate of the equipment and is calculated as: Actual output / Theoretical output
         // in our case this means: Actual cycle time / Ideal cycle time
-        // The node values with these tags are rolled into global, factory and production line level. The corresponding OPC UA nodes
-        // in all stations should be tagged with it.
         OeePerformance_Ideal,
         OeePerformance_Actual,
 
         // OeeQuality is used for internal processing. No OPC UA nodes should be tagged with this relevance.
         OeeQuality,
     
-        // OeeQuality_Bad and OeeQuality_Good are tags used for calculation of the OEE Quality for global, factory, production line and station level.
+        // OeeQuality_Bad and OeeQuality_Good are tags used for calculation of the OEE Quality
+        //
         // OEE Quality is the quality rate of the equipment and is calculated as: Good output / Actual output
         // in our case this means: Good products/(Good products + Bad products)
-        // The node values with these tags are rolled into global, factory and production line and station level. This means the faulty product counter 
-        // of each station must be tagged with OeeQuality_Bad and the good product counter of the last station must be tagged
-        // with OeeQualtiy_Good.
         OeeQuality_Bad,
         OeeQuality_Good,
 
-        // OeeQuality_Station_Bad and OeeQuality_Station_Good are tags used for calculation of the OEE Quality of a station.
-        // The node values with these tags are for station metrics only and are used to tag the faulty and good product counter of 
-        // a station.
-        OeeQuality_Station_Bad,
-        OeeQuality_Station_Good,
-
         // Kpi1 is the tag used to mark the OPC UA nodes contributing to the number of manufactured products of a production line.
-        // Only these OPC UA nodes, counting finalized products of a production line should be tagged with it. The values of those OPC UA nodes are accumulated bottom up
-        // into station, production line, factory and global level.
         Kpi1,
 
-        // Kpi1_Station is the tag used to mark the OPC UA nodes contributing to the number of manufactured products of a station.
-        // The values of those OPC UA nodes are NOT accumulated bottom up, but are locally to the station to which this OPC UA node belongs to.
-        Kpi1_Station,
-
         // Kpi2 is the tag used to mark the OPC UA nodes measuring the energy consumption of a station.
-        // The values of those OPC UA nodes are accumulated bottom up into station, production line, factory and global level.
-        Kpi2,
-
-        // Kpi2_Station is not used right now.
-        Kpi2_Station
+        Kpi2
     };
 
     /// <summary>

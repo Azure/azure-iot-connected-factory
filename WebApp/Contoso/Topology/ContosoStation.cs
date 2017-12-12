@@ -53,8 +53,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
                             case "OeeAvailability_Running":
                             case "OeeAvailability_Fault":
-                            case "OeeAvailability_Station_Running":
-                            case "OeeAvailability_Station_Fault":
                                 if (stationDescription.OeeAvailability == null)
                                 {
                                     throw new Exception(string.Format("The node '{0}' in Station wit URI '{1}' shows '{2}' relevance, but there are no performance settings for 'OeeAvailability' defined for the Station. Please change.", opcNode.NodeId, Key, relevanceDescription));
@@ -71,8 +69,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
                             case "OeeQuality_Good":
                             case "OeeQuality_Bad":
-                            case "OeeQuality_Station_Good":
-                            case "OeeQuality_Station_Bad":
                                 if (stationDescription.OeeQuality == null)
                                 {
                                     throw new Exception(string.Format("The node '{0}' in Station wit URI '{1}' shows '{2}' relevance, but there are no performance settings for 'OeeQuality' defined for the Station. Please change.", opcNode.NodeId, Key, relevanceDescription));
@@ -80,7 +76,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                                 goto case "SetRelevanceOperation";
 
                             case "Kpi1":
-                            case "Kpi1_Station":
                                 if (stationDescription.Kpi1 == null)
                                 {
                                     throw new Exception(string.Format("The node '{0}' in Station wit URI '{1}' shows '{2}' relevance, but there are no performance settings for 'Kpi1' defined for the Station. Please change.", opcNode.NodeId, Key, relevanceDescription));

@@ -836,7 +836,6 @@
     <Content Include="Content\fonts\selawkl.ttf" />
     <Content Include="Content\fonts\selawksb.ttf" />
     <Content Include="Content\fonts\selawksl.ttf" />
-    <None Include="Properties\PublishProfiles\johanngtest024 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />

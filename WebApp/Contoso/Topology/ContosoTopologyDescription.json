@@ -54,7 +54,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -145,7 +145,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -218,7 +218,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -315,10 +315,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
@@ -394,10 +394,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
@@ -469,7 +469,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -568,7 +568,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -647,7 +647,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -718,10 +718,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
@@ -819,7 +819,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -898,7 +898,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -969,10 +969,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
@@ -1070,7 +1070,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1149,7 +1149,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1220,10 +1220,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
@@ -1307,7 +1307,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1386,7 +1386,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1457,10 +1457,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
@@ -1544,7 +1544,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1623,7 +1623,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1694,10 +1694,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
@@ -1795,7 +1795,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1874,7 +1874,7 @@
                 {
                   "NodeId": "ns=2;i=385",
                   "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1", "OeeQuality_Station_Good" ],
+                  "Relevance": [ "Kpi1", "OeeQuality_Good" ],
                   "OpCode": "SubMaxMin"
                 },
                 {
@@ -1945,10 +1945,10 @@
               },
               "OpcNodes": [
                 {
-                  "NodeId": "ns=2;i=385",
-                  "SymbolicName": "NumberOfManufacturedProducts",
-                  "Relevance": [ "Kpi1_Station", "OeeQuality_Station_Good" ],
-                  "OpCode": "SubMaxMin"
+                    "NodeId": "ns=2;i=385",
+                    "SymbolicName": "NumberOfManufacturedProducts",
+                    "Relevance": [ "Kpi1", "OeeQuality_Good" ],
+                    "OpCode": "SubMaxMin"
                 },
                 {
                   "NodeId": "ns=2;i=391",
