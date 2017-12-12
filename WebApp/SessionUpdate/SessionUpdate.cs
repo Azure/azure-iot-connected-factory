@@ -13,21 +13,23 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 {
     public class SessionUpdate
     {
-        public static void ConfigureUpdateSessions(CancellationToken token)
+        public static List<Task> ConfigureUpdateSessions(CancellationToken token)
         {
+            List<Task> updateSessionsTasks = new List<Task>();
             try
             {
                 _updateClientOeeKpiData = new AutoResetEvent(false);
-                Task.Run(async () => await UpdateSessionsOeeKpiData(token));
+                updateSessionsTasks.Add(Task.Run(async () => await UpdateSessionsOeeKpiData(token)));
                 _updateClientAlertData = new AutoResetEvent(false);
-                Task.Run(async () => await UpdateSessionsAlertData(token));
+                updateSessionsTasks.Add(Task.Run(async () => await UpdateSessionsAlertData(token)));
                 _updateClientChildrenData = new AutoResetEvent(false);
-                Task.Run(async () => await UpdateSessionsChildrenData(token));
+                updateSessionsTasks.Add(Task.Run(async () => await UpdateSessionsChildrenData(token)));
             }
             catch (Exception e)
             {
                 Trace.TraceError($"Exception in ConfigureUpdateSessions ({e.Message})");
             }
+            return updateSessionsTasks;
         }
 
         public static void Dispose()

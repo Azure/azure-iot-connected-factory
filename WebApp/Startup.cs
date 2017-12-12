@@ -8,6 +8,8 @@ using System.Web.Http;
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 {
     using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using static Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.SessionUpdate;
 
     public partial class Startup
@@ -20,6 +22,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
         public void Configuration(IAppBuilder app)
         {
             _shutdownTokenSource = new CancellationTokenSource();
+            _tasksToShutdown = new List<Task>();
+
             DashboardController.Init();
 
             HttpConfiguration = new HttpConfiguration();
@@ -34,7 +38,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 
             ConfigureTopology();
 
-            ConfigureIotHub();
+            _tasksToShutdown.Add(ConfigureIotHub(_shutdownTokenSource.Token));
 
             ConfigureRDX();
 
@@ -42,12 +46,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 
             ConfigureOpcUa();
 
-            ConfigureUpdateSessions(_shutdownTokenSource.Token);
+            _tasksToShutdown.AddRange(ConfigureUpdateSessions(_shutdownTokenSource.Token));
         }
 
         public static void End()
         {
             _shutdownTokenSource.Cancel();
+            Task.WhenAll(_tasksToShutdown.ToArray());
             DashboardController.Deinit();
         }
 
@@ -57,5 +62,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
         }
 
         private static CancellationTokenSource _shutdownTokenSource;
+        private static List<Task> _tasksToShutdown;
     }
 }

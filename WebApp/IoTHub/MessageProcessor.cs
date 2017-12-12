@@ -58,6 +58,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
         public Task ProcessErrorAsync(PartitionContext context, Exception error)
         {
             Trace.TraceError($"Message processor error '{error.Message}' on partition with id '{context.PartitionId}'");
+            Trace.TraceError($"Exception stack '{error.StackTrace}'");
             return Task.CompletedTask;
         }
 
@@ -188,13 +189,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 
         private Stopwatch _checkpointStopwatch;
         private const double _checkpointPeriodInMinutes = 5;
-        private static Stopwatch _sessionUpdateStopwatch;
-        private static int _processorHostMessages;
-        private static int _publisherMessages;
-        private static int _publisherMessagesInvalidFormat;
-        private static string _lastSourceTimestamp;
-        private static string _lastOpcUri;
-        private static string _lastNodeId;
+        private Stopwatch _sessionUpdateStopwatch;
+        private int _processorHostMessages;
+        private int _publisherMessages;
+        private int _publisherMessagesInvalidFormat;
+        private string _lastSourceTimestamp;
+        private string _lastOpcUri;
+        private string _lastNodeId;
     }
 }
 

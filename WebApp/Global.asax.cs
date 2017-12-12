@@ -19,6 +19,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
     {
         protected void Application_Start()
         {
+            Trace.TraceInformation("Connected factory Application_Start");
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -31,7 +32,15 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 
         protected void Application_End()
         {
+            Trace.TraceInformation("Connected factory Application_End");
             Startup.End();
+        }
+        
+        protected void Application_Error()
+        {
+            Trace.TraceError("Connected factory Application_Error");
+            Exception e = Server.GetLastError();
+            Trace.TraceError($"{e.StackTrace}");
         }
 
         protected void Application_Dispose()
