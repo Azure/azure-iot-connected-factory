@@ -31,8 +31,31 @@
             }
             else
             {
-                <img class="dashboard_map_container_image" src="@Model.TopNode.ImagePath" />
-            }
+                <div class="dashboard_map_container scalize">
+                    <img class="dashboard_map_container_image target" src="@Model.TopNode.ImagePath" />
+                    @{ int i = 0;}
+                    @foreach (var child in Model.Children)
+                    {
+                        if (child.ImagePushpin != null)
+                        {
+                            RouteValueDictionary valueDictionary = new RouteValueDictionary { { "topNode", child.Key } };
+                            var dashboardUrl = @Url.Action("Index", "Dashboard", valueDictionary);
+                            <div id="image_pushpin@(i)" class="item-point" data-top="@child.ImagePushpin.Top" data-left="@child.ImagePushpin.Left">
+                                @if (Model.ChildrenType == typeof(ContosoOpcUaNode))
+                                {
+                                    <div><a class="select" href="#" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');"></a></div>
+                                }
+                                else
+                                {
+                                    <div><a class="select" href="#" onclick="javascript:gotoChildrenNode('@dashboardUrl');"></a></div>
+                                }
+                                <div class="dashboard_container_image_text">@child.Name</div>
+                            </div>
+                        }
+                        i++;
+                    }
+                </div>
+            }   
         </div>
             <div class="row dashboard_alerts_container col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 @{
@@ -1287,6 +1310,7 @@
                                             updateMap = true;
                                         }
                                     }
+                                    $("#image_pushpin" + j).addClass("alarm");
                                 } else {
                                     var statusMessage = "@Strings.Normal";
                                     var dashboardStatusClass = "dashboard_status_good";
@@ -1297,6 +1321,7 @@
                                             updateMap = true;
                                         }
                                     }
+                                    $("#image_pushpin" + j).removeClass("alarm");
                                 }
 
                                 var url = '@Url.Action("Index", "Dashboard")' + "?topNode=" + encodeURI(session.Children[j].Key);
@@ -1542,6 +1567,9 @@
         applyFilter(alertListInformation);
 
         jQuery('.scrollbar-macosx').scrollbar();
+
+        //Initialize scalize library
+        $('.scalize').scalize(); 
     });
 
     function updateTopologyListInformation() {

@@ -52,6 +52,11 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         public string ImagePath { get; set; }
 
         /// <summary>
+        /// Image pushpin coordinates.
+        /// </summary>
+        public ContosoPushPinCoordinates ImagePushpin { get; set; }
+
+        /// <summary>
         /// OEE Availability definition of the topology node.
         /// </summary>
         public ContosoPerformanceSetting OeeAvailabilityPerformanceSetting { get; set; }
@@ -151,17 +156,18 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         /// <summary>
         /// Ctor for the topology node using values.
         /// </summary>
-        public ContosoTopologyNode(string key, string name, string description) : base(key)
+        public ContosoTopologyNode(string key, string name, string description, ContosoPushPinCoordinates imagePushpin) : base(key)
         {
             Name = name;
             Description = description;
             ImagePath = "/Content/img/" + _defaultImage;
+            ImagePushpin = imagePushpin;
         }
 
         /// <summary>
         /// Ctor for a topology node in the topology using the topology node description.
         /// </summary>
-        public ContosoTopologyNode(string key, string name, string description, ContosoTopologyDescriptionCommon topologyDescription) : this(key, name, description)
+        public ContosoTopologyNode(string key, string name, string description, ContosoTopologyDescriptionCommon topologyDescription) : this(key, name, description, topologyDescription.ImagePushpin)
         {
             if (topologyDescription == null)
             {

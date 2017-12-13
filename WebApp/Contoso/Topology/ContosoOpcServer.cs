@@ -52,6 +52,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         public string NodeId;
 
         [JsonProperty]
+        public ContosoPushPinCoordinates ImagePushpin;
+
+        [JsonProperty]
         public string SymbolicName;
 
         [JsonProperty]
@@ -157,6 +160,11 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         public List<ContosoAlertActionDefinition> MaximumAlertActions;
 
         /// <summary>
+        /// Define Pushpin coordinates in px from the top and from the left border of the image.
+        /// <summary>
+        public ContosoPushPinCoordinates ImagePushpin { get; set; }
+
+        /// <summary>
         /// Ctor for a Contoso OPC UA node, specifying alert related information.
         /// </summary>
         public ContosoOpcUaNode(
@@ -170,7 +178,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             double? minimum,
             double? maximum,
             List<ContosoAlertActionDefinition> minimumAlertActionDefinitions,
-            List<ContosoAlertActionDefinition> maximumlertActionDefinitions
+            List<ContosoAlertActionDefinition> maximumAlertActionDefinitions,
+            ContosoPushPinCoordinates imagePushpin
             )
             : base(opcUaNodeId, opcUaSymbolicName)
         {
@@ -182,8 +191,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             Minimum = minimum;
             Maximum = maximum;
             MinimumAlertActions = minimumAlertActionDefinitions;
-            MaximumAlertActions = maximumlertActionDefinitions;
+            MaximumAlertActions = maximumAlertActionDefinitions;
             Last = new ContosoDataItem();
+            ImagePushpin = imagePushpin;
         }
 
         /// <summary>
@@ -210,6 +220,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             MaximumAlertActions = new List<ContosoAlertActionDefinition>();
             MaximumAlertActions.AddRange(ContosoAlertActionDefinition.Init(opcNodeDescription.MaximumAlertActions));
             Last = new ContosoDataItem();
+            ImagePushpin = opcNodeDescription.ImagePushpin;
         }
 
         /// <summary>
@@ -346,7 +357,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
             double? minimum,
             double? maximum,
             List<ContosoAlertActionDefinition> minimumAlertActionDefinitions,
-            List<ContosoAlertActionDefinition> maximumAlertActionDefinitions)
+            List<ContosoAlertActionDefinition> maximumAlertActionDefinitions,
+            ContosoPushPinCoordinates imagePushpin)
         {
             foreach (var node in NodeList)
             {
@@ -368,7 +380,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                 minimum,
                 maximum,
                 minimumAlertActionDefinitions,
-                maximumAlertActionDefinitions);
+                maximumAlertActionDefinitions,
+                imagePushpin);
 
             NodeList.Add(opcUaNodeObject);
         }

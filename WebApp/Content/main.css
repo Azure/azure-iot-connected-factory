@@ -7161,13 +7161,21 @@ a {
  *  dashboard map
 */
 .dashboard_map_container {
-  border: 16px solid #121416;
   border-top: none;
   height: 561px;
 }
 .dashboard_map_container_image {
   width: 100%;
   height: 100%;
+}
+.dashboard_container_image_text {
+  display: inline-block;
+  color: white;
+  vertical-align: text-top;
+  text-align: center;
+  width: 200px;
+  margin-left: -95px;
+  margin-top: 15px;
 }
 /* 
  *  dashboard information area with alerts
@@ -7246,6 +7254,11 @@ a {
   text-align: right;
   margin-top: -2px;
   font-size: 14px;
+}
+.scroll-wrapper > .scroll-content.scroll_only_y {
+  overflow: hidden !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 /* 
  *  dashboard OEE/KPI area
