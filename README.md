@@ -20,14 +20,13 @@ It takes approximately 14 minutes to complete the deployment.
 After you have successfully deployed the solution and the web application launches the first time it takes approximately 3 minutes for data to show in the solution dashboard.
 
 #### Bing Maps
-If you don't have a Bing Maps API for Enterprise account, create one in the [Azure portal](https://portal.azure.com) by clicking + New, search for Bing Maps API for Enterprise and follow prompts to create. 
+Connected factory supports the Bing Maps API to show factory locations in the dashboard. Please check the [Connected factory FAQ](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-faq-cf) for more details.
 
-Get your Bing Maps API for Enterprise QueryKey from the Azure portal: 
-1.	Navigate to the Resource Group where your Bing Maps API for Enterprise is in the Azure portal.
-2.	Click All Settings, then Key Management. 
-3.	You will see two keys: MasterKey and QueryKey. Copy the value for QueryKey.
-4.	To have the key picked up by the build.ps1 script, set the environment variable "$env:MapApiQueryKey" in your PowerShell environment to a valid BingMaps license key and it will be picked up by the build script and automatically added to the settings of the App Service.
-5.	Run a local or cloud deployment using build.ps1.
+#### Configure Connected factory
+The configuration of the Connected factory preconfigured solution is handled in more detail [here](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-connected-factory-configure).
+
+#### Deploy an edge gateway for the Connected factory
+If you want to add a new gateway to the Connected factory, please follow the instructions on [this page](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-connected-factory-gateway-deployment).
 
 #### Simulation VM security
 To upload and start the simulation in the VM, we are adding a public IP interface before we upload the VM scripts and executables. This interface is removed after the operation is completed. The network interface of the VM is protected by a network security group, which allows only outgoing connections on ports 5671 (AMPQS), 8883 (MQTTS) and 443 (TLS).
