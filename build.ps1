@@ -407,7 +407,7 @@ function AzureNameExists () {
     {
         "microsoft.storage/storageaccounts"
         {
-            return Test-AzureName -Storage $resourceBaseName
+            return ((Get-AzureRmStorageAccountNameAvailability -Name $resourceBaseName) -eq $false)
         }
         "microsoft.eventhub/namespaces"
         {
