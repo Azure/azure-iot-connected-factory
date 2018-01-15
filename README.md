@@ -58,9 +58,9 @@ If you need to change the configuration of the production line VM to allow inbou
   * Search for Windows PowerShell in Start
   * Right click on result Windows PowerShell and choose Run as Administrator
   * In PowerShell (Administrator mode)
-    * Install PSCX PowerShell cmdlets V3.2.2 on your system by "Install-Module PSCX -AllowClobber"
+    * Install PSCX PowerShell cmdlets V3.3.1 on your system by "Install-Module PSCX -MaximumVersion 3.3.1 -AllowClobber"
       * Choose Y to message "install from Powershell gallery if prompted"
-    * Install-Module Posh-SSH on your system by "Install-Module Posh-SSH -AllowClobber" 
+    * Install Posh-SSH V2.0.2 on your system by "Install-Module Posh-SSH -MaximumVersion 2.0.2 -AllowClobber" 
       * Choose Y to message "install from Powershell gallery if prompted"
 5. Update your PowerShell profile or session environemnt
   * To build PCS MSBuild.exe must be in the path.

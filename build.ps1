@@ -407,7 +407,7 @@ function AzureNameExists () {
     {
         "microsoft.storage/storageaccounts"
         {
-            return ((Get-AzureRmStorageAccountNameAvailability -Name $resourceBaseName) -eq $false)
+            return ((Get-AzureRmStorageAccountNameAvailability -Name $resourceBaseName).NameAvailable -eq $false)
         }
         "microsoft.eventhub/namespaces"
         {
@@ -692,14 +692,7 @@ Function ValidateLoginCredentials()
     if (Test-Path "$profileFile") 
     {
         Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Use saved profile from '{0}" -f $profileFile)
-        if ($script:AzurePowershellVersionMajor -le 3)
-        {
-            $rmProfile = Select-AzureRmProfile -Path "$profileFile"
-        }
-        else 
-        {
-            $rmProfile = Import-AzureRmContext -Path "$profileFile"
-        }
+        $rmProfile = Import-AzureRmContext -Path "$profileFile"
         $rmProfileLoaded = ($rmProfile -ne $null) -and ($rmProfile.Context -ne $null) -and ((Get-AzureRmSubscription) -ne $null)
     }
     if ($rmProfileLoaded -ne $true) {
@@ -712,14 +705,7 @@ Function ValidateLoginCredentials()
             Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - The login to the Azure account was not successful. Please run the script again.")
             throw ("The login to the Azure account was not successful. Please run the script again.")
         }
-        if ($script:AzurePowershellVersionMajor -le 3)
-        {
-            Save-AzureRmProfile -Path "$profileFile"
-        }
-        else 
-        {
-            Save-AzureRmContext -Path "$profileFile"
-        }
+        Save-AzureRmContext -Path "$profileFile"
     }
 }
 
@@ -797,12 +783,12 @@ Function CreateAadClientSecret()
 {
     $newPassword = RandomPassword
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - New Password: {0}" -f $newPassword)
-    Remove-AzureRmADAppCredential -ApplicationId $script:AadClientId -All -Force
+    Remove-AzureRmADAppCredential -ApplicationId $script:AadClientId -All -Force -ErrorAction SilentlyContinue
     # create new secret for web app, $secret is converted to PSAD type
     # keep $newPassword to be returned as a string
     $secret = $newPassword
     $startDate = Get-Date
-    $secret = New-AzureRmADAppCredential -ApplicationId $script:AadClientId -StartDate $startDate -EndDate $startDate.AddYears(1) -Password $secret
+    $secret = New-AzureRmADAppCredential -ApplicationId $script:AadClientId -StartDate $startDate -EndDate $startDate.AddYears(1) -Password (ConvertTo-SecureString -String  $secret -Force –AsPlainText)
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - New Secret Id: {0}" -f $secret.KeyId)
     return $newPassword
 }
@@ -822,14 +808,7 @@ Function GetAadTenant()
     if ($tenants.Count -eq 1)
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Only one tenant found, use it. TenantId: '{0}' with IdentifierUri '{1}' exists in Azure environment '{2}'" -f $script:WebAppDisplayName , $script:WebAppIdentifierUri, $script:AzureEnvironment.Name)
-        if ($script:AzurePowershellVersionMajor -le 3)
-        {
-            $tenantId = $tenants[0].TenantId
-        }
-        else
-        {
-            $tenantId = $tenants[0].Id
-        }
+        $tenantId = $tenants[0].Id
     }
     else
     {
@@ -839,14 +818,7 @@ Function GetAadTenant()
         [int]$selectedIndex = -1
         foreach ($tenantObj in $tenants)
         {
-            if ($script:AzurePowershellVersionMajor -le 3)
-            {
-                $tenant = $tenantObj.TenantId
-            }
-            else
-            {
-                $tenant = $tenantObj.Id
-            }
+            $tenant = $tenantObj.Id
             $uri = "{0}{1}/me?api-version=1.6" -f $script:AzureEnvironment.GraphUrl, $tenant
             $authResult = GetAuthenticationResult $tenant $script:AzureEnvironment.ActiveDirectoryAuthority $script:AzureEnvironment.GraphUrl $script:AzureAccountName -Prompt "Auto"
             $header = $authResult.CreateAuthorizationHeader()
@@ -887,14 +859,7 @@ Function GetAadTenant()
                 }
             }
         }
-        if ($script:AzurePowershellVersionMajor -le 3)
-        {
-            $tenantId = $tenants[$selectedIndex - 1].TenantId
-        }
-        else
-        {
-            $tenantId = $tenants[$selectedIndex - 1].Id
-        }
+        $tenantId = $tenants[$selectedIndex - 1].Id
     }
 
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - AAD Tenant ID is '{0}'" -f $tenantId)
@@ -1030,14 +995,7 @@ Function InitializeEnvironment()
             $subscriptions = Get-AzureRMSubscription
             if ($subscriptions.Count -eq 1)
             {
-                if ($script:AzurePowershellVersionMajor -le 3)
-                {
-                    $subscriptionId = $subscriptions[0].SubscriptionId
-                }
-                else
-                {
-                    $subscriptionId = $subscriptions[0].Id
-                }
+                $subscriptionId = $subscriptions[0].Id
             }
             else
             {
@@ -1045,30 +1003,13 @@ Function InitializeEnvironment()
                 Write-Host
                 Write-Host ("Available subscriptions for account '{0}'" -f $script:AzureAccountName)
                 Write-Host
-                if ($script:AzurePowershellVersionMajor -le 3)
-                {
-                    Write-Host ($subscriptions | Format-Table @{Name='Option';Expression={$script:OptionIndex;$script:OptionIndex+=1};Alignment='right'},SubscriptionName, subscriptionId -AutoSize | Out-String).Trim() 
-                }
-                else
-                {
-                    Write-Host ($subscriptions | Format-Table @{Name='Option';Expression={$script:OptionIndex;$script:OptionIndex+=1};Alignment='right'},Name, Id -AutoSize | Out-String).Trim() 
-                }
+                Write-Host ($subscriptions | Format-Table @{Name='Option';Expression={$script:OptionIndex;$script:OptionIndex+=1};Alignment='right'},Name, Id -AutoSize | Out-String).Trim() 
                 Write-Host
                 while ($true)
                 {
-                    if ($script:AzurePowershellVersionMajor -le 3)
+                    if ($subscriptions.Id.Contains($subscriptionId))
                     {
-                        if ($subscriptions.SubscriptionId.Contains($subscriptionId))
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if ($subscriptions.Id.Contains($subscriptionId))
-                        {
-                            break;
-                        }
+                        break;
                     }
 
                     try
@@ -1085,32 +1026,24 @@ Function InitializeEnvironment()
                     {
                         continue
                     }
-
-                    if ($script:AzurePowershellVersionMajor -le 3)
-                    {
-                        $subscriptionId = $subscriptions[$script:OptionIndex - 1].SubscriptionId
-                    }
-                    else
-                    {
-                        $subscriptionId = $subscriptions[$script:OptionIndex - 1].Id
-                    }
+                    $subscriptionId = $subscriptions[$script:OptionIndex - 1].Id
                 }
             }
         }
     }
     UpdateEnvSetting "SubscriptionId" $subscriptionId
     $rmSubscription = Get-AzureRmSubscription -SubscriptionId $subscriptionId
-    if ($script:AzurePowershellVersionMajor -le 3)
-    {
-        $subscriptionName = $rmSubscription.SubscriptionName
-    }
-    else
-    {
-        $subscriptionName = $rmSubscription.Name
-    }
+    $subscriptionName = $rmSubscription.Name
     $tenantId = $rmSubscription.TenantId
-    Set-AzureRmContext -SubscriptionName $subscriptionName -TenantId $tenantId | Out-Null
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Selected Azure subscription {0} with ID {1}" -f $subscriptionName, $subscriptionId)
+    Set-AzureRmContext -Subscription $subscriptionId -Tenant $tenantId -Scope Process | Out-Null
+    $context = Get-AzureRmContext
+    if ($context.Subscription.Id -ne $subscriptionId)
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot select subscription '{0}'. Please open a new PowerShell window and and run the command again or try later." -f $subscriptionId)
+        throw ("Cannot select subscription '{0}'. Please open a new PowerShell window and and run the command again or try later." -f $subscriptionId)
+    }
+    Select-AzureRmContext -InputObject $context -Scope Process | Out-Null
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Azure context set to subscription '{0}' with Id '{1}' in tenant with Id '{2}'." -f $subscriptionName, $subscriptionId, $tenantId)
 
     # Initialize Tenant
     $script:AadTenant = GetOrSetEnvSetting "AadTenant" "GetAADTenant"
@@ -1866,12 +1799,12 @@ Function GetOwnerObjectId()
     {
         # find owner in the subscription directory
         $searchuser = ($script:AzureAccountName -replace '@','_') + '#EXT#*'
-        $result = (Get-AzureRmAdUser | Where-Object {($_.UserPrincipalName -like $searchuser)}).Id
+        $result = (Get-AzureRmADUser | Where-Object {($_.UserPrincipalName -like $searchuser)}).Id
         if ([string]::IsNullOrEmpty($result))
         {
             # not found, but fill with UPN to avoid deployment error
             $result = $script:AzureAccountName
-            Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Owner {0} object id not found" -f $result);
+            Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Owner {0} object id not found" -f $result);
         }
     }
     return $result
@@ -2016,8 +1949,8 @@ $SECONDS_TO_SLEEP=3
 # Timestamp format as specified on http://msdn.microsoft.com/library/system.globalization.datetimeformatinfo.aspx
 # u is ISO 8601 standard for coordinated universal time
 $TIME_STAMP_FORMAT = "u"
-$EXPECTED_PSCX_MODULE_VERSION = "3.2.2"
-$EXPECTED_POSHSSH_MODULE_VERSION = "1.7.7"
+$EXPECTED_PSCX_MODULE_VERSION = "3.3.1"
+$EXPECTED_POSHSSH_MODULE_VERSION = "2.0.2"
 
 # Variable initialization
 $script:IoTSuiteRootPath = Split-Path $MyInvocation.MyCommand.Path
@@ -2038,8 +1971,6 @@ $script:SimulationBuildOutputStartScript = "$script:SimulationBuildOutputPath/st
 $script:SimulationBuildOutputStopScript = "$script:SimulationBuildOutputPath/stopsimulation"
 $script:SimulationConfigPath = "$script:SimulationBuildOutputPath/Config"
 
-# Import and check installed Azure cmdlet version
-$script:AzurePowershellVersionMajor = (Get-Module -ListAvailable -Name Azure).Version.Major
 CheckModuleVersion PSCX $EXPECTED_PSCX_MODULE_VERSION
 CheckModuleVersion Posh-SSH $EXPECTED_POSHSSH_MODULE_VERSION
 
@@ -2082,7 +2013,7 @@ switch($script:AzureEnvironmentName)
     }
     default {throw ("'{0}' is not a supported Azure Cloud environment" -f $script:AzureEnvironmentName)}
 }
-$script:AzureEnvironment = Get-AzureEnvironment $script:AzureEnvironmentName
+$script:AzureEnvironment = Get-AzureRmEnvironment $script:AzureEnvironmentName
 
 # Set environment specific variables.
 if ($script:DeploymentName -eq "local")
@@ -2173,6 +2104,41 @@ if ($script:Command -eq "build" -or $script:Command -eq "updatesimulation")
 
 if ($script:Command -eq "delete")
 {
+    if ([string]::IsNullOrEmpty((Get-AzureRmContext).Account))
+    {
+        Login-AzureRmAccount -EnvironmentName $script:AzureEnvironment.Name -ErrorAction Stop | Out-Null
+    }
+
+    if (!(Test-Path "$script:DeploymentSettingsFile"))
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot find the configruation file '{0}' for the deployment." -f $script:DeploymentSettingsFile)
+        throw ("Cannot find the configruation file '{0}' for the deployment." -f $script:DeploymentSettingsFile)
+    }
+
+    # Initialize deployment settings.
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - InitializeDeployment settings for'{0}'" -f $script:DeploymentName)
+    InitializeDeploymentSettings
+
+    $subscriptionId = GetEnvSetting "SubscriptionId"
+    $tenantId = GetEnvSetting "AadTenant"
+    if (![string]::IsNullOrEmpty($subscriptionId) -and ![string]::IsNullOrEmpty($tenantId))
+    {
+        Set-AzureRmContext -Subscription $subscriptionId -Tenant $tenantId -Scope Process | Out-Null
+        $context = Get-AzureRmContext
+        if ($context.Subscription.Id -ne $subscriptionId)
+        {
+            Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot select subscription '{0}'. Please open a new PowerShell window and run the command again or try later." -f $subscriptionId)
+            throw ("Cannot select subscription '{0}'. Please open a new PowerShell window and run the command again or try later." -f $subscriptionId)
+        }
+        Select-AzureRmContext -InputObject $context -Scope Process | Out-Null
+        Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Azure context set to subscription with Id '{0}' in tenant with Id '{1}'." -f $subscriptionId, $tenantId)
+    }
+    else
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - AadTenant and/or SubscriptionId setting in the configuration are missing or empty.")
+        throw ("AadTenant and/or SubscriptionId setting in the configuration are missing or empty.")
+    }
+
     # Remove the resource group.
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check if resource group with name '{0}' exists." -f $script:SuiteName)
     $resourceGroup = Get-AzureRmResourceGroup -Name $script:SuiteName -ErrorAction SilentlyContinue
@@ -2183,27 +2149,30 @@ if ($script:Command -eq "delete")
     }
     else
     {
-        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot find resource group name '{0}'. Have you selected the correct subscription by Select-AzureRmSubscription?" -f $script:SuiteName)
-        throw ("Cannot find resource group name '{0}'. Do you have selected the correct subscription by Select-AzureRmSubscription?" -f $script:SuiteName)
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot find resource group name '{0}'." -f $script:SuiteName)
     }
 
-    # Remove the WebApp.
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check if WebApp with the following IdentifierUri'{0}' exists" -f $script:WebAppIdentifierUri)
+    # Delete deployment certificates.
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete existing certificates")
+    Remove-Item -Recurse -Path "$script:CreateCertsPath/certs/$script:DeploymentName" -Force -ErrorAction SilentlyContinue | Out-Null
+    Remove-Item -Recurse -Path "$script:CreateCertsPath/private/$script:DeploymentName" -Force -ErrorAction SilentlyContinue | Out-Null
+
+    # Remove the AD Application.
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check if an AD application with the IdentifierUri '{0}' exists" -f $script:WebAppIdentifierUri)
     $webApp = Get-AzureRmADApplication -IdentifierUri $script:WebAppIdentifierUri  -ErrorAction SilentlyContinue
     if ($webApp -ne $null)
     {
-        Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - WebApp found. Remove it.")
-        Remove-AzureRmADApplication -ObjectId $webApp.ObjectId -Force -ErrorAction SilentlyContinue
+        Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - AD application found. Remove it."
+        Remove-AzureRmADApplication -ObjectId $webApp.ObjectId.Guid -Force -ErrorAction SilentlyContinue
+
+        # Delete the deployment settings file.
+        Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete existing settings file '{0}'" -f $script:DeploymentSettingsFile)
+        Remove-Item $script:DeploymentSettingsFile -Force -ErrorAction SilentlyContinue | Out-Null
     }
-
-    # Delete the deployment settings file.
-    Write-Output Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete existing settings file '{0}'" -f $script:DeploymentSettingsFile)
-    Remove-Item $script:DeploymentSettingsFile -Force -ErrorAction SilentlyContinue | Out-Null
-
-    # Delete deployment certificates.
-    Write-Output Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Delete existing certificates")
-    Remove-Item -Recurse -Path "$script:CreateCertsPath/certs/$script:DeploymentName" -Force -ErrorAction SilentlyContinue | Out-Null
-    Remove-Item -Recurse -Path "$script:CreateCertsPath/private/$script:DeploymentName" -Force -ErrorAction SilentlyContinue | Out-Null
+    else
+    {
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - An AD application with the IdentifierUri '{0}' could not be found. Keeping configuration file." -f $script:WebAppIdentifierUri)
+    }
     exit
 }
 
@@ -2431,11 +2400,14 @@ if ($script:WebSitesServicePrincipal -eq $null)
 }
 $script:WebSitesServicePrincipalObjectId = $script:WebSitesServicePrincipal.Id
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Websites Service Principal Object Id: $script:WebSitesServicePrincipalObjectId"
+
+# Create TSI credentials
 $script:RdxAccessPolicyPrincipalObjectId = (Get-AzureRmADServicePrincipal -ServicePrincipalName $script:AadClientId).Id
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - AAD Client Service Principal Object Id: $script:RdxAccessPolicyPrincipalObjectId"
 $script:RdxOwnerServicePrincipalObjectId = GetOwnerObjectId
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Data Access Contributor Object Id: $script:RdxOwnerServicePrincipalObjectId"
 $script:RdxAuthenticationClientSecret = CreateAadClientSecret
+Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - TSI Authentication secret: $script:RdxAuthenticationClientSecret"
 
 # Set up ARM parameters.
 $script:ArmParameter += @{ `
@@ -2550,46 +2522,33 @@ Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Provisioning and deployment
 if ($script:CloudDeploy -eq $true)
 {
     $script:MaxTries = $MAX_TRIES
-    $script:WebEndpoint = "{0}.{1}" -f $script:DeploymentName, $script:WebsiteSuffix
-    if (!(Test-AzureName -Website $script:WebEndpoint))
+    # Wait till we can successfully load the page
+    Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Waiting for website to respond."
+    while ($true)
     {
-        Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Waiting for website URL to resolve."
-        while (!(Test-AzureName -Website $script:WebEndpoint))
+        Clear-DnsClientCache
+        try
         {
-            Clear-DnsClientCache
-            Write-Progress -Activity "Resolving website URL" -Status "Trying" -SecondsRemaining ($script:MaxTries*$SECONDS_TO_SLEEP)
-            if ($script:MaxTries-- -le 0)
-            {
-                Write-Warning ("$(Get-Date –f $TIME_STAMP_FORMAT) - Unable to resolve Website endpoint {0}" -f $script:WebAppHomepage)
-                break
-            }
-            sleep $SECONDS_TO_SLEEP
+            $result = Invoke-WebRequest -Uri $script:WebAppHomepage
         }
-    }
-    if (Test-AzureName -Website $script:WebEndpoint)
-    {
-        # Wait till we can successfully load the page
-        Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Waiting for website to respond."
-        while ($true)
+        catch 
         {
-            try
-            {
-                $result = Invoke-WebRequest -Uri $script:WebAppHomepage
-            }
-            catch 
-            {
-                $result = $null
-            }
-            if ($result -ne $null -and $result.StatusCode -eq 200)
-            {
-                break;
-            }
-            Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Sleep for 5 seconds and check again."
-            Start-Sleep -Seconds 10
+            $result = $null
         }
-        # start the browser to show the page
-        start $script:WebAppHomepage
+        if ($result -ne $null -and $result.StatusCode -eq 200)
+        {
+            break;
+        }
+        if ($script:MaxTries-- -le 0)
+        {
+            Write-Warning ("$(Get-Date –f $TIME_STAMP_FORMAT) - Unable to resolve Website endpoint {0}. Try later manually." -f $script:WebAppHomepage)
+            break
+        }
+        Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Sleep for 5 seconds and check again."
+        Start-Sleep -Seconds 10
     }
+    # start the browser to show the page
+    start $script:WebAppHomepage
 }
 else
 {
