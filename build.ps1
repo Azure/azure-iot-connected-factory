@@ -1039,8 +1039,8 @@ Function InitializeEnvironment()
     $context = Get-AzureRmContext
     if ($context.Subscription.Id -ne $subscriptionId)
     {
-        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot select subscription '{0}'. Please open a new PowerShell window and and run the command again or try later." -f $subscriptionId)
-        throw ("Cannot select subscription '{0}'. Please open a new PowerShell window and and run the command again or try later." -f $subscriptionId)
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - Cannot select subscription '{0}'. Please open a new PowerShell window and run the command again or try later." -f $subscriptionId)
+        throw ("Cannot select subscription '{0}'. Please open a new PowerShell window and run the command again or try later." -f $subscriptionId)
     }
     Select-AzureRmContext -InputObject $context -Scope Process | Out-Null
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Azure context set to subscription '{0}' with Id '{1}' in tenant with Id '{2}'." -f $subscriptionName, $subscriptionId, $tenantId)
