@@ -680,7 +680,7 @@ Function ValidateLoginCredentials()
         Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Account '{0}' is unknown in Azure environment '{1}'. Add it." -f $script:AzureAccountName, $script:AzureEnvironment.Name)
         $account = Add-AzureAccount -Environment $script:AzureEnvironment.Name
     }
-    if ((Get-AzureSubscription -SubscriptionId ($account.Subscriptions -replace '(?:\r\n)',',').split(",")[0]) -eq $null)
+    if ([string]::IsNullOrEmpty($account.Subscriptions) -or (Get-AzureSubscription -SubscriptionId ($account.Subscriptions -replace '(?:\r\n)',',').split(",")[0]) -eq $null)
     {
         Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - No subscriptions. Add account")
         Add-AzureAccount -Environment $script:AzureEnvironment.Name | Out-Null

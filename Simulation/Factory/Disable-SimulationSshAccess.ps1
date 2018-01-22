@@ -62,7 +62,11 @@ $script:ResourceGroupName = $DeploymentName
 # Find the NSG
 try 
 {
-    $currentNsg = Get-AzureRmNetworkSecurityGroup -ResourceGroupName $script:ResourceGroupName -Name $script:ResourceGroupName
+    $currentNsg = Get-AzureRmNetworkSecurityGroup -ResourceGroupName $script:ResourceGroupName -Name $script:ResourceGroupName -ErrorAction SilentlyContinue
+    if ($currentNsg -eq $null)
+    {
+        throw
+    }
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Found the network security group with name '{0}' in resource group '{1}'" -f $script:ResourceGroupName, $script:ResourceGroupName)
 }
 catch 
