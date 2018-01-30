@@ -122,7 +122,7 @@
     <comment>Error message.</comment>
   </data>
   <data name="MicrosoftAzureIoTSuite" xml:space="preserve">
-    <value>Conjunto de aplicaciones de IoT de Microsoft Azure</value>
+    <value>Microsoft Azure IoT Suite</value>
     <comment>Section heading.</comment>
   </data>
   <data name="SignIn" xml:space="preserve">
@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>Alarms</value>
+    <value>Alarmas</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -915,8 +915,8 @@ Seguimiento de la pila:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
-&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
+    <value>&lt;div&gt;Puede encontrar instrucciones para Windows &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;aquí&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;Puede encontrar instrucciones para Linux &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;aquí&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Puede encontrar instrucciones para editar la información de la línea de ensamblado &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;aquí&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">

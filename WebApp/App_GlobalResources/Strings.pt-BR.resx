@@ -150,7 +150,7 @@
     <comment>Error message. {StrContains="JavaScript"}</comment>
   </data>
   <data name="NoJScriptInfo2" xml:space="preserve">
-    <value>Para saber como permitir o uso de JavaScript ou como descobrir se seu navegador dá suporte a JavaScript, consulte a ajuda online do navegador da Web.</value>
+    <value>Para saber como permitir o uso de JavaScript ou como descobrir se seu navegador é compatível com JavaScript, consulte a ajuda online do navegador da Web.</value>
     <comment>Informational text block. {StrContains="JavaScript"}</comment>
   </data>
   <data name="DefaultSolutionName" xml:space="preserve">
@@ -222,7 +222,7 @@
     <comment>Label</comment>
   </data>
   <data name="AlertsContainerHeader" xml:space="preserve">
-    <value>Alarms</value>
+    <value>Alarmes</value>
     <comment>Label</comment>
   </data>
   <data name="ChildrenFactoryListContainerHeaderPostfix" xml:space="preserve">
@@ -915,8 +915,8 @@ Rastreamento de pilha:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Instructions for Windows can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;here&lt;/a&gt;.&lt;/div&gt;
-&lt;div&gt;Instructions for Linux be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
+    <value>&lt;div&gt;As instruções para o Windows podem ser encontradas &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846367"&gt;aqui&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;As instruções para o Linux podem ser encontradas &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846368"&gt;aqui&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;As instruções para editar as informações da linha de assembly podem ser encontradas &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;aqui&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
