@@ -2409,6 +2409,9 @@ Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Data Access Contributor Obj
 $script:RdxAuthenticationClientSecret = CreateAadClientSecret
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - TSI Authentication secret: $script:RdxAuthenticationClientSecret"
 
+# Register KeyVault provider
+Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.KeyVault" | Out-Null
+
 # Set up ARM parameters.
 $script:ArmParameter += @{ `
     suitename = $script:SuiteName; `
