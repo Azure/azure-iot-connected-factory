@@ -40,7 +40,8 @@
 *.svg       text
 
 *.cshtml    text
-
+# For shell scripts <cr><lf> line endings are dangerous
+*.sh		text eol=lf
 
 ###############################################################################
 # behavior for image files
