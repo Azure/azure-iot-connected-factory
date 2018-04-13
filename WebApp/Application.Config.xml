@@ -194,9 +194,11 @@
     <!-- Show Only Security, COM Calls, Errors and Trace -->
     <!-- <TraceMasks>771</TraceMasks> -->
     <!-- Show Only Security, Service Calls, Errors and Trace -->
-    <TraceMasks>523</TraceMasks>
+    <!-- <TraceMasks>523</TraceMasks> -->
     <!-- Show Only Security, ServiceResultExceptions, Errors and Trace -->
     <!-- <TraceMasks>519</TraceMasks> -->
+    <!-- Show Error, StackTrace, Service, StartStop, ExternalSystem, Security -->
+     <TraceMasks>385</TraceMasks> 
   </TraceConfiguration>
 
   <!-- Enables the hi-res clock for the process to allows for shorter (<100ms) publishing and sampling intervals. -->

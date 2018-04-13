@@ -1879,7 +1879,13 @@ function SimulationUpdate
             }
             $vmCommand = "$script:DockerRoot/deletesimulation `&> $script:DockerRoot/deletesimulation.log"
             # Ignore the status of the delete script. Check the log file in the VM for details.
-            Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand | Out-Null
+            try
+            {
+                Invoke-SSHCommand -Sessionid $session.SessionId -TimeOut $script:SshTimeout -Command $vmCommand | Out-Null
+            }
+            catch
+            {
+            }
 
             # Copy compressed simulation binaries and scripts to VM
             Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Upload simulation files to VM")

@@ -157,7 +157,7 @@
         },
         "webAppUri": {
             "type": "string",
-            "defaultValue": "https://aka.ms/azureiot/connectedfactory/webapp"
+            "defaultValue": "https://iotsuitestorage.blob.core.windows.net/packages/Connectedfactory/current/WebApp.zip?st=2017-06-01T06%3A55%3A00Z&se=2022-06-02T06%3A55%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=eIJmoHBAI4p6amXWAVs%2BE46ADil81qlLvbPR92cxytw%3D"
         },
         "webPlanSkuName": {
             "type": "string",
@@ -229,7 +229,7 @@
         },
         "vmArmTemplateUri": {
             "type": "string",
-            "defaultValue": "https://aka.ms/azureiot/connectedfactory/linkedarm",
+            "defaultValue": "https://iotsuitestorage.blob.core.windows.net/packages/Connectedfactory/current/FactorySimulation.json?st=2017-06-01T06%3A55%3A00Z&se=2022-06-02T06%3A55%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=YfelLVSPLoJj0HOEFre02Wd9E00e8ZHzAvnBF8QBiTg%3D",
             "metadata": {
                 "description": "URI containing files for deployment."
             }
@@ -255,14 +255,14 @@
         },
         "initSimulationUri": {
             "type": "string",
-            "defaultValue": "https://aka.ms/azureiot/connectedfactory/initsimulation",
+            "defaultValue": "https://iotsuitestorage.blob.core.windows.net/packages/Connectedfactory/current/initsimulation?st=2017-06-01T06%3A55%3A00Z&se=2022-06-02T06%3A55%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=2xGMM2fTF%2BfKgl1lLnlhln5j9U7AzlcYoxmKozFk56g%3D",
             "metadata": {
                 "description": "URI containing script to init the VM."
             }
         },
         "simulationUri": {
             "type": "string",
-            "defaultValue": "https://aka.ms/azureiot/connectedfactory/simulation",
+            "defaultValue": "https://iotsuitestorage.blob.core.windows.net/packages/Connectedfactory/current/simulation?st=2017-06-01T06%3A55%3A00Z&se=2022-06-02T06%3A55%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=c6b7OKjqDwO6Ko%2FxfM5AY%2Fr%2F04wHHt4YJFG5gQ8%2FiJQ%3D",
             "metadata": {
                 "description": "URI containing the archive with all files for the simulation."
             }
