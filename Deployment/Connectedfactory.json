@@ -633,7 +633,7 @@
                 {
                     "name": "MSDeploy",
                     "type": "extensions",
-                    "apiVersion": "[variables('webPlanVersion')]",
+                    "apiVersion": "[variables('webSiteVersion')]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Web/Sites', variables('webSiteName'))]"
                     ],
