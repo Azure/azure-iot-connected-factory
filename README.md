@@ -94,7 +94,7 @@ If one of these commands does report nothing back, something went wrong in your 
 4. To build and deploy the solution into the cloud:
   * Run the following script from the root of your cloned repository: `./build.ps1 cloud -DeploymentName <your deployment name> -Configuration [release | debug ]`
     * Deployment naming rules - Length 4 - 64, Case insensitive, supports alphanumeric, underscore and hypens are all valid characters
-  * More detailed help on the build script is available by typing get-help `.\build.ps1 - detailed`
+  * More detailed help on the build script is available by typing `get-help .\build.ps1 -detailed`
   * Sign in with your Azure account credentials when prompted
   * Select the Azure Subscription to use
     * All your subscription will be shown in a list
@@ -111,7 +111,7 @@ If one of these commands does report nothing back, something went wrong in your 
  
  
 ### Additional build script help
-There are more parameters available in the build.ps1 script. Please use get-help `.\build.ps1 -detailed` to get more information on them
+There are more parameters available in the build.ps1 script. Please use `get-help .\build.ps1 -detailed` to get more information on them
  
  
 ### Delete the deployment
