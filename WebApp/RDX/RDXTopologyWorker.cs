@@ -232,7 +232,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
             List<string> opcUaServers = fullQuery.GetActiveServerList();
             foreach (string opcUaServer in opcUaServers)
             {
-                ContosoOpcUaServer topologyNode = _topology[opcUaServer] as ContosoOpcUaServer;
+                ContosoOpcUaServer topologyNode = _topology[opcUaServer.ToLower()] as ContosoOpcUaServer;
                 if (topologyNode != null)
                 {
                     List<string> topologyNodeIdList = topologyNode.NodeList.Select(x => x.NodeId).ToList();
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                                 newNodeId,
                                 symbolicName,
                                 null,
-                                ContosoOpcNodeOpCode.Last,
+                                ContosoOpcNodeOpCode.Avg,
                                 null,
                                 true,
                                 null,

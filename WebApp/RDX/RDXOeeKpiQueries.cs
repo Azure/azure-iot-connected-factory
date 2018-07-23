@@ -306,7 +306,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
 
             foreach (string appUri in opcUaServers)
             {
-                Station station = topology[appUri] as Station;
+                Station station = topology[appUri.ToLower()] as Station;
                 if (station != null)
                 {
                     ContosoAggregatedOeeKpiHistogram oeeKpiHistogram = station[aggregateIndex];

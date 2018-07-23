@@ -758,7 +758,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         string _newStationName = Strings.NewStationName;
         const string _newFactoryImage = "newfactory.jpg";
         const string _newProductionLineImage = "assembly_floor.jpg";
-        const string _newStationImage = "assembly_station.jpg";
+        const string _newStationImage = "assembly_station.png";
 
         /// <summary>
         /// Get new factory node. Creates new node if new factory doesn't exist.
