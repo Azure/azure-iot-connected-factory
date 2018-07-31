@@ -474,7 +474,8 @@ a {
     width: @contextpanel-right-width - 100px;
     font-size: @children-listitem-text-size;
     color: @text-mainhead-color;
-    padding: 6px 6px;
+    padding-left: 6px;
+    padding-bottom: 6px;
     display: block;
 }
 .bootstrap-select .dropdown-menu {
@@ -484,9 +485,9 @@ a {
     background-color: @secondary-color;
 }
 .bootstrap-select .open {
-  width: @contextpanel-right-width - 125px;
-  margin-left: -2px;
-  white-space: nowrap;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 .bootstrap-select .text {
     white-space: normal;

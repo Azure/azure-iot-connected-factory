@@ -21,7 +21,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                     "~/Scripts/globalize.js",
                     "~/Scripts/js.cookie-{version}.js",
                     "~/Scripts/moment-with-locales.js",
-                    "~/Scripts/bootstrap-select-{version}.js",
+                    "~/Scripts/bootstrap-select.js",
                     "~/Scripts/jquery.scrollbar.min.js",
                     "~/Scripts/scalize.min.js"
                 ));
