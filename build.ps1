@@ -2454,23 +2454,6 @@ $script:ArmParameter += @{ `
     webSitesServicePrincipalObjectId = $script:WebSitesServicePrincipalObjectId; `
 }
 
-# Check if there is a bing maps license key set in the configuration file.
-$script:MapApiQueryKey = GetEnvSetting "MapApiQueryKey"
-if ([string]::IsNullOrEmpty($script:MapApiQueryKey))
-{
-    # To enable bing maps functionality, the PowerShell environement variable MapApiQueryKey must hold bing maps license key
-    if (-not [string]::IsNullOrEmpty($env:MapApiQueryKey))
-    {
-        $script:MapApiQueryKey = $env:MapApiQueryKey
-    }
-}
-# the bing maps is only set in the ARM template if there is a valid license key and if it is deployed in public cloud environments.
-if (-not [string]::IsNullOrEmpty($script:MapApiQueryKey) -and $script:AzureEnvironmentName -eq "AzureCloud")
-{
-    # Pass the key to the ARM template.
-    $script:ArmParameter += @{mapApiQueryKey=$script:MapApiQueryKey;}
-}
-
 # Show deployment parameters.
 Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Suite name: $script:SuiteName"
 Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Storage Name: $($script:StorageAccount.StorageAccountName)"
@@ -2519,10 +2502,7 @@ UpdateEnvSetting "IotHubTelemetryConsumerGroup" $script:ArmResult.Outputs['iotHu
 UpdateEnvSetting "RdxAuthenticationClientSecret" $script:RdxAuthenticationClientSecret
 UpdateEnvSetting "RdxDnsName" $script:ArmResult.Outputs['rdxDnsName'].Value
 UpdateEnvSetting "RdxEnvironmentId" $script:ArmResult.Outputs['rdxEnvironmentId'].Value
-if ($script:ArmResult.Outputs['mapApiQueryKey'].Value.Length -gt 0 -and $script:ArmResult.Outputs['mapApiQueryKey'].Value -ne "0")
-{
-    UpdateEnvSetting "MapApiQueryKey" $script:ArmResult.Outputs['mapApiQueryKey'].Value
-}
+UpdateEnvSetting "MapApiQueryKey" $script:ArmResult.Outputs['mapApiQueryKey'].Value
 
 UpdateResourceGroupState Complete
 Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Provisioning and deployment completed successfully, see {0}.config.user for deployment values" -f $script:DeploymentName)

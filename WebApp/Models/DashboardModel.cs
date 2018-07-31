@@ -26,7 +26,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
 
 
         /// <summary>
-        /// The bing maps license key.
+        /// The Azure maps license key.
         /// </summary>
         public string MapApiQueryKey { get; set; }
 

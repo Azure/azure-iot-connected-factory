@@ -3,100 +3,100 @@
 
 @model DashboardModel
 
-@{  var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+@{ var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     var json = serializer.Serialize(Model.Children);
     var mapApiQueryKey = serializer.Serialize(Model.MapApiQueryKey);
 }
 
 <!-- Reference to the Bing Maps SDK -->
-<script type='text/javascript' src='//www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+<link rel="stylesheet" href="https://atlas.microsoft.com/sdk/css/atlas.min.css?api-version=1.0" type="text/css" />
+<script src="https://atlas.microsoft.com/sdk/js/atlas.min.js?api-version=1.0"></script>
+
+<div id="map">
+    <button class="dashboard_zoom dashboard_zoom-plus" onclick="ZoomIn()"> + </button>
+    <button class="dashboard_zoom dashboard_zoom-minus" onclick="ZoomOut()"> - </button>
+</div>
 
 <script type='text/javascript'>
-    function GetMap()
-    {
-        // get the model
-        var children = @Html.Raw(json);
-        var mapKey = @Html.Raw(mapApiQueryKey);
-        // create a world map
-        var worldRect = Microsoft.Maps.LocationRect.fromEdges(71, -28, -55, 28);
-        factoryMap = new Microsoft.Maps.Map('#factoryMap', {
-            credentials: mapKey,
-            bounds: worldRect,
-            mapTypeId: Microsoft.Maps.MapTypeId.canvasDark,
-            zoom: 10,
-            disableZooming: false,
-            showZoomButtons: true,
-            showTermsLink: false,
-            showTrafficButton: false,
-            showScalebar: false,
-            showMapTypeSelector: false,
-            showLocateMeButton: false,
-            showDashboard: true,
-            showBreadcrumb: false,
-            disableStreetside: true,
-            disableScrollWheelZoom: false,
-            allowHidingLabelsOfRoad: true,
-            disablePanning: false
-        });
 
-        for (index = 0; index < children.length; index++)
-        {
+    var children = @Html.Raw(json);
+    var subscriptionKey = @Html.Raw(mapApiQueryKey);
+    var factoryMapPushpin = [];
+    var map = new atlas.Map("map", {
+        "subscription-key": subscriptionKey,
+        center: [11.576124, 48.137154],
+        interactive: true,
+        zoom: 1
+    });
+
+    var pinImgStatuGood = new Image();
+    pinImgStatuGood.onload = function () {
+        //Add the pin image to the map resources. Give it a unique id.
+        map.addIcon('info-icon', pinImgStatuGood);
+    }
+    pinImgStatuGood.src = "/Content/img/info.svg";
+
+    var pinImgStatuPoor = new Image();
+    pinImgStatuPoor.onload = function () {
+        //Add the pin image to the map resources. Give it a unique id.
+        map.addIcon('alert-icon', pinImgStatuPoor);
+    }
+    pinImgStatuPoor.src = "/Content/img/critical.svg";
+
+    addPin();
+
+    function addPin() {
+        for (index = 0; index < children.length; index++) {
             if (children[index].Latitude != 0 && children[index].Longitude != 0) {
-                var pushPinFile = "/Content/img/info.svg";
+                var pushPinFile = "info-icon";
                 var city = children[index].City;
-                if (children[index].Status == "@ContosoPerformanceStatus.Poor.ToString()")
-                {
-                    pushPinFile = "/Content/img/critical.svg";
+                if (children[index].Status == "@ContosoPerformanceStatus.Poor.ToString()") {
+                    var pushPinFile = "alert-icon";
                 }
-                var location = new Microsoft.Maps.Location(children[index].Latitude, children[index].Longitude);
-                factoryMapPushpin[index] = new Microsoft.Maps.Pushpin(location,
-                                {
-                                    anchor: new Microsoft.Maps.Point(8, 8),
-                                    icon: pushPinFile,
-                                    draggalbe: false,
-                                    title: (children[index].Name)
-                                });
-                Microsoft.Maps.Events.addHandler(factoryMapPushpin[index], 'click',
-                    function () {
-                        for (index = 0; index < children.length; index++) {
-                            if (arguments[0].target._options.title == children[index].Name)
-                            {
-                                var dashboardUrl = "Index?TopNode=" + children[index].Key;
-                                window.location.assign(dashboardUrl);
-                                break;
-                            }
-                        }
-                    });
-                factoryMap.entities.push(factoryMapPushpin[index]);
+                factoryMapPushpin.push(
+                    new atlas.data.Feature(new atlas.data.Point([children[index].Longitude, children[index].Latitude]),
+                    {
+                        icon: pushPinFile,
+                        title: children[index].Name
+                    })
+                );
             }
         }
+        map.addPins(factoryMapPushpin, {
+            fontColor: "#000",
+            fontSize: 14,
+            name: "default-pin-layer",
+            textOffset: [0, 15],
+        });
 
-        getZoomRange = function () {
-            return {
-                max: 24,
-                min: 2
-            };
-        };
-        // Forcibly set the zoom to our min/max whenever the view starts to change beyond them
-        var restrictZoom = function () {
-            if (factoryMap.getZoom() <= getZoomRange().min)
-            {
-                factoryMap.setView({
-                    zoom: getZoomRange().min,
-                    animate: false
-                });
-            }
-            else if (factoryMap.getZoom() >= getZoomRange().max)
-            {
-                factoryMap.setView({
-                    zoom: getZoomRange().max,
-                    animate: false
-                });
-            }
-        };
-        // Attach a handler to the event that gets fired whenever the map's view is about to change
-        window.Microsoft.Maps.Events.addHandler(factoryMap, 'viewchangeend', restrictZoom);
+        map.addEventListener('click', "default-pin-layer",
+            function (event) {
+                for (index = 0; index < children.length; index++) {
+                    console.log("argument ", arguments);
+                    console.log("event ", event);
+                    if (event.features[0].properties.title == children[index].Name) {
+                        var dashboardUrl = "Index?TopNode=" + children[index].Key;
+                        window.location.assign(dashboardUrl);
+                    }
+                }
+            });
 
     }
+
+    function ZoomIn() {
+        zoom(1);
+    }
+
+    function ZoomOut() {
+        zoom(-1);
+    }
+
+    function zoom(zoomFactor) {
+        var currZoom = map.getCamera().zoom;
+        map.setCamera({
+            zoom: currZoom + zoomFactor
+        });
+    }
+
 </script>
 

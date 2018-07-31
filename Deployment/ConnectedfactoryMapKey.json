@@ -40,13 +40,6 @@
                 "description": "The object ID of the service principal Microsoft.Azure.WebSites (f8daea97-62e7-4026-becf-13c2ea98e8b4)."
             }
         },
-        "mapApiQueryKey": {
-            "type": "string",
-            "defaultValue": "0",
-            "metadata": {
-                "description": "Bing Maps Api Query key - default is disabled"
-            }
-        },
         "storageName": {
             "type": "string",
             "metadata": {
@@ -269,6 +262,9 @@
         "webPlanVersion": "2016-09-01",
         "webPlanName": "[concat(parameters('suiteName'), '-plan')]",
         "webSiteName": "[parameters('suiteName')]",
+        "azureMapsName": "[concat(parameters('suiteName'), '-map')]",
+        "azureMapsVersion": "2018-05-01",
+        "AzureMapsPricingSpec": "S0",
         "storageEndpointSuffix": "[parameters('storageEndpointSuffix')]",
         "iotHubVersion": "2016-02-03",
         "iotHubResourceId": "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
@@ -328,324 +324,333 @@
             }
         ]
     },
-    "resources": [
-        {
-            "name": "linkedVmTemplate",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2016-09-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/', parameters('storageName'))]",
-                "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
-                "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('keyVaultVmSecretName'))]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('vmArmTemplateUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "suiteName": {
-                        "value": "[parameters('suiteName')]"
-                    },
-                    "suiteType": {
-                        "value": "[parameters('suiteType')]"
-                    },
-                    "storageName": {
-                        "value": "[parameters('storageName')]"
-                    },
-                    "storageSkuName": {
-                        "value": "[parameters('storageSkuName')]"
-                    },
-                    "storageKind": {
-                        "value": "[parameters('storageKind')]"
-                    },
-                    "storageEndpointSuffix": {
-                        "value": "[parameters('storageEndpointSuffix')]"
-                    },
-                    "adminUsername": {
-                        "value": "[parameters('adminUsername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "vmSize": {
-                        "value": "[parameters('vmSize')]"
-                    },
-                    "initSimulationUri": {
-                        "value": "[parameters('initSimulationUri')]"
-                    },
-                    "simulationUri": {
-                        "value": "[parameters('simulationUri')]"
-                    },
-                    "iotHubOwnerConnectionString": {
-                        "value": "[concat('HostName=', reference(variables('iotHubResourceId')).hostName, ';SharedAccessKeyName=', variables('iotHubKeyName'), ';SharedAccessKey=', listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey)]"
-                    },
-                    "keyVaultId": {
-                        "value": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
-                    },
-                    "keyVaultSecretUrl": {
-                        "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('keyVaultVmSecretName'))).secretUriWithVersion]"
-                    },
-                    "uaSecretThumbprint": {
-                        "value": "[parameters('uaSecretThumbprint')]"
-                    }
-                }
-            }
+  "resources": [
+    {
+      "name": "linkedVmTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', parameters('storageName'))]",
+        "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('keyVaultVmSecretName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('vmArmTemplateUri')]",
+          "contentVersion": "1.0.0.0"
         },
-        {
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('storageName')]",
-            "apiVersion": "[variables('storageVersion')]",
-            "location": "[variables('location')]",
-            "tags": {
-                "IotSuiteType": "[parameters('suiteType')]"
-            },
-            "kind": "[parameters('storageKind')]",
-            "sku": {
-                "name": "[parameters('storageSkuName')]"
-            }
-        },
-        {
-            "type": "Microsoft.Devices/Iothubs",
-            "name": "[parameters('iotHubName')]",
-            "apiVersion": "[variables('iotHubVersion')]",
-            "location": "[variables('location')]",
-            "sku": {
-                "name": "[parameters('iotHubSkuName')]",
-                "capacity": "[parameters('iotHubSkuCapacityUnits')]"
-            },
-            "tags": {
-                "IotSuiteType": "[parameters('suiteType')]"
-            },
-            "properties": {
-                "location": "[variables('location')]"
-            }
-        },
-        {
-            "name": "[concat(parameters('iotHubName'), '/events/', variables('rdxCGName'))]",
-            "type": "Microsoft.Devices/Iothubs/eventhubEndpoints/ConsumerGroups",
-            "apiVersion": "[variables('iotHubVersion')]",
-            "dependsOn": [
-                "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
-            ]
-        },
-        {
-            "name": "[concat(parameters('iotHubName'), '/events/', variables('telemetryCGName'))]",
-            "type": "Microsoft.Devices/Iothubs/eventhubEndpoints/ConsumerGroups",
-            "apiVersion": "[variables('iotHubVersion')]",
-            "dependsOn": [
-                "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.TimeSeriesInsights/environments",
-            "name": "[parameters('rdxEnvironmentName')]",
-            "apiVersion": "[variables('rdxVersion')]",
-            "location": "[variables('location')]",
-            "properties": {
-                "dataRetentionTime": "[parameters('rdxEnvironmentDataRetentionTime')]"
-            },
-            "sku": {
-                "name": "[parameters('rdxEnvironmentSkuName')]",
-                "capacity": "[parameters('rdxEnvironmentSkuCapacity')]"
-            },
-            "tags": "[variables('rdxEnvironmentTagsValue')]",
-            "dependsOn": [
-                "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
-            ],
-            "resources": [
-                {
-                    "type": "eventsources",
-                    "name": "[variables('rdxEventSourceName')]",
-                    "apiVersion": "[variables('rdxVersion')]",
-                    "location": "[variables('location')]",
-                    "kind": "Microsoft.EventHub",
-                    "properties": {
-                        "eventSourceResourceId": "[variables('iotHubResourceId')]",
-                        "serviceBusNamespace": "[split(reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.endpoint, variables('delimiters'))[1]]",
-                        "eventHubName": "[reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.path]",
-                        "consumerGroupName": "[variables('rdxCGName')]",
-                        "keyName": "[variables('rdxIotHubKeyName')]",
-                        "sharedAccessKey": "[concat(listkeys(variables('rdxIotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
-                        "timestampPropertyName": "variables('rdxTimestampPropertyName')"
-                    },
-                    "tags": "[variables('rdxEventSourceTagsValue')]",
-                    "dependsOn": [
-                        "[concat('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
-                    ]
-                },
-                {
-                    "type": "accesspolicies",
-                    "name": "[variables('rdxAccessPolicyName')]",
-                    "apiVersion": "[variables('rdxVersion')]",
-                    "properties": {
-                        "principalObjectId": "[parameters('rdxAccessPolicyPrincipalObjectId')]",
-                        "roles": [
-                            "[variables('rdxAccessPolicyRole')]"
-                        ]
-                    },
-                    "dependsOn": [
-                        "[concat('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
-                    ]
-                },
-                {
-                    "type": "accesspolicies",
-                    "name": "OwnerAccess",
-                    "apiVersion": "[variables('rdxVersion')]",
-                    "properties": {
-                        "principalObjectId": "[parameters('rdxOwnerServicePrincipalObjectId')]",
-                        "roles": [
-                            "[variables('rdxOwnerPolicyRole')]"
-                        ]
-                    },
-                    "dependsOn": [
-                        "[concat('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "[variables('webPlanName')]",
-            "type": "Microsoft.Web/serverfarms",
-            "apiVersion": "[variables('webPlanVersion')]",
-            "location": "[variables('location')]",
-            "tags": {
-                "IotSuiteType": "[parameters('suiteType')]"
-            },
-            "sku": {
-                "Name": "[parameters('webPlanSkuName')]"
-            },
-            "properties": {
-                "name": "[variables('webPlanName')]",
-                "workerSizeId": "[parameters('webPlanWorkerSize')]",
-                "numberOfWorkers": "[parameters('webPlanWorkerCount')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageName'))]",
-                "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
-                "[resourceId('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults",
-            "name": "[variables('keyVaultName')]",
-            "apiVersion": "[variables('keyVaultVersion')]",
-            "location": "[variables('location')]",
-            "tags": {
-                "displayName": "[variables('keyVaultDisplayName')]"
-            },
-            "properties": {
-                "enabledForDeployment": true,
-                "enabledForTemplateDeployment": false,
-                "enabledForVolumeEncryption": false,
-                "sku": {
-                    "name": "[parameters('keyVaultSkuName')]",
-                    "family": "A"
-                },
-                "tenantId": "[parameters('aadTenant')]",
-                "accessPolicies": "[variables('keyVaultAccessPolicies')]"
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/', variables('keyVaultVmSecretName'))]",
-            "apiVersion": "[variables('keyVaultVersion')]",
-            "properties": {
-                "value": "[variables('keyVaultVmSecretBase64')]"
-            },
-            "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/', variables('keyVaultWebsiteSecretName'))]",
-            "apiVersion": "[variables('keyVaultVersion')]",
-            "properties": {
-                "value": "[parameters('keyVaultWebsiteSecret')]",
-                "contentType": "application/x-pkcs12"
-            },
-            "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/certificates",
-            "name": "[variables('certificateName')]",
-            "apiVersion": "[variables('certificateVersion')]",
-            "location": "[variables('location')]",
-            "properties": {
-                "keyVaultId": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
-                "keyVaultSecretName": "[variables('keyVaultWebsiteSecretName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
-                "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
-            ]
-        },
-        {
-            "name": "[variables('webSiteName')]",
-            "type": "Microsoft.Web/sites",
-            "apiVersion": "[variables('webSiteVersion')]",
-            "location": "[variables('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
-                "[resourceId('Microsoft.Web/certificates', variables('certificateName'))]"
-            ],
-            "tags": {
-                "IotSuiteType": "[parameters('suiteType')]"
-            },
-            "properties": {
-                "serverFarmId": "[variables('webPlanName')]",
-                "siteConfig": {
-                    "AlwaysOn": "[parameters('webPlanAlwaysOn')]"
-                }
-            },
-            "resources": [
-                {
-                    "name": "MSDeploy",
-                    "type": "extensions",
-                    "apiVersion": "[variables('webSiteVersion')]",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Web/Sites', variables('webSiteName'))]"
-                    ],
-                    "properties": {
-                        "packageUri": "[parameters('webAppUri')]",
-                        "connectionString": "",
-                        "dbType": ""
-                    }
-                },
-                {
-                    "name": "Appsettings",
-                    "type": "config",
-                    "apiVersion": "[variables('webSiteVersion')]",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Web/Sites', variables('webSiteName'))]",
-                        "[concat('Microsoft.Web/Sites/', variables('webSiteName'), '/Extensions/MSDeploy')]"
-                    ],
-                    "properties": {
-                        "SolutionName": "[variables('webSiteName')]",
-                        "SolutionStorageAccountConnectionString": "[concat('DefaultEndpointsProtocol=https;EndpointSuffix=', parameters('storageEndpointSuffix'), ';AccountName=', parameters('storageName'), ';AccountKey=', listkeys(variables('storageId'), variables('storageVersion')).keys[0].value)]",
-                        "AadTenant": "[parameters('aadTenant')]",
-                        "AadInstance": "[parameters('aadInstance')]",
-                        "AadClientId": "[parameters('aadClientId')]",
-                        "IotHubOwnerConnectionString": "[concat('HostName=', reference(variables('iotHubResourceId')).hostName, ';SharedAccessKeyName=', variables('iotHubKeyName'), ';SharedAccessKey=', listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
-                        "IotHubEventHubName": "[reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.path]",
-                        "IotHubEventHubEndpointIotHubOwnerConnectionString": "[concat('Endpoint=', reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.endpoint, ';SharedAccessKeyName=', variables('iotHubKeyName'), ';SharedAccessKey=', listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
-                        "IotHubTelemetryConsumerGroup": "[variables('telemetryCGName')]",
-                        "IotHubRdxConsumerGroup": "[variables('rdxCGName')]",
-                        "RdxAuthenticationClientSecret": "[parameters('rdxAuthenticationClientSecret')]",
-                        "RdxDnsName": "[parameters('rdxDnsName')]",
-                        "RdxEnvironmentId": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('rdxEnvironmentName'))).dataAccessId]",
-                        "MapApiQueryKey": "[parameters('mapApiQueryKey')]",
-                        "WEBSITE_LOAD_CERTIFICATES": "*"
-                    }
-                }
-            ]
+        "parameters": {
+          "suiteName": {
+            "value": "[parameters('suiteName')]"
+          },
+          "suiteType": {
+            "value": "[parameters('suiteType')]"
+          },
+          "storageName": {
+            "value": "[parameters('storageName')]"
+          },
+          "storageSkuName": {
+            "value": "[parameters('storageSkuName')]"
+          },
+          "storageKind": {
+            "value": "[parameters('storageKind')]"
+          },
+          "storageEndpointSuffix": {
+            "value": "[parameters('storageEndpointSuffix')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "vmSize": {
+            "value": "[parameters('vmSize')]"
+          },
+          "initSimulationUri": {
+            "value": "[parameters('initSimulationUri')]"
+          },
+          "simulationUri": {
+            "value": "[parameters('simulationUri')]"
+          },
+          "iotHubOwnerConnectionString": {
+            "value": "[concat('HostName=', reference(variables('iotHubResourceId')).hostName, ';SharedAccessKeyName=', variables('iotHubKeyName'), ';SharedAccessKey=', listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey)]"
+          },
+          "keyVaultId": {
+            "value": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+          },
+          "keyVaultSecretUrl": {
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('keyVaultVmSecretName'))).secretUriWithVersion]"
+          },
+          "uaSecretThumbprint": {
+            "value": "[parameters('uaSecretThumbprint')]"
+          }
         }
-    ],
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('storageName')]",
+      "apiVersion": "[variables('storageVersion')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "IotSuiteType": "[parameters('suiteType')]"
+      },
+      "kind": "[parameters('storageKind')]",
+      "sku": {
+        "name": "[parameters('storageSkuName')]"
+      }
+    },
+    {
+      "type": "Microsoft.Devices/Iothubs",
+      "name": "[parameters('iotHubName')]",
+      "apiVersion": "[variables('iotHubVersion')]",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "[parameters('iotHubSkuName')]",
+        "capacity": "[parameters('iotHubSkuCapacityUnits')]"
+      },
+      "tags": {
+        "IotSuiteType": "[parameters('suiteType')]"
+      },
+      "properties": {
+        "location": "[variables('location')]"
+      }
+    },
+    {
+      "name": "[concat(parameters('iotHubName'), '/events/', variables('rdxCGName'))]",
+      "type": "Microsoft.Devices/Iothubs/eventhubEndpoints/ConsumerGroups",
+      "apiVersion": "[variables('iotHubVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
+      ]
+    },
+    {
+      "name": "[concat(parameters('iotHubName'), '/events/', variables('telemetryCGName'))]",
+      "type": "Microsoft.Devices/Iothubs/eventhubEndpoints/ConsumerGroups",
+      "apiVersion": "[variables('iotHubVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.TimeSeriesInsights/environments",
+      "name": "[parameters('rdxEnvironmentName')]",
+      "apiVersion": "[variables('rdxVersion')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "dataRetentionTime": "[parameters('rdxEnvironmentDataRetentionTime')]"
+      },
+      "sku": {
+        "name": "[parameters('rdxEnvironmentSkuName')]",
+        "capacity": "[parameters('rdxEnvironmentSkuCapacity')]"
+      },
+      "tags": "[variables('rdxEnvironmentTagsValue')]",
+      "dependsOn": [
+        "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
+      ],
+      "resources": [
+        {
+          "type": "eventsources",
+          "name": "[variables('rdxEventSourceName')]",
+          "apiVersion": "[variables('rdxVersion')]",
+          "location": "[variables('location')]",
+          "kind": "Microsoft.EventHub",
+          "properties": {
+            "eventSourceResourceId": "[variables('iotHubResourceId')]",
+            "serviceBusNamespace": "[split(reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.endpoint, variables('delimiters'))[1]]",
+            "eventHubName": "[reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.path]",
+            "consumerGroupName": "[variables('rdxCGName')]",
+            "keyName": "[variables('rdxIotHubKeyName')]",
+            "sharedAccessKey": "[concat(listkeys(variables('rdxIotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
+            "timestampPropertyName": "variables('rdxTimestampPropertyName')"
+          },
+          "tags": "[variables('rdxEventSourceTagsValue')]",
+          "dependsOn": [
+            "[concat('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
+          ]
+        },
+        {
+          "type": "accesspolicies",
+          "name": "[variables('rdxAccessPolicyName')]",
+          "apiVersion": "[variables('rdxVersion')]",
+          "properties": {
+            "principalObjectId": "[parameters('rdxAccessPolicyPrincipalObjectId')]",
+            "roles": [
+              "[variables('rdxAccessPolicyRole')]"
+            ]
+          },
+          "dependsOn": [
+            "[concat('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
+          ]
+        },
+        {
+          "type": "accesspolicies",
+          "name": "OwnerAccess",
+          "apiVersion": "[variables('rdxVersion')]",
+          "properties": {
+            "principalObjectId": "[parameters('rdxOwnerServicePrincipalObjectId')]",
+            "roles": [
+              "[variables('rdxOwnerPolicyRole')]"
+            ]
+          },
+          "dependsOn": [
+            "[concat('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "[variables('webPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "[variables('webPlanVersion')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "IotSuiteType": "[parameters('suiteType')]"
+      },
+      "sku": {
+        "Name": "[parameters('webPlanSkuName')]"
+      },
+      "properties": {
+        "name": "[variables('webPlanName')]",
+        "workerSizeId": "[parameters('webPlanWorkerSize')]",
+        "numberOfWorkers": "[parameters('webPlanWorkerCount')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageName'))]",
+        "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
+        "[resourceId('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "[variables('keyVaultName')]",
+      "apiVersion": "[variables('keyVaultVersion')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "displayName": "[variables('keyVaultDisplayName')]"
+      },
+      "properties": {
+        "enabledForDeployment": true,
+        "enabledForTemplateDeployment": false,
+        "enabledForVolumeEncryption": false,
+        "sku": {
+          "name": "[parameters('keyVaultSkuName')]",
+          "family": "A"
+        },
+        "tenantId": "[parameters('aadTenant')]",
+        "accessPolicies": "[variables('keyVaultAccessPolicies')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(variables('keyVaultName'), '/', variables('keyVaultVmSecretName'))]",
+      "apiVersion": "[variables('keyVaultVersion')]",
+      "properties": {
+        "value": "[variables('keyVaultVmSecretBase64')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(variables('keyVaultName'), '/', variables('keyVaultWebsiteSecretName'))]",
+      "apiVersion": "[variables('keyVaultVersion')]",
+      "properties": {
+        "value": "[parameters('keyVaultWebsiteSecret')]",
+        "contentType": "application/x-pkcs12"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/certificates",
+      "name": "[variables('certificateName')]",
+      "apiVersion": "[variables('certificateVersion')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "keyVaultId": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
+        "keyVaultSecretName": "[variables('keyVaultWebsiteSecretName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
+        "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
+      ]
+    },
+    {
+      "name": "[variables('webSiteName')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "[variables('webSiteVersion')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
+        "[resourceId('Microsoft.Web/certificates', variables('certificateName'))]"
+      ],
+      "tags": {
+        "IotSuiteType": "[parameters('suiteType')]"
+      },
+      "properties": {
+        "serverFarmId": "[variables('webPlanName')]",
+        "siteConfig": {
+          "AlwaysOn": "[parameters('webPlanAlwaysOn')]"
+        }
+      },
+      "resources": [
+        {
+          "name": "MSDeploy",
+          "type": "extensions",
+          "apiVersion": "[variables('webSiteVersion')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('webSiteName'))]"
+          ],
+          "properties": {
+            "packageUri": "[parameters('webAppUri')]",
+            "connectionString": "",
+            "dbType": ""
+          }
+        },
+        {
+          "name": "Appsettings",
+          "type": "config",
+          "apiVersion": "[variables('webSiteVersion')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('webSiteName'))]",
+            "[concat('Microsoft.Web/Sites/', variables('webSiteName'), '/Extensions/MSDeploy')]"
+          ],
+          "properties": {
+            "SolutionName": "[variables('webSiteName')]",
+            "SolutionStorageAccountConnectionString": "[concat('DefaultEndpointsProtocol=https;EndpointSuffix=', parameters('storageEndpointSuffix'), ';AccountName=', parameters('storageName'), ';AccountKey=', listkeys(variables('storageId'), variables('storageVersion')).keys[0].value)]",
+            "AadTenant": "[parameters('aadTenant')]",
+            "AadInstance": "[parameters('aadInstance')]",
+            "AadClientId": "[parameters('aadClientId')]",
+            "IotHubOwnerConnectionString": "[concat('HostName=', reference(variables('iotHubResourceId')).hostName, ';SharedAccessKeyName=', variables('iotHubKeyName'), ';SharedAccessKey=', listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
+            "IotHubEventHubName": "[reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.path]",
+            "IotHubEventHubEndpointIotHubOwnerConnectionString": "[concat('Endpoint=', reference(variables('iotHubResourceId'), variables('iotHubVersion')).eventHubEndpoints.events.endpoint, ';SharedAccessKeyName=', variables('iotHubKeyName'), ';SharedAccessKey=', listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
+            "IotHubTelemetryConsumerGroup": "[variables('telemetryCGName')]",
+            "IotHubRdxConsumerGroup": "[variables('rdxCGName')]",
+            "RdxAuthenticationClientSecret": "[parameters('rdxAuthenticationClientSecret')]",
+            "RdxDnsName": "[parameters('rdxDnsName')]",
+            "RdxEnvironmentId": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('rdxEnvironmentName'))).dataAccessId]",
+            "MapApiQueryKey": "[listkeys(variables('azureMapsName'), variables('azureMapsVersion')).primaryKey]",
+            "WEBSITE_LOAD_CERTIFICATES": "*"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Maps/accounts",
+      "sku": {
+        "name": "[variables('AzureMapsPricingSpec')]"
+      },
+      "name": "[variables('azureMapsName')]",
+      "apiVersion": "[variables('azureMapsVersion')]",
+      "location": "global"
+    }
+  ],
     "outputs": {
         "iotHubOwnerConnectionString": {
             "type": "string",
@@ -669,7 +674,7 @@
         },
         "mapApiQueryKey": {
             "type": "string",
-            "value": "[parameters('mapApiQueryKey')]"
+            "value": "[listkeys(variables('azureMapsName'), variables('azureMapsVersion')).primaryKey]"
         },
         "storageConnectionString": {
             "type": "string",

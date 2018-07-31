@@ -7160,6 +7160,13 @@ a {
 /* 
  *  dashboard map
 */
+div {
+  position: static;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
 .dashboard_map_container {
   border-top: none;
   height: 561px;
@@ -7176,6 +7183,29 @@ a {
   width: 200px;
   margin-left: -95px;
   margin-top: 15px;
+}
+.dashboard_zoom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: #121416;
+  color: white;
+  z-index: 999;
+}
+.dashboard_zoom-plus {
+  top: 10px;
+  right: 10px;
+}
+.dashboard_zoom-minus {
+  top: 60px;
+  right: 10px;
 }
 /* 
  *  dashboard information area with alerts

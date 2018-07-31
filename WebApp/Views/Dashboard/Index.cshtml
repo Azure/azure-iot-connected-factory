@@ -24,8 +24,8 @@
                 Html.RenderPartial("_ChildrenList", Model);
             }
         </div>
-        <div id="factoryMap" class="dashboard_map_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
-            @if (Model.TopNode.Parent == null && !Model.MapApiQueryKey.IsEmpty())
+        <div  class="dashboard_map_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            @if (Model.TopNode.Parent == null )
             {
                 Html.RenderPartial("_ChildrenMap", Model);
             }
@@ -1249,10 +1249,6 @@
     // SignalR hub client.
     var telemetry = $.connection.telemetryHub;
 
-    //Bing map and pushpins.
-    var factoryMap = null;
-    var factoryMapPushpin = [];
-
     // Alert information
     @{   var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         var jsonAlerts = serializer.Serialize(Model.Alerts);
@@ -1297,16 +1293,17 @@
                         // Only update if the filter panel is closed.
                         if ($("#dashboardFilterContextpanel").hasClass('overlay-close') && session.Children != undefined) {
                             var childrenList = '';
+                            var updateMap = false;
                             for (j = 0; j < session.Children.length; j++) {
                                 childrenList += '<div >';
-                                var updateMap = false;
+                                
                                 if (session.Children[j].Status == "@ContosoPerformanceStatus.Poor") {
                                     var statusMessage = "@Strings.Error";
                                     var dashboardStatusClass = "dashboard_status_poor";
 
                                     if (factoryMapPushpin != undefined) {
-                                        if (factoryMapPushpin != null && factoryMapPushpin.Length > j && factoryMapPushpin[j] != null) {
-                                            factoryMapPushpin[j].setOptions({ icon: "/Content/img/icon_red.svg" });
+                                        if (factoryMapPushpin != null && factoryMapPushpin[j] != null) {
+                                            factoryMapPushpin[j].properties.icon = "alert-icon";
                                             updateMap = true;
                                         }
                                     }
@@ -1316,8 +1313,8 @@
                                     var dashboardStatusClass = "dashboard_status_good";
 
                                     if (factoryMapPushpin != undefined) {
-                                        if (factoryMapPushpin != null && factoryMapPushpin.Length > j && factoryMapPushpin[j] != null) {
-                                            factoryMapPushpin[j].setOptions({icon: "/Content/img/icon_green.svg"});
+                                        if (factoryMapPushpin != null && factoryMapPushpin[j] != null) {
+                                            factoryMapPushpin[j].properties.icon = "info-icon";
                                             updateMap = true;
                                         }
                                     }
@@ -1351,10 +1348,15 @@
                                 if ($(topologyListInformation.idFilter).is(":visible")) {
                                     applyFilter(topologyListInformation);
                                 }
-
-                                if (updateMap == true && factoryMap != undefined && factoryMap != null) {
-                                    factoryMap.entities.push(factoryMapPushpin[j]);
-                                }
+                            }                         
+                            if (updateMap == true && map != undefined && map != null) {
+                                map.removeLayers(["default-pin-layer"]);
+                                map.addPins(factoryMapPushpin, {
+                                    fontColor: "#000",
+                                    fontSize: 14,
+                                    name: "default-pin-layer",
+                                    textOffset: [0, 15],
+                                });
                             }
                         }  else {
                             console.log('ignore the topology list update, since filtering is in active');
