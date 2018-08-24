@@ -118,14 +118,14 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken(Order = 1)]
         [RequirePermission(Permission.BrowseOpcServer)]
-        public async Task<ActionResult> Connect(string endpointUrl)
+        public async Task<ActionResult> Connect(string endpointUrl, bool enforceTrust = false)
         {
             OpcSessionModel sessionModel = new OpcSessionModel { EndpointUrl = endpointUrl } ;
 
             Session session = null;
             try
             {
-                session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, endpointUrl);
+                session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, endpointUrl, enforceTrust);
             }
             catch (Exception exception)
             {
@@ -176,7 +176,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                     };
                     OpcSessionHelper.Instance.OpcSessionCache.TryUpdate(Session.SessionID, newValue, entry);
 
-                    return await Connect(endpointURL);
+                    // connect with enforced trust
+                    return await Connect(endpointURL, true);
                 }
             }
 
@@ -604,18 +605,31 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         {
             uint publisherServerPort = 62222;
             string publisherAbsolutePath = "/UA/Publisher";
+            string publisherHostName = "publisher";
 
             // Build Publisher URL from the OPC server URL we're currently browsing
             Session stationSession = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-            string domainName = stationSession.Endpoint.EndpointUrl.Substring("opc.tcp://".Length);
-            string stationName = domainName;
             Uri stationUri;
             Uri publisherUri;
             try
             {
                 stationUri = new Uri(stationSession.Endpoint.EndpointUrl);
-                string dnsLabels = stationUri.DnsSafeHost.Contains(".") ? stationUri.DnsSafeHost.Substring(stationUri.DnsSafeHost.IndexOf(".")) : "";
-                publisherUri = new Uri($"{stationUri.Scheme}://publisher{dnsLabels}:{publisherServerPort}{publisherAbsolutePath}");
+                string dnsLabels = null;
+                switch (stationUri.HostNameType)
+                {
+                    case UriHostNameType.Dns:
+                        dnsLabels = stationUri.DnsSafeHost.Contains(".") ? stationUri.DnsSafeHost.Substring(stationUri.DnsSafeHost.IndexOf(".")) : "";
+                        publisherUri = new Uri($"{stationUri.Scheme}://{publisherHostName}{dnsLabels}:{publisherServerPort}{publisherAbsolutePath}");
+                        break;
+
+                    case UriHostNameType.IPv4:
+                    case UriHostNameType.IPv6:
+                        publisherUri = new Uri($"{stationUri.Scheme}://{publisherHostName}:{publisherServerPort}{publisherAbsolutePath}");
+                        break;
+
+                    default:
+                        throw new ArgumentException("Only DNS hostnames or IPv4/IPv6 hostnames are supported.");
+                }
             }
             catch
             {

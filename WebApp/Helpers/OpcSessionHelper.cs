@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
@@ -49,6 +50,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
         private static OpcSessionHelper _instance = null;
         private static Object _instanceLock = new Object();
 
+        private static SemaphoreSlim _trustedSessionCertificateValidation = null;
+        private static string _trustedSessionId { get; set; } = null;
+
         public static OpcSessionHelper Instance
         {
             get
@@ -66,6 +70,11 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
 
                 return _instance;
             }
+        }
+
+        public OpcSessionHelper()
+        {
+            _trustedSessionCertificateValidation = new SemaphoreSlim(1);
         }
 
         /// <summary>
@@ -160,7 +169,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
         /// Checks if there is an active OPC UA session for the provided browser session. If the persisted OPC UA session does not exist,
         /// a new OPC UA session to the given endpoint URL is established.
         /// </summary>
-        public async Task<Session> GetSessionAsync(string sessionID, string endpointURL)
+        public async Task<Session> GetSessionAsync(string sessionID, string endpointURL, bool enforceTrust = false)
         {
             if (string.IsNullOrEmpty(sessionID) || string.IsNullOrEmpty(endpointURL))
             {
@@ -210,35 +219,53 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
                 }
             }
 
-            Session session = await Session.Create(
-                _configuration,
-                endpoint,
-                true,
-                false,
-                sessionID,
-                60000,
-                new UserIdentity(new AnonymousIdentityToken()),
-                null);
-
-            if (session != null)
+            Session session = null;
+            try
             {
-                session.KeepAlive += new KeepAliveEventHandler(StandardClient_KeepAlive);
+                // lock the session creation for the enforced trust case
+                await _trustedSessionCertificateValidation.WaitAsync();
 
-                // Update our cache data
-                if (OpcSessionCache.TryGetValue(sessionID, out entry))
+                if (enforceTrust)
                 {
-                    if (string.Equals(entry.EndpointURL, endpointURL, StringComparison.InvariantCultureIgnoreCase))
+                    // enforce trust in the certificate validator by setting the trusted session id
+                    _trustedSessionId = sessionID;
+                }
+
+                session = await Session.Create(
+                    _configuration,
+                    endpoint,
+                    true,
+                    false,
+                    sessionID,
+                    60000,
+                    new UserIdentity(new AnonymousIdentityToken()),
+                    null);
+
+                if (session != null)
+                {
+                    session.KeepAlive += new KeepAliveEventHandler(StandardClient_KeepAlive);
+
+                    // Update our cache data
+                    if (OpcSessionCache.TryGetValue(sessionID, out entry))
                     {
-                        OpcSessionCacheData newValue = new OpcSessionCacheData
+                        if (string.Equals(entry.EndpointURL, endpointURL, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            CertThumbprint = entry.CertThumbprint,
-                            EndpointURL = entry.EndpointURL,
-                            Trusted = entry.Trusted,
-                            OPCSession = session
-                        };
-                        OpcSessionCache.TryUpdate(sessionID, newValue, entry);
+                            OpcSessionCacheData newValue = new OpcSessionCacheData
+                            {
+                                CertThumbprint = entry.CertThumbprint,
+                                EndpointURL = entry.EndpointURL,
+                                Trusted = entry.Trusted,
+                                OPCSession = session
+                            };
+                            OpcSessionCache.TryUpdate(sessionID, newValue, entry);
+                        }
                     }
                 }
+            }
+            finally
+            {
+                _trustedSessionId = null;
+                _trustedSessionCertificateValidation.Release();
             }
 
             return session;
@@ -982,55 +1009,73 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
 
             return updatedEndpoints;
         }
-        
+
         /// <summary>
-        /// Check for untrusted certificates and only accept them if the user has accepted them
+        /// For untrusted certificates we check if we trust their thumbprint already. If not, we check if the hostname is in the certificate.
+        /// Trust can be enforced when the SessionId is set and already in the cache.
         /// </summary>
         private void CertificateValidator_CertificateValidation(CertificateValidator validator, CertificateValidationEventArgs e)
         {
             if (e.Error.StatusCode == StatusCodes.BadCertificateUntrusted)
             {
-                // Session is not accessible from here so we need to iterate through all key-value-pairs
-                foreach (KeyValuePair<string, OpcSessionCacheData> pair in OpcSessionCache.ToArray())
+                if (!string.IsNullOrEmpty(_trustedSessionId) && OpcSessionCache.ContainsKey(_trustedSessionId))
                 {
-                    // try processing each entry
-                    try
+                    // Update our cache data
+                    OpcSessionCacheData currentValue = OpcSessionCache[_trustedSessionId];
+                    OpcSessionCacheData newValue = new OpcSessionCacheData
                     {
-                        string hostName = pair.Value.EndpointURL.Substring("opc.tcp://".Length);
-                        if (hostName.Contains(":"))
+                        OPCSession = currentValue.OPCSession,
+                        EndpointURL = currentValue.EndpointURL,
+                        Trusted = currentValue.Trusted,
+                        CertThumbprint = e.Certificate.Thumbprint
+                    };
+                    OpcSessionCache.TryUpdate(_trustedSessionId, newValue, currentValue);
+                    e.Accept = true;
+                }
+                else
+                {
+                    // Session is not accessible from here so we need to iterate through all key-value-pairs
+                    foreach (KeyValuePair<string, OpcSessionCacheData> pair in OpcSessionCache.ToArray())
+                    {
+                        // try processing each entry
+                        try
                         {
-                            hostName = hostName.Substring(0, hostName.IndexOf(':'));
-                        }
-
-                        // Look up by cert thumbprint
-                        if (string.Equals(pair.Value.CertThumbprint, e.Certificate.Thumbprint, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            // check if the current session user has confirmed trust
-                            if (pair.Value.Trusted)
+                            string hostName = pair.Value.EndpointURL.Substring("opc.tcp://".Length);
+                            if (hostName.Contains(":"))
                             {
-                                // In this case, we accept the cert
-                                e.Accept = true;
+                                hostName = hostName.Substring(0, hostName.IndexOf(':'));
+                            }
+
+                            // Look up by cert thumbprint
+                            if (string.Equals(pair.Value.CertThumbprint, e.Certificate.Thumbprint, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                // check if the current session user has confirmed trust
+                                if (pair.Value.Trusted)
+                                {
+                                    // In this case, we accept the cert
+                                    e.Accept = true;
+                                    break;
+                                }
+                            }
+
+                            // Update our cache data
+                            if (e.Certificate.Subject.Contains(hostName))
+                            {
+                                OpcSessionCacheData newValue = new OpcSessionCacheData
+                                {
+                                    OPCSession = pair.Value.OPCSession,
+                                    EndpointURL = pair.Value.EndpointURL,
+                                    Trusted = pair.Value.Trusted,
+                                    CertThumbprint = e.Certificate.Thumbprint
+                                };
+                                OpcSessionCache.TryUpdate(pair.Key, newValue, pair.Value);
                                 break;
                             }
                         }
-
-                        // Update our cache data
-                        if (e.Certificate.Subject.Contains(hostName))
+                        catch (Exception)
                         {
-                            OpcSessionCacheData newValue = new OpcSessionCacheData
-                            {
-                                OPCSession = pair.Value.OPCSession,
-                                EndpointURL = pair.Value.EndpointURL,
-                                Trusted = pair.Value.Trusted,
-                                CertThumbprint = e.Certificate.Thumbprint
-                            };
-                            OpcSessionCache.TryUpdate(pair.Key, newValue, pair.Value);
-                            break;
+                            // do nothing
                         }
-                    }
-                    catch (Exception)
-                    {
-                        // do nothing
                     }
                 }
             }

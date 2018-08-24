@@ -127,7 +127,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                     TimeSpan intervalTimeSpan = aggregatedTimeSpan[0].IntervalTimeSpan;
                     DateTimeRange aggregateSpan = RDXUtils.CalcAggregationRange(aggregatedTimeSpan, searchSpan.To);
                     RDXCachedAggregatedQuery fullQuery = new RDXCachedAggregatedQuery(opcUaQueries);
-                    Task aggServerAndNodesTask = fullQuery.Execute(aggregateSpan);
+                    Task aggServerAndNodesTask = fullQuery.ExecuteAsync(aggregateSpan);
 
                     // wait for all outstanding aggregates
                     tasks.Add(aggServerTask);
@@ -140,6 +140,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                     // intersect list of active servers and schedule all queries
                     tasks.Clear();
                     List<string> opcUaServersToQuery = opcUaServers.Intersect(topologyStations, StringComparer.InvariantCultureIgnoreCase).ToList();
+                    // query known servers
                     await oeeKpiQueries.ScheduleAllOeeKpiQueries(searchSpan, _topology, fullQuery, opcUaServersToQuery, tasks, aggregateIndex);
 
                     // wait for all outstanding queries

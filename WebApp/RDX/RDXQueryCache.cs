@@ -46,12 +46,11 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
         /// <summary>
         /// Issue a task for a cached query for all active nodes and stations
         /// </summary>
-        /// <param name="searchSpan">Date and time span for the query</param>
-        public Task Execute(DateTimeRange searchSpan)
+        public async Task<AggregateResult> ExecuteAsync(DateTimeRange searchSpan)
         {
             SearchSpan = searchSpan;
-            _task = _opcUaQueries.GetAllAggregatedStationsAndNodes(searchSpan);
-            return _task;
+            _result = await _opcUaQueries.GetAllAggregatedStationsAndNodes(searchSpan);
+            return _result;
         }
 
         /// <summary>
