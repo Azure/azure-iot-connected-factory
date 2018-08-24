@@ -6,7 +6,7 @@ You can deploy preconfigured solutions that implement common Internet of Things 
 Each preconfigured solution implements a common IoT scenario and is a complete, end-to-end implementation. You can deploy the Azure IoT Suite Connected factory preconfigured solution from [https://www.azureiotsuite.com](https://www.azureiotsuite.com), following the guidance outlined in this [document](https://azure.microsoft.com/en-us/documentation/articles/iot-suite-getstarted-preconfigured-solutions/). In addition, you can download the complete source code from this repository to customize and extend the solution to meet your specific requirements. 
 
 ## Connected factory Preconfigured Solution
-The Connected factory Preconfigured Solution illustrates how you can get started with your Industrie 4.0 digital transformation. It brings together key Azure IoT services to enable the following features: OPC UA data ingestion, OPC UA server management, rules and actions and Azure Time Series Insights.
+The Connected factory Preconfigured Solution illustrates how you can get started with your Industry 4.0 digital transformation. It brings together key Azure IoT services to enable the following features: OPC UA data ingestion, OPC UA server management, rules and actions and Azure Time Series Insights.
 
 ## Release Notes
 
@@ -93,8 +93,8 @@ If one of these commands does report nothing back, something went wrong in your 
 3. Ensure that you have cloned the latest version of this repository before building via the build script by verifying that the content of VERSION.txt in your local clone of the repository is the same as the content of [this file](https://github.com/Azure/azure-iot-connected-factory/blob/master/VERSION.txt).
 4. To build and deploy the solution into the cloud:
   * Run the following script from the root of your cloned repository: `./build.ps1 cloud -DeploymentName <your deployment name> -Configuration [release | debug ]`
-    * Deployment naming rules - Length 4 - 64, Case insensitive, supports alphanumeric, underscore and hypens are all valid characters
-  * More detailed help on the build script is available by typing get-help `.\build.ps1 - detailed`
+  * Deployment naming rules - Length 4 to 64, Case insensitive, supports alphanumeric, underscore and hypens are all valid characters
+  * More detailed help on the build script is available by typing get-help `.\build.ps1 -detailed`
   * Sign in with your Azure account credentials when prompted
   * Select the Azure Subscription to use
     * All your subscription will be shown in a list
@@ -104,14 +104,14 @@ If one of these commands does report nothing back, something went wrong in your 
     * List of available locations will be displayed to you
     * Enter the number of the location you wish to use
     * Location will be stored for future use
-  * Select an Active Directories to use
-    * List of available Active directories will be provided to you
-    * Enter the number of the active directory you wish to use
+  * Select an Active Directory to use
+    * List of available Active Directories will be provided to you
+    * Enter the number of the Active Directory you wish to use
   * When script completes successfully it will open a browser tab with the web app launched
  
  
 ### Additional build script help
-There are more parameters available in the build.ps1 script. Please use get-help `.\build.ps1 -detailed` to get more information on them
+There are more parameters available in the build.ps1 script. Please use `get-help .\build.ps1 -detailed` to get more information on them
  
  
 ### Delete the deployment
@@ -144,7 +144,7 @@ Do you want to run this script?`
  
 #### Authorization_RequestDenied Message
 If you see an message `Invoke-RestMethod : {"odata.error":{"code":"Authorization_RequestDenied","message":{"lang":"en","value":"Insufficient privileges to complete the operation."}}}`
-This can be ignored, it is displayed when the user doesn't have administrator privileges to the active directory, the Script will continue to execute
+This can be ignored, it is displayed when the user doesn't have administrator privileges to the Active Directory, the Script will continue to execute
 
 ## Feedback
 
