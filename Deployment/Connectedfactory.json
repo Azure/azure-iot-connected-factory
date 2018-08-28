@@ -14,13 +14,6 @@
                 "description": "The suite type for resource tracking"
             }
         },
-        "bingMapsLocation": {
-            "type": "string",
-            "defaultValue": "westus",
-            "metadata": {
-                "description": "Not used - remove when portal updated"
-            }
-        },
         "aadTenant": {
             "type": "string",
             "metadata": {
@@ -45,13 +38,6 @@
             "defaultValue": "f8daea97-62e7-4026-becf-13c2ea98e8b4",
             "metadata": {
                 "description": "The object ID of the service principal Microsoft.Azure.WebSites (f8daea97-62e7-4026-becf-13c2ea98e8b4)."
-            }
-        },
-        "mapApiQueryKey": {
-            "type": "string",
-            "defaultValue": "0",
-            "metadata": {
-                "description": "Bing Maps Api Query key - default is disabled"
             }
         },
         "storageName": {
@@ -274,10 +260,11 @@
         "storageId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageName'))]",
         "webSiteVersion": "2016-08-01",
         "webPlanVersion": "2016-09-01",
-        "bingMapsName": "[concat(parameters('suiteName'), '-map')]",
-        "bingMapsVersion": "2016-08-18",
         "webPlanName": "[concat(parameters('suiteName'), '-plan')]",
         "webSiteName": "[parameters('suiteName')]",
+        "azureMapsName": "[concat(parameters('suiteName'), '-map')]",
+        "azureMapsVersion": "2018-05-01",
+        "AzureMapsPricingSpec": "S0",
         "storageEndpointSuffix": "[parameters('storageEndpointSuffix')]",
         "iotHubVersion": "2016-02-03",
         "iotHubResourceId": "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
@@ -401,22 +388,6 @@
                     }
                 }
             }
-        },
-        {
-            "type": "Microsoft.BingMaps/mapApis",
-            "name": "[variables('bingMapsName')]",
-            "apiVersion": "[variables('bingMapsVersion')]",
-            "location": "[parameters('bingMapsLocation')]",
-            "plan": {
-                "publisher": "bingmaps",
-                "product": "mapapis",
-                "name": "internal1",
-                "promotionCode": null
-            },
-            "tags": {
-                "IotSuiteType": "[parameters('suiteType')]"
-            },
-            "properties": {}
         },
         {
             "type": "Microsoft.Storage/storageAccounts",
@@ -549,7 +520,6 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageName'))]",
                 "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
-                "[resourceId('Microsoft.BingMaps/mapApis', variables('bingMapsName'))]",
                 "[resourceId('Microsoft.TimeSeriesInsights/environments/', parameters('rdxEnvironmentName'))]"
             ]
         },
@@ -665,11 +635,20 @@
                         "RdxAuthenticationClientSecret": "[parameters('rdxAuthenticationClientSecret')]",
                         "RdxDnsName": "[parameters('rdxDnsName')]",
                         "RdxEnvironmentId": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('rdxEnvironmentName'))).dataAccessId]",
-                        "MapApiQueryKey": "[listSecrets(variables('bingMapsName'), variables('bingMapsVersion')).QueryKey]",
+                        "MapApiQueryKey": "[listkeys(variables('azureMapsName'), variables('azureMapsVersion')).primaryKey]",
                         "WEBSITE_LOAD_CERTIFICATES": "*"
                     }
                 }
             ]
+        },
+        {
+          "type": "Microsoft.Maps/accounts",
+          "sku": {
+            "name": "[variables('AzureMapsPricingSpec')]"
+          },
+          "name": "[variables('azureMapsName')]",
+          "apiVersion": "[variables('azureMapsVersion')]",
+          "location": "global"
         }
     ],
     "outputs": {
@@ -695,7 +674,7 @@
         },
         "mapApiQueryKey": {
             "type": "string",
-            "value": "[listSecrets(variables('bingMapsName'), variables('bingMapsVersion')).QueryKey]"
+            "value": "[listkeys(variables('azureMapsName'), variables('azureMapsVersion')).primaryKey]"
         },
         "storageConnectionString": {
             "type": "string",
