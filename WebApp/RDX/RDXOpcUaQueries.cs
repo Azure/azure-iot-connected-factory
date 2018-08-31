@@ -58,6 +58,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
             "[" + OpcServerUri + "] HAS '{0}' AND [" + OpcMonitoredItemId + "] = '{1}'";
         public const string OpcNodePredicate = "[" + OpcMonitoredItemId + "] = '{0}'";
 
+        public AggregateResult GetAllAggregatedStationsAndNodesResult => _getAllAggregatedStationsAndNodesResult;
+
         /// <summary>
         /// Task runner helper
         /// </summary>
@@ -243,12 +245,12 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                     _cancellationToken);
 
                 // Since there was 1 top level aggregate in request, there is 1 aggregate result.
-                AggregateResult aggregateResult = aggregateResults[0];
+                _getAllAggregatedStationsAndNodesResult = aggregateResults[0];
 
                 stopwatch.Stop();
                 RDXTrace.TraceInformation("GetAllAggregatedStationsAndNodes query took {0} ms", stopwatch.ElapsedMilliseconds);
 
-                return aggregateResult;
+                return _getAllAggregatedStationsAndNodesResult;
             }
             catch (Exception e)
             {
@@ -459,6 +461,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
             var result = iEvent.EventSchema.Properties.IndexOf(p => (p.Name == property));
             return (T)iEvent.Values[result];
         }
+
+        public AggregateResult _getAllAggregatedStationsAndNodesResult { get; set; }
     }
 }
 

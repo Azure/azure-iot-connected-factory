@@ -127,12 +127,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                     TimeSpan intervalTimeSpan = aggregatedTimeSpan[0].IntervalTimeSpan;
                     DateTimeRange aggregateSpan = RDXUtils.CalcAggregationRange(aggregatedTimeSpan, searchSpan.To);
                     RDXCachedAggregatedQuery fullQuery = new RDXCachedAggregatedQuery(opcUaQueries);
-                    Task aggServerAndNodesTask = fullQuery.ExecuteAsync(aggregateSpan);
+                    Task aggServerAndNodesTask = fullQuery.Execute(aggregateSpan);
 
                     // wait for all outstanding aggregates
                     tasks.Add(aggServerTask);
                     tasks.Add(aggServerAndNodesTask);
                     await RDXUtils.WhenAllTasks("Aggregates", tasks, stopWatch);
+                    fullQuery.UpdateCacheQueryResult();
 
                     List<string> topologyStations = _topology.GetAllChildren(_tree.TopologyRoot.Key, typeof(Station));
                     List<string> opcUaServers = await aggServerTask;

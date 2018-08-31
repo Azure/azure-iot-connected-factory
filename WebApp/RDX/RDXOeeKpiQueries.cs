@@ -347,7 +347,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.RDX
                         {
                             RDXCachedAggregatedQuery newQuery = new RDXCachedAggregatedQuery(_opcUaQueries);
                             queryCache.List.Add(newQuery);
-                            tasks.Add(newQuery.ExecuteAsync(intervalSearchSpan));
+                            tasks.Add(newQuery.Execute(intervalSearchSpan));
                             aggregatedQuery = queryCache.Find(intervalSearchSpan);
                         }
 
