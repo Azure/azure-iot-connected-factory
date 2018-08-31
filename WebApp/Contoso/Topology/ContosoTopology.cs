@@ -715,9 +715,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
 
             node.Status |= UpdateAlert(node, oeeKpi.Kpi1.Kpi, oeeKpi.Kpi1.Time, node.Kpi1PerformanceSetting, ContosoAlertCause.AlertCauseKpi1BelowMinimum, ContosoAlertCause.AlertCauseKpi1AboveMaximum);
             node.Status |= UpdateAlert(node, oeeKpi.Kpi2.Kpi, oeeKpi.Kpi2.Time, node.Kpi2PerformanceSetting, ContosoAlertCause.AlertCauseKpi2BelowMinimum, ContosoAlertCause.AlertCauseKpi2AboveMaximum);
-            node.Status |= UpdateAlert(node, node.OeeAvailabilityLast.OeeAvailability, node.OeeAvailabilityLast.Time, node.OeeAvailabilityPerformanceSetting);
-            node.Status |= UpdateAlert(node, node.OeePerformanceLast.OeePerformance, node.OeePerformanceLast.Time, node.OeePerformancePerformanceSetting);
-            node.Status |= UpdateAlert(node, node.OeeQualityLast.OeeQuality, node.OeeQualityLast.Time, node.OeeQualityPerformanceSetting);
+            node.Status |= UpdateAlert(node, node.OeeAvailabilityLast.OeeAvailability, node.OeeAvailabilityLast.Time, node.OeeAvailabilityPerformanceSetting, ContosoAlertCause.AlertCauseOeeAvailabilityBelowMinimum, ContosoAlertCause.AlertCauseOeeAvailabilityAboveMaximum);
+            node.Status |= UpdateAlert(node, node.OeePerformanceLast.OeePerformance, node.OeePerformanceLast.Time, node.OeePerformancePerformanceSetting, ContosoAlertCause.AlertCauseOeePerformanceBelowMinimum, ContosoAlertCause.AlertCauseOeePerformanceAboveMaximum);
+            node.Status |= UpdateAlert(node, node.OeeQualityLast.OeeQuality, node.OeeQualityLast.Time, node.OeeQualityPerformanceSetting, ContosoAlertCause.AlertCauseOeeQualityBelowMinimum, ContosoAlertCause.AlertCauseOeeQualityAboveMaximum);
         }
 
         /// <summary>
