@@ -24,8 +24,8 @@
                 Html.RenderPartial("_ChildrenList", Model);
             }
         </div>
-        <div  class="dashboard_map_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
-            @if (Model.TopNode.Parent == null )
+        <div class="dashboard_map_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            @if (Model.TopNode.Parent == null)
             {
                 Html.RenderPartial("_ChildrenMap", Model);
             }
@@ -55,15 +55,15 @@
                         i++;
                     }
                 </div>
-            }   
+            }
         </div>
-            <div class="row dashboard_alerts_container col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                @{
-                    Html.RenderPartial("_Alerts", Model);
-                }
-            </div>
+        <div class="row dashboard_alerts_container col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            @{
+                Html.RenderPartial("_Alerts", Model);
+            }
+        </div>
     </div>
-   
+
     <div class="dashboard_bottom_container row">
         <div class="dashboard_oee_container col-xs-12 col-sm-12 col-md-8">
             <div id="oeeHeaderLabel" class="dashboard_oee_header overflow row">@Strings.OeeHeaderLabel</div>
@@ -1296,15 +1296,17 @@
                             var updateMap = false;
                             for (j = 0; j < session.Children.length; j++) {
                                 childrenList += '<div >';
-                                
+
                                 if (session.Children[j].Status == "@ContosoPerformanceStatus.Poor") {
                                     var statusMessage = "@Strings.Error";
                                     var dashboardStatusClass = "dashboard_status_poor";
 
-                                    if (factoryMapPushpin != undefined) {
-                                        if (factoryMapPushpin != null && factoryMapPushpin[j] != null) {
-                                            factoryMapPushpin[j].properties.icon = "alert-icon";
-                                            updateMap = true;
+                                    if (session.TopNode == "topologyroot") {
+                                        if (factoryMapPushpin != undefined) {
+                                            if (factoryMapPushpin != null && factoryMapPushpin[j] != null) {
+                                                factoryMapPushpin[j].properties.icon = "alert-icon";
+                                                updateMap = true;
+                                            }
                                         }
                                     }
                                     $("#image_pushpin" + j).addClass("alarm");
@@ -1312,10 +1314,12 @@
                                     var statusMessage = "@Strings.Normal";
                                     var dashboardStatusClass = "dashboard_status_good";
 
-                                    if (factoryMapPushpin != undefined) {
-                                        if (factoryMapPushpin != null && factoryMapPushpin[j] != null) {
-                                            factoryMapPushpin[j].properties.icon = "info-icon";
-                                            updateMap = true;
+                                    if (session.TopNode == "topologyroot") {
+                                        if (factoryMapPushpin != undefined) {
+                                            if (factoryMapPushpin != null && factoryMapPushpin[j] != null) {
+                                                factoryMapPushpin[j].properties.icon = "info-icon";
+                                                updateMap = true;
+                                            }
                                         }
                                     }
                                     $("#image_pushpin" + j).removeClass("alarm");
@@ -1348,7 +1352,7 @@
                                 if ($(topologyListInformation.idFilter).is(":visible")) {
                                     applyFilter(topologyListInformation);
                                 }
-                            }                         
+                            }
                             if (updateMap == true && map != undefined && map != null) {
                                 map.removeLayers(["default-pin-layer"]);
                                 map.addPins(factoryMapPushpin, {
@@ -1571,7 +1575,7 @@
         jQuery('.scrollbar-macosx').scrollbar();
 
         //Initialize scalize library
-        $('.scalize').scalize(); 
+        $('.scalize').scalize();
     });
 
     function updateTopologyListInformation() {
