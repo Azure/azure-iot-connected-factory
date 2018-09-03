@@ -40,6 +40,13 @@
                 "description": "The object ID of the service principal Microsoft.Azure.WebSites (f8daea97-62e7-4026-becf-13c2ea98e8b4)."
             }
         },
+        "mapApiQueryKey": {
+            "type": "string",
+            "defaultValue": "0",
+            "metadata": {
+                "description": "Bing Maps Api Query key - default is disabled"
+            }
+        },
         "storageName": {
             "type": "string",
             "metadata": {
