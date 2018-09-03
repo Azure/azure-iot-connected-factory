@@ -2454,6 +2454,23 @@ $script:ArmParameter += @{ `
     webSitesServicePrincipalObjectId = $script:WebSitesServicePrincipalObjectId; `
 }
 
+# Check if there is an Azure maps license key set in the configuration file.
+$script:MapApiQueryKey = GetEnvSetting "MapApiQueryKey"
+if ([string]::IsNullOrEmpty($script:MapApiQueryKey))
+{
+    # To enable bing maps functionality, the PowerShell environement variable MapApiQueryKey must hold bing maps license key
+    if (-not [string]::IsNullOrEmpty($env:MapApiQueryKey))
+    {
+        $script:MapApiQueryKey = $env:MapApiQueryKey
+    }
+}
+# the Azure maps is only set in the ARM template if there is a valid license key and if it is deployed in public cloud environments.
+if (-not [string]::IsNullOrEmpty($script:MapApiQueryKey) -and $script:AzureEnvironmentName -eq "AzureCloud")
+{
+    # Pass the key to the ARM template.
+    $script:ArmParameter += @{mapApiQueryKey=$script:MapApiQueryKey;}
+}
+
 # Show deployment parameters.
 Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Suite name: $script:SuiteName"
 Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Storage Name: $($script:StorageAccount.StorageAccountName)"
