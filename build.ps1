@@ -2458,7 +2458,7 @@ $script:ArmParameter += @{ `
 $script:MapApiQueryKey = GetEnvSetting "MapApiQueryKey"
 if ([string]::IsNullOrEmpty($script:MapApiQueryKey))
 {
-    # To enable bing maps functionality, the PowerShell environement variable MapApiQueryKey must hold bing maps license key
+    # To enable Azure maps functionality, the PowerShell environement variable MapApiQueryKey must hold Azure maps license key
     if (-not [string]::IsNullOrEmpty($env:MapApiQueryKey))
     {
         $script:MapApiQueryKey = $env:MapApiQueryKey
