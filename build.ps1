@@ -2039,7 +2039,7 @@ else
 $script:WebAppIdentifierUri = $script:WebAppHomepage + $script:SuiteName
 $script:WebAppDisplayName = $script:SuiteName + "-app"
 $script:DeploymentTemplateFile = "$script:DeploymentConfigPath/ConnectedfactoryMapKey.json"
-$script:DeploymentTemplateFileBingMaps = "$script:DeploymentConfigPath/Connectedfactory.json"
+$script:DeploymentTemplateFileAzureMaps = "$script:DeploymentConfigPath/Connectedfactory.json"
 $script:VmDeploymentTemplateFile = "$script:DeploymentConfigPath/FactorySimulation.json"
 $script:DeploymentSettingsFile = "{0}/{1}.config.user" -f $script:IoTSuiteRootPath, $script:DeploymentName
 
@@ -2057,7 +2057,7 @@ $script:DockerPublisherRepo = "microsoft/iot-edge-opc-publisher"
 $script:DockerPublisherVersion = "2.1.4"
 # todo remove
 $script:UaSecretBaseName = "UAWebClient"
-# Note: The password could only be changed if it is synced with the password used in CreateCerts.exe
+# Note: The password can only be changed if it is synced with the password used in CreateCerts.exe
 $script:UaSecretPassword = "password"
 
 # Load System.Web
@@ -2177,7 +2177,7 @@ if ($script:Command -eq "delete")
     }
     else
     {
-        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - An AD application with the IdentifierUri '{0}' could not be found. Keeping configuration file." -f $script:WebAppIdentifierUri)
+        Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - An AD application with the IdentifierUri '{0}' can not be found. Keeping configuration file." -f $script:WebAppIdentifierUri)
     }
     exit
 }

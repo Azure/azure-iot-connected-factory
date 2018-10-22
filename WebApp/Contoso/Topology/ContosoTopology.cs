@@ -115,7 +115,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         // Pushpin coordinates
         public ContosoPushPinCoordinates ImagePushpin { get; set; }
 
-        // Geo location the toplogy node resides. Could be used in the UX.
+        // Geo location the toplogy node resides. Can be used in the UX.
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool Visible { get; set; }

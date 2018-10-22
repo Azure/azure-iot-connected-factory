@@ -959,7 +959,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
                 }
                 catch (Exception e)
                 {
-                    Trace.TraceError("Could not fetch endpoints from url: {0}", discoveryUrl);
+                    Trace.TraceError("Can not fetch endpoints from url: {0}", discoveryUrl);
                     Trace.TraceError("Reason = {0}", e.Message);
                     throw;
                 }

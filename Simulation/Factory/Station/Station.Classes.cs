@@ -72,12 +72,6 @@ namespace Station
             InitializeOptionalChildren(context);
         }
 
-        protected override void Initialize(ISystemContext context, NodeState source)
-        {
-            InitializeOptionalChildren(context);
-            base.Initialize(context, source);
-        }
-
         /// <summary>
         /// Initializes the any option children defined for the instance.
         /// </summary>
@@ -324,12 +318,6 @@ namespace Station
         {
             Initialize(context, InitializationString);
             InitializeOptionalChildren(context);
-        }
-
-        protected override void Initialize(ISystemContext context, NodeState source)
-        {
-            InitializeOptionalChildren(context);
-            base.Initialize(context, source);
         }
 
         /// <summary>
@@ -814,6 +802,7 @@ namespace Station
         /// <param name="objectId">The id of the object.</param>
         /// <param name="inputArguments">The input arguments which have been already validated.</param>
         /// <param name="outputArguments">The output arguments which have initialized with thier default values.</param>
+        /// <returns></returns>
         protected override ServiceResult Call(
             ISystemContext context,
             NodeId objectId,
@@ -891,12 +880,6 @@ namespace Station
         {
             Initialize(context, InitializationString);
             InitializeOptionalChildren(context);
-        }
-
-        protected override void Initialize(ISystemContext context, NodeState source)
-        {
-            InitializeOptionalChildren(context);
-            base.Initialize(context, source);
         }
 
         /// <summary>
@@ -1146,12 +1129,6 @@ namespace Station
         {
             Initialize(context, InitializationString);
             InitializeOptionalChildren(context);
-        }
-
-        protected override void Initialize(ISystemContext context, NodeState source)
-        {
-            InitializeOptionalChildren(context);
-            base.Initialize(context, source);
         }
 
         /// <summary>

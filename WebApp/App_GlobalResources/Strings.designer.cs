@@ -2024,7 +2024,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not establish connection to Publisher.
+        ///   Looks up a localized string similar to Can not establish connection to Publisher.
         /// </summary>
         public static string SessionNull {
             get {

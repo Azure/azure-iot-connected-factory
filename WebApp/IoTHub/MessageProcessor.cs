@@ -75,7 +75,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
             }
         }
 
-        private async Task<bool> ProcessPublisherMessageAsync(string opcUri, string nodeId, string sourceTimestamp, string value)
+        private bool ProcessPublisherMessage(string opcUri, string nodeId, string sourceTimestamp, string value)
         {
             // Get the OPC UA node object.
             ContosoOpcUaNode opcUaNode = Startup.Topology.GetOpcUaNode(opcUri.ToLower(), nodeId);
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 
         private async Task CheckpointAsync(PartitionContext context, Stopwatch checkpointStopwatch)
         {
-            context.CheckpointAsync();
+            await context.CheckpointAsync();
             checkpointStopwatch.Restart();
             Trace.TraceInformation($"checkpoint completed at {DateTime.UtcNow}");
         }
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                                     _publisherMessages++;
                                     try
                                     {
-                                        await ProcessPublisherMessageAsync(publisherMessage.OpcUri, publisherMessage.NodeId, publisherMessage.Value.SourceTimestamp, publisherMessage.Value.Value);
+                                        ProcessPublisherMessage(publisherMessage.OpcUri, publisherMessage.NodeId, publisherMessage.Value.SourceTimestamp, publisherMessage.Value.Value);
                                         _lastSourceTimestamp = publisherMessage.Value.SourceTimestamp;
                                         _lastOpcUri = publisherMessage.OpcUri;
                                         _lastNodeId = publisherMessage.NodeId;
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                             _publisherMessagesInvalidFormat++;
                             if (publisherMessage != null)
                             {
-                                await ProcessPublisherMessageAsync(publisherMessage.OpcUri, publisherMessage.NodeId, publisherMessage.Value.SourceTimestamp, publisherMessage.Value.Value);
+                                ProcessPublisherMessage(publisherMessage.OpcUri, publisherMessage.NodeId, publisherMessage.Value.SourceTimestamp, publisherMessage.Value.Value);
                                 _lastSourceTimestamp = publisherMessage.Value.SourceTimestamp;
                                 _lastOpcUri = publisherMessage.OpcUri;
                                 _lastNodeId = publisherMessage.NodeId;

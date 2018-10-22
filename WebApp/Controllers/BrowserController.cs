@@ -308,7 +308,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 node = jstreeNodeSplit[1];
             }
 
-            ReferenceDescriptionCollection references;
+            ReferenceDescriptionCollection references = null;
             Byte[] continuationPoint;
             var jsonTree = new List<object>();
 
@@ -326,7 +326,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             catch (Exception e)
             {
                 // do nothing, since we still want to show the tree
-                Trace.TraceWarning("Could not read published nodes for endpoint '{0}'.", endpointUrl);
+                Trace.TraceWarning("Can not read published nodes for endpoint '{0}'.", endpointUrl);
+                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                Trace.TraceWarning(errorMessage);
             }
 
             bool retry = true;
@@ -336,19 +339,31 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 {
                     Stopwatch stopwatch = new Stopwatch();
                     stopwatch.Start();
-                    session.Browse(
-                        null,
-                        null,
-                        node,
-                        0u,
-                        BrowseDirection.Forward,
-                        ReferenceTypeIds.HierarchicalReferences,
-                        true,
-                        0,
-                        out continuationPoint,
-                        out references);
 
-                    Trace.TraceInformation("Browse {0} ms", stopwatch.ElapsedMilliseconds);
+                    try
+                    {
+                        session.Browse(
+                            null,
+                            null,
+                            node,
+                            0u,
+                            BrowseDirection.Forward,
+                            ReferenceTypeIds.HierarchicalReferences,
+                            true,
+                            0,
+                            out continuationPoint,
+                            out references);
+                    }
+                    catch (Exception e)
+                    {
+                        // skip this node
+                        Trace.TraceError("Can not browse node '{0}'", node);
+                        string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                            e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                        Trace.TraceError(errorMessage);
+                    }
+
+                    Trace.TraceInformation("Browsing node '{0}' data took {0} ms", node.ToString(), stopwatch.ElapsedMilliseconds);
 
                     if (references != null)
                     {
@@ -370,27 +385,34 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 
                             ReferenceDescriptionCollection childReferences = null;
                             Byte[] childContinuationPoint;
-                        
-                            session.Browse(
-                                null,
-                                null,
-                                ExpandedNodeId.ToNodeId(nodeReference.NodeId, session.NamespaceUris),
-                                0u,
-                                BrowseDirection.Forward,
-                                ReferenceTypeIds.HierarchicalReferences,
-                                true,
-                                0,
-                                out childContinuationPoint,
-                                out childReferences);
+
+                            Trace.TraceInformation("Browse '{0}' count: {1}", nodeReference.NodeId, jsonTree.Count);
 
                             INode currentNode = null;
                             try
                             {
+                                session.Browse(
+                                    null,
+                                    null,
+                                    ExpandedNodeId.ToNodeId(nodeReference.NodeId, session.NamespaceUris),
+                                    0u,
+                                    BrowseDirection.Forward,
+                                    ReferenceTypeIds.HierarchicalReferences,
+                                    true,
+                                    0,
+                                    out childContinuationPoint,
+                                    out childReferences);
+
                                 currentNode = session.ReadNode(ExpandedNodeId.ToNodeId(nodeReference.NodeId, session.NamespaceUris));
                             }
-                            catch (Exception)
+                            catch (Exception e)
                             {
                                 // skip this node
+                                Trace.TraceError("Can not browse or read node '{0}'", nodeReference.NodeId);
+                                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                                Trace.TraceError(errorMessage);
+
                                 continue;
                             }
 
@@ -464,59 +486,73 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                         // If there are no children, then this is a call to read the properties of the node itself.
                         if (jsonTree.Count == 0)
                         {
-                            INode currentNode = session.ReadNode(new NodeId(node));
+                            INode currentNode = null;
 
-                            byte currentNodeAccessLevel = 0;
-                            byte currentNodeEventNotifier = 0;
-                            bool currentNodeExecutable = false;
-
-                            VariableNode variableNode = currentNode as VariableNode;
-
-                            if (variableNode != null)
+                            try
                             {
-                                currentNodeAccessLevel = variableNode.UserAccessLevel;
-                                if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
+                                currentNode = session.ReadNode(new NodeId(node));
+                            }
+                            catch (Exception e)
+                            {
+                                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                                Trace.TraceError(errorMessage);
+                            }
+
+                            if (currentNode == null)
+                            {
+                                byte currentNodeAccessLevel = 0;
+                                byte currentNodeEventNotifier = 0;
+                                bool currentNodeExecutable = false;
+
+                                VariableNode variableNode = currentNode as VariableNode;
+
+                                if (variableNode != null)
                                 {
-                                    currentNodeAccessLevel = (byte)((uint)currentNodeAccessLevel & ~0x2);
+                                    currentNodeAccessLevel = variableNode.UserAccessLevel;
+                                    if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
+                                    {
+                                        currentNodeAccessLevel = (byte)((uint)currentNodeAccessLevel & ~0x2);
+                                    }
                                 }
+
+                                ObjectNode objectNode = currentNode as ObjectNode;
+
+                                if (objectNode != null)
+                                {
+                                    currentNodeEventNotifier = objectNode.EventNotifier;
+                                }
+
+                                ViewNode viewNode = currentNode as ViewNode;
+
+                                if (viewNode != null)
+                                {
+                                    currentNodeEventNotifier = viewNode.EventNotifier;
+                                }
+
+                                MethodNode methodNode = currentNode as MethodNode;
+
+                                if (methodNode != null && PermsChecker.HasPermission(Permission.ControlOpcServer))
+                                {
+                                    currentNodeExecutable = methodNode.UserExecutable;
+                                }
+
+                                jsonTree.Add(new
+                                {
+                                    id = jstreeNode,
+                                    text = currentNode.DisplayName.ToString(),
+                                    nodeClass = currentNode.NodeClass.ToString(),
+                                    accessLevel = currentNodeAccessLevel.ToString(),
+                                    eventNotifier = currentNodeEventNotifier.ToString(),
+                                    executable = currentNodeExecutable.ToString(),
+                                    children = false
+                                });
                             }
-
-                            ObjectNode objectNode = currentNode as ObjectNode;
-
-                            if (objectNode != null)
-                            {
-                                currentNodeEventNotifier = objectNode.EventNotifier;
-                            }
-
-                            ViewNode viewNode = currentNode as ViewNode;
-
-                            if (viewNode != null)
-                            {
-                                currentNodeEventNotifier = viewNode.EventNotifier;
-                            }
-
-                            MethodNode methodNode = currentNode as MethodNode;
-
-                            if (methodNode != null && PermsChecker.HasPermission(Permission.ControlOpcServer))
-                            {
-                                currentNodeExecutable = methodNode.UserExecutable;
-                            }
-
-                            jsonTree.Add(new
-                            {
-                                id = jstreeNode,
-                                text = currentNode.DisplayName.ToString(),
-                                nodeClass = currentNode.NodeClass.ToString(),
-                                accessLevel = currentNodeAccessLevel.ToString(),
-                                eventNotifier = currentNodeEventNotifier.ToString(),
-                                executable = currentNodeExecutable.ToString(),
-                                children = false
-                            });
                         }
                     }
 
                     stopwatch.Stop();
-                    Trace.TraceInformation("GetChildren took {0} ms", stopwatch.ElapsedMilliseconds);
+                    Trace.TraceInformation("Browing all childeren info of node '{0}' took {0} ms", node, stopwatch.ElapsedMilliseconds);
 
                     return Json(jsonTree, JsonRequestBehavior.AllowGet);
                 }
@@ -656,8 +692,12 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 {
                     publisherSession = await ConnectToPublisher(publisherSessionId);
                 }
-                catch
+                catch (Exception e)
                 {
+                    Trace.TraceWarning($"Can not connect to publisher for endppoint '{endpointUrl}'.");
+                    string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                        e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                    Trace.TraceWarning(errorMessage);
                     return null;
                 }
 
@@ -671,6 +711,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                     }
                     catch (Exception e)
                     {
+                        Trace.TraceWarning($"Can not parse published nodes information for endppoint '{endpointUrl}'.");
+                        string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                            e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                        Trace.TraceWarning(errorMessage);
                         return null;
                     }
                     inputArguments.Add(endpointUrlValue);
@@ -691,6 +735,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                             ResponseHeader responseHeader = publisherSession.Call(null, requests, out results, out diagnosticInfos);
                             if (StatusCode.IsBad(results[0].StatusCode))
                             {
+                                Trace.TraceWarning($"Got bad OPC UA status when calling GetPublishedNodes method on endppoint '{endpointUrl}'.");
                                 return null;
                             }
                             else
@@ -711,6 +756,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                                 }
                                 else
                                 {
+                                    Trace.TraceWarning($"GetPublishedNodes method on endppoint '{endpointUrl}' returned no output arguments.");
                                     return null;
                                 }
                             }
@@ -719,6 +765,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                         {
                             if (!retry)
                             {
+                                Trace.TraceWarning($"Can not read published nodes information for endppoint '{endpointUrl}'.");
+                                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                                Trace.TraceWarning(errorMessage);
                                 return null;
                             }
                             retry = false;
@@ -727,11 +777,16 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 }
                 else
                 {
+                    Trace.TraceWarning($"No connection to publisher for endppoint '{endpointUrl}' available.");
                     return null;
                 }
             }
             catch (Exception e)
             {
+                Trace.TraceWarning($"Exception while fetching published nodes data for endppoint '{endpointUrl}'.");
+                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                Trace.TraceWarning(errorMessage);
                 return null;
             }
             finally

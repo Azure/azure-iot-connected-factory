@@ -17,7 +17,7 @@
 #>
 [CmdletBinding()]
 Param(
-[Parameter(Position=0, Mandatory=$true, HelpMessage="Specify the Azure account under which this operation should take place. Available account names could be seen by Get-AzureAccount.)")]
+[Parameter(Position=0, Mandatory=$true, HelpMessage="Specify the Azure account under which this operation should take place. Available account names can be seen by Get-AzureAccount.)")]
 [string] $AccountName,
 [Parameter(Position=1, Mandatory=$false, HelpMessage="Specify the name of the deployment (this is the name used as the name for the VM and the resource group)")]
 [string] $DeploymentName,

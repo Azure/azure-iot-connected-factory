@@ -19,8 +19,8 @@ It takes approximately 14 minutes to complete the deployment.
 #### Connected factory telemetry Flow
 After you have successfully deployed the solution and the web application launches the first time it takes approximately 3 minutes for data to show in the solution dashboard.
 
-#### Bing Maps
-Connected factory supports the Bing Maps API to show factory locations in the dashboard. Please check the [Connected factory FAQ](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-faq-cf) for more details.
+#### Azure Maps
+Connected factory supports the Azure Maps API to show factory locations in the dashboard. Please check the [Connected factory FAQ](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-faq-cf) for more details.
 
 #### Configure Connected factory
 The configuration of the Connected factory preconfigured solution is handled in more detail [here](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-connected-factory-configure).
@@ -44,7 +44,7 @@ If you need to change the configuration of the production line VM to allow inbou
   * **Connectedfactory:** contains the source code for the complete preconfigured solution, including the solution portal web app and the simulated factories.
 
 ### Preparation
-1. Install from  [here](https://www.visualstudio.com/downloads/). Release notes could be found [here](https://www.visualstudio.com/en-us/news/releasenotes/vs2017-relnotes).
+1. Install from  [here](https://www.visualstudio.com/downloads/). Release notes can be found [here](https://www.visualstudio.com/en-us/news/releasenotes/vs2017-relnotes).
   * Choose your edition
   * Any of these editions will work
   * Whatever edition you choose to install please ensure that you have selected:

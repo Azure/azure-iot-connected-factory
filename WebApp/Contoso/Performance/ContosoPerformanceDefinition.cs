@@ -131,12 +131,12 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         public double Maximum { get; set; }
 
         /// <summary>
-        /// Defines the actions a user could execute as reaction for a minimum alert.
+        /// Defines the actions a user can execute as reaction for a minimum alert.
         /// </summary>
         public List<ContosoAlertActionDefinition> MinimumAlertActions;
 
         /// <summary>
-        /// Defines the actions a user could execute as reaction for a maximum alert.
+        /// Defines the actions a user can execute as reaction for a maximum alert.
         /// </summary>
         public List<ContosoAlertActionDefinition> MaximumAlertActions;
 

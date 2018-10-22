@@ -63,7 +63,7 @@
   <TransportQuotas>
     
     <!-- The default timeout in milliseconds for operations (used by clients) -->
-    <OperationTimeout>30000</OperationTimeout>
+    <OperationTimeout>60000</OperationTimeout>
     
     <!-- The maximum length for a string value in any message -->
     <MaxStringLength>1048576</MaxStringLength>

@@ -44,7 +44,7 @@
             "type": "string",
             "defaultValue": "0",
             "metadata": {
-                "description": "Bing Maps Api Query key - default is disabled"
+                "description": "Azure Maps Api Query key - default is disabled"
             }
         },
         "storageName": {
@@ -583,10 +583,11 @@
         "keyVaultSecretName": "[variables('keyVaultWebsiteSecretName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]"
       },
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
-        "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
-      ]
+        "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
+            "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]",
+            "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('keyVaultWebsiteSecretName'))]"
+        ]
     },
     {
       "name": "[variables('webSiteName')]",

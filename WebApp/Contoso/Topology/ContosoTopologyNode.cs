@@ -252,7 +252,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                 }
             }
             // The alert was not found.
-            Trace.TraceError($"alertId '{alertId}' in node '{Key}' could not be found.");
+            Trace.TraceError($"alertId '{alertId}' in node '{Key}' can not be found.");
             return false;
         }
 
@@ -268,14 +268,14 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
                 ContosoAlert alert = Alerts.Find(x => x.AlertId == alertId);
                 if (alert == null)
                 {
-                    Trace.TraceError($"alertId '{alertId}' in node '{Key}' could not be found.");
+                    Trace.TraceError($"alertId '{alertId}' in node '{Key}' can not be found.");
                     return false;
                 }
 
                 // Fail if the alert is not yet acknowledged.
                 if (alert.Status != ContosoAlertStatus.AlertStatusAcknowledged)
                 {
-                    Trace.TraceError($"alert with alertId '{alertId}' in node '{Key}' could not be closed, since it is not acknowledged ('{alert.Status}')");
+                    Trace.TraceError($"alert with alertId '{alertId}' in node '{Key}' can not be closed, since it is not acknowledged ('{alert.Status}')");
                     return false;
                 }
 

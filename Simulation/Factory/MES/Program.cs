@@ -145,7 +145,7 @@ namespace Opc.Ua.Sample.Simulation
                 }
                 else
                 {
-                    throw new ArgumentException("Could not load station definition from configuration file!");
+                    throw new ArgumentException("Can not load station definition from configuration file!");
                 }
 
                 // connect to all servers.
@@ -253,7 +253,7 @@ namespace Opc.Ua.Sample.Simulation
             }
             else
             {
-                Trace("Could not create session!");
+                Trace("Can not create session!");
             }
 
             return session;
@@ -298,7 +298,7 @@ namespace Opc.Ua.Sample.Simulation
                 }
                 else
                 {
-                    Trace("Error: Could not create monitored item!");
+                    Trace("Error: Can not create monitored item!");
                 }
             }
             else

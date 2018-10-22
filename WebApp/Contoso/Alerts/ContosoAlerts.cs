@@ -45,7 +45,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso
         // Description of the action, which show up in the UX.
         public string Description { get; set; }
 
-        // Parameters for the action, this could be used per action type as needed.
+        // Parameters for the action, this can be used per action type as needed.
         public string Parameter;
 
         /// <summary>

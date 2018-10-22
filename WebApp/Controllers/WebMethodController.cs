@@ -163,7 +163,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                                 if (topologyNode.AcknowledgeAlert(alertId) == false)
                                 {
                                     Trace.TraceError(
-                                        $"alertId '{alertId}' in node '{topologyNode.Key}' could not be acknowledged.");
+                                        $"alertId '{alertId}' in node '{topologyNode.Key}' can not be acknowledged.");
                                     Response.StatusCode = 1;
                                     jsonResponse.Add(new { errorMessage = Strings.AlertIdUnknown });
                                 }
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                                 if (topologyNode.CloseAlert(alertId) == false)
                                 {
                                     Trace.TraceError(
-                                        $"alertId '{alertId}' in node '{topologyNode.Key}' could not be acknowledged.");
+                                        $"alertId '{alertId}' in node '{topologyNode.Key}' can not be acknowledged.");
                                     Response.StatusCode = 1;
                                     jsonResponse.Add(new { errorMessage = Strings.AlertIdUnknown });
                                 }
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 Session session = OpcSessionHelper.Instance.GetSessionWithImplicitTrust(sessionID, appUri).Result;
                 if (session == null)
                 {
-                    result = $"Could not establish session to OPC UA server with appUri '{appUri}'";
+                    result = $"Can not establish session to OPC UA server with appUri '{appUri}'";
                     Trace.TraceError(result);
                     return result;
                 }
