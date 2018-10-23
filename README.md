@@ -1,32 +1,32 @@
-# Microsoft Azure IoT Suite 
-You can deploy preconfigured solutions that implement common Internet of Things (IoT) scenarios to Microsoft Azure using your Azure subscription. You can use preconfigured solutions: 
+# Microsoft Azure IoT solution accelerators 
+You can deploy Azure IoT solution accelerators that implement common Internet of Things (IoT) scenarios to Microsoft Azure using your Azure subscription. You can use solution accelerators: 
 - as a starting point for your own IoT solution. 
 - to learn about the most common patterns in IoT solution design and development. 
 
-Each preconfigured solution implements a common IoT scenario and is a complete, end-to-end implementation. You can deploy the Azure IoT Suite Connected factory preconfigured solution from [https://www.azureiotsuite.com](https://www.azureiotsuite.com), following the guidance outlined in this [document](https://azure.microsoft.com/en-us/documentation/articles/iot-suite-getstarted-preconfigured-solutions/). In addition, you can download the complete source code from this repository to customize and extend the solution to meet your specific requirements. 
+Each solution accelerator implements a common IoT scenario and is a complete, end-to-end implementation. You can deploy the Azure IoT solution accelerator Connected Factory solution accelerator from [https://www.azureiotsolutions.com](https://www.azureiotsolutions.com), following the guidance outlined in this [document](https://www.azureiotsolutions.com/Accelerators#description/CF). In addition, you can download the complete source code from this repository to customize and extend the solution to meet your specific requirements. 
 
-## Connected factory Preconfigured Solution
-The Connected factory Preconfigured Solution illustrates how you can get started with your Industry 4.0 digital transformation. It brings together key Azure IoT services to enable the following features: OPC UA data ingestion, OPC UA server management, rules and actions and Azure Time Series Insights.
+## Connected Factory solution accelerator
+The Connected Factory solution accelerator illustrates how you can get started with your Industry 4.0 digital transformation. It brings together key Azure IoT services to enable the following features: OPC UA data ingestion, OPC UA server management, rules and actions and Azure Time Series Insights.
 
 ## Release Notes
 
 #### Deployment Names
 When using the build.ps1 script for deployment, it is recommended that you use a new deployment name each time you deploy the connected factory solution.
 
-#### Connected factory deployment Time
+#### Connected Factory deployment Time
 It takes approximately 14 minutes to complete the deployment.
 
-#### Connected factory telemetry Flow
+#### Connected Factory telemetry Flow
 After you have successfully deployed the solution and the web application launches the first time it takes approximately 3 minutes for data to show in the solution dashboard.
 
 #### Azure Maps
-Connected factory supports the Azure Maps API to show factory locations in the dashboard. Please check the [Connected factory FAQ](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-faq-cf) for more details.
+Connected Factory supports the Azure Maps API to show factory locations in the dashboard. Please check the [Connected Factory FAQ](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-faq-cf) for more details.
 
-#### Configure Connected factory
-The configuration of the Connected factory preconfigured solution is handled in more detail [here](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-connected-factory-configure).
+#### Configure Connected Factory
+The configuration of the Connected Factory solution accelerator is handled in more detail [here](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-connected-factory-configure).
 
-#### Deploy an edge gateway for the Connected factory
-If you want to add a new gateway to the Connected factory, please follow the instructions on [this page](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-connected-factory-gateway-deployment).
+#### Deploy an edge gateway for the Connected Factory
+If you want to add a new gateway to the Connected Factory, please follow the instructions on [this page](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-connected-factory-gateway-deployment).
 
 #### Simulation VM security
 To upload and start the simulation in the VM, we are adding a public IP interface before we upload the VM scripts and executables. This interface is removed after the operation is completed. The network interface of the VM is protected by a network security group, which allows only outgoing connections on ports 5671 (AMPQS), 8883 (MQTTS) and 443 (TLS).
@@ -36,12 +36,11 @@ If you need to change the configuration of the production line VM to allow inbou
 
 ## Documentation
 
-  * [IoT Suite documentation](https://azure.microsoft.com/documentation/suites/iot-suite/)
-  * [Frequently asked questions for IoT Suite](https://azure.microsoft.com/documentation/articles/iot-suite-faq/)
-  * [Permissions on the azureiotsuite.com site](https://azure.microsoft.com/documentation/articles/iot-suite-permissions/). This includes instructions for adding co-administrators to your preconfigured solution.
+  * [Connected Factory IoT solution accelerator documentation](https://www.azureiotsolutions.com/Accelerators#description/CF/)
+  * [Permissions on the azureiotsuite.com site](https://azure.microsoft.com/documentation/articles/iot-suite-permissions/). This includes instructions for adding co-administrators to your solution accelerator.
   
 ### Visual Studio Solution
-  * **Connectedfactory:** contains the source code for the complete preconfigured solution, including the solution portal web app and the simulated factories.
+  * **Connectedfactory:** contains the source code for the complete solution accelerator, including the solution portal web app and the simulated factories.
 
 ### Preparation
 1. Install from  [here](https://www.visualstudio.com/downloads/). Release notes can be found [here](https://www.visualstudio.com/en-us/news/releasenotes/vs2017-relnotes).
@@ -89,7 +88,7 @@ Verify then that the required PowerShell modules are installed the following Pow
 If one of these commands does report nothing back, something went wrong in your preparation.
 ### Run the build script
 1. Search for Windows PowerShell in Start
-2. The Connected factory repository is [here](https://github.com/Azure/azure-iot-connected-factory).
+2. The Connected Factory repository is [here](https://github.com/Azure/azure-iot-connected-factory).
 3. Ensure that you have cloned the latest version of this repository before building via the build script by verifying that the content of VERSION.txt in your local clone of the repository is the same as the content of [this file](https://github.com/Azure/azure-iot-connected-factory/blob/master/VERSION.txt).
 4. To build and deploy the solution into the cloud:
   * Run the following script from the root of your cloned repository: `./build.ps1 cloud -DeploymentName <your deployment name> -Configuration [release | debug ]`
