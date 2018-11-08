@@ -1623,7 +1623,21 @@ function SimulationBuildScripts
 {
     # Initialize init script
     Set-Content -Path "$script:SimulationBuildOutputInitScript" -Value "#!/bin/bash `n" -NoNewline
-    # Unpack the simulation files
+    # Install or update docker ce
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "apt-get update`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "apt-get remove -y docker docker-engine docker.io`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "apt-get autoremove -y`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "apt-key fingerprint 0EBFCD88`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "add-apt-repository `"deb [arch=amd64] https://download.docker.com/linux/ubuntu `$(lsb_release -cs) stable`"`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "apt-get update`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "apt-get install -y --no-install-recommends docker-ce`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "usermod -aG docker $USER`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "usermod -aG docker $ADMIN`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "curl -L `"https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`$(uname -s)-`$(uname -m)`" -o /usr/local/bin/docker-compose`n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "chmod +x /usr/local/bin/docker-compose`n" -NoNewline
+     # Unpack the simulation files
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "chmod +x simulation `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "tar -xjvf simulation -C $script:DockerRoot `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputInitScript" -Value "rm simulation `n" -NoNewline
