@@ -1,4 +1,4 @@
-#dfsdfsdfsdfsa#
+#adfsfa
 # Microsoft Azure IoT solution accelerators 
 You can deploy Azure IoT solution accelerators that implement common Internet of Things (IoT) scenarios to Microsoft Azure using your Azure subscription. You can use solution accelerators: 
 - as a starting point for your own IoT solution. 
