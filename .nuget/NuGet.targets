@@ -36,12 +36,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackagesProjectConfig Condition=" '$(OS)' == 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName.Replace(' ', '_')).config</PackagesProjectConfig>
-        <PackagesProjectConfig Condition=" '$(OS)' != 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName).config</PackagesProjectConfig>
+      <!--PackagesProjectConfig Condition=" '$(OS)' == 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName.Replace(' ', '_')).config</PackagesProjectConfig>
+        <PackagesProjectConfig Condition=" '$(OS)' != 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName).config</PackagesProjectConfig-->
     </PropertyGroup>
 
     <PropertyGroup>
-      <PackagesConfig Condition="Exists('$(MSBuildProjectDirectory)\packages.config')">$(MSBuildProjectDirectory)\packages.config</PackagesConfig>
+      <!--PackagesConfig Condition="Exists('$(MSBuildProjectDirectory)\packages.config')">$(MSBuildProjectDirectory)\packages.config</PackagesConfig-->
       <PackagesConfig Condition="Exists('$(PackagesProjectConfig)')">$(PackagesProjectConfig)</PackagesConfig>
     </PropertyGroup>
     
