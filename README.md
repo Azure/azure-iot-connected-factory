@@ -1,11 +1,11 @@
-#yejis comment
+
 # Microsoft Azure IoT solution accelerators 
 You can deploy Azure IoT solution accelerators that implement common Internet of Things (IoT) scenarios to Microsoft Azure using your Azure subscription. You can use solution accelerators: 
 - as a starting point for your own IoT solution. 
 - to learn about the most common patterns in IoT solution design and development. 
 
 Each solution accelerator implements a common IoT scenario and is a complete, end-to-end implementation. You can deploy the Azure IoT solution accelerator Connected Factory solution accelerator from [https://www.azureiotsolutions.com](https://www.azureiotsolutions.com), following the guidance outlined in this [document](https://www.azureiotsolutions.com/Accelerators#description/CF). In addition, you can download the complete source code from this repository to customize and extend the solution to meet your specific requirements. 
-
+## yeji's comment
 ## Connected Factory solution accelerator
 The Connected Factory solution accelerator illustrates how you can get started with your Industry 4.0 digital transformation. It brings together key Azure IoT services to enable the following features: OPC UA data ingestion, OPC UA server management, rules and actions and Azure Time Series Insights.
 
