@@ -1,0 +1,159 @@
+﻿
+@using GlobalResources;
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
+
+@model OpcSessionModel
+
+<div class="container-fluid browser_connect_container">
+    <div class="row browser_connect_header">
+        <div class="browser_connect_header_text overflow">@Strings.SupervisorSelect</div>
+    </div>
+    <div class="row browser_top_container scrollbar-inner">
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+            <table class="table_container_twin">
+                <thead>
+                    <tr>
+                        <th class="table_header">@Strings.SupervisorHeaderId</th>
+                        <th class="table_header">@Strings.SupervisorHeaderConnStatus</th>
+                        <th class="table_header">@Strings.SupervisorScanStatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;}
+                    @{ string toggleLabel = null;}
+                    @{ string connectStatus = Strings.supervisorDisconnected;}
+                    @if (Model.supervisorList != null)
+                    {
+                        foreach (var supervisor in Model.supervisorList)
+                        {
+                            <tr id="table_supervisor_id@(i)" class="table_ListItem_container">
+                                <td id="supervisor_table_content" class="table_content">
+                                    @supervisor.supervisorModel.Id
+                                </td>
+                                @if (@supervisor.supervisorModel.Connected == true)
+                                {
+                                    connectStatus = Strings.supervisorConnected;
+                                }
+                                <td id="supervisor_table_content" class="table_content">
+                                    @connectStatus
+                                </td>
+                                <td id="supervisor_table_content@(i)" class="table_content">
+                                    <label class="label">
+                                        <div class="toggle">
+                                            @if (@supervisor.supervisorModel.Discovery.ToString() == "Fast")
+                                            {
+                                                <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" checked="checked" value="@supervisor.supervisorModel.Id" onchange="checkToggle(this, @i)" />
+                                                toggleLabel = Strings.ScanToggleOn;
+                                            }
+                                            else
+                                            {
+                                                <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" value="@supervisor.supervisorModel.Id" onchange="checkToggle(this, @i)" />
+                                                toggleLabel = Strings.ScanToggleOff;
+                                            }
+                                            <div class="toggle-inner">
+                                                <div class="indicator"></div>
+                                            </div>
+                                            <div class="active-bg"></div>
+                                        </div>
+                                        <div id="label-text@(i)" class="label-text">@toggleLabel</div>
+                                    </label>
+                                </td>
+                                @if (supervisor.HasApplication == true)
+                                {
+                                    <td id="supervisor_button" class="table_content">
+                                        <label class="label">
+                                            @Html.ActionLink(Strings.ButtonEndpoints, "Start", "Browser", new { supervisorId = @supervisor.supervisorModel.Id }, new { @class = "btn btn-default btn_browser" })
+                                        </label>
+                                    </td>
+                                }
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+            <div class="row browser_browse_disconnect_button">
+                @Html.ActionLink(@Strings.ButtonBack, "Index", "Dashboard", null, new { @class = "btn btn-default btn_browser" })
+            </div>
+        </div>
+        <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            <img class="img-responsive" src="~/Content/img/packing_station.png" />
+        </div>
+    </div>
+
+    <div id="contextpanel" class="overlay">
+        <a href="#" class="closebtn" onclick="closContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+
+        <div id="errorContextPanel" class="overlay-content">
+            <div class="browser_error_contextpanel_container">
+                <span class="browser_error_contextpanel_header">@Strings.BrowserErrorMessage</span>
+                <div id="errorHeader" class="browser_error_contextpanel_message"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        jQuery('.scrollbar-macosx').scrollbar();
+        // initialize all context panels to default state closed
+        $("#contextpanel").addClass("overlay-close").removeClass("overlay-right-open");
+        $("#errorContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+
+        @if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
+        {
+           @: $(".toggle-state").prop("disabled", true);
+           @: $(".toggle").css("background", "gray");
+           @: $(".active-bg").css("background", "gray");
+           @: $(".indicator").css("background", "darkgray");
+           @: $(".label-text").css("color", "gray");
+           @: $(".label").css("cursor", "default");
+        }
+    });
+
+
+    function checkToggle(element, index) {
+        if (element.checked == true) {
+             $("#label-text" + index).html('@Strings.ScanToggleOn');
+        } else {
+            $("#label-text" + index).html('@Strings.ScanToggleOff');
+        }
+
+        setScanSupervisor(element.value, element.checked);
+    }
+
+    function setScanSupervisor(supervisorId, scanStatus) {
+        $.post({
+            url: "/Supervisor/SetScanStatus",
+            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), supervisorId: supervisorId, scanStatus: scanStatus },
+            success: function onSuccess(response) {
+            },
+            error: function (response) {
+                console.error("error setting scan status: ", response.d, response.responseText);
+                onFailure(response);
+            },
+            complete: function () {
+            }
+        });
+    }
+
+    var title = "@Strings.TitleBrowser";
+
+    function onFailure(response) {
+        $("#contextpanel").html("@Strings.Error");
+        $("#errorContextPanel").show();
+        $("#errorHeader").html(sessionModel.ErrorHeader);
+        $("#errorMessage").html(sessionModel.ErrorMessage);
+        $("#proceedButton").hide();
+        $("#cancelButton").hide();
+        $(".dashboard-cancel-icon").show();
+        $(".dashboard_contextpanel_select_filter_button").css({ "margin-left": marginLeft });
+    }
+
+    function closetContextPanel() {
+        $("#contextpanel").addClass("overlay-close").removeClass("overlay-right-open");
+    }
+</script>
+
+

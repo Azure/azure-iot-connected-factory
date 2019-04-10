@@ -70,6 +70,24 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse Disabled.
+        /// </summary>
+        public static string ActivateEndpointToggleOff {
+            get {
+                return ResourceManager.GetString("ActivateEndpointToggleOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse Enabled.
+        /// </summary>
+        public static string ActivateEndpointToggleOn {
+            get {
+                return ResourceManager.GetString("ActivateEndpointToggleOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;div&gt;Instructions for Windows can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846367&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
         ///&lt;div&gt;Instructions for Linux be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846368&quot;&gt;here&lt;/a&gt;.&lt;/div&gt; &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846688&quot;&gt;her [rest of string was truncated]&quot;;.
         /// </summary>
@@ -632,6 +650,15 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Endpoint not found.
+        /// </summary>
+        public static string BrowserEndpointErrorHeader {
+            get {
+                return ResourceManager.GetString("BrowserEndpointErrorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to After you have connected your gateway, you can start connecting your own OPC UA servers. Enter your OPC UA server&apos;s endpoint URL (opc.tcp://servername.domain:portnumber) here:.
         /// </summary>
         public static string BrowserEnterOwn {
@@ -845,6 +872,42 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publish data failed.
+        /// </summary>
+        public static string BrowserOpcPublishFailed {
+            get {
+                return ResourceManager.GetString("BrowserOpcPublishFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publish data succeded.
+        /// </summary>
+        public static string BrowserOpcPublishSucceeded {
+            get {
+                return ResourceManager.GetString("BrowserOpcPublishSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UnPublish data failed.
+        /// </summary>
+        public static string BrowserOpcUnPublishFailed {
+            get {
+                return ResourceManager.GetString("BrowserOpcUnPublishFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UnPublish data succeded.
+        /// </summary>
+        public static string BrowserOpcUnPublishSucceeded {
+            get {
+                return ResourceManager.GetString("BrowserOpcUnPublishSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continuous.
         /// </summary>
         public static string BrowserOpcValueContinuous {
@@ -962,20 +1025,20 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select an endpoint.
+        /// </summary>
+        public static string BrowserSelectEndpoint {
+            get {
+                return ResourceManager.GetString("BrowserSelectEndpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect your own OPC UA server.
         /// </summary>
         public static string BrowserSelectNewServer {
             get {
                 return ResourceManager.GetString("BrowserSelectNewServer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select an OPC UA server.
-        /// </summary>
-        public static string BrowserSelectServer {
-            get {
-                return ResourceManager.GetString("BrowserSelectServer", resourceCulture);
             }
         }
         
@@ -1021,6 +1084,33 @@ namespace GlobalResources {
         public static string BrowserWriteWarningHeader {
             get {
                 return ResourceManager.GetString("BrowserWriteWarningHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to back.
+        /// </summary>
+        public static string ButtonBack {
+            get {
+                return ResourceManager.GetString("ButtonBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to browse nodes.
+        /// </summary>
+        public static string ButtonBrowseNodes {
+            get {
+                return ResourceManager.GetString("ButtonBrowseNodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to endpoints.
+        /// </summary>
+        public static string ButtonEndpoints {
+            get {
+                return ResourceManager.GetString("ButtonEndpoints", resourceCulture);
             }
         }
         
@@ -1381,6 +1471,51 @@ namespace GlobalResources {
         public static string GraphWednesday {
             get {
                 return ResourceManager.GetString("GraphWednesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Endpoint activation.
+        /// </summary>
+        public static string HeaderEndpointActivation {
+            get {
+                return ResourceManager.GetString("HeaderEndpointActivation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Endpoint Url.
+        /// </summary>
+        public static string HeaderEndpointUrl {
+            get {
+                return ResourceManager.GetString("HeaderEndpointUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security Level.
+        /// </summary>
+        public static string HeaderSecurityLevel {
+            get {
+                return ResourceManager.GetString("HeaderSecurityLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security Mode.
+        /// </summary>
+        public static string HeaderSecurityMode {
+            get {
+                return ResourceManager.GetString("HeaderSecurityMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security Policy.
+        /// </summary>
+        public static string HeaderSecurityPolicy {
+            get {
+                return ResourceManager.GetString("HeaderSecurityPolicy", resourceCulture);
             }
         }
         
@@ -2024,6 +2159,24 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scan Off.
+        /// </summary>
+        public static string ScanToggleOff {
+            get {
+                return ResourceManager.GetString("ScanToggleOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan On.
+        /// </summary>
+        public static string ScanToggleOn {
+            get {
+                return ResourceManager.GetString("ScanToggleOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not establish connection to Publisher.
         /// </summary>
         public static string SessionNull {
@@ -2047,6 +2200,60 @@ namespace GlobalResources {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        public static string supervisorConnected {
+            get {
+                return ResourceManager.GetString("supervisorConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnected.
+        /// </summary>
+        public static string supervisorDisconnected {
+            get {
+                return ResourceManager.GetString("supervisorDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection Status.
+        /// </summary>
+        public static string SupervisorHeaderConnStatus {
+            get {
+                return ResourceManager.GetString("SupervisorHeaderConnStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateway Id.
+        /// </summary>
+        public static string SupervisorHeaderId {
+            get {
+                return ResourceManager.GetString("SupervisorHeaderId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan Status.
+        /// </summary>
+        public static string SupervisorScanStatus {
+            get {
+                return ResourceManager.GetString("SupervisorScanStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select an IoT edge Gateway.
+        /// </summary>
+        public static string SupervisorSelect {
+            get {
+                return ResourceManager.GetString("SupervisorSelect", resourceCulture);
             }
         }
         
@@ -2101,6 +2308,15 @@ namespace GlobalResources {
         public static string UntrustedCertificate {
             get {
                 return ResourceManager.GetString("UntrustedCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable written succesfully.
+        /// </summary>
+        public static string WriteSuccesfully {
+            get {
+                return ResourceManager.GetString("WriteSuccesfully", resourceCulture);
             }
         }
         

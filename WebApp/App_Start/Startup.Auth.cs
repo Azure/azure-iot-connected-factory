@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Configuration;
 using Owin;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 {
@@ -13,7 +14,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
     {
         public void ConfigureAuth(IAppBuilder app)
         {
-
             string aadClientId = ConfigurationProvider.GetConfigurationSettingValue("AadClientId");
             string aadInstance = ConfigurationProvider.GetConfigurationSettingValue("AadInstance");
             string aadTenant = ConfigurationProvider.GetConfigurationSettingValue("AadTenant");
@@ -28,6 +28,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                 {
                     ClientId = aadClientId,
                     Authority = authority,
+                    TokenValidationParameters = new TokenValidationParameters
+                    {
+                        SaveSigninToken = true
+                    },
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
                         AuthenticationFailed = context =>
@@ -60,7 +64,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                             return Task.FromResult(0);
                         },
                         SecurityTokenValidated = context =>
-                        {
+                        {       
                             Trace.TraceInformation("ConfigureAuth: SecurityTokenValidated");
                             return Task.FromResult(0);
                         }

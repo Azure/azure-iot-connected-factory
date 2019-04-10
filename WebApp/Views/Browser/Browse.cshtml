@@ -23,12 +23,7 @@
                 </ul>
             </div>
             <div class="row browser_browse_disconnect_button">
-                @using (Html.BeginForm("Disconnect", "Browser"))
-                {
-                    @Html.AntiForgeryToken();
-                    @Html.HiddenFor(model => model.BackUrl, new { id = "hiddenBackUrl" })
-                    <input id="disconnectButton" class="btn btn-default btn_browser" type="submit" value="@Strings.BrowserDisconnectButton" />
-                }
+                @Html.ActionLink(@Strings.ButtonBack, "Back", "Browser", new { backUrl = @Model.BackUrl }, new { @class = "btn btn-default btn_browser" })
             </div>
         </div>
         <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -247,7 +242,7 @@
                     $("#connectLoader").hide();
                     $("#waitingForPublishing").hide();
                     $("#publishBody").show();
-                    if (data == htmlDecode('@Strings.BrowserOpcMethodCallSucceeded')) {
+                    if (data == htmlDecode('@Strings.BrowserOpcPublishSucceeded')) {
                         var jsonNode = $('#OpcNodeTree').jstree(true).get_node(obj.item.nodeId);
                         $('#OpcNodeTree').jstree(true).set_type(jsonNode, "published");
                         jsonNode.original.publishedNode = true;
@@ -278,7 +273,7 @@
                     $("#connectLoader").hide();
                     $("#waitingForPublishing").hide();
                     $("#publishBody").show();
-                    if (data == htmlDecode('@Strings.BrowserOpcMethodCallSucceeded')) {
+                    if (data == htmlDecode('@Strings.BrowserOpcUnPublishSucceeded')) {
                         var jsonNode = $('#OpcNodeTree').jstree(true).get_node(obj.item.nodeId);
                         $('#OpcNodeTree').jstree(true).set_type(jsonNode, "default");
                         jsonNode.original.publishedNode = false;
@@ -403,7 +398,6 @@
                 parameterVal = $(parameterId).val();
                 parameterValEncoded = $(parameterId).text(parameterVal).html();
                 parameterValues.push(parameterValEncoded);
-
             }
             $("#methodCallResult_result").text("@Strings.NodeCallInProgress");
             $("#methodCallResult_methodName").text($("#methodCall_methodName").text());

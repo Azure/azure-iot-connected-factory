@@ -669,6 +669,7 @@ Function GetAzureAccountInfo()
     }
     # Workaround since errors pipe to the output stream
     $script:GetOrSetSettingValue = $account.Id
+    $script:accountName = $account.Id
 }
 
 Function ValidateLoginCredentials()
@@ -766,7 +767,7 @@ Function ReplaceFileParameters()
 # Usage: RandomPassword <length>
 # For more information see
 # https://blogs.technet.microsoft.com/heyscriptingguy/2013/06/03/generating-a-new-password-with-windows-powershell/
-Function RandomPassword ($length = 15)
+Function RandomPassword ($length = 16)
 {
     $punc = 46..46
     $digits = 48..57
@@ -777,7 +778,7 @@ Function RandomPassword ($length = 15)
     $password += get-random -Count ($length -4) -InputObject ($punc + $digits + $lcLetters + $ucLetters) | % -begin { $aa = $null } -process {$aa += [char]$_} -end {$aa}
 
     return $password
-}
+} 
 
 Function CreateAadClientSecret()
 {
@@ -788,8 +789,8 @@ Function CreateAadClientSecret()
     # keep $newPassword to be returned as a string
     $secret = $newPassword
     $startDate = Get-Date
-    $secret = New-AzureRmADAppCredential -ApplicationId $script:AadClientId -StartDate $startDate -EndDate $startDate.AddYears(1) -Password (ConvertTo-SecureString -String  $secret -Force –AsPlainText)
-    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - New Secret Id: {0}" -f $secret.KeyId)
+    $script:clientSecret = New-AzureRmADAppCredential -ApplicationId $script:AadClientId -StartDate $startDate -EndDate $startDate.AddYears(1) -Password (ConvertTo-SecureString -String  $secret -Force –AsPlainText)
+    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - New Secret Id: {0}" -f $script:clientSecret.KeyId)
     return $newPassword
 }
 
@@ -879,7 +880,8 @@ Function UpdateAadApp($tenantId)
     if ($result.value.Count -eq 0)
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Application '{0}' not found, create it with IdentifierUri '{1}'" -f $script:WebAppDisplayName, $script:WebAppIdentifierUri)
-        $body = ReplaceFileParameters ("{0}/Application.json" -f $script:DeploymentConfigPath) -arguments @($script:WebAppHomepage, $script:WebAppDisplayName, $script:WebAppIdentifierUri)
+        $password = RandomPassword
+        $body = ReplaceFileParameters ("{0}/Application.json" -f $script:DeploymentConfigPath) -arguments @($script:WebAppHomepage, $script:WebAppDisplayName, $script:WebAppIdentifierUri, $password)
         $result = Invoke-RestMethod -Method "POST" -Uri $uri -Headers @{"Authorization"=$header;"Content-Type"="application/json"} -Body $body -ErrorAction SilentlyContinue
         if ($result -eq $null)
         {
@@ -1072,30 +1074,6 @@ Function InitializeEnvironment()
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Azure location to use is '{0}'" -f $script:AzureLocation)
 }
 
-# Replace browser endpoint configuration file in WebApp
-Function FixWebAppPackage()
-{
-    Param(
-        [Parameter(Mandatory=$true,Position=0)] [string] $filePath
-    )
-
-    # Set path correct
-    $browserEndpointsName = "OPC.Ua.Browser.Endpoints.xml"
-    $browserEndpointsFullName = "$script:IoTSuiteRootPath/WebApp/$browserEndpointsName"
-    $zipfile = Get-Item "$filePath"
-    [System.IO.Compression.ZipArchive]$zipArchive = [System.IO.Compression.ZipFile]::Open($zipfile.FullName, "Update")
-
-    $entries = $zipArchive.Entries | Where-Object { $_.FullName -match ".*$browserEndpointsName" } 
-    foreach ($entry in $entries)
-    { 
-        $fullPath = $entry.FullName
-        Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Found '{0}' in archive" -f $fullPath)
-        $entry.Delete()
-        [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zipArchive, $browserEndpointsFullName, $fullPath) | Out-Null
-    }
-    $zipArchive.Dispose()
-}
-
 Function ResourceObjectExists
  {
     Param(
@@ -1157,52 +1135,6 @@ function CreateProductionLineStationUrl
     )
     $station = ($productionLine.Stations | where { $_.Simulation.Type -eq $type})
     return CreateStationUrl -net $productionLine.Simulation.Network.ToLowerInvariant() -station $station
-}
-
-function UpdateBrowserEndpoints()
-{
-    # Use a copy of the original to patch
-    $originalFileName = "$script:IoTSuiteRootPath\WebApp\OPC.Ua.SampleClient.Endpoints.xml"
-    $applicationFileName = "$script:IoTSuiteRootPath\WebApp\OPC.Ua.Browser.Endpoints.xml"
-    Copy-Item $originalFileName $applicationFileName -Force
-    # Patch the endpoint configuration file. Grab a node we import into the patched file
-    $xml = [xml] (Get-Content $originalFileName)
-    $configuredEndpoint = $xml.ConfiguredEndpointCollection.Endpoints.ChildNodes[0]
-
-    $xml = [xml] (Get-Content $applicationFileName)
-    $content = Get-Content -raw $script:TopologyDescription
-    $json = ConvertFrom-Json -InputObject $content
-    $productionLines = ($json | select -ExpandProperty Factories | select -ExpandProperty ProductionLines)
-    foreach($productionLine in $productionLines)
-    {
-        $configuredEndpoint.Endpoint.EndpointUrl = CreateProductionLineStationUrl -productionLine $productionLine -type "Assembly"
-        $child = $xml.ImportNode($configuredEndpoint, $true)
-        $xml.ConfiguredEndpointCollection.Endpoints.AppendChild($child) | Out-Null
-
-        $configuredEndpoint.Endpoint.EndpointUrl = CreateProductionLineStationUrl -productionLine $productionLine -type "Test"
-        $child = $xml.ImportNode($configuredEndpoint, $true)
-        $xml.ConfiguredEndpointCollection.Endpoints.AppendChild($child) | Out-Null
-
-        $configuredEndpoint.Endpoint.EndpointUrl = CreateProductionLineStationUrl -productionLine $productionLine -type "Packaging"
-        $child = $xml.ImportNode($configuredEndpoint, $true)
-        $xml.ConfiguredEndpointCollection.Endpoints.AppendChild($child) | Out-Null
-    }
- 
-    # Remove the entry with localhost (original template)
-    $nodes = $xml.ConfiguredEndpointCollection.Endpoints.ChildNodes
-    for ($i=0; $i -lt $nodes.Count; )
-    {
-        if ($nodes[$i].Endpoint.EndpointUrl -like "*localhost*")
-        {
-            $xml.ConfiguredEndpointCollection.Endpoints.RemoveChild($nodes[$i]) | Out-Null
-        }
-        else
-        {
-            $i++
-        }
-    }
-
-    $xml.Save($applicationFileName)
 }
 
 Function Build()
@@ -1376,13 +1308,6 @@ Function FinalizeWebPackages
 
     # Set path correct
     $script:WebAppLocalPath = "$script:IoTSuiteRootPath/WebApp/obj/{0}/Package/WebApp.zip" -f $script:Configuration
-
-    # Update browser endpoints
-    UpdateBrowserEndpoints
-
-    # Upload WebApp package
-    Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Fix WebApp package")
-    FixWebAppPackage $script:WebAppLocalPath
 }
 
 function RecordVmCommand
@@ -1531,24 +1456,21 @@ function StartMES
     RecordVmCommand -command $vmCommand -startScript
 }
 
-function StartProxy
+function StartTwinModule
 {
     Param(
         [Parameter(Mandatory=$true)] $net
     )
 
-    # Start proxy container in the VM and link to simulation container
-    $hostName = "proxy." + $net
+    $hostName = "twin." + $net
 
     # Disconnect from network on stop and delete.
     $vmCommand = "docker network disconnect -f $net $hostName"
     RecordVmCommand -command $vmCommand -stopScript -deleteScript
 
-    # Start proxy.
-    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for Proxy node $hostName ...")
-    $vmCommand = "docker run -itd -v $script:DockerRoot/$($script:DockerLogsFolder):/app/$script:DockerLogsFolder --name $hostName -h $hostName --network $net --restart always " + '$DOCKER_PROXY_REPO:$DOCKER_PROXY_VERSION ' + "-c " + '"$IOTHUB_CONNECTIONSTRING" ' + "-l /app/$script:DockerLogsFolder/proxy1.$net.log "
-    RecordVmCommand -command $vmCommand -startScript
-    $vmCommand = "sleep 5s"
+    # Start Twin Module.
+    Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for Twin module ...")
+    $vmCommand = "docker run -itd -e PCS_IOTHUB_CONNSTRING=" + '"$IOTHUB_CONNECTIONSTRING" ' + "--name $hostName -h $hostName --network $net --restart always " + '$DOCKER_TWIN_REPO:$DOCKER_TWIN_VERSION'
     RecordVmCommand -command $vmCommand -startScript
 }
 
@@ -1615,7 +1537,7 @@ function StartGWPublisher
     $volumes += "-v $script:DockerRoot/$script:DockerLogsFolder/$($hostName):/app/$script:DockerLogsFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerConfigFolder/$($hostName):/app/$script:DockerConfigFolder"
 
-    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always " + '$DOCKER_PUBLISHER_REPO:$DOCKER_PUBLISHER_VERSION ' + "$hostName " + '"$IOTHUB_CONNECTIONSTRING" ' + "--pf `'/app/$script:DockerConfigFolder/publishednodes.JSON`' --tp `'/app/Shared/CertificateStores/UA Applications`' --lf `'/app/$script:DockerLogsFolder/$hostName.log.txt`' --si 1 --ms 0 --di 60 --oi 1000 --op 1000 --fd true --tm true --as true --vc true"
+    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always " + '$DOCKER_PUBLISHER_REPO:$DOCKER_PUBLISHER_VERSION ' + "$hostName " + '"$IOTHUB_CONNECTIONSTRING" ' + "--pf `'/app/$script:DockerConfigFolder/publishednodes.JSON`' --tp `'/app/Shared/CertificateStores/UA Applications`' --lf `'/app/$script:DockerLogsFolder/$hostName.log.txt`' --si 1 --ms 0 --di 60 --oi 1000 --op 1000 --fd true --tm true --as true --vc true --aa"
     RecordVmCommand -command $vmCommand -startScript
 }
 
@@ -1660,8 +1582,8 @@ function SimulationBuildScripts
     # Initialize start script
     Set-Content -Path "$script:SimulationBuildOutputStartScript" -Value "#!/bin/bash `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "cd $script:DockerRoot/buildOutput `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PROXY_REPO=`"$script:DockerProxyRepo`" `n" -NoNewline
-    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PROXY_VERSION=`"$script:DockerProxyVersion`" `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_TWIN_REPO=`"$script:DockerTwinRepo`" `n" -NoNewline
+    Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_TWIN_VERSION=`"$script:DockerTwinVersion`" `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PUBLISHER_REPO=`"$script:DockerPublisherRepo`" `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "export DOCKER_PUBLISHER_VERSION=`"$script:DockerPublisherVersion`" `n" -NoNewline
     Add-Content -Path "$script:SimulationBuildOutputStartScript" -Value "if [ `"`$IOTHUB_CONNECTIONSTRING`" == `"`" ] `n" -NoNewline
@@ -1690,8 +1612,8 @@ function SimulationBuildScripts
         $vmCommand = 'docker build -t simulation:latest .'
         RecordVmCommand -command $vmCommand -initScript
 
-        # Pull proxy image from docker hub.
-        $vmCommand = "docker pull $script:DockerProxyRepo:$script:DockerProxyVersion"
+        # Pull twin image from docker hub.
+        $vmCommand = "docker pull $script:DockerTwinRepo:$script:DockerTwinVersion"
         RecordVmCommand -command $vmCommand -initScript
 
         # Pull GW Publisher image from docker hub.
@@ -1740,7 +1662,7 @@ function SimulationBuildScripts
             Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Create network $net ...");
             $vmCommand = "docker network create -d bridge -o 'com.docker.network.bridge.enable_icc'='true' $net"
             RecordVmCommand -command $vmCommand -initScript
-            StartProxy -net $net
+            StartTwinModule -net $net
         }
 
         foreach($productionLine in $productionLines)
@@ -1954,6 +1876,472 @@ function SimulationUpdate
     }
 }
 
+#******************************************************************************
+# Get an access token
+#******************************************************************************
+Function GetAzureToken() {
+
+    try {
+        $context = Get-AzureRmContext
+        $tenantId = $context.Tenant.Id
+        $refreshToken = @($context.TokenCache.ReadItems() | Where-Object {$_.tenantId -eq $tenantId -and $_.ExpiresOn -gt (Get-Date)})[0].RefreshToken
+        $body = "grant_type=refresh_token&refresh_token=$($refreshToken)&resource=74658136-14ec-4630-ad9b-26e160ff0fc6"
+        $apiToken = Invoke-RestMethod "https://login.windows.net/$tenantId/oauth2/token" -Method POST -Body $body -ContentType "application/x-www-form-urlencoded"
+        return $apiToken.access_token
+    }
+    catch {
+        Write-Host "An error occurred: $($_.Exception.Message)"
+    }
+}
+
+#******************************************************************************
+# Grant permission to to the app with id = $azureAppId
+#******************************************************************************
+Function GrantPermission() {
+    
+    Param(
+        [string] $azureAppId
+    )
+
+    try { 
+        $token = GetAzureToken
+        $header = @{
+            "Authorization"          = "Bearer " + $token
+            "X-Requested-With"       = "XMLHttpRequest"
+            "x-ms-client-request-id" = [guid]::NewGuid()
+            "x-ms-correlation-id"    = [guid]::NewGuid()
+        } 
+        $url = "https://main.iam.ad.ext.azure.com/api/RegisteredApplications/" + $azureAppId + "/Consent?onBehalfOfAll=true"
+        Invoke-RestMethod -Uri $url -Method Post -Headers $header
+    }
+    catch {
+        Write-Host "An error occurred: $($_.Exception.Message)"
+    }
+}
+
+#*******************************************************************************************************
+# Acquire bearer token for user
+#*******************************************************************************************************
+Function AcquireToken() {
+    Param (
+        [string] $tenant,
+        [string] $authUri,
+        [string] $resourceUri,
+        [Parameter(Mandatory=$false)] [string] $user = $null,
+        [Parameter(Mandatory=$false)] [string] $prompt = "Auto"
+    )
+    $psAadClientId = "1950a258-227b-4e31-a9cf-717495945fc2"
+    [Uri]$aadRedirectUri = "urn:ietf:wg:oauth:2.0:oob"
+    $authority = "{0}{1}" -f $authUri, $tenant
+    $authContext = New-Object "Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext" `
+         -ArgumentList $authority,$true
+    $userId = [Microsoft.IdentityModel.Clients.ActiveDirectory.UserIdentifier]::AnyUser
+    if (![string]::IsNullOrEmpty($user)) {
+        $userId = new-object Microsoft.IdentityModel.Clients.ActiveDirectory.UserIdentifier  `
+            -ArgumentList $user, "OptionalDisplayableId"
+    }
+    $authResult = $authContext.AcquireToken($resourceUri, $psAadClientId, `
+        $aadRedirectUri, $prompt, $userId)
+    return $authResult
+}
+
+#*******************************************************************************************************
+# Login to Azure AD (interactive if credentials are not already provided.
+#*******************************************************************************************************
+Function ConnectToAzureADTenant() {
+  
+    $context = Get-AzureRmContext
+    $tenantId = $context.Tenant.Id
+    $ActiveDirectoryAuthority = "https://login.microsoftonline.com/"
+    $GraphUrl = "https://graph.windows.net/"
+
+        if (!$tenantId) {
+            throw "No tenant selected for AAD connect."
+        }
+        else {
+            # Make sure we get token from token cache instead of interactive logon
+            $graphAuth = AcquireToken $tenantId $ActiveDirectoryAuthority `
+                $GraphUrl $script:accountName "Auto"
+            $user = Invoke-RestMethod -Method "GET" `
+                -Uri ("{0}{1}/me?api-version=1.6" -f $GraphUrl, $tenantId) `
+                -Headers @{ `
+                    "Authorization"=$($graphAuth.CreateAuthorizationHeader()); `
+                    "Content-Type"="application/json" `
+                }
+            return Connect-AzureAD -MsAccessToken $graphAuth.AccessToken -TenantId $tenantId `
+                -ErrorAction Stop -AadAccessToken $graphAuth.AccessToken -AccountId $user.userPrincipalName
+        }
+    
+    return $null
+}
+
+#*******************************************************************************************************
+# Adds the requiredAccesses (expressed as a pipe separated string) to the requiredAccess structure
+#*******************************************************************************************************
+Function AddResourcePermission() {
+    Param (
+        $requiredAccess, 
+        $exposedPermissions, 
+        [string]$requiredAccesses, `
+        [string]$permissionType
+    ) 
+    foreach($permission in $requiredAccesses.Trim().Split("|")) {
+        foreach($exposedPermission in $exposedPermissions) {
+            if ($exposedPermission.Value -eq $permission) {
+                $resourceAccess = New-Object Microsoft.Open.AzureAD.Model.ResourceAccess
+                # Scope = Delegated permissions | Role = Application permissions
+                $resourceAccess.Type = $permissionType
+                # Read directory data
+                $resourceAccess.Id = $exposedPermission.Id 
+                $requiredAccess.ResourceAccess.Add($resourceAccess)
+            }
+        }
+    }
+}
+
+#*******************************************************************************************************
+# Example: GetRequiredPermissions "Microsoft Graph" "Graph.Read|User.Read"
+#*******************************************************************************************************
+Function GetRequiredPermissions() {
+    Param(
+        [string] $applicationDisplayName,
+        [string] $requiredDelegatedPermissions, 
+        [string] $requiredApplicationPermissions,
+        [string] $appId,
+        [string] $servicePrincipalName,
+        $servicePrincipal
+    )
+
+    if ($servicePrincipal) {
+        $sp = $servicePrincipal
+    }
+    else {
+        if ($servicePrincipalName) {
+            $sp = Get-AzureADServicePrincipal -Filter "ServicePrincipalNames eq '$servicePrincipalName'"
+        }
+        if ($appId) {
+            $sp = Get-AzureADServicePrincipal -Filter "AppId eq '$appId'"
+        }
+        if ($applicationDisplayName) {
+            $sp = Get-AzureADServicePrincipal -Filter "DisplayName eq '$applicationDisplayName'"
+        }
+    }
+
+    $appid = $sp.AppId
+    $requiredAccess = New-Object Microsoft.Open.AzureAD.Model.RequiredResourceAccess
+    $requiredAccess.ResourceAppId = $appid 
+    $requiredAccess.ResourceAccess =  
+        New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.ResourceAccess]
+
+    if ($requiredDelegatedPermissions) {
+        AddResourcePermission $requiredAccess -exposedPermissions $sp.Oauth2Permissions `
+            -requiredAccesses $requiredDelegatedPermissions -permissionType "Scope"
+    }
+    if ($requiredApplicationPermissions) {
+        AddResourcePermission $requiredAccess -exposedPermissions $sp.AppRoles `
+            -requiredAccesses $requiredApplicationPermissions -permissionType "Role"
+    }
+    return $requiredAccess
+}
+
+#*******************************************************************************************************
+# Create an application role of given name and description
+#*******************************************************************************************************
+Function CreateAppRole() {
+    param(
+        $current,
+        [string] $name, 
+        [string] $description, 
+        [string] $value
+    )
+    $appRole = $current | Where-Object { $_.Value -eq $value }
+    if (!$appRole) {
+        $appRole = New-Object Microsoft.Open.AzureAD.Model.AppRole
+        $appRole.AllowedMemberTypes = New-Object System.Collections.Generic.List[string]
+        $appRole.AllowedMemberTypes.Add("User");
+        $appRole.Id = New-Guid
+        $appRole.IsEnabled = $true
+        $appRole.Value = $value;
+    }
+    $appRole.DisplayName = $name
+    $appRole.Description = $description
+    return $appRole
+}
+
+#*******************************************************************************************************
+# Get configuration object for client applications (connected factory app)
+#*******************************************************************************************************
+Function GetAzureADApplicationConfigCF() {
+    $serviceDisplayName = $script:resourceGroupName + "-services"
+
+    try {
+        $creds = ConnectToAzureADTenant
+        if (!$creds) {
+            return $null
+        }
+        $tenantId = $creds.Tenant.Id
+        if (!$tenantId) {
+            return $null
+        }
+        
+        $tenant = Get-AzureADTenantDetail
+        $tenantName =  ($tenant.VerifiedDomains | Where { $_._Default -eq $True }).Name
+        Write-Host "Selected Tenant '$tenantName' as authority."
+
+        $displayName = $script:SuiteName + "-app"
+        $clientAadApplication=Get-AzureADApplication `
+            -Filter "DisplayName eq '$displayName'"
+        
+        #
+        # Try to add current user as app owner 
+        #
+        try {
+            $user = Get-AzureADUser -ObjectId $creds.Account.Id -ErrorAction Stop
+            # TODO: Check whether already owner...
+
+            Add-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId `
+                -RefObjectId $user.ObjectId
+        }
+        catch {
+            Write-Verbose "Adding $($creds.Account.Id) as owner failed."
+        }
+
+        $serviceAadApplication=Get-AzureADApplication `
+            -Filter "identifierUris/any(uri:uri eq 'https://$tenantName/$serviceDisplayName')" 
+
+        # 
+        # Update client application to add reply urls required permissions.
+        #
+        $replyUrls = New-Object System.Collections.Generic.List[System.String]
+        # $replyUrls.Add("Https://localhost:44305")
+        $replyUrls.Add($script:WebAppHomepage)
+        $requiredResourcesAccess = `
+            New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
+        $requiredPermissions = GetRequiredPermissions -applicationDisplayName $serviceDisplayName `
+            -requiredDelegatedPermissions "user_impersonation" # "Directory.Read.All|User.Read"
+        $requiredResourcesAccess.Add($requiredPermissions)
+        $requiredPermissions = GetRequiredPermissions -applicationDisplayName "Microsoft Graph" `
+            -requiredDelegatedPermissions "User.Read" 
+        $requiredResourcesAccess.Add($requiredPermissions)
+        Set-AzureADApplication -ObjectId $clientAadApplication.ObjectId `
+            -RequiredResourceAccess $requiredResourcesAccess -ReplyUrls $replyUrls `
+            -Oauth2AllowImplicitFlow $True -Oauth2AllowUrlPathMatching $True
+
+        $startDate = Get-Date
+        $aadAppKeyPwd = New-AzureADApplicationPasswordCredential -ObjectId $clientAadApplication.ObjectId -CustomKeyIdentifier "Primary" -StartDate $startDate -EndDate $startDate.AddYears(1)
+
+        return [pscustomobject] @{ 
+            TenantId = $tenantId
+            Audience = $serviceAadApplication.IdentifierUris[0].ToString()
+            AppId = $serviceAadApplication.AppId
+            AppObjectId = $serviceAadApplication.ObjectId
+            ClientId = $clientAadApplication.AppId
+            ClientObjectId = $clientAadApplication.ObjectId
+            ClientSecret = $aadAppKeyPwd.Value
+        }
+    }
+    catch {
+        $ex = $_.Exception
+
+        Write-Host
+        Write-Host "An error occurred: $($ex.Message)" 
+        Write-Host
+        Write-Host "Ensure you have installed the AzureAD cmdlets:" 
+        Write-Host "1) Run Powershell as an administrator" 
+        Write-Host "2) in the PowerShell window, type: Install-Module AzureAD" 
+        Write-Host
+
+        $reply = Read-Host -Prompt "Continue without authentication? [y/n]"
+        if ($reply -match "[yY]") { 
+            return $null
+        }
+        throw $ex
+    }
+}
+
+#*******************************************************************************************************
+# Get configuration object for service and client applications (SPA app)
+#*******************************************************************************************************
+Function GetAzureADApplicationConfig() {
+    try {
+        $creds = ConnectToAzureADTenant
+        if (!$creds) {
+            return $null
+        }
+        $script:tenantId = $creds.Tenant.Id
+        if (!$script:tenantId) {
+            return $null
+        }
+        
+        $aadApplicationName = $script:resourceGroupName
+        if ([string]::IsNullOrEmpty($aadApplicationName)) {
+            if ($script:interactive) {
+                Write-Host
+                Write-Host "Please provide a name for the AAD application to register."
+                $aadApplicationName = Read-Host "(Hit enter to use '$script:resourceGroupName')"
+                if ([string]::IsNullOrEmpty($aadApplicationName)) {
+                    Write-Host "Registering '$script:resourceGroupName' in AAD."
+                    $aadApplicationName = $script:resourceGroupName
+                }
+            }
+            else {
+                $aadApplicationName = $script:resourceGroupName
+            }
+        }
+        $serviceDisplayName = $aadApplicationName + "-services"
+        $clientDisplayName = $aadApplicationName + "-clients"
+
+        $tenant = Get-AzureADTenantDetail
+        $tenantName =  ($tenant.VerifiedDomains | Where { $_._Default -eq $True }).Name
+        Write-Host "Selected Tenant '$tenantName' as authority."
+
+        $serviceAadApplication=Get-AzureADApplication `
+            -Filter "identifierUris/any(uri:uri eq 'https://$tenantName/$serviceDisplayName')"  
+        if (!$serviceAadApplication) {
+            $serviceAadApplication = New-AzureADApplication -DisplayName $serviceDisplayName `
+                -PublicClient $False -HomePage "https://localhost" `
+                -IdentifierUris "https://$tenantName/$serviceDisplayName"
+            Write-Host "Created new AAD service application '$($serviceDisplayName)'."
+        }
+        $serviceServicePrincipal=Get-AzureADServicePrincipal `
+             -Filter "AppId eq '$($serviceAadApplication.AppId)'"
+        if (!$serviceServicePrincipal) {
+            $serviceServicePrincipal = New-AzureADServicePrincipal `
+                -AppId $serviceAadApplication.AppId `
+                -Tags {WindowsAzureActiveDirectoryIntegratedApp}
+        }
+
+        $clientAadApplication=Get-AzureADApplication `
+            -Filter "DisplayName eq '$clientDisplayName'"
+        if (!$clientAadApplication) {
+            $clientAadApplication = New-AzureADApplication -DisplayName $clientDisplayName `
+                -PublicClient $True
+            Write-Host "Created new AAD client application '$($clientDisplayName)'."
+        }
+
+        # Find client principal
+        $clientServicePrincipal=Get-AzureADServicePrincipal `
+             -Filter "AppId eq '$($clientAadApplication.AppId)'"
+        if (!$clientServicePrincipal) {
+            $clientServicePrincipal = New-AzureADServicePrincipal `
+                -AppId $clientAadApplication.AppId `
+                -Tags {WindowsAzureActiveDirectoryIntegratedApp}
+        }
+
+        #
+        # Try to add current user as app owner 
+        #
+        try {
+            $user = Get-AzureADUser -ObjectId $creds.Account.Id -ErrorAction Stop
+            # TODO: Check whether already owner...
+
+            Add-AzureADApplicationOwner -ObjectId $serviceAadApplication.ObjectId `
+                -RefObjectId $user.ObjectId
+            Add-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId `
+                -RefObjectId $user.ObjectId
+            Write-Host "'$($user.UserPrincipalName)' added as owner for applications."
+        }
+        catch {
+            Write-Verbose "Adding $($creds.Account.Id) as owner failed."
+        }
+
+        #
+        # Update service application to add roles, known applications and required permissions
+        #
+        $approverRole = CreateAppRole -current $serviceAadApplication.AppRoles -name "Approver" `
+            -value "Sign" -description "Approvers have the ability to issue certificates."
+        $writerRole = CreateAppRole -current $serviceAadApplication.AppRoles -name "Writer" `
+            -value "Write" -description "Writers Have the ability to change entities."
+        $adminRole = CreateAppRole -current $serviceAadApplication.AppRoles -name "Administrator" `
+            -value "Admin" -description "Admins can access advanced features."
+        $appRoles = New-Object `
+            System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.AppRole]
+        $appRoles.Add($writerRole)
+        $appRoles.Add($approverRole)
+        $appRoles.Add($adminRole)
+        $knownApplications = New-Object System.Collections.Generic.List[System.String]
+        $knownApplications.Add($clientAadApplication.AppId)
+        $knownApplications.Add($script:AadClientId)
+        Write-Host "CF appID = '$($script:AadClientId)' "
+        $requiredResourcesAccess = `
+            New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
+        $requiredPermissions = GetRequiredPermissions -appId "cfa8b339-82a2-471a-a3c9-0fc0be7a4093" `
+            -requiredDelegatedPermissions "user_impersonation"
+        $requiredResourcesAccess.Add($requiredPermissions)
+        $requiredPermissions = GetRequiredPermissions -applicationDisplayName "Microsoft Graph" `
+            -requiredDelegatedPermissions "User.Read" 
+        $requiredResourcesAccess.Add($requiredPermissions)
+
+        Set-AzureADApplication -ObjectId $serviceAadApplication.ObjectId `
+            -KnownClientApplications $knownApplications -AppRoles $appRoles `
+            -RequiredResourceAccess $requiredResourcesAccess
+        Write-Host "'$($serviceDisplayName)' updated with required resource access, app roles and known applications."  
+
+        # read updated app roles for service principal
+        $serviceServicePrincipal=Get-AzureADServicePrincipal `
+             -Filter "AppId eq '$($serviceAadApplication.AppId)'"
+
+        # 
+        # Update client application to add reply urls required permissions.
+        #
+        $replyUrls = New-Object System.Collections.Generic.List[System.String]
+        $replyUrls.Add("urn:ietf:wg:oauth:2.0:oob")
+        $requiredResourcesAccess = `
+            New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
+        $requiredPermissions = GetRequiredPermissions -applicationDisplayName $serviceDisplayName `
+            -requiredDelegatedPermissions "user_impersonation" # "Directory.Read.All|User.Read"
+        $requiredResourcesAccess.Add($requiredPermissions)
+        $requiredPermissions = GetRequiredPermissions -applicationDisplayName "Microsoft Graph" `
+            -requiredDelegatedPermissions "User.Read" 
+        $requiredResourcesAccess.Add($requiredPermissions)
+        Set-AzureADApplication -ObjectId $clientAadApplication.ObjectId `
+            -RequiredResourceAccess $requiredResourcesAccess -ReplyUrls $replyUrls `
+            -Oauth2AllowImplicitFlow $True -Oauth2AllowUrlPathMatching $True
+
+        return [pscustomobject] @{ 
+            TenantId = $tenantId
+            Instance = $script:AzureEnvironment.ActiveDirectoryAuthority
+            Audience = $serviceAadApplication.IdentifierUris[0].ToString()
+            AppName = $aadApplicationName
+            AppId = $serviceAadApplication.AppId
+            AppObjectId = $serviceAadApplication.ObjectId
+            AppDisplayName = $serviceDisplayName
+            ClientId = $clientAadApplication.AppId
+            ClientObjectId = $clientAadApplication.ObjectId
+        }
+    }
+    catch {
+        $ex = $_.Exception
+
+        Write-Host
+        Write-Host "An error occurred: $($ex.Message)" 
+        Write-Host
+        Write-Host "Ensure you have installed the AzureAD cmdlets:" 
+        Write-Host "1) Run Powershell as an administrator" 
+        Write-Host "2) in the PowerShell window, type: Install-Module AzureAD" 
+        Write-Host
+        if ($script:interactive) {
+            $reply = Read-Host -Prompt "Continue without authentication? [y/n]"
+            if ($reply -match "[yY]") { 
+                return $null
+            }
+        }
+        throw $ex
+    }
+}
+
+#*******************************************************************************************************
+# Get identifierUri
+#*******************************************************************************************************
+function Get-identifierUri {
+    param (
+        [Parameter(Mandatory=$true,Position=0)] $appId
+    )
+    $appData = Get-AzureRmADApplication -ApplicationId $appId
+
+    return $appData.IdentifierUri
+}
+
 
 ################################################################################################################################################################
 #
@@ -2065,10 +2453,11 @@ $script:DockerConfigFolder = "Config"
 $script:DockerLogsFolder = "Logs"
 $script:DockerSharedFolder = "Shared"
 $script:DockerCertsFolder = "$script:DockerSharedFolder/CertificateStores/UA Applications/certs"
-$script:DockerProxyRepo = "microsoft/iot-edge-opc-proxy"
-$script:DockerProxyVersion = "1.0.2"
+$script:ContainerRegistryPrefix = ""
+$script:DockerTwinRepo = "mcr.microsoft.com/iotedge/opc-twin"
+$script:DockerTwinVersion = "host-latest"
 $script:DockerPublisherRepo = "microsoft/iot-edge-opc-publisher"
-$script:DockerPublisherVersion = "2.1.4"
+$script:DockerPublisherVersion = "latest"
 # todo remove
 $script:UaSecretBaseName = "UAWebClient"
 # Note: The password can only be changed if it is synced with the password used in CreateCerts.exe
@@ -2300,7 +2689,6 @@ if ($script:Command -eq "updatesimulation")
     # Update the simulation.
     Write-Output "$(Get-Date –f $TIME_STAMP_FORMAT) - Upload and start the simulation"
     SimulationUpdate
-    UpdateBrowserEndpoints
     exit
 }
 
@@ -2429,8 +2817,18 @@ Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - Data Access Contributor Obj
 $script:RdxAuthenticationClientSecret = CreateAadClientSecret
 Write-Verbose "$(Get-Date –f $TIME_STAMP_FORMAT) - TSI Authentication secret: $script:RdxAuthenticationClientSecret"
 
-# Register KeyVault provider
-Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.KeyVault" | Out-Null
+# Register resource provider
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.devices" | Out-Null
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.documentdb" | Out-Null
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.eventhub" | Out-Null
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.storage" | Out-Null
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.keyvault" | Out-Null
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.authorization" | Out-Null
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.web" | Out-Null
+Register-AzureRmResourceProvider -ProviderNamespace "microsoft.compute" | Out-Null
+
+$script:aadConfig = GetAzureADApplicationConfig
+$script:adminPasswordTwin = RandomPassword
 
 # Set up ARM parameters.
 $script:ArmParameter += @{ `
@@ -2466,6 +2864,36 @@ $script:ArmParameter += @{ `
     uaSecretThumbprint = $script:UaSecretThumbprint; `
     uaSecretPassword =  $script:UaSecretPassword; `
     webSitesServicePrincipalObjectId = $script:WebSitesServicePrincipalObjectId; `
+    adminPasswordTwin = $script:adminPasswordTwin; `
+    branchName = "master"; `
+    authAudience = $script:aadConfig.Audience; `
+    aadClientIdTwin = $script:aadConfig.ClientId; `
+    aadTenantId = $script:aadConfig.TenantId; `
+    containerRegistryPrefix = $script:containerRegistryPrefix; 
+}
+
+# Set website name
+if ($interactive) {
+    $azureWebsiteName = Read-Host "Please specify a website name"
+    if (![string]::IsNullOrEmpty($azureWebsiteName)) { 
+        $script:ArmParameter.Add("azureWebsiteName", $azureWebsiteName)
+    }
+}
+
+# Create ssl cert 
+$cert = New-SelfSignedCertificate -DnsName "opctwin.services.net" `
+    -KeyExportPolicy Exportable -CertStoreLocation "Cert:\CurrentUser\My"
+if ($cert) {
+    $thumbprint = $cert.Thumbprint;
+    if (![string]::IsNullOrEmpty($thumbprint)) { 
+        $ArmParameter.Add("remoteEndpointSSLThumbprint", $thumbprint)
+    }
+    $certificate = [Convert]::ToBase64String(`
+        $cert.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pfx, `
+        $script:adminPasswordTwin))
+    if (![string]::IsNullOrEmpty($certificate)) { 
+        $ArmParameter.Add("remoteEndpointCertificate", $certificate)
+    }
 }
 
 # Check if there is an Azure maps license key set in the configuration file.
@@ -2502,6 +2930,16 @@ foreach ($script:ArmParameterKey in $script:ArmParameter.Keys)
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - ARM Parameter '$($script:ArmParameterKey)' for deployment has value '$($script:ArmParameter[$script:ArmParameterKey])'")
 }
 
+Write-Host "Start Azure deployment..."
+
+$subscriptionId = GetEnvSetting "SubscriptionId"
+
+$appConfig = GetAzureADApplicationConfigCF
+$script:ArmParameter.Add("aadClientSecret", $appConfig.ClientSecret)
+Write-Output ("Audience =  $appConfig.Audience")
+Write-Output ("AppSecret =  $appConfig.ClientSecret")
+
+
 # Deploy resources to Azure
 Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Deploy all other resources to Azure")
 UpdateResourceGroupState ProvisionAzure
@@ -2522,6 +2960,15 @@ else
     }
 }
 
+Write-Host "Grant permissions"
+GrantPermission -azureAppId $ArmParameter.aadClientIdTwin   
+
+$website = $script:ArmResult.Outputs["azureWebsite"].Value
+$twinUrl = $website + "/twin/"
+$registryUrl = $website + "/registry/"
+Write-Output ("Registry url =  $registryUrl")
+Write-Output ("Twin url =  $twinUrl")
+
 # Set Config file variables
 Write-Verbose  "$(Get-Date –f $TIME_STAMP_FORMAT) - Updating config file settings"
 UpdateEnvSetting "ServiceStoreAccountName" $script:StorageAccount.StorageAccountName
@@ -2534,9 +2981,43 @@ UpdateEnvSetting "RdxAuthenticationClientSecret" $script:RdxAuthenticationClient
 UpdateEnvSetting "RdxDnsName" $script:ArmResult.Outputs['rdxDnsName'].Value
 UpdateEnvSetting "RdxEnvironmentId" $script:ArmResult.Outputs['rdxEnvironmentId'].Value
 UpdateEnvSetting "MapApiQueryKey" $script:ArmResult.Outputs['mapApiQueryKey'].Value
+UpdateEnvSetting "RegistryService" $registryUrl
+UpdateEnvSetting "TwinService" $twinUrl
+UpdateEnvSetting "Audience" $appConfig.Audience
+UpdateEnvSetting "ClientSecret" $appConfig.ClientSecret
+
 
 UpdateResourceGroupState Complete
 Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Provisioning and deployment completed successfully, see {0}.config.user for deployment values" -f $script:DeploymentName)
+
+Write-Output ("website =  $website")
+if ($script:aadConfig.ClientObjectId) {
+    # 
+    # Update twin client application to add reply urls required permissions.
+    #
+    $replyUrls = New-Object System.Collections.Generic.List[System.String]
+    $replyUrls.Add($website)
+    $replyUrls.Add($website + "/twin/oauth2-redirect.html")
+    $replyUrls.Add($website + "/registry/oauth2-redirect.html")
+    $replyUrls.Add($website + "/vault/oauth2-redirect.html")
+    # still connected
+    Set-AzureADApplication -ObjectId $script:aadConfig.ClientObjectId -ReplyUrls $replyUrls
+}
+
+$adminUser = $script:ArmResult.Outputs["adminUsernameTwin"].Value 
+$adminPassword = $script:adminPasswordTwin
+
+Write-Host "Use the following User and Password to log onto your Twin VM:"
+Write-Host 
+Write-Host $adminUser
+Write-Host $adminPassword
+Write-Host
+
+Write-Host "Use the following User and Password to log onto your Simulation VM:"
+Write-Host 
+Write-Host $script:VmAdminUsername; 
+Write-Host $script:VmAdminPassword;
+Write-Host
 
 # For cloud deployments start the website
 if ($script:CloudDeploy -eq $true)

@@ -1,35 +1,80 @@
 ﻿@using GlobalResources;
 @using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
 
 @model OpcSessionModel
 
 <div class="container-fluid browser_connect_container">
     <div class="row browser_connect_header">
-        <div class="browser_connect_header_text overflow">@Strings.BrowserSelectServer</div>
+        <div class="browser_connect_header_text">@Strings.BrowserSelectEndpoint</div>
     </div>
-    <div class="row browser_top_container">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="row browser_select_connect_container">
-                @using (Ajax.BeginForm("Connect", "Browser", new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
-                {
-                    @Html.AntiForgeryToken();
-                    <div class="row browser_connect_selection_label">@Strings.BrowserPreconfiguredListLabel</div>
-                    <div class="row  browser_connect_selection_dropdown">
-                        <select id="endpointUrlSelect" class="selectpicker form-control" name="endpointUrl" data-live-search="true" data-size="20">
-                            @foreach (var endpoint in Model.PrepopulatedEndpoints)
-                            {
-                                <option>@endpoint.Text</option>
-                            }  
-                        </select>
-                    </div>
-                    <div class="row browser_browse_connect_button">
-                        <input id="connectButton" class="btn btn-default btn_browser" type="submit" onclick="openConnectContextPanel();" value=@Strings.BrowserConnect>
-                    </div>
-                }
+    <div class="row browser_top_container scrollbar-inner">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="table_container_twin">
+                <thead>
+                    <tr>
+                        <th class="table_header">@Strings.HeaderEndpointUrl</th>
+                        <th class="table_header">@Strings.HeaderSecurityMode</th>
+                        <th class="table_header">@Strings.HeaderSecurityPolicy</th>
+                        <th class="table_header">@Strings.HeaderSecurityLevel</th>
+                        <th class="table_header">@Strings.HeaderEndpointActivation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;}
+                    @{ string toggleLabel = null;}
+                    @if (Model.endpointList != null)
+                    {
+                        foreach (var endpoint in Model.endpointList)
+                        {
+                            <tr id="table_supervisor_id@(i)" class="table_ListItem_container">
+                                <td id="supervisor_table_content" class="table_content">
+                                    @endpoint.EndpointUrl
+                                </td>
+                                <td id="supervisor_table_content" class="table_content">
+                                    @endpoint.SecurityMode
+                                </td>
+                                <td id="supervisor_table_content" class="table_content">
+                                    @endpoint.SecurityPolicy
+                                </td>
+                                <td id="supervisor_table_content" class="table_content">
+                                    @endpoint.SecurityLevel
+                                </td>
+                                <td id="supervisor_table_content@(i)" class="table_content">
+                                    <label class="label">
+                                        <div id="toggle_id@(i)" class="toggle">
+                                            @if (@endpoint.Activated == true)
+                                            {
+                                                <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" checked="checked" value="@endpoint.EndpointId" onchange="checkToggle(this, @i)" />
+                                                toggleLabel = Strings.ActivateEndpointToggleOn;
+                                            }
+                                            else
+                                            {
+                                                <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" value="@endpoint.EndpointId" onchange="checkToggle(this, @i)" />
+                                                toggleLabel = Strings.ActivateEndpointToggleOff;
+                                            }
+                                            <div class="toggle-inner">
+                                                <div class="indicator"></div>
+                                            </div>
+                                            <div class="active-bg"></div>
+                                        </div>
+                                        <div id="label-text@(i)" class="label-text">@toggleLabel</div>
+                                    </label>
+                                </td>
+                                <td id="browser_button@(i)" class="table_content">
+                                    <label class="label">
+                                        @Html.ActionLink(@Strings.ButtonBrowseNodes, "BrowseNodes", "Browser", new { endpointId = @endpoint.EndpointId, endpointUrl = @endpoint.EndpointUrl, productUri = @endpoint.ProductUri }, new { @class = "btn btn-default btn_browser" })
+                                    </label>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+            <div class="row browser_browse_disconnect_button">
+                @Html.ActionLink("Back", "Index", "Supervisor", null, new { @class = "btn btn-default btn_browser" })
             </div>
-        </div>
-        <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
-            <img class="img-responsive" src="~/Content/img/packing_station.png"/>
         </div>
     </div>
 
@@ -37,94 +82,84 @@
         <div class="dashboard_contextpanel_header">
             <div id="connectContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecurityWarning</div>
         </div>
-            <a href="#" class="closebtn" onclick="closeConnectContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
-        <div id="connectBodyContextPanel" class="browser_error_details_container">
-            <div class="row browser_error_details_line_header" >
-                <span class="glyphicon glyphicon-alert"></span>
-                <span class="browser_error_details_label">@Strings.BrowserTrustHeader</span>
-             </div>
-            <div class="row browser_error_details_line">
-                <span class="browser_error_details_info_black">@Strings.BrowserTrust</span>
-            </div>
-        </div>
+        <a href="#" class="closebtn" onclick="closeConnectContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+
         <div id="errorContextPanel" class="overlay-content">
-            <div  class="browser_error_contextpanel_container">
+            <div class="browser_error_contextpanel_container">
                 <span class="browser_error_contextpanel_header">@Strings.BrowserErrorMessage</span>
                 <div id="errorHeader" class="browser_error_contextpanel_message"></div>
             </div>
         </div>
-
-        <div id="waitingForConnect" class="browser_error_details_container">@Strings.BrowserConnecting</div>
-        <div id="connectLoader" class="loader"></div>
-       
-        <div id="proceedButton" class="dashboard_contextpanel_select_filter_button">
-            @using (Ajax.BeginForm("ConnectWithTrust", "Browser", new AjaxOptions { OnSuccess = "onSuccess", OnFailure = "onFailure" }))
-            {
-                @Html.AntiForgeryToken();
-                @Html.HiddenFor(model => model.EndpointUrl, new { id = "hiddenEndpointUrl" })
-                <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="connecting();" value="@Strings.BrowserTrustButton">
-            }
-        </div>
-        <div id="cancelButton" class="dashboard_contextpanel_clear_filter_button">
-            
-            @using (Html.BeginForm("Disconnect", "Browser"))
-            {
-                @Html.AntiForgeryToken();
-                <button class="btn btn-default btn_dashboard_contextpanel btn-cancel" type="submit" onclick="closeConnectContextPanel();" > 
-                    <img class="dashboard-cancel-icon" src="~/Content/img/cancelX.svg">
-                    @Strings.BrowserDontTrustButton
-                </button>
-            }
-</div>
     </div>
-</div>
 
-<script>
+    <script>
     $(document).ready(function () {
-        $("#connectButton").prop("disabled", false);
+        jQuery('.scrollbar-macosx').scrollbar();
         // initialize all context panels to default state closed
         $("#connectContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
         $("#errorContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+        var count = @Model.endpointList.Count
+
+        for (var i = 0; i < count; i++) {
+            if ($("#label-text" + i).text() == '@Strings.ActivateEndpointToggleOn') {
+                $("#browser_button" + i).show();
+            }
+            else {
+                $("#browser_button" + i).hide();
+            }
+        }
+
+        @if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
+        {
+           @: $(".toggle-state").prop("disabled", true);
+           @: $(".toggle").css("background", "gray");
+           @: $(".active-bg").css("background", "gray");
+           @: $(".indicator").css("background", "darkgray");
+           @: $(".label-text").css("color", "gray");
+           @: $(".label").css("cursor", "default");
+        }
     });
 
-    var disconnect = false;
     var title = "@Strings.TitleBrowser";
 
-    function onSuccess(sessionModel) {
-        $("#hiddenEndpointUrl").val(sessionModel.EndpointUrl);
-        $("#connectLoader").hide();
-
-        if (sessionModel.ErrorHeader == "@Strings.UntrustedCertificate") {
-            $("#waitingForConnect").hide();
-            $("#connectBodyContextPanel").show();
-            $("#connectContextpanelHeader").html("@Strings.BrowserSecurityWarning");
-            $("#errorContextPanel").hide();
-            $("#proceedButton").show();
-            $("#cancelButton").show();
-
-        } else if (sessionModel.ErrorHeader != null) {
-            $("#connectLoader").hide();
-            $("#waitingForConnect").hide();
-            $("#connectContextpanelHeader").html("@Strings.Error");
-            $("#errorContextPanel").show();
-            $("#errorHeader").html(sessionModel.ErrorHeader);
-            $("#errorMessage").html(sessionModel.ErrorMessage);
-            disconnect = true;
-        }
-        else {
-            var baseUrl = '@Url.Content("~")';
-            window.location.href = baseUrl + "Browser/Index";
+    function checkToggle(element, index) {
+        if (element.checked == true) {
+            $("#label-text" + index).html('@Strings.ActivateEndpointToggleOn');
+            activateEndpoint(element.value);
+            $("#browser_button" + index).show();
+        } else {
+            $("#label-text" + index).html('@Strings.ActivateEndpointToggleOff');
+            deActivateEndpoint(element.value);
+            $("#browser_button" + index).hide();
         }
     }
 
-    function onFailure(response) {
-        $("#connectLoader").hide();
-        $("#waitingForConnect").hide();
-        $("#connectContextpanelHeader").html("@Strings.Error");
-        $("#errorContextPanel").show();
-        $("#errorHeader").html(sessionModel.ErrorHeader);
-        $("#errorMessage").html(sessionModel.ErrorMessage);
-        disconnect = true;
+    function activateEndpoint(endpointId) {
+        $.post({
+            url: "/Browser/Activate",
+            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), endpointId: endpointId },
+            success: function onSuccess(response) {
+            },
+            error: function (response) {
+                console.error("error setting activation Endpoint: ", response.d, response.responseText);
+            },
+            complete: function () {
+            }
+        });
+    }
+
+    function deActivateEndpoint(endpointId) {
+        $.post({
+            url: "/Browser/DeActivate",
+            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), endpointId: endpointId },
+            success: function onSuccess(response) {
+            },
+            error: function (response) {
+                console.error("error setting activation Endpoint: ", response.d, response.responseText);
+            },
+            complete: function () {
+            }
+        });
     }
 
     function openConnectContextPanel() {
@@ -139,35 +174,8 @@
         $(".dashboard_contextpanel_select_filter_button").css({ "margin-left": marginLeft });
     }
 
-    $('form').submit(function () {
-        $("#connectButton").prop("disabled", true);
-    })
-
-    function connecting() {
-        $("#connectContextpanelHeader").html("@Strings.BrowserConnect");
-        $("#connectBodyContextPanel").hide();
-        $("#proceedButton").hide();
-        $("#cancelButton").hide();
-        $("#waitingForConnect").show();
-        $("#connectLoader").show();
-    }
-
-    function closeConnectContextPanel() {
+     function closeConnectContextPanel() {
         $("#connectContextpanel").addClass("overlay-close").removeClass("overlay-right-open");
-
-        if (disconnect == true) {
-            $.post({
-                url: "/Browser/Disconnect",
-                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), backUrl: window.location.href },
-                success: function onSuccess(response) {
-                },
-                error: function (response) {
-                    console.error("error connecting to an OPC UA server: ", response.d, response.responseText);
-                }
-            });
-        }
-        $("#connectButton").prop("disabled", false);
-        disconnect = false;
     }
-</script>
+    </script>
 

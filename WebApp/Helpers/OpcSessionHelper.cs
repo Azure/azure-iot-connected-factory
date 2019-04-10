@@ -9,11 +9,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 using GlobalResources;
-using Microsoft.Azure.Devices.Proxy;
-using Microsoft.Azure.Devices.Proxy.Provider;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Configuration;
 using Opc.Ua;
-using Opc.Ua.Bindings.Proxy;
 using Opc.Ua.Client;
 using Opc.Ua.Configuration;
 
@@ -96,12 +93,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers
 
                 // check the application certificate
                 await _application.CheckApplicationInstanceCertificate(false, 0);
-
-#if !DIRECT_TCP_CONNECT
-                // initialize our custom transport via the proxy
-                Socket.Provider = new DefaultProvider(ConfigurationProvider.GetConfigurationSettingValue("IotHubOwnerConnectionString"));
-                WcfChannelBase.g_CustomTransportChannel = new ProxyTransportChannelFactory();
-#endif
 
                 // load cached endpoints
                 OpcCachedEndpoints = _configuration.LoadCachedEndpoints(true);

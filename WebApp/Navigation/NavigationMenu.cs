@@ -41,7 +41,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                 {
                     Text = Strings.NavigationMenuBrowser,
                     Action = "Index",
-                    Controller = "Browser",
+                    Controller = "Supervisor",
                     Selected = false,
                     Class = "navigation_link_browser",
                     MinimumPermission = Permission.BrowseOpcServer,

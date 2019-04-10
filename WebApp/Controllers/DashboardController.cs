@@ -13,7 +13,6 @@ using System.Web.WebPages;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 {
-
     /// <summary>
     /// A Controller for Dashboard-related views.
     /// </summary>

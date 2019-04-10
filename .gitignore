@@ -131,7 +131,7 @@ publish/
 ## TODO: Comment the next line if you want to checkin your
 ## web deploy settings but do note that will include unencrypted
 ## passwords
-#*.pubxml
+*.pubxml
 
 # NuGet.exe
 .nuget/nuget.exe
@@ -215,3 +215,5 @@ OPC\ Foundation/
 **/OPC.Ua.Browser.Endpoints.xml
 /private
 /.config
+/WebApp/Properties/PublishProfiles
+/Deployment/vm/parameter.xml

@@ -46,6 +46,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
 
             ConfigureOpcUa();
 
+            ConfigureTwinService();
+
+            ConfigureRegistryService();
+
             _tasksToShutdown.AddRange(ConfigureUpdateSessions(_shutdownTokenSource.Token));
         }
 

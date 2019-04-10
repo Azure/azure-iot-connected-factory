@@ -116,7 +116,7 @@
 	<DiscoveryServers></DiscoveryServers>
     
     <!-- The file used to save the EndpointDescriptions for servers known to the Client -->
-    <EndpointCacheFilePath>Opc.Ua.Browser.Endpoints.xml</EndpointCacheFilePath>
+    <EndpointCacheFilePath></EndpointCacheFilePath>
   
 	<!-- The minimum subscription lifetime.
 	This ensures subscriptions are not set to expire too quickly. The requesed lifetime count

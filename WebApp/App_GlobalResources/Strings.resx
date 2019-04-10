@@ -257,8 +257,8 @@
     <value>Select a server from the preconfigured list:</value>
     <comment>Label</comment>
   </data>
-  <data name="BrowserSelectServer" xml:space="preserve">
-    <value>Select an OPC UA server</value>
+  <data name="BrowserSelectEndpoint" xml:space="preserve">
+    <value>Select an endpoint</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserCommunicationStatusMessageLabel" xml:space="preserve">
@@ -1041,5 +1041,101 @@ Stack trace:
   <data name="TitleDashboard" xml:space="preserve">
     <value>Dashboard</value>
     <comment>message</comment>
+  </data>
+  <data name="BrowserEndpointErrorHeader" xml:space="preserve">
+    <value>Endpoint not found</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="WriteSuccesfully" xml:space="preserve">
+    <value>Variable written succesfully</value>
+    <comment>message</comment>
+  </data>
+  <data name="BrowserOpcPublishFailed" xml:space="preserve">
+    <value>Publish data failed</value>
+    <comment>message</comment>
+  </data>
+  <data name="BrowserOpcPublishSucceeded" xml:space="preserve">
+    <value>Publish data succeded</value>
+    <comment>message</comment>
+  </data>
+  <data name="BrowserOpcUnPublishFailed" xml:space="preserve">
+    <value>UnPublish data failed</value>
+    <comment>message</comment>
+  </data>
+  <data name="BrowserOpcUnPublishSucceeded" xml:space="preserve">
+    <value>UnPublish data succeded</value>
+    <comment>message</comment>
+  </data>
+  <data name="ScanToggleOff" xml:space="preserve">
+    <value>Scan Off</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ScanToggleOn" xml:space="preserve">
+    <value>Scan On</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ActivateEndpointToggleOff" xml:space="preserve">
+    <value>Browse Disabled</value>
+    <comment>label</comment>
+  </data>
+  <data name="ActivateEndpointToggleOn" xml:space="preserve">
+    <value>Browse Enabled</value>
+    <comment>label</comment>
+  </data>
+  <data name="ButtonBack" xml:space="preserve">
+    <value>back</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ButtonBrowseNodes" xml:space="preserve">
+    <value>browse nodes</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ButtonEndpoints" xml:space="preserve">
+    <value>endpoints</value>
+    <comment>Label</comment>
+  </data>
+  <data name="HeaderEndpointActivation" xml:space="preserve">
+    <value>Endpoint activation</value>
+    <comment>Label</comment>
+  </data>
+  <data name="HeaderEndpointUrl" xml:space="preserve">
+    <value>Endpoint Url</value>
+    <comment>Label</comment>
+  </data>
+  <data name="HeaderSecurityLevel" xml:space="preserve">
+    <value>Security Level</value>
+    <comment>Label</comment>
+  </data>
+  <data name="HeaderSecurityMode" xml:space="preserve">
+    <value>Security Mode</value>
+    <comment>Label</comment>
+  </data>
+  <data name="HeaderSecurityPolicy" xml:space="preserve">
+    <value>Security Policy</value>
+    <comment>Label</comment>
+  </data>
+  <data name="SupervisorHeaderConnStatus" xml:space="preserve">
+    <value>Connection Status</value>
+    <comment>Label</comment>
+  </data>
+  <data name="SupervisorHeaderId" xml:space="preserve">
+    <value>Gateway Id</value>
+    <comment>Label</comment>
+  </data>
+  <data name="SupervisorScanStatus" xml:space="preserve">
+    <value>Scan Status</value>
+    <comment>Label</comment>
+  </data>
+  <data name="SupervisorSelect" xml:space="preserve">
+    <value>Select an IoT edge Gateway</value>
+    <comment>Label</comment>
+  </data>
+  <data name="supervisorConnected" xml:space="preserve">
+    <value>Connected</value>
+    <comment>Label</comment>
+  </data>
+  <data name="supervisorDisconnected" xml:space="preserve">
+    <value>Disconnected</value>
+    <comment>Label</comment>
   </data>
 </root>

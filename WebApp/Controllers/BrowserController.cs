@@ -19,30 +19,18 @@ using System.Web.UI.WebControls;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 {
+    using Microsoft.Azure.IIoT.OpcUa.Api.Registry.Models;
+    using Microsoft.Azure.IIoT.OpcUa.Api.Twin.Models;
+    using static Startup;
     public class StatusHub : Hub { }
 
     [OutputCache(CacheProfile = "NoCacheProfile")]
     public class BrowserController : Controller
     {
-        private List<ListItem> _prepopulatedEndpoints = new List<ListItem>();
-
-        public BrowserController()
-        {
-            if (OpcSessionHelper.Instance.InitResult == "Good")
-            {
-                // populate endpoints
-                foreach (ConfiguredEndpoint endpoint in OpcSessionHelper.Instance.OpcCachedEndpoints)
-                {
-                    ListItem item = new ListItem();
-                    item.Value = endpoint.EndpointUrl.AbsoluteUri;
-                    item.Text = item.Value;
-                    _prepopulatedEndpoints.Add(item);
-                }
-            }
-        }
-
         private class MethodCallParameterData
         {
+            public string ObjectId { get; set; }
+
             public string Name { get; set; }
 
             public string Value { get; set; }
@@ -69,6 +57,56 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         }
 
         /// <summary>
+        /// Create a list of endpoints for all servers
+        /// </summary>
+        /// <param name="actionName"></param>
+        public List<Endpoint> CreateEndpointList()
+        {
+            List<Endpoint> endpointList = new List<Endpoint>();
+
+            try
+            {
+                string supervisorId = Session["supervisorId"].ToString();
+                IEnumerable<ApplicationInfoApiModel> applications = RegistryService.ListApplications();
+
+                if (applications != null)
+                {
+                    foreach (var application in applications)
+                    {
+                        if (application.SupervisorId == supervisorId)
+                        {
+                            ApplicationRegistrationApiModel applicationRecord = RegistryService.GetApplication(application.ApplicationId);
+
+                            foreach (var elem in applicationRecord.Endpoints)
+                            {
+                                EndpointInfoApiModel endpointModel = RegistryService.GetEndpoint(elem.Id);
+
+                                Endpoint endpointInfo = new Endpoint();
+                                endpointInfo.EndpointId = elem.Id;
+                                endpointInfo.EndpointUrl = elem.Endpoint.Url;
+                                endpointInfo.SecurityMode = elem.Endpoint.SecurityMode != null ? elem.Endpoint.SecurityMode.ToString() : string.Empty;
+                                endpointInfo.SecurityPolicy = elem.Endpoint.SecurityPolicy != null ? elem.Endpoint.SecurityPolicy.Remove(0, elem.Endpoint.SecurityPolicy.IndexOf('#') + 1) : string.Empty;
+                                endpointInfo.SecurityLevel = elem.SecurityLevel;
+                                endpointInfo.ApplicationId = application.ApplicationId;
+                                endpointInfo.ProductUri = application.ProductUri;
+                                endpointInfo.Activated = endpointModel.ActivationState == EndpointActivationState.Activated || endpointModel.ActivationState == EndpointActivationState.ActivatedAndConnected;
+                                endpointList.Add(endpointInfo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceWarning("Can not get applications list");
+                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                Trace.TraceWarning(errorMessage);
+            }
+            return endpointList;
+        }
+
+        /// <summary>
         /// Default action of the controller.
         /// </summary>
         [HttpGet]
@@ -76,22 +114,13 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         public ActionResult Index()
         {
             OpcSessionModel sessionModel = new OpcSessionModel();
-
-            if (OpcSessionHelper.Instance.InitResult != "Good")
-            {
-                sessionModel.ErrorMessage = OpcSessionHelper.Instance.InitResult;
-                return View("Error", sessionModel);
-            }
             
-            OpcSessionCacheData entry = null;
-            if (OpcSessionHelper.Instance.OpcSessionCache.TryGetValue(Session.SessionID, out entry))
+            if (Session["EndpointId"] != null)
             {
-                sessionModel.EndpointUrl = entry.EndpointURL;
-                Session["EndpointUrl"] = entry.EndpointURL;
                 return View("Browse", sessionModel);
             }
-
-            sessionModel.PrepopulatedEndpoints = new SelectList(_prepopulatedEndpoints, "Value", "Text");
+           
+            sessionModel.endpointList = CreateEndpointList();
             return View("Index", sessionModel);
         }
 
@@ -113,131 +142,111 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         }
 
         /// <summary>
-        /// Post form method to connect to an OPC UA server.
+        /// Start action of the controller.
         /// </summary>
-        [HttpPost]
-        [ValidateAntiForgeryToken(Order = 1)]
+        [HttpGet]
         [RequirePermission(Permission.BrowseOpcServer)]
-        public async Task<ActionResult> Connect(string endpointUrl, bool enforceTrust = false)
+        public ActionResult Start(string supervisorId)
         {
-            OpcSessionModel sessionModel = new OpcSessionModel { EndpointUrl = endpointUrl } ;
+            OpcSessionModel sessionModel = new OpcSessionModel();
 
-            Session session = null;
-            try
+            Session["supervisorId"] = supervisorId;
+            return Index();
+        }
+
+        /// <summary>
+        /// Back action of the controller.
+        /// </summary>
+        [HttpGet]
+        [RequirePermission(Permission.BrowseOpcServer)]
+        public ActionResult Back(string backUrl)
+        {
+            if ((backUrl != null) && (backUrl.Contains("AddOpcServer")))
             {
-                session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, endpointUrl, enforceTrust);
+                return RedirectToAction("Index", "AddOpcServer");
             }
-            catch (Exception exception)
+            else
             {
-                // Check for untrusted certificate
-                ServiceResultException ex = exception as ServiceResultException;
-                if ((ex != null) && (ex.InnerResult != null) && (ex.InnerResult.StatusCode == StatusCodes.BadCertificateUntrusted))
-                {
-                    sessionModel.ErrorHeader = Strings.UntrustedCertificate;
-                    return Json(sessionModel);
-                }
-
-                // Generate an error to be shown in the error view and trace.
-                string errorMessageTrace = string.Format(Strings.BrowserConnectException, exception.Message,
-                exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--"); 
-                Trace.TraceError(errorMessageTrace);
-                sessionModel.ErrorHeader = Strings.BrowserConnectErrorHeader;
-
-                return Json(sessionModel);
+                Session["EndpointId"] = null;
+                return RedirectToAction("Index"); 
             }
+        }
 
+        /// <summary>
+        /// Browse entry point.
+        /// </summary>
+        [HttpGet]
+        [RequirePermission(Permission.BrowseOpcServer)]
+        public ActionResult BrowseNodes(string endpointId, string endpointUrl, string productUri)
+        {
+            OpcSessionModel sessionModel = new OpcSessionModel { EndpointUrl = endpointUrl, EndpointId = endpointId };
+       
+            Session["EndpointId"] = endpointId;
             Session["EndpointUrl"] = endpointUrl;
-
+            Session["ProductUri"] = productUri;
             return View("Browse", sessionModel);
         }
 
         /// <summary>
-        /// Post form method to connect to an OPC UA server.
+        /// Post form method to activate an endpoint.
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken(Order = 1)]
-        [RequirePermission(Permission.BrowseOpcServer)]
-        public async Task<ActionResult> ConnectWithTrust(string endpointURL)
+        [RequirePermission(Permission.ControlOpcServer)]
+        public async Task<ActionResult> Activate(string endpointId)
         {
-            OpcSessionModel sessionModel = new OpcSessionModel { EndpointUrl = endpointURL };
+            OpcSessionModel sessionModel = new OpcSessionModel { EndpointId = endpointId };
 
-            // Check that there is a session already in our cache data
-            OpcSessionCacheData entry;
-            if (OpcSessionHelper.Instance.OpcSessionCache.TryGetValue(Session.SessionID, out entry))
+            try
             {
-                if (string.Equals(entry.EndpointURL, endpointURL, StringComparison.InvariantCultureIgnoreCase))
+                await RegistryService.ActivateEndpointAsync(endpointId);
+            }
+            catch (Exception exception)
+            {
+                // Generate an error to be shown in the error view and trace    .
+                string errorMessageTrace = string.Format(Strings.BrowserConnectException, exception.Message,
+                exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--"); 
+                Trace.TraceError(errorMessageTrace);
+                if (exception.Message.Contains("ResourceNotFound"))
                 {
-                    OpcSessionCacheData newValue = new OpcSessionCacheData
-                    {
-                        CertThumbprint = entry.CertThumbprint,
-                        OPCSession = entry.OPCSession,
-                        EndpointURL = entry.EndpointURL,
-                        Trusted = true
-                    };
-                    OpcSessionHelper.Instance.OpcSessionCache.TryUpdate(Session.SessionID, newValue, entry);
-
-                    // connect with enforced trust
-                    return await Connect(endpointURL, true);
+                    sessionModel.ErrorHeader = Strings.BrowserEndpointErrorHeader;
                 }
+                else
+                {
+                    sessionModel.ErrorHeader = Strings.BrowserConnectErrorHeader;
+                }
+                return Json(sessionModel);
             }
 
-            // Generate an error to be shown in the error view.
-            // Since we should only get here when folks are trying to hack the site,
-            // make the error generic so not to reveal too much about the internal workings of the site.
-            Trace.TraceError(Strings.BrowserConnectErrorHeader);
-            sessionModel.ErrorHeader = Strings.BrowserConnectErrorHeader;
-
+            Session["EndpointId"] = endpointId;
             return Json(sessionModel);
         }
 
         /// <summary>
-        /// Get method to disconnect from the currently connected OPC UA server.
-        /// </summary>
-        [HttpGet]
-        [RequirePermission(Permission.BrowseOpcServer)]
-        public ActionResult Disconnect(string backUrl)
-        {
-            return Disconnect(null, backUrl);
-        }
-
-        /// <summary>
-        /// Post method to disconnect from the currently connected OPC UA server.
+        /// Post method to deactivate an endpoint.
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken(Order = 1)] 
-        [RequirePermission(Permission.BrowseOpcServer)]
-        public ActionResult Disconnect(FormCollection form, string backUrl)
+        [RequirePermission(Permission.ControlOpcServer)]
+        public ActionResult Deactivate(string endpointId)
         {
+            Session["EndpointUrl"] = null;
+            Session["EndpointId"] = null;
+
             try
             {
-                OpcSessionHelper.Instance.Disconnect(Session.SessionID);
-                Session["EndpointUrl"] = "";
+                RegistryService.DeActivateEndpoint(endpointId);
             }
             catch (Exception exception)
             {
-                // Trace an error and return to the connect view.
-                var errorMessage = string.Format(Strings.BrowserDisconnectException, exception.Message,
-                    exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--");
-                Trace.TraceError(errorMessage);
+                // Generate an error to be shown in trace.
+                string errorMessageTrace = string.Format(Strings.BrowserConnectException, exception.Message,
+                exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--");
+                Trace.TraceError(errorMessageTrace);
             }
 
-            if (OpcSessionHelper.Instance.InitResult != "Good")
-            {
-                return RedirectToAction("Index", "Dashboard");
-            }
-            else
-            {
-                if ((backUrl != null) && (backUrl.Contains("AddOpcServer")))
-                {
-                    return RedirectToAction("Index", "AddOpcServer");
-                }
-                else
-                {
-                    OpcSessionModel sessionModel = new OpcSessionModel();
-                    sessionModel.PrepopulatedEndpoints = new SelectList(_prepopulatedEndpoints, "Value", "Text");
-                    return View("Index", sessionModel);
-                }
-            }
+            OpcSessionModel sessionModel = new OpcSessionModel(); 
+            return Json(sessionModel);
         }
 
         /// <summary>
@@ -248,42 +257,25 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         [RequirePermission(Permission.BrowseOpcServer)]
         public async Task<ActionResult> GetRootNode()
         {
-            ReferenceDescriptionCollection references;
-            Byte[] continuationPoint;
-            var jsonTree = new List<object>();
+            List<object> jsonTree = new List<object>();
+            string endpointId = Session["EndpointId"].ToString();
+            BrowseRequestApiModel model = new BrowseRequestApiModel();
 
-            bool retry = true;
-            while (true)
-            { 
-                try
-                {
-                    Session session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
+            model.NodeId = "";
+            model.TargetNodesOnly = true;
 
-                    session.Browse(
-                        null,
-                        null,
-                        ObjectIds.ObjectsFolder,
-                        0u,
-                        BrowseDirection.Forward,
-                        ReferenceTypeIds.HierarchicalReferences,
-                        true,
-                        0,
-                        out continuationPoint,
-                        out references);
-                    jsonTree.Add(new { id = ObjectIds.ObjectsFolder.ToString(), text = Strings.BrowserRootNodeName, children = (references?.Count != 0) });
+            try
+            {
+                var browseData = await TwinService.NodeBrowseAsync(endpointId, model);
+                jsonTree.Add(new { id = browseData.Node.NodeId, text = browseData.Node.DisplayName, children = (browseData.References?.Count != 0) });
 
-                    return Json(jsonTree, JsonRequestBehavior.AllowGet);
-                }
-                catch (Exception exception)
-                {
-                    OpcSessionHelper.Instance.Disconnect(Session.SessionID);
-                    if (!retry)
-                    {
-                        return Content(CreateOpcExceptionActionString(exception));
-                    }
-                    retry = false;
-                }
+                return Json(jsonTree, JsonRequestBehavior.AllowGet);
             }
+            catch (Exception exception)
+            {
+                Session["EndpointId"] = null;
+                return Content(CreateOpcExceptionActionString(exception)); 
+            } 
         }
 
         /// <summary>
@@ -308,20 +300,18 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 node = jstreeNodeSplit[1];
             }
 
-            ReferenceDescriptionCollection references = null;
-            Byte[] continuationPoint;
-            var jsonTree = new List<object>();
+            List<object> jsonTree = new List<object>();
+            string endpointId = Session["EndpointId"].ToString();
+            string endpointUrl = Session["EndpointUrl"].ToString();
+            string ProductUri = Session["ProductUri"].ToString();
 
             // read the currently published nodes
-            Session session = null;
-            string[] publishedNodes = null;
-            string endpointUrl = null;
+            PublishedItemListResponseApiModel publishedNodes = new PublishedItemListResponseApiModel();
             try
             {
-                session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-                endpointUrl = session.ConfiguredEndpoint.EndpointUrl.AbsoluteUri;
-                publishedNodes = await GetPublishedNodes(endpointUrl);
-                Trace.TraceInformation("Currently is/are {0} node(s) published on endpoint '{1}'.", publishedNodes.Length, endpointUrl);
+                PublishedItemListRequestApiModel publishModel = new PublishedItemListRequestApiModel();
+                publishedNodes = await TwinService.GetPublishedNodesAsync(endpointId, publishModel);
+
             }
             catch (Exception e)
             {
@@ -332,240 +322,132 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 Trace.TraceWarning(errorMessage);
             }
 
-            bool retry = true;
-            while (true)
+            BrowseResponseApiModel browseData = new BrowseResponseApiModel();
+
+            try
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 try
                 {
-                    Stopwatch stopwatch = new Stopwatch();
-                    stopwatch.Start();
+                    BrowseRequestApiModel model = new BrowseRequestApiModel();
+                    model.NodeId = node;
+                    model.TargetNodesOnly = false;
 
-                    try
-                    {
-                        session.Browse(
-                            null,
-                            null,
-                            node,
-                            0u,
-                            BrowseDirection.Forward,
-                            ReferenceTypeIds.HierarchicalReferences,
-                            true,
-                            0,
-                            out continuationPoint,
-                            out references);
-                    }
-                    catch (Exception e)
-                    {
-                        // skip this node
-                        Trace.TraceError("Can not browse node '{0}'", node);
-                        string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
-                            e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
-                        Trace.TraceError(errorMessage);
-                    }
+                    browseData =  TwinService.NodeBrowse(endpointId, model);
+                }
+                catch (Exception e)
+                {
+                    // skip this node
+                    Trace.TraceError("Can not browse node '{0}'", node);
+                    string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
+                        e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
+                    Trace.TraceError(errorMessage);
+                }
 
-                    Trace.TraceInformation("Browsing node '{0}' data took {0} ms", node.ToString(), stopwatch.ElapsedMilliseconds);
+                Trace.TraceInformation("Browsing node '{0}' data took {0} ms", node.ToString(), stopwatch.ElapsedMilliseconds);
 
-                    if (references != null)
+                if (browseData.References != null)
+                {
+                    var idList = new List<string>();
+                    foreach (var nodeReference in browseData.References)
                     {
-                        var idList = new List<string>();
-                        foreach (var nodeReference in references)
+                        bool idFound = false;
+                        foreach (var id in idList)
                         {
-                            bool idFound = false;
-                            foreach (var id in idList)
+                            if (id == nodeReference.Target.NodeId.ToString())
                             {
-                                if (id == nodeReference.NodeId.ToString())
-                                {
-                                    idFound = true;
-                                }
+                                idFound = true;
                             }
-                            if (idFound == true)
-                            {
-                                continue;
-                            }
+                        }
+                        if (idFound == true)
+                        {
+                            continue;
+                        }
 
-                            ReferenceDescriptionCollection childReferences = null;
-                            Byte[] childContinuationPoint;
+                        Trace.TraceInformation("Browse '{0}' count: {1}", nodeReference.Target.NodeId, jsonTree.Count);
 
-                            Trace.TraceInformation("Browse '{0}' count: {1}", nodeReference.NodeId, jsonTree.Count);
+                        NodeApiModel currentNode = nodeReference.Target;
 
-                            INode currentNode = null;
-                            try
-                            {
-                                session.Browse(
-                                    null,
-                                    null,
-                                    ExpandedNodeId.ToNodeId(nodeReference.NodeId, session.NamespaceUris),
-                                    0u,
-                                    BrowseDirection.Forward,
-                                    ReferenceTypeIds.HierarchicalReferences,
-                                    true,
-                                    0,
-                                    out childContinuationPoint,
-                                    out childReferences);
+                        currentNode = nodeReference.Target;
 
-                                currentNode = session.ReadNode(ExpandedNodeId.ToNodeId(nodeReference.NodeId, session.NamespaceUris));
-                            }
-                            catch (Exception e)
-                            {
-                                // skip this node
-                                Trace.TraceError("Can not browse or read node '{0}'", nodeReference.NodeId);
-                                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
-                                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
-                                Trace.TraceError(errorMessage);
+                        byte currentNodeAccessLevel = 0;
+                        byte currentNodeEventNotifier = 0;
+                        bool currentNodeExecutable = false;
 
-                                continue;
-                            }
-
-                            byte currentNodeAccessLevel = 0;
-                            byte currentNodeEventNotifier = 0;
-                            bool currentNodeExecutable = false;
-
-                            VariableNode variableNode = currentNode as VariableNode;
-                            if (variableNode != null)
-                            {
-                                currentNodeAccessLevel = variableNode.UserAccessLevel;
+                        switch (currentNode.NodeClass)
+                        {
+                            case NodeClass.Variable:
+                                currentNodeAccessLevel = (byte)currentNode.UserAccessLevel;
                                 if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
                                 {
                                     currentNodeAccessLevel = (byte)((uint)currentNodeAccessLevel & ~0x2);
                                 }
-                            }
+                                break;
 
-                            ObjectNode objectNode = currentNode as ObjectNode;
-                            if (objectNode != null)
-                            {
-                                currentNodeEventNotifier = objectNode.EventNotifier;
-                            }
+                            case NodeClass.Object:
+                                currentNodeEventNotifier = (byte)currentNode.EventNotifier;
+                                break;
 
-                            ViewNode viewNode = currentNode as ViewNode;
-                            if (viewNode != null)
-                            {
-                                currentNodeEventNotifier = viewNode.EventNotifier;
-                            }
+                            case NodeClass.View:
+                                currentNodeEventNotifier = (byte)currentNode.EventNotifier;
+                                break;
 
-                            MethodNode methodNode = currentNode as MethodNode;
-                            if (methodNode != null && PermsChecker.HasPermission(Permission.ControlOpcServer))
-                            {
-                                currentNodeExecutable = methodNode.UserExecutable;
-                            }
-
-                            var isPublished = false;
-                            var isRelevant = false;
-                            if (publishedNodes != null)
-                            {
-                                Session stationSession = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-                                string urn = stationSession.ServerUris.GetString(0);
-                                foreach (var nodeId in publishedNodes)
+                            case NodeClass.Method:
+                                if (PermsChecker.HasPermission(Permission.ControlOpcServer))
                                 {
-                                    if (nodeId == nodeReference.NodeId.ToString())
-                                    {
-                                        isPublished = true;
-                                        ContosoOpcUaNode contosoOpcUaNode = Startup.Topology.GetOpcUaNode(urn, nodeId);
-                                        if (contosoOpcUaNode?.Relevance != null)
-                                        {
-                                            isRelevant = true;
-                                        }
-                                    }
+                                    currentNodeExecutable = (bool)currentNode.UserExecutable;
                                 }
-                            }
+                                break;
 
-                            jsonTree.Add(new
-                            {
-                                id = ("__" + node + delimiter[0] + nodeReference.NodeId.ToString()),
-                                text = nodeReference.DisplayName.ToString(),
-                                nodeClass = nodeReference.NodeClass.ToString(),
-                                accessLevel = currentNodeAccessLevel.ToString(),
-                                eventNotifier = currentNodeEventNotifier.ToString(),
-                                executable = currentNodeExecutable.ToString(),
-                                children = (childReferences.Count == 0) ? false : true,
-                                publishedNode = isPublished,
-                                relevantNode = isRelevant
-                            });
-                            idList.Add(nodeReference.NodeId.ToString());
+                            default:
+                                break;
                         }
 
-                        // If there are no children, then this is a call to read the properties of the node itself.
-                        if (jsonTree.Count == 0)
+                        var isPublished = false;
+                        var isRelevant = false;
+                        if (publishedNodes.Items != null)
                         {
-                            INode currentNode = null;
-
-                            try
+                            foreach (var item in publishedNodes.Items)
                             {
-                                currentNode = session.ReadNode(new NodeId(node));
-                            }
-                            catch (Exception e)
-                            {
-                                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
-                                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
-                                Trace.TraceError(errorMessage);
-                            }
-
-                            if (currentNode == null)
-                            {
-                                byte currentNodeAccessLevel = 0;
-                                byte currentNodeEventNotifier = 0;
-                                bool currentNodeExecutable = false;
-
-                                VariableNode variableNode = currentNode as VariableNode;
-
-                                if (variableNode != null)
+                                if (item.NodeId == nodeReference.Target.NodeId.ToString())
                                 {
-                                    currentNodeAccessLevel = variableNode.UserAccessLevel;
-                                    if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
+                                    isPublished = true;
+                                    ContosoOpcUaNode contosoOpcUaNode = Startup.Topology.GetOpcUaNode(ProductUri, item.NodeId);
+                                    if (contosoOpcUaNode?.Relevance != null)
                                     {
-                                        currentNodeAccessLevel = (byte)((uint)currentNodeAccessLevel & ~0x2);
+                                        isRelevant = true;
                                     }
                                 }
-
-                                ObjectNode objectNode = currentNode as ObjectNode;
-
-                                if (objectNode != null)
-                                {
-                                    currentNodeEventNotifier = objectNode.EventNotifier;
-                                }
-
-                                ViewNode viewNode = currentNode as ViewNode;
-
-                                if (viewNode != null)
-                                {
-                                    currentNodeEventNotifier = viewNode.EventNotifier;
-                                }
-
-                                MethodNode methodNode = currentNode as MethodNode;
-
-                                if (methodNode != null && PermsChecker.HasPermission(Permission.ControlOpcServer))
-                                {
-                                    currentNodeExecutable = methodNode.UserExecutable;
-                                }
-
-                                jsonTree.Add(new
-                                {
-                                    id = jstreeNode,
-                                    text = currentNode.DisplayName.ToString(),
-                                    nodeClass = currentNode.NodeClass.ToString(),
-                                    accessLevel = currentNodeAccessLevel.ToString(),
-                                    eventNotifier = currentNodeEventNotifier.ToString(),
-                                    executable = currentNodeExecutable.ToString(),
-                                    children = false
-                                });
                             }
                         }
-                    }
 
-                    stopwatch.Stop();
-                    Trace.TraceInformation("Browing all childeren info of node '{0}' took {0} ms", node, stopwatch.ElapsedMilliseconds);
-
-                    return Json(jsonTree, JsonRequestBehavior.AllowGet);
-                }
-                catch (Exception exception)
-                {
-                    OpcSessionHelper.Instance.Disconnect(Session.SessionID);
-                    if (!retry)
-                    {
-                        return Content(CreateOpcExceptionActionString(exception));
+                        jsonTree.Add(new
+                        {
+                            id = ("__" + node + delimiter[0] + nodeReference.Target.NodeId.ToString()),
+                            text = nodeReference.Target.DisplayName.ToString(),
+                            nodeClass = nodeReference.Target.NodeClass.ToString(),
+                            accessLevel = currentNodeAccessLevel.ToString(),
+                            eventNotifier = currentNodeEventNotifier.ToString(),
+                            executable = currentNodeExecutable.ToString(),
+                            children = nodeReference.Target.HasChildren,
+                            publishedNode = isPublished,
+                            relevantNode = isRelevant
+                        });
+                        idList.Add(nodeReference.Target.NodeId.ToString());
                     }
-                    retry = false;
                 }
+
+                stopwatch.Stop();
+                Trace.TraceInformation("Browing all childeren info of node '{0}' took {0} ms", node, stopwatch.ElapsedMilliseconds);
+
+                return Json(jsonTree, JsonRequestBehavior.AllowGet);
             }
+            catch (Exception exception)
+            {
+                return Content(CreateOpcExceptionActionString(exception));
+            }
+         
         }
 
         /// <summary>
@@ -579,7 +461,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string[] delimiter = { "__$__" };
             string[] jstreeNodeSplit = jstreeNode.Split(delimiter, 3, StringSplitOptions.None);
             string node;
-            var actionResult = "";
+            string actionResult = string.Empty;
+            string endpointId = Session["EndpointId"].ToString();
 
             if (jstreeNodeSplit.Length == 1)
             {
@@ -590,214 +473,40 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 node = jstreeNodeSplit[1];
             }
 
-            bool retry = true;
-            while (true)
-            { 
-                try
-                {
-                    DataValueCollection values = null;
-                    DiagnosticInfoCollection diagnosticInfos = null;
-                    ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-                    ReadValueId valueId = new ReadValueId();
-                    valueId.NodeId = new NodeId(node);
-                    valueId.AttributeId = Attributes.Value;
-                    valueId.IndexRange = null;
-                    valueId.DataEncoding = null;
-                    nodesToRead.Add(valueId);
-                    Session session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-                    ResponseHeader responseHeader = session.Read(null, 0, TimestampsToReturn.Both, nodesToRead, out values, out diagnosticInfos);
-                    string value = "";
-                    if (values[0].Value != null)
-                    {
-                        if (values[0].WrappedValue.ToString().Length > 40)
-                        {
-                            value = values[0].WrappedValue.ToString().Substring(0, 40);
-                            value += "...";
-                        }
-                        else
-                        {
-                            value = values[0].WrappedValue.ToString();
-                        }
-                    }
-                    // We return the HTML formatted content, which is shown in the context panel.
-                    actionResult = Strings.BrowserOpcDataValueLabel + ": " + value + @"<br/>" +
-                                    Strings.BrowserOpcDataStatusLabel + ": " + values[0].StatusCode + @"<br/>" +
-                                    Strings.BrowserOpcDataSourceTimestampLabel + ": " + values[0].SourceTimestamp + @"<br/>" +
-                                    Strings.BrowserOpcDataServerTimestampLabel + ": " + values[0].ServerTimestamp;
-                    return Content(actionResult);
-                }
-                catch (Exception exception)
-                {
-                    if (!retry)
-                    {
-                        return Content(CreateOpcExceptionActionString(exception));
-                    }
-                    retry = false;
-                }
-            }
-        }
-
-        public async Task<Session> ConnectToPublisher(string sessionId)
-        {
-            uint publisherServerPort = 62222;
-            string publisherAbsolutePath = "/UA/Publisher";
-            string publisherHostName = "publisher";
-
-            // Build Publisher URL from the OPC server URL we're currently browsing
-            Session stationSession = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-            Uri stationUri;
-            Uri publisherUri;
             try
             {
-                stationUri = new Uri(stationSession.Endpoint.EndpointUrl);
-                string dnsLabels = null;
-                switch (stationUri.HostNameType)
+                ValueReadRequestApiModel model = new ValueReadRequestApiModel();
+                model.NodeId = node;
+                var data = await TwinService.ReadNodeValueAsync(endpointId, model);
+
+                string value = "";
+
+                if (data.Value != null)
                 {
-                    case UriHostNameType.Dns:
-                        dnsLabels = stationUri.DnsSafeHost.Contains(".") ? stationUri.DnsSafeHost.Substring(stationUri.DnsSafeHost.IndexOf(".")) : "";
-                        publisherUri = new Uri($"{stationUri.Scheme}://{publisherHostName}{dnsLabels}:{publisherServerPort}{publisherAbsolutePath}");
-                        break;
-
-                    case UriHostNameType.IPv4:
-                    case UriHostNameType.IPv6:
-                        publisherUri = new Uri($"{stationUri.Scheme}://{publisherHostName}:{publisherServerPort}{publisherAbsolutePath}");
-                        break;
-
-                    default:
-                        throw new ArgumentException("Only DNS hostnames or IPv4/IPv6 hostnames are supported.");
-                }
-            }
-            catch
-            {
-                throw;
-            }
-
-            // Try to connect to publisher
-            return await OpcSessionHelper.Instance.GetSessionWithImplicitTrust(sessionId, publisherUri.ToString());
-        }
-
-        /// <summary>
-        /// Returns the list of published nodes of the OPC UA server with the given endpointUrl
-        /// </summary>
-        private async Task<string[]> GetPublishedNodes(string endpointUrl)
-        {
-            List<string> publishedNodes = new List<string>();
-            Session publisherSession = null;
-            string publisherSessionId = Guid.NewGuid().ToString();
-
-            // read the published nodes from the publisher
-            try
-            {
-                try
-                {
-                    publisherSession = await ConnectToPublisher(publisherSessionId);
-                }
-                catch (Exception e)
-                {
-                    Trace.TraceWarning($"Can not connect to publisher for endppoint '{endpointUrl}'.");
-                    string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
-                        e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
-                    Trace.TraceWarning(errorMessage);
-                    return null;
-                }
-
-                if (publisherSession != null)
-                {
-                    VariantCollection inputArguments = new VariantCollection();
-                    Variant endpointUrlValue;
-                    try
+                    if (data.Value.ToString().Length > 40)
                     {
-                        OpcSessionHelper.Instance.BuildDataValue(ref publisherSession, ref endpointUrlValue, TypeInfo.GetDataTypeId(string.Empty), ValueRanks.Scalar, endpointUrl);
+                        value = data.Value.ToString().Substring(0, 40);
+                        value += "...";
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Trace.TraceWarning($"Can not parse published nodes information for endppoint '{endpointUrl}'.");
-                        string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
-                            e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
-                        Trace.TraceWarning(errorMessage);
-                        return null;
-                    }
-                    inputArguments.Add(endpointUrlValue);
-
-                    bool retry = true;
-                    while (true)
-                    {
-                        try
-                        {
-                            CallMethodRequestCollection requests = new CallMethodRequestCollection();
-                            CallMethodResultCollection results;
-                            DiagnosticInfoCollection diagnosticInfos = null;
-                            CallMethodRequest request = new CallMethodRequest();
-                            request.ObjectId = new NodeId("Methods", 2);
-                            request.MethodId = new NodeId("GetPublishedNodes", 2);
-                            request.InputArguments = inputArguments;
-                            requests.Add(request);
-                            ResponseHeader responseHeader = publisherSession.Call(null, requests, out results, out diagnosticInfos);
-                            if (StatusCode.IsBad(results[0].StatusCode))
-                            {
-                                Trace.TraceWarning($"Got bad OPC UA status when calling GetPublishedNodes method on endppoint '{endpointUrl}'.");
-                                return null;
-                            }
-                            else
-                            {
-                                if (results?[0]?.OutputArguments.Count == 1)
-                                {
-                                    string stringResult = results[0].OutputArguments[0].ToString();
-
-                                    int jsonStartIndex = stringResult.IndexOf("[");
-                                    int jsonEndIndex = stringResult.IndexOf("]");
-                                    PublishedNodesCollection nodelist = JsonConvert.DeserializeObject<PublishedNodesCollection>(stringResult.Substring(jsonStartIndex, jsonEndIndex - jsonStartIndex + 1));
-                                    foreach (NodeLookup node in nodelist)
-                                    {
-                                        publishedNodes.Add(node.NodeID.ToString());
-                                    }
-
-                                    return publishedNodes.ToArray();
-                                }
-                                else
-                                {
-                                    Trace.TraceWarning($"GetPublishedNodes method on endppoint '{endpointUrl}' returned no output arguments.");
-                                    return null;
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            if (!retry)
-                            {
-                                Trace.TraceWarning($"Can not read published nodes information for endppoint '{endpointUrl}'.");
-                                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
-                                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
-                                Trace.TraceWarning(errorMessage);
-                                return null;
-                            }
-                            retry = false;
-                        }
+                        value = data.Value.ToString();
                     }
                 }
-                else
-                {
-                    Trace.TraceWarning($"No connection to publisher for endppoint '{endpointUrl}' available.");
-                    return null;
-                }
+                // We return the HTML formatted content, which is shown in the context panel.
+                actionResult = Strings.BrowserOpcDataValueLabel + ": " + value + @"<br/>" +
+                                (data.ErrorInfo == null ? "" : (Strings.BrowserOpcDataStatusLabel + ": " + data.ErrorInfo.StatusCode + @"<br/>")) +
+                                Strings.BrowserOpcDataSourceTimestampLabel + ": " + data.SourceTimestamp + @"<br/>" +
+                                Strings.BrowserOpcDataServerTimestampLabel + ": " + data.ServerTimestamp;
+                return Content(actionResult);
             }
-            catch (Exception e)
-            {
-                Trace.TraceWarning($"Exception while fetching published nodes data for endppoint '{endpointUrl}'.");
-                string errorMessage = string.Format(Strings.BrowserOpcException, e.Message,
-                    e.InnerException?.Message ?? "--", e?.StackTrace ?? "--");
-                Trace.TraceWarning(errorMessage);
-                return null;
-            }
-            finally
-            {
-                if (publisherSession != null)
-                {
-                    OpcSessionHelper.Instance.Disconnect(publisherSessionId);
-                }
+            catch (Exception exception)
+            {               
+                return Content(CreateOpcExceptionActionString(exception));
             }
         }
 
+       
         /// <summary>
         /// Post method to publish or unpublish the value of a variable identified by the given node.
         /// </summary>
@@ -810,9 +519,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string[] jstreeNodeSplit = jstreeNode.Split(delimiter, 3, StringSplitOptions.None);
             string node;
             string actionResult = "";
-            Session publisherSession;
-            string publisherSessionId = Guid.NewGuid().ToString();
-
+            string endpointId = Session["EndpointId"].ToString();
+           
             if (jstreeNodeSplit.Length == 1)
             {
                 node = jstreeNodeSplit[0];
@@ -821,116 +529,58 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             {
                 node = jstreeNodeSplit[1];
             }
-            
+           
             try
             {
-                try
+                if (method == "unpublish")
                 {
-                    publisherSession = await ConnectToPublisher(publisherSessionId);
-                }
-                catch
-                {
-                    return Content(CreateOpcExceptionActionString(new Exception(Strings.Error)));
-                }
+                    PublishStopRequestApiModel publishModel = new PublishStopRequestApiModel();
+                    publishModel.NodeId = node;
+                    var data = await TwinService.UnPublishNodeValuesAsync(endpointId, publishModel);
 
-                if (publisherSession != null)
-                {
-                    VariantCollection inputArguments = new VariantCollection();
-                    Variant nodeIdValue;
-                    Variant endpointUrlValue;
-                    try
+                    if (data.ErrorInfo != null)
                     {
-                        OpcSessionHelper.Instance.BuildDataValue(ref publisherSession, ref nodeIdValue, TypeInfo.GetDataTypeId(string.Empty), ValueRanks.Scalar, node);
-                        OpcSessionHelper.Instance.BuildDataValue(ref publisherSession, ref endpointUrlValue, TypeInfo.GetDataTypeId(string.Empty), ValueRanks.Scalar, (string)Session["EndpointUrl"]);
-                    }
-                    catch (Exception exception)
-                    {
-                        actionResult = string.Format(Strings.BrowserOpcWriteConversionProblem, exception.Message);
-                        return Content(actionResult);
-                    }
-                    inputArguments.Add(nodeIdValue);
-                    inputArguments.Add(endpointUrlValue);
-
-                    bool retry = true;
-                    while (true)
-                    {
-                        try
+                        actionResult = Strings.BrowserOpcUnPublishFailed + @"<br/><br/>" +
+                                        Strings.BrowserOpcMethodStatusCode + ": " + data.ErrorInfo.StatusCode;
+                        if (data.ErrorInfo.Diagnostics != null)
                         {
-                            CallMethodRequestCollection requests = new CallMethodRequestCollection();
-                            CallMethodResultCollection results;
-                            DiagnosticInfoCollection diagnosticInfos = null;
-                            CallMethodRequest request = new CallMethodRequest();
-                            request.ObjectId = new NodeId("Methods", 2);
-                            if (method == "unpublish")
-                            {
-                                request.MethodId = new NodeId("UnpublishNode", 2);
-                            }
-                            else
-                            {
-                                request.MethodId = new NodeId("PublishNode", 2);
-                            }
-                            request.InputArguments = inputArguments;
-                            requests.Add(request);
-                            ResponseHeader responseHeader = publisherSession.Call(null, requests, out results, out diagnosticInfos);
-                            if (StatusCode.IsBad(results[0].StatusCode))
-                            {
-                                actionResult = Strings.BrowserOpcMethodCallFailed + @"<br/><br/>" +
-                                                Strings.BrowserOpcMethodStatusCode + ": " + results[0].StatusCode;
-                                if (diagnosticInfos.Count > 0)
-                                {
-                                    actionResult += @"<br/><br/>" + Strings.BrowserOpcDataDiagnosticInfoLabel + ": " + diagnosticInfos;
-                                }
-                            }
-                            else
-                            {
-                                if (results[0].OutputArguments.Count == 0)
-                                {
-                                    actionResult = Strings.BrowserOpcMethodCallSucceeded;
-                                }
-                                else
-                                {
-                                    actionResult = Strings.BrowserOpcMethodCallSucceededWithResults + @"<br/><br/>";
-                                    for (int ii = 0; ii < results[0].OutputArguments.Count; ii++)
-                                    {
-                                        actionResult += results[0].OutputArguments[ii] + "@<br/>";
-                                    }
-                                }
-                            }
-                            return Content(actionResult);
-                        }
-                        catch (Exception exception)
-                        {
-                            if (!retry)
-                            {
-                                try
-                                {
-                                    OpcSessionHelper.Instance.Disconnect(publisherSessionId);
-                                }
-                                catch
-                                {
-                                }
-                                return Content(CreateOpcExceptionActionString(exception));
-                            }
-                            retry = false;
+                            actionResult += @"<br/><br/>" + Strings.BrowserOpcDataDiagnosticInfoLabel + ": " + data.ErrorInfo.Diagnostics;
                         }
                     }
+                    else
+                    {
+                        actionResult = Strings.BrowserOpcUnPublishSucceeded;
+                    }
+
                 }
                 else
                 {
-                    throw new Exception(Strings.SessionNull);
+                    PublishStartRequestApiModel publishModel = new PublishStartRequestApiModel();
+                    PublishedItemApiModel item = new PublishedItemApiModel();
+                    item.NodeId = node;
+                    publishModel.Item = item;
+                    var data = await TwinService.PublishNodeValuesAsync(endpointId, publishModel);
+
+                    if (data.ErrorInfo != null)
+                    {
+                        actionResult = Strings.BrowserOpcPublishFailed + @"<br/><br/>" +
+                                        Strings.BrowserOpcMethodStatusCode + ": " + data.ErrorInfo.StatusCode;
+                        if (data.ErrorInfo.Diagnostics != null)
+                        {
+                            actionResult += @"<br/><br/>" + Strings.BrowserOpcDataDiagnosticInfoLabel + ": " + data.ErrorInfo.Diagnostics;
+                        }
+                    }
+                    else
+                    {
+                        actionResult = Strings.BrowserOpcPublishSucceeded;
+                    }
                 }
+                return Content(actionResult);
             }
             catch (Exception exception)
             {
                 return Content(CreateOpcExceptionActionString(exception));
-            }
-            finally
-            {
-                if (publisherSessionId != null)
-                {
-                    OpcSessionHelper.Instance.Disconnect(publisherSessionId);
-                }
-            }
+            }        
         }
 
         /// <summary>
@@ -944,7 +594,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string[] delimiter = { "__$__" };
             string[] jstreeNodeSplit = jstreeNode.Split(delimiter, 3, StringSplitOptions.None);
             string node;
-            var actionResult = "";
+            string actionResult = string.Empty;
+            string endpointId = Session["EndpointId"].ToString();
 
             if (jstreeNodeSplit.Length == 1)
             {
@@ -955,45 +606,29 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 node = jstreeNodeSplit[1];
             }
 
-            bool retry = true;
-            while (true)
+            try
             {
-                try
+                ValueReadRequestApiModel model = new ValueReadRequestApiModel();
+                model.NodeId = node;
+                var data = await TwinService.ReadNodeValueAsync(endpointId, model);
+
+                if (data.Value != null)
                 {
-                    DataValueCollection values = null;
-                    DiagnosticInfoCollection diagnosticInfos = null;
-                    ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-                    ReadValueId valueId = new ReadValueId();
-                    valueId.NodeId = new NodeId(node);
-                    valueId.AttributeId = Attributes.Value;
-                    valueId.IndexRange = null;
-                    valueId.DataEncoding = null;
-                    nodesToRead.Add(valueId);
-                    Session session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-                    ResponseHeader responseHeader = session.Read(null, 0, TimestampsToReturn.Both, nodesToRead, out values,
-                        out diagnosticInfos);
-                    if (values[0].Value != null)
+                    if (data.Value.ToString().Length > 30)
                     {
-                        if (values[0].WrappedValue.ToString().Length > 30)
-                        {
-                            actionResult = values[0].WrappedValue.ToString().Substring(0, 30);
-                            actionResult += "...";
-                        }
-                        else
-                        {
-                            actionResult = values[0].WrappedValue.ToString();
-                        }
+                        actionResult = data.Value.ToString().Substring(0, 30);
+                        actionResult += "...";
                     }
-                    return Content(actionResult);
-                }
-                catch (Exception exception)
-                {
-                    if (!retry)
+                    else
                     {
-                        return Content(CreateOpcExceptionActionString(exception));
+                        actionResult = data.Value.ToString();
                     }
-                    retry = false;
                 }
+                return Content(actionResult);
+            }
+            catch (Exception exception)
+            {   
+                return Content(CreateOpcExceptionActionString(exception));
             }
         }
 
@@ -1005,22 +640,38 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         [RequirePermission(Permission.ControlOpcServer)]
         public async Task<ActionResult> VariableWriteUpdate(string jstreeNode, string newValue)
         {
-            Session session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-            bool retry = true;
-            while (true)
+            string[] delimiter = { "__$__" };
+            string[] jstreeNodeSplit = jstreeNode.Split(delimiter, 3, StringSplitOptions.None);
+            string node;
+            string endpointId = Session["EndpointId"].ToString();
+
+            if (jstreeNodeSplit.Length == 1)
             {
-                try
-                { 
-                    return Content(OpcSessionHelper.Instance.WriteOpcNode(jstreeNode, newValue, session));
-                }
-                catch (Exception exception)
+                node = jstreeNodeSplit[0];
+            }
+            else
+            {
+                node = jstreeNodeSplit[1];
+            }
+
+            try
+            {
+                ValueWriteRequestApiModel model = new ValueWriteRequestApiModel();
+                model.NodeId = node;
+                model.Value = newValue;
+                var data = await TwinService.WriteNodeValueAsync(endpointId, model);
+                if (data.ErrorInfo == null)
                 {
-                    if (!retry)
-                    {
-                        return Content(CreateOpcExceptionActionString(exception));
-                    }
-                    retry = false;
+                    return Content(Strings.WriteSuccesfully);
                 }
+                else
+                {
+                    return Content(data.ErrorInfo.ErrorMessage);
+                }
+            }
+            catch (Exception exception)
+            {
+                return Content(CreateOpcExceptionActionString(exception));
             }
         }
 
@@ -1035,8 +686,9 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string[] delimiter = { "__$__" };
             string[] jstreeNodeSplit = jstreeNode.Split(delimiter, 3, StringSplitOptions.None);
             string node;
-            var jsonParameter = new List<object>();
+            List<object> jsonParameter = new List<object>();
             int parameterCount = 0;
+            string endpointId = Session["EndpointId"].ToString();
 
             if (jstreeNodeSplit.Length == 1)
             {
@@ -1046,60 +698,50 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             {
                 node = jstreeNodeSplit[1];
             }
-            bool retry = true;
-            while (true)
+           
+            try
             {
-                try
+                MethodMetadataRequestApiModel model = new MethodMetadataRequestApiModel();
+                model.MethodId = node;
+                var data = await TwinService.NodeMethodGetMetadataAsync(endpointId, model);
+
+                if (data.InputArguments == null)
                 {
-                    QualifiedName browseName = null;
-                    browseName = Opc.Ua.BrowseNames.InputArguments;
-
-                    ReferenceDescriptionCollection references = null;
-                    Byte[] continuationPoint;
-
-                    Session session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
-                    session.Browse(
-                            null,
-                            null,
-                            node,
-                            1u,
-                            BrowseDirection.Forward,
-                            ReferenceTypeIds.HasProperty,
-                            true,
-                            0,
-                            out continuationPoint,
-                            out references);
-                    if (references.Count == 1)
+                    parameterCount = 0;
+                    jsonParameter.Add(new { data.ObjectId });
+                }
+                else
+                {
+                    if (data.InputArguments.Count > 0)
                     {
-                        var nodeReference = references[0];
-                        VariableNode argumentsNode = session.ReadNode(ExpandedNodeId.ToNodeId(nodeReference.NodeId, session.NamespaceUris)) as VariableNode;
-                        DataValue value = session.ReadValue(argumentsNode.NodeId);
-
-                        ExtensionObject[] argumentsList = value.Value as ExtensionObject[];
-                        for (int ii = 0; ii < argumentsList.Length; ii++)
+                        foreach(var item in data.InputArguments)
                         {
-                            Argument argument = (Argument)argumentsList[ii].Body;
-                            NodeId nodeId = new NodeId(argument.DataType);
-                            Node dataTypeIdNode = session.ReadNode(nodeId);
-                            jsonParameter.Add(new { name = argument.Name, value = argument.Value, valuerank = argument.ValueRank, arraydimentions = argument.ArrayDimensions, description = argument.Description.Text, datatype = nodeId.Identifier, typename = dataTypeIdNode.DisplayName.Text });
+                            jsonParameter.Add(new
+                            {
+                                objectId = data.ObjectId,
+                                name = item.Name,
+                                value = item.DefaultValue,
+                                valuerank = item.ValueRank,
+                                arraydimentions = item.ArrayDimensions,
+                                description = item.Description,
+                                datatype = item.Type.DataType,
+                                typename = item.Type.DisplayName
+                            });
                         }
-                        parameterCount = argumentsList.Length;
                     }
                     else
                     {
-                        parameterCount = 0;
+                        jsonParameter.Add(new { data.ObjectId });
                     }
 
-                    return Json(new { count = parameterCount, parameter = jsonParameter }, JsonRequestBehavior.AllowGet);
+                    parameterCount = data.InputArguments.Count;
                 }
-                catch (Exception exception)
-                {
-                    if (!retry)
-                    {
-                        return Content(CreateOpcExceptionActionString(exception));
-                    }
-                    retry = false;
-                }
+                
+                return Json(new { count = parameterCount, parameter = jsonParameter }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {        
+                return Content(CreateOpcExceptionActionString(exception));
             }
         }
 
@@ -1115,6 +757,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string[] jstreeNodeSplit = jstreeNode.Split(delimiter, 3, StringSplitOptions.None);
             string node;
             string parentNode = null;
+            string endpointId = Session["EndpointId"].ToString();
 
             if (jstreeNodeSplit.Length == 1)
             {
@@ -1130,83 +773,59 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string actionResult = "";
             List<MethodCallParameterData> originalData = JsonConvert.DeserializeObject<List<MethodCallParameterData>>(parameterData);
             List<Variant> values = JsonConvert.DeserializeObject<List<Variant>>(parameterValues);
-            int count = values.Count;
-            VariantCollection inputArguments = new VariantCollection();
+            List<MethodCallArgumentApiModel> argumentsList = new List<MethodCallArgumentApiModel>();
 
-            bool retry = true;
-            while (true)
+            try
             {
-                try
+                MethodCallRequestApiModel model = new MethodCallRequestApiModel();
+                model.MethodId = node;
+                model.ObjectId = originalData[0].ObjectId;
+
+                if (originalData.Count > 1)
                 {
-                    if (session == null)
+                    int count = 0;
+                    foreach (var item in originalData)
                     {
-                        session = await OpcSessionHelper.Instance.GetSessionAsync(Session.SessionID, (string)Session["EndpointUrl"]);
+                        MethodCallArgumentApiModel argument = new MethodCallArgumentApiModel();
+                        argument.Value = values[count].Value != null ? values[count].Value.ToString() : string.Empty;
+                        argument.DataType = item.Datatype;
+                        argumentsList.Add(argument);
+                        count++;
                     }
+                    model.Arguments = argumentsList;
+                }
 
-                    for (int i = 0; i < count; i++)
+                var data = await TwinService.NodeMethodCallAsync(endpointId, model);
+    
+                if (data.ErrorInfo != null)
+                {
+                    actionResult = Strings.BrowserOpcMethodCallFailed + @"<br/><br/>" +
+                                    Strings.BrowserOpcMethodStatusCode + ": " + data.ErrorInfo.StatusCode;
+                    if (data.ErrorInfo.Diagnostics != null)
                     {
-                        Variant value = new Variant();
-                        NodeId dataTypeNodeId = "i=" + originalData[i].Datatype;
-                        string dataTypeName = originalData[i].TypeName;
-                        Int32 valueRank = Convert.ToInt32(originalData[i].ValueRank, CultureInfo.InvariantCulture);
-                        string newValue = values[i].Value.ToString();
-
-                        try
-                        {
-                            OpcSessionHelper.Instance.BuildDataValue(ref session, ref value, dataTypeNodeId, valueRank, newValue);
-                            inputArguments.Add(value);
-                        }
-                        catch (Exception exception)
-                        {
-                            actionResult = string.Format(Strings.BrowserOpcWriteConversionProblem, newValue,
-                                dataTypeName, exception.Message);
-                            return Content(actionResult);
-                        }
+                        actionResult += @"<br/><br/>" + Strings.BrowserOpcDataDiagnosticInfoLabel + ": " + data.ErrorInfo.Diagnostics;
                     }
-
-                    CallMethodRequestCollection requests = new CallMethodRequestCollection();
-                    CallMethodResultCollection results;
-                    DiagnosticInfoCollection diagnosticInfos = null;
-                    CallMethodRequest request = new CallMethodRequest();
-                    request.ObjectId = new NodeId(parentNode);
-                    request.MethodId = new NodeId(node);
-                    request.InputArguments = inputArguments;
-                    requests.Add(request);
-                    ResponseHeader responseHeader = session.Call(null, requests, out results, out diagnosticInfos);
-                    if (StatusCode.IsBad(results[0].StatusCode))
+                }
+                else
+                {
+                    if (data.Results.Count == 0)
                     {
-                        actionResult = Strings.BrowserOpcMethodCallFailed + @"<br/><br/>" +
-                                       Strings.BrowserOpcMethodStatusCode + ": " + results[0].StatusCode;
-                        if (diagnosticInfos.Count > 0)
-                        {
-                            actionResult += @"<br/><br/>" + Strings.BrowserOpcDataDiagnosticInfoLabel + ": " + diagnosticInfos;
-                        }
+                        actionResult = Strings.BrowserOpcMethodCallSucceeded;
                     }
                     else
                     {
-                        if (results[0].OutputArguments.Count == 0)
+                        actionResult = Strings.BrowserOpcMethodCallSucceededWithResults + @"<br/><br/>";
+                        for (int ii = 0; ii < data.Results.Count; ii++)
                         {
-                            actionResult = Strings.BrowserOpcMethodCallSucceeded;
-                        }
-                        else
-                        {
-                            actionResult = Strings.BrowserOpcMethodCallSucceededWithResults + @"<br/><br/>";
-                            for (int ii = 0; ii < results[0].OutputArguments.Count; ii++)
-                            {
-                                actionResult += results[0].OutputArguments[ii] + "@<br/>";
-                            }
+                            actionResult += data.Results[ii].Value + @"<br/>";
                         }
                     }
-                    return Content(actionResult);
                 }
-                catch (Exception exception)
-                {
-                    if (!retry)
-                    {
-                        return Content(CreateOpcExceptionActionString(exception));
-                    }
-                    retry = false;
-                }
+                return Content(actionResult);
+            }
+            catch (Exception exception)
+            {
+                return Content(CreateOpcExceptionActionString(exception));
             }
         }
 
