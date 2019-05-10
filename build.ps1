@@ -2455,9 +2455,9 @@ $script:DockerSharedFolder = "Shared"
 $script:DockerCertsFolder = "$script:DockerSharedFolder/CertificateStores/UA Applications/certs"
 $script:ContainerRegistryPrefix = ""
 $script:DockerTwinRepo = "mcr.microsoft.com/iotedge/opc-twin"
-$script:DockerTwinVersion = "host-latest"
-$script:DockerPublisherRepo = "microsoft/iot-edge-opc-publisher"
-$script:DockerPublisherVersion = "latest"
+$script:DockerTwinVersion = "host-2.0.1"
+$script:DockerPublisherRepo = "mcr.microsoft.com/iotedge/opc-publisher"
+$script:DockerPublisherVersion = "2.3"
 # todo remove
 $script:UaSecretBaseName = "UAWebClient"
 # Note: The password can only be changed if it is synced with the password used in CreateCerts.exe
