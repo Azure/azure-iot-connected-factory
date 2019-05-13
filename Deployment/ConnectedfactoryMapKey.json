@@ -868,7 +868,7 @@
             "consumerGroupName": "[variables('rdxCGName')]",
             "keyName": "[variables('rdxIotHubKeyName')]",
             "sharedAccessKey": "[concat(listkeys(variables('rdxIotHubKeyResource'), variables('iotHubVersion')).primaryKey)]",
-            "timestampPropertyName": "variables('rdxTimestampPropertyName')"
+            "timestampPropertyName": "[variables('rdxTimestampPropertyName')]"
           },
           "tags": "[variables('rdxEventSourceTagsValue')]",
           "dependsOn": [
