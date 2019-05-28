@@ -57,6 +57,9 @@
             <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeInfo <span id="variableRead_variableName">@Strings.NodeVariableName</span></b></div>
             <hr />
             <span class="list-group-item text-left" id="variableRead_variableData">@Strings.NodeReadInProgress</span>
+
+            <div class="list-group-item text-left list-group-item-heading" id="errorInfo_header"><b></b></div>
+            <div class="list-group-item text-left" id="errorInfo_message"></div>
         </div>
     </div>
 
@@ -71,6 +74,9 @@
             <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeInfo <span id="variablePublish_variableName">@Strings.NodeVariableName</span></b></div>
             <hr />
             <span class="list-group-item text-left" id="variablePublish_variableData">@Strings.NodePublishInProgress</span>
+
+            <div class="list-group-item text-left list-group-item-heading" id="errorInfo_header"><b></b></div>
+            <div class="list-group-item text-left" id="errorInfo_message"></div>
         </div>
         <div id="rdxLink" class="browser_rdxlink_container" onclick="openRDXExplorerLink(linkRDXExplorer)">@Strings.Tsilink</div>
     </div>
@@ -110,6 +116,8 @@
                 <div class="list-group-item text-left"><b>@Strings.NodeMethodResult <span id="methodCallResult_methodName">@Strings.NodeMethodName</span></b></div>
                 <span class="list-group-item text-left" id="methodCallResult_result">@Strings.NodeCallInProgress</span>
             </div>
+            <div class="list-group-item text-left list-group-item-heading" id="errorInfo_header"><b></b></div>
+            <div class="list-group-item text-left" id="errorInfo_message"></div>
         </div>
     </div>
 
@@ -151,6 +159,8 @@
                 <div class="list-group-item text-left"><b>@Strings.NodeWriteResult <span id="variableWriteResult_variableName">@Strings.NodeVariableName</span></b></div>
                 <span class="list-group-item text-left" id="variableWriteResult_result">@Strings.NodeWriteInProgress</span>
             </div>
+            <div class="list-group-item text-left list-group-item-heading" id="errorInfo_header"><b></b></div>
+            <div class="list-group-item text-left" id="errorInfo_message"></div>
         </div>
     </div>
 
@@ -214,6 +224,12 @@
                 success: function (data) {
                     $("#variableRead_variableData").html(data);
                     $("#variableRead_variableName").html(obj.item.nodeName);
+
+                    if (data.errorInfo != null) {
+                        $("#errorInfo_message").html(data.errorInfo.errorMessage);
+                        $("#errorInfo_header").html('@Strings.BrowserErrorInfo');
+                    }
+
                     $(".overlay").addClass("overlay-close", function () {
                         $("#variableReadContextPanel").removeClass("overlay-close").addClass("overlay-right-open");
                         $(".dashboard-cancel-icon").show();
@@ -224,7 +240,7 @@
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
-                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                        $('#browserErrorMessage').html(response.responseText);
                     }
                 }
             });
@@ -251,13 +267,17 @@
                             linkRDXExplorer = rdxUrl;
                         });
                     }
+                    if (data.errorInfo != null) {
+                        $("#errorInfo_message").html(data.errorInfo.errorMessage);
+                        $("#errorInfo_header").html('@Strings.BrowserErrorInfo');
+                    }
                 },
                 error: function (response) {
                     openErrorPanel();
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
-                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                        $('#browserErrorMessage').html(response.responseText);
                     }
                 }
             });
@@ -278,6 +298,10 @@
                         $('#OpcNodeTree').jstree(true).set_type(jsonNode, "default");
                         jsonNode.original.publishedNode = false;
                     }
+                    if (data.errorInfo != null) {
+                        $("#errorInfo_message").html(data.errorInfo.errorMessage);
+                        $("#errorInfo_header").html('@Strings.BrowserErrorInfo');
+                    }
                 },
                 error: function (response) {
                     openErrorPanel();
@@ -285,7 +309,7 @@
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
-                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                        $('#browserErrorMessage').html(response.responseText);
                     }
                 }
             });
@@ -304,13 +328,17 @@
                         $("#variableWriteShowResult").hide();
                         $(".dashboard-cancel-icon").show();
                     });
+                    if (data.errorInfo != null) {
+                        $("#errorInfo_message").html(data.errorInfo.errorMessage);
+                        $("#errorInfo_header").html('@Strings.BrowserErrorInfo');
+                    }
                 },
                 error: function(response) {
                     openErrorPanel();
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
-                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                        $('#browserErrorMessage').html(response.responseText);
                     }
                 }
             });
@@ -328,14 +356,18 @@
                 url: "/Browser/VariableWriteUpdate",
                 data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), jstreeNode: id, newValue: newValEncoded },
                 success: function (data) {
-                    $("#variableWriteResult_result").html(data)
+                    $("#variableWriteResult_result").html(data);
+                    if (data.errorInfo != null) {
+                        $("#errorInfo_message").html(data.errorInfo.errorMessage);
+                        $("#errorInfo_header").html('@Strings.BrowserErrorInfo');
+                    }
                 },
                 error: function (response) {
                     openErrorPanel();
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
-                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                        $('#browserErrorMessage').html(response.responseText);
                     }
                 }
             });
@@ -358,6 +390,11 @@
                             $("#methodCall_parameterData").html(currentHtml + parameterHtml);
                         }
                     }
+                    if (data.errorInfo != null) {
+                        $("#errorInfo_message").html(data.errorInfo.errorMessage);
+                        $("#errorInfo_header").html('@Strings.BrowserErrorInfo');
+                    }
+
                     $("#methodCall_parameterOriginalData").text(JSON.stringify(data));
                     $("#methodCall_methodName").text(obj.item.nodeName);
                     $("#methodCall_methodId").text(obj.item.nodeId);
@@ -372,7 +409,7 @@
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
-                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                        $('#browserErrorMessage').html(response.responseText);
                     }
                 }
             });
@@ -407,13 +444,17 @@
                 success: function (data) {
                     $("#methodCallResult_result").html(data);
                     $("#methodCallShowResult").show();
+                    if (data.errorInfo != null) {
+                        $("#errorInfo_message").html(data.errorInfo.errorMessage);
+                        $("#errorInfo_header").html('@Strings.BrowserErrorInfo');
+                    }
                 },
                 error: function (response) {
                     openErrorPanel();
                     if (response.status == 403) {
                         $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
                     } else {
-                        $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                        $('#browserErrorMessage').html(response.responseText);
                     }
                 }
             });
@@ -423,14 +464,13 @@
             $("#browserErrorContextPanel").removeClass("overlay-close").addClass("overlay-right-open");
             $("#disconnectButton").attr("disabled", "disabled");
             $(".dashboard-cancel-icon").show();
+            $(".jstree-ocl").hide();
+            $(".jstree-anchor").hide();
         }
 
         function closeErrorPanel() {
             $('#browserErrorContextPanel').addClass('overlay-close').removeClass("overlay-right-open");
             $("#disconnectButton").attr("enabled", "enabled");
-            if ($('#browserErrorMessage').html() == '@Strings.BrowserErrorUnknown') {
-                window.location.href = "/Browser/Disconnect?backUrl=" + back;
-            }
         }
 
         function OpcServerMenu(node) {
@@ -575,8 +615,10 @@
                             openErrorPanel();
                             if (xdr.status == 403) {
                                 $('#browserErrorMessage').html('@Strings.ErrorInsufficientPermissions');
+                            } else if (xdr.status == 500) {
+                                $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');                        
                             } else {
-                                $('#browserErrorMessage').html('@Strings.BrowserErrorUnknown');
+                                $('#browserErrorMessage').html(xdr.responseText);
                             }
                         }
                     }

@@ -21,6 +21,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 {
     using Microsoft.Azure.IIoT.OpcUa.Api.Registry.Models;
     using Microsoft.Azure.IIoT.OpcUa.Api.Twin.Models;
+    using System.Text.RegularExpressions;
     using static Startup;
     public class StatusHub : Hub { }
 
@@ -378,7 +379,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                         switch (currentNode.NodeClass)
                         {
                             case NodeClass.Variable:
-                                currentNodeAccessLevel = (byte)currentNode.UserAccessLevel;
+                                currentNodeAccessLevel = currentNode.UserAccessLevel != null ? (byte)currentNode.UserAccessLevel : (byte)0;
                                 if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
                                 {
                                     currentNodeAccessLevel = (byte)((uint)currentNodeAccessLevel & ~0x2);
@@ -386,17 +387,17 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                                 break;
 
                             case NodeClass.Object:
-                                currentNodeEventNotifier = (byte)currentNode.EventNotifier;
+                                currentNodeEventNotifier = currentNode.EventNotifier != null ? (byte)currentNode.EventNotifier : (byte)0;
                                 break;
 
                             case NodeClass.View:
-                                currentNodeEventNotifier = (byte)currentNode.EventNotifier;
+                                currentNodeEventNotifier = currentNode.EventNotifier != null ? (byte)currentNode.EventNotifier : (byte)0;
                                 break;
 
                             case NodeClass.Method:
                                 if (PermsChecker.HasPermission(Permission.ControlOpcServer))
                                 {
-                                    currentNodeExecutable = (bool)currentNode.UserExecutable;
+                                    currentNodeExecutable = currentNode.UserExecutable != null ? (bool)currentNode.UserExecutable : false;
                                 }
                                 break;
 
@@ -483,15 +484,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 
                 if (data.Value != null)
                 {
-                    if (data.Value.ToString().Length > 40)
-                    {
-                        value = data.Value.ToString().Substring(0, 40);
-                        value += "...";
-                    }
-                    else
-                    {
-                        value = data.Value.ToString();
-                    }
+                    value = data.Value.ToString();
                 }
                 // We return the HTML formatted content, which is shown in the context panel.
                 actionResult = Strings.BrowserOpcDataValueLabel + ": " + value + @"<br/>" +
@@ -838,11 +831,33 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             string errorMessage = string.Format(Strings.BrowserOpcException, exception.Message,
                 exception.InnerException?.Message ?? "--", exception?.StackTrace ?? "--");
             Trace.TraceError(errorMessage);
-            errorMessage = Strings.BrowserErrorUnknown;
+            string stringError = getSubstring(exception.Message, "message", ".");
+            if (stringError != string.Empty)
+            {
+                errorMessage = Regex.Replace(stringError, "[^A-Za-z0-9 ]", "");
+            }
+            else
+            {
+                errorMessage = exception.Message;
+            }          
             string actionResult = HttpUtility.HtmlEncode(errorMessage);
             Response.StatusCode = 1;
 
             return actionResult;
+        }
+
+        private string getSubstring(string source, string start, string end)
+        {
+            int startIndex;
+            int endIndex;
+            string result = string.Empty;
+            if (source.Contains(start) && source.Contains(end))
+            {
+                startIndex = source.IndexOf(start, 0) + start.Length;
+                endIndex = source.IndexOf(end, startIndex);
+                result = source.Substring(startIndex, endIndex - startIndex);
+            }
+            return result;
         }
     }
 }
