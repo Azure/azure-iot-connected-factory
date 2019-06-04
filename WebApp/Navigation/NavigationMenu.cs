@@ -54,15 +54,6 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                     Selected = false,
                     Class = "navigation_link_addgateway",
                     MinimumPermission = Permission.AddOpcServer,
-                },
-                new NavigationMenuItem
-                {
-                    Text = Strings.NavigationMenuAddServer, 
-                    Action = "Index",
-                    Controller = "AddOpcServer",
-                    Selected = false,
-                    Class = "navigation_link_add_opc_server",
-                    MinimumPermission = Permission.AddOpcServer,
                 }
             };
         }
