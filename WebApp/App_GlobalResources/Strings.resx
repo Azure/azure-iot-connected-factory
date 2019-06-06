@@ -915,7 +915,7 @@ Stack trace:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Instructions can be found &lt;a target="_blank" style="text-decoration:underline" href="https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-existing"&gt;here&lt;/a&gt;.&lt;/div&gt;
+    <value>&lt;div&gt;Instructions can be found &lt;a target="_blank" style="text-decoration:underline" href="https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules"&gt;here&lt;/a&gt;.&lt;/div&gt;
  &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
@@ -1127,7 +1127,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="SupervisorSelect" xml:space="preserve">
-    <value>Select an IoT edge Gateway</value>
+    <value>Select an IoT Edge Gateway</value>
     <comment>Label</comment>
   </data>
   <data name="supervisorConnected" xml:space="preserve">

@@ -88,7 +88,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div&gt;Instructions can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-existing&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
+        ///   Looks up a localized string similar to &lt;div&gt;Instructions can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
         /// &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846688&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;.
         /// </summary>
         public static string AddGatewayBodyPoint1 {
@@ -2258,7 +2258,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select an IoT edge Gateway.
+        ///   Looks up a localized string similar to Select an IoT Edge Gateway.
         /// </summary>
         public static string SupervisorSelect {
             get {
