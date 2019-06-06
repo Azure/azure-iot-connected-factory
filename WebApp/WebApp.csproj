@@ -1098,8 +1098,6 @@
     <Content Include="Views\Browser\Error.cshtml" />
     <Content Include="Views\Dashboard\_ChildrenMap.cshtml" />
     <Content Include="Views\AddGateway\Index.cshtml" />
-    <Content Include="Views\AddOpcServer\Index.cshtml" />
-    <Content Include="Views\AddOpcServer\Error.cshtml" />
     <Content Include="Views\Supervisor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
