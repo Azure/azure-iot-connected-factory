@@ -6,17 +6,17 @@
 
 <div class="dashboard_children_container_header row">
     <div id="backIcon" class="dashboard_children_back_icon col-xs-1 col-md-1 col-lg-1 " hidden>
-        <a id="backIcon" class="dashboard_children_container_header_icon" align="left" href="#" onclick="gotoParentNode();">
-            <img  class="dashboard-chevron-left" src="/Content/img/chevron_left.svg">
+        <a aria-label="back" id="backIconLink" class="dashboard_children_container_header_icon" align="left" href="#" onclick="gotoParentNode();">
+            <img aria-label="back" class="dashboard-chevron-left" src="/Content/img/chevron_left.svg">
         </a>
     </div>
     <p id="headerText" class="dashboard_children_container_header_text col-xs-8 col-md-8 col-lg-8 overflow">@Model.ChildrenContainerHeader</p>
     <a id="allIcon" class="dashboard_children_container_header_text_glyph" align="right" href="#" onclick="openFilterContextPanel();">
-        <img id="dashboardChildrenContainerHeaderFilter" class="dashboard_filter_icon" src="/Content/img/filter.svg">
+        <img aria-label="filter" id="dashboardChildrenContainerHeaderFilter" class="dashboard_filter_icon" src="/Content/img/filter.svg">
         @Strings.NoFilterApplied 
     </a>
     <p id="filterIcon" class="dashboard_children_container_header_text_glyph" hidden>
-        <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" class="dashboard_container_filter" src="/Content/img/filter.svg"></a>
+        <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img class="dashboard_children_container_header_filter" src="/Content/img/filter.svg"></a>
     </p>
 </div>
 <div class="dashboard_children_list_header row">
@@ -45,7 +45,7 @@
                     if (child.Visible == true)
                     {
                          <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');">
-                            <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
+                            <div id="childrenListListItemStatusText@(i)" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                             <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
                             <div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">@child.Last @child.Unit</div>
                         </div>
@@ -54,10 +54,10 @@
                 else
                 {
                     <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:gotoChildrenNode('@dashboardUrl');">
-                        <div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
+                        <div id="childrenListListItemStatusText@(i)" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                         <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
                         <div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">@child.Description</div>
-                        <img class="dashboard-chevron-right" align="right" src="/Content/img/chevron_right.svg">
+                        <img aria-label="next" class="dashboard-chevron-right" align="right" src="/Content/img/chevron_right.svg">
                     </div>
                 }
              </div>

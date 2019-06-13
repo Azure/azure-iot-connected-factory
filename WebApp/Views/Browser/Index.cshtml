@@ -28,16 +28,16 @@
                         foreach (var endpoint in Model.endpointList)
                         {
                             <tr id="table_supervisor_id@(i)" class="table_ListItem_container">
-                                <td id="supervisor_table_content" class="table_content">
+                                <td id="supervisor_table_content_endpointUrls@(i)" class="table_content">
                                     @endpoint.EndpointUrl
                                 </td>
-                                <td id="supervisor_table_content" class="table_content">
+                                <td id="supervisor_table_content_securityMode@(i)" class="table_content">
                                     @endpoint.SecurityMode
                                 </td>
-                                <td id="supervisor_table_content" class="table_content">
+                                <td id="supervisor_table_content_securityPolicy@(i)" class="table_content">
                                     @endpoint.SecurityPolicy
                                 </td>
-                                <td id="supervisor_table_content" class="table_content">
+                                <td id="supervisor_table_content_securityLevel@(i)" class="table_content">
                                     @endpoint.SecurityLevel
                                 </td>
                                 <td id="supervisor_table_content@(i)" class="table_content">
@@ -82,7 +82,7 @@
         <div class="dashboard_contextpanel_header">
             <div id="connectContextpanelHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserSecurityWarning</div>
         </div>
-        <a href="#" class="closebtn" onclick="closeConnectContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+        <a aria-label="closePanel" href="#" class="closebtn" onclick="closeConnectContextPanel();"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
 
         <div id="errorContextPanel" class="overlay-content">
             <div class="browser_error_contextpanel_container">

@@ -7077,13 +7077,16 @@ main {
 p {
   display: inline-block;
 }
-#dashboardChildrenContainerHeaderFilter {
-  width: 14px;
-  height: 14px;
+.dashboard_children_container_header_filter {
+  width: 14px !important;
+  height: 14px !important;
   position: relative;
   right: -12px;
   bottom: 1px;
   outline: none;
+  margin-right: 12px;
+  margin-bottom: 4px;
+  color: #AFB9C3;
 }
 .dashboard_container_filter {
   right: 4px !important;
