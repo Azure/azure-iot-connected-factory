@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Station.PredefinedNodes.uanodes" />
-    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="1.4.354.23" />
+    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="0.4.5" />
     <None Update="Opc.Ua.Station.Config.xml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
