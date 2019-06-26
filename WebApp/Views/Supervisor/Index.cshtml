@@ -27,15 +27,15 @@
                     {
                         foreach (var supervisor in Model.supervisorList)
                         {
-                            <tr id="table_supervisor_id@(i)" class="table_ListItem_container">
-                                <td id="supervisor_table_content" class="table_content">
+                            <tr  class="table_ListItem_container">
+                                <td id="supervisor_table_content_id@(i)" class="table_content">
                                     @supervisor.supervisorModel.Id
                                 </td>
                                 @if (@supervisor.supervisorModel.Connected == true)
                                 {
                                     connectStatus = Strings.supervisorConnected;
                                 }
-                                <td id="supervisor_table_content" class="table_content">
+                                <td id="supervisor_table_content_connStatus@(i)" class="table_content">
                                     @connectStatus
                                 </td>
                                 <td id="supervisor_table_content@(i)" class="table_content">
@@ -61,7 +61,7 @@
                                 </td>
                                 @if (supervisor.HasApplication == true)
                                 {
-                                    <td id="supervisor_button" class="table_content">
+                                    <td id="supervisor_button@(i)" class="table_content">
                                         <label class="label">
                                             @Html.ActionLink(Strings.ButtonEndpoints, "Start", "Browser", new { supervisorId = @supervisor.supervisorModel.Id }, new { @class = "btn btn-default btn_browser" })
                                         </label>
@@ -78,12 +78,12 @@
             </div>
         </div>
         <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
-            <img class="img-responsive" src="~/Content/img/packing_station.png" />
+            <img aria-label="image" class="img-responsive" src="~/Content/img/packing_station.png" />
         </div>
     </div>
 
     <div id="contextpanel" class="overlay">
-        <a href="#" class="closebtn" onclick="closContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+        <a aria-label="closePanel" href="#" class="closebtn" onclick="closContextPanel();"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
 
         <div id="errorContextPanel" class="overlay-content">
             <div class="browser_error_contextpanel_container">

@@ -32,7 +32,7 @@
             else
             {
                 <div class="dashboard_map_container scalize">
-                    <img class="dashboard_map_container_image target" src="@Model.TopNode.ImagePath" />
+                    <img aria-label="image" class="dashboard_map_container_image target" src="@Model.TopNode.ImagePath" />
                     @{ int i = 0;}
                     @foreach (var child in Model.Children)
                     {
@@ -43,11 +43,11 @@
                             <div id="image_pushpin@(i)" class="item-point" data-top="@child.ImagePushpin.Top" data-left="@child.ImagePushpin.Left">
                                 @if (Model.ChildrenType == typeof(ContosoOpcUaNode))
                                 {
-                                    <div><a class="select" href="#" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');"></a></div>
+                                    <div><a aria-label="pushpin@(i)" class="select" href="#" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');"></a></div>
                                 }
                                 else
                                 {
-                                    <div><a class="select" href="#" onclick="javascript:gotoChildrenNode('@dashboardUrl');"></a></div>
+                                    <div><a aria-label="pushpin@(i)" class="select" href="#" onclick="javascript:gotoChildrenNode('@dashboardUrl');"></a></div>
                                 }
                                 <div class="dashboard_container_image_text">@child.Name</div>
                             </div>
@@ -112,7 +112,7 @@
             <div class="dashboard_contextpanel_header-big">
                 <div id="dashboardContextpanelGraphHeader" class="dashboard_contextpanel_header_text"></div>
             </div>
-            <a href="#" class="closebtn" onclick="closeChartContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeChartContextPanel();"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
             <div id="nodeMsg" class="msg-container"></div>
             <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
@@ -138,7 +138,7 @@
             <div class="dashboard_contextpanel_header-big">
                 <div id="alertContextpanelHeader" class="alert_contextpanel_header_text"></div>
             </div>
-            <a href="#" class="closebtn" onclick="closeAlertContextPanel();"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeAlertContextPanel();"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div class="alert_contextpanel_details_container">
                 <p id="alertDetailAlertId" hidden></p>
                 <div id="alertDetailDescriptionHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsDescriptionHeader</div>
@@ -169,7 +169,7 @@
                 <div id="alertDetailActionContainer" class="alert_contextpanel_details_container">
                     <div class="alert_contextpanel_details_label">@Strings.AlertSelectAction</div>
                     <div>
-                        <select id="alertContextpanelActionPicker" class="selectpicker form-control">
+                        <select aria-label="alertActionPicker" "alertContextpanelActionPicker" class="selectpicker form-control">
                             <option selected="selected" value="empty">@Strings.AlertDetailsNoActionAvailable</option>
                         </select>
                     </div>
@@ -188,13 +188,13 @@
             <div class="dashboard_contextpanel_header">
                 <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
             </div>
-            <a href="#" class="closebtn" onclick="closeFilterPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeFilterPanel()"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             @for (int i = 0; i < 3; i++)
             {
                 <div class="dashboard_contextpanel_list_container">
                     <p id="filterLabel@(i)" class="dashboard_contextpanel_select_list_label" for="topologySelector@(i)"></p>
                     <div>
-                        <select id="topologySelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
+                        <select aria-label="topologySelector@(i)" id="topologySelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
                             <option selected value="empty">@Strings.NoFilterApplied</option>
                         </select>
                     </div>
@@ -214,13 +214,13 @@
             <div class="dashboard_contextpanel_header">
                 <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
             </div>
-            <a href="#" class="closebtn" onclick="closeFilterAlertsPanel()"><img class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeFilterAlertsPanel()"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             @for (int i = 0; i < 5; i++)
             {
                 <div class="dashboard_contextpanel_list_container">
                     <p id="filterAlertLabel@(i)" class="dashboard_contextpanel_select_list_label" for="alertSelector@(i)"></p>
                     <div>
-                        <select id="alertSelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
+                        <select aria-label="alertSelector@(i)" id="alertSelector@(i)" class="selectpicker form-control" data-live-search="true" data-size="10">
                             <option selected value="empty">@Strings.NoFilterApplied</option>
                         </select>
                     </div>
@@ -1330,7 +1330,7 @@
                                 {
                                     if (session.Children[j].Visible == true) {
                                         childrenList += '<div id="dashboard_children_listitem' + j +'" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick="openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');">';
-                                        childrenList += '<div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
+                                        childrenList += '<div id="childrenListListItemStatusText' + j +'" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
                                         childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>';
                                         childrenList += '<div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">' + session.Children[j].Last + ' ' + session.Children[j].Unit + '</div>';
                                         childrenList += '</div>';
@@ -1338,10 +1338,10 @@
                                 }
                                 else {
                                     childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick="gotoChildrenNode(\''+url+'\')">';
-                                    childrenList += '<div id="childrenListListItemStatusText" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
+                                    childrenList += '<div id="childrenListListItemStatusText' + j +'" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
                                     childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>';
                                     childrenList += '<div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">' + session.Children[j].Description + '</div>';
-                                    childrenList += '<img class="dashboard-chevron-right" align="right" src="/Content/img/chevron_right.svg">';
+                                    childrenList += '<img aria-label="next" class="dashboard-chevron-right" align="right" src="/Content/img/chevron_right.svg">';
                                     childrenList += '</div>';
                                 }
                                 childrenList += '</div>';
@@ -1454,7 +1454,7 @@
                                 }, '');
                                 alertsList += alertLocation;
                                 alertsList += '</div>';
-                                alertsList += '<div id="alertsSourceDetailsTime" class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">' + session.Alerts[j].UxTime + '</div>';
+                                alertsList += '<div class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">' + session.Alerts[j].UxTime + '</div>';
                                 alertsList += '</div>';
                                 alertsList += '</div>';
                             }

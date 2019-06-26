@@ -4,7 +4,7 @@
 @using GlobalResources
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     @* Adjust the viewport width as per device width *@
@@ -33,12 +33,14 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div id="accountMenu" class="collapse navbar-collapse">
-                    <ul id="title" class="path overflow"></ul>
+                    <ul class="path overflow">
+                        <li id="title"></li>
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="masthead_text overflow">@Strings.MicrosoftAzureIoTSuite - @Strings.DefaultSolutionName</li>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" aria-label="dropdown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_language_icon"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="account-menu">
@@ -60,7 +62,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle masthead_account_container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" aria-label="dropdown" class="dropdown-toggle masthead_account_container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_account_avatar"></span>
                                 <span class="masthead_account">
                                     <span class="masthead_account_name overflow">@PrincipalHelper.GetEmailAddress(User)</span>

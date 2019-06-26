@@ -8,11 +8,11 @@
     <p class="dashboard_alerts_container_header_text overflow">@Strings.AlertsContainerHeader</p>
     <div class="dashboard_alerts_container_header_filter" hidden>v</div>
     <a id="allIconAlert" class="dashboard_alerts_container_header_text_glyph" href="#" onclick="openFilterAlertsContextPanel();">
-        <img id="dashboardChildrenContainerHeaderFilter" class="dashboard_filter_icon" src="/Content/img/filter.svg">
+        <img class="dashboard_children_container_header_filter" aria-label="filter" src="/Content/img/filter.svg">
         @Strings.NoFilterApplied
     </a>
     <p id="filterIconAlert" class="dashboard_alerts_container_header_text_glyph" hidden>
-        <a id="openFromFiltered" href="javascript:openFilterAlertsContextPanel();"><img id="dashboardChildrenContainerHeaderFilter" class="dashboard_container_filter" src="/Content/img/filter.svg"></a>
+        <a id="openFromFilteredAlert" href="javascript:openFilterAlertsContextPanel();"><img class="dashboard_children_container_header_filter" src="/Content/img/filter.svg"></a>
     </p>
 </div>
 <div class="dashboard-padding"></div>
@@ -49,7 +49,7 @@
                                 }
                              }
                         </div>
-                        <div id="alertsSourceDetailsTime" class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">@alert.UxTime</div>
+                        <div class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">@alert.UxTime</div>
                     </div>              
                 </div>
             </div>
