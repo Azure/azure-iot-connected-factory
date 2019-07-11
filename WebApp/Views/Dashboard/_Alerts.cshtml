@@ -7,7 +7,7 @@
 <div class="dashboard_alerts_container_header row">
     <p class="dashboard_alerts_container_header_text overflow">@Strings.AlertsContainerHeader</p>
     <div class="dashboard_alerts_container_header_filter" hidden>v</div>
-    <a id="allIconAlert" class="dashboard_alerts_container_header_text_glyph" href="#" onclick="openFilterAlertsContextPanel();">
+    <a id="allIconAlert" class="dashboard_alerts_container_header_text_glyph" href="#" onclick="openFilterAlertsContextPanel();" role="button">
         <img class="dashboard_children_container_header_filter" aria-label="filter" src="/Content/img/filter.svg">
         @Strings.NoFilterApplied
     </a>
@@ -32,7 +32,7 @@
             var alertDescription = Strings.AlertDetailsUnknown;
             alertDescription = ContosoAlert.GetAlertCauseDescription(alert.Cause);
             <div >
-                <div class="dashboard_alerts_listitem_container @alertStatusClass row" onclick="openContextPanelFromAlert(@alert.AlertId)">
+                <div class="dashboard_alerts_listitem_container @alertStatusClass row" onclick="openContextPanelFromAlert(@alert.AlertId)" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(@alert.AlertId)" tabindex="0">
                     <div class="dashboard_alerts_listitem_source overflow row">@alertDescription</div>
                     <div class="dashboard_alerts_listitem_source_details_container row">
                         <div class="dashboard_alerts_listitem_source_details overflow col-xs-7">

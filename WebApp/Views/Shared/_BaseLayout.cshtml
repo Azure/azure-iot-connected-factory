@@ -31,7 +31,8 @@
     @Html.AntiForgeryToken();
     <header>
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
+            <a href="#content" class="skip">Skip to content</a>
+            <div id="content" class="container-fluid">
                 <div id="accountMenu" class="collapse navbar-collapse">
                     <ul class="path overflow">
                         <li id="title"></li>
@@ -39,11 +40,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="masthead_text overflow">@Strings.MicrosoftAzureIoTSuite - @Strings.DefaultSolutionName</li>
 
-                        <li class="dropdown">
-                            <a href="#" aria-label="dropdown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="masthead_language_icon"></span>
+                        <li id="language-menu" class="dropdown">
+                            <a href="#" aria-label="dropdown-language-menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="masthead_language_icon" tabindex="0"></span>
                             </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="account-menu">
+                            <ul class="dropdown-menu" role="menu">
                                 @foreach (var language in CultureHelper.GetLanguages())
                                 {
                                     if (language.IsCurrent)
@@ -61,8 +62,8 @@
                                 }
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" aria-label="dropdown" class="dropdown-toggle masthead_account_container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <li id="account-menu" class="dropdown">
+                            <a href="#" aria-label="dropdown-account-menu" class="dropdown-toggle masthead_account_container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_account_avatar"></span>
                                 <span class="masthead_account">
                                     <span class="masthead_account_name overflow">@PrincipalHelper.GetEmailAddress(User)</span>
@@ -80,7 +81,7 @@
                                     }
                                 </span>
                             </a>
-                            <ul class="dropdown-menu masthead_account_menu" role="menu" aria-labelledby="account-menu">
+                            <ul class="dropdown-menu masthead_account_menu" role="menu">
                                 <li role="presentation">
                                     <a href="@Url.Action("SignOut", "Account")" role="menuitem">@Strings.SignOut</a>
                                 </li>
@@ -136,6 +137,21 @@
             }
         }
 
+        $(document).on('keydown', function (event) {
+            if ( event.keyCode === 27 ) { // ESC
+                if ($('.push_left').length) {
+                    $("#dashboardContextPanelLeft").addClass("overlay-close");
+                    $("#pushPanel").removeClass("push_left");
+                    $(".navbar").removeClass("navbar-left");
+                    $('.navigation_link').removeClass("navigation_link_text");
+                }
+                else if ($('.dropdown').length){
+                    $("#account-menu").removeClass("open");
+                    $("#language-menu").removeClass("open");
+                }
+            }
+        });
+
         $(document).on('mouseenter', ".overflow", function (event) {
             var $this = $(this);
             if (this.offsetWidth < this.scrollWidth && !$this.attr('title')) {
@@ -184,6 +200,24 @@
 
         $(document).ready(function () {
             checkButtonTextLength();
+
+            // bind a click event to the 'skip' link
+            $(".skip").click(function(event){
+    
+                // strip the leading hash and declare
+                // the content we're skipping to
+                var skipTo="#"+this.href.split('#')[1];
+    
+                // Setting 'tabindex' to -1 takes an element out of normal 
+                // tab flow but allows it to be focused via javascript
+                $(skipTo).attr('tabindex', -1).on('blur focusout', function () {
+    
+                    // when focus leaves this element, 
+                    // remove the tabindex attribute
+                    $(this).removeAttr('tabindex');
+    
+                }).focus(); // focus on the content container
+            });
         });
 
     </script>
