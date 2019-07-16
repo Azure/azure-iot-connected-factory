@@ -18,6 +18,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                     Text = "Contoso",
                     Selected = false,
                     Class = "navigation_link_contoso",
+                    AriaLabel="Contoso",
                     MinimumPermission = Permission.ViewTelemetry,
                 },
                 new NavigationMenuItem
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                     Action = "Index",
                     Selected = false,
                     Class = "navigation_link_hamburger",
+                    AriaLabel="HamburgerMenu",
                     MinimumPermission = Permission.ViewTelemetry,
                 },
                 new NavigationMenuItem
@@ -35,6 +37,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                     Controller = "Dashboard",
                     Selected = false,
                     Class = "navigation_link_home",
+                    AriaLabel="Home",
                     MinimumPermission = Permission.ViewTelemetry,
                 },
                 new NavigationMenuItem
@@ -44,6 +47,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                     Controller = "Supervisor",
                     Selected = false,
                     Class = "navigation_link_browser",
+                    AriaLabel="Browser",
                     MinimumPermission = Permission.BrowseOpcServer,
                 },
                 new NavigationMenuItem
@@ -53,6 +57,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                     Controller = "AddGateway",
                     Selected = false,
                     Class = "navigation_link_addgateway",
+                    AriaLabel="AddGateway",
                     MinimumPermission = Permission.AddOpcServer,
                 }
             };

@@ -144,12 +144,8 @@ a {
     position: relative;
     color: @text-mainhead-color;
 
-    &:hover {
-        filter: brightness(0) invert(1) !important;
-        -webkit-filter: brightness(0) invert(1) !important;
-    }
-
-    &:focus {
+    &:hover  {
+        outline: none;
         filter: brightness(0) invert(1) !important;
         -webkit-filter: brightness(0) invert(1) !important;
     }
@@ -576,10 +572,6 @@ a {
 
 div.selector-container {
     max-width: @contextpanel-right-width - 130px;
-
-    /*&:focus {
-        outline: solid 1px white !important;
-    }*/
 }
 
 .form-control {

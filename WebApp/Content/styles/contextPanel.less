@@ -87,10 +87,17 @@
     font-size: 28px;
     font-weight: 100;
     color: white;
+
+    &:focus {
+        outline: none;
+        filter: brightness(0) invert(1) !important;
+        -webkit-filter: brightness(0) invert(1) !important;
+    }
 }
 
 /*a.closebtn:focus {
-    outline: solid 1px white !important;
+    color: white;
+    //outline: solid 1px white !important;
 }*/
 
 /* Position of the expand button */

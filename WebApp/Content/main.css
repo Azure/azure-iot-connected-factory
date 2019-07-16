@@ -7156,10 +7156,7 @@ a {
   color: #afb9c3;
 }
 .dashboard-cancel-icon:hover {
-  filter: brightness(0) invert(1) !important;
-  -webkit-filter: brightness(0) invert(1) !important;
-}
-.dashboard-cancel-icon:focus {
+  outline: none;
   filter: brightness(0) invert(1) !important;
   -webkit-filter: brightness(0) invert(1) !important;
 }
@@ -7513,9 +7510,6 @@ div {
 }
 div.selector-container {
   max-width: 270px;
-  /*&:focus {
-        outline: solid 1px white !important;
-    }*/
 }
 .form-control {
   height: 24px;
@@ -8226,6 +8220,11 @@ textarea {
 .dropdown .dropdown-toggle {
   overflow: hidden;
 }
+.dropdown-highligth:focus,
+.dropdown-highligth:hover {
+  filter: brightness(0) invert(1) !important;
+  -webkit-filter: brightness(0) invert(1) !important;
+}
 .navbar-header {
   position: initial;
 }
@@ -8240,7 +8239,7 @@ textarea {
 }
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
-  background-color: #1B1D1F;
+  background-color: transparent !important;
 }
 .navbar-inverse .navbar-nav > li > a {
   color: #afb9c3;
@@ -8304,9 +8303,9 @@ textarea {
   width: 24px;
   height: 20px;
   float: right;
+  outline: none;
 }
-.masthead_language_icon:hover,
-.masthead_language_icon:focus {
+.masthead_language_icon:hover {
   filter: brightness(0) invert(1) !important;
   -webkit-filter: brightness(0) invert(1) !important;
 }
@@ -8507,8 +8506,14 @@ a.skip:hover {
   font-weight: 100;
   color: white;
 }
+.overlay .closebtn:focus {
+  outline: none;
+  filter: brightness(0) invert(1) !important;
+  -webkit-filter: brightness(0) invert(1) !important;
+}
 /*a.closebtn:focus {
-    outline: solid 1px white !important;
+    color: white;
+    //outline: solid 1px white !important;
 }*/
 /* Position of the expand button */
 .overlay .button {

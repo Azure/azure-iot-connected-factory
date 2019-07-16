@@ -1616,6 +1616,7 @@
 
     function openFilterContextPanel() {
         updateTopologyListInformation();
+        console.log(topologyListInformation);
         createListItems(topologyListInformation);
 
         $("#allIcon").blur();
@@ -1627,7 +1628,8 @@
         $(".dashboard-cancel-icon").show();
         $(".dashboard_contextpanel_select_filter_button").css({ "margin-left": marginLeft });
 
-        setTimeout(function() { $("#filterSelector00").focus() }, 200);
+        setTimeout(function () { $("#filterSelector0").focus() }, 200);
+        console.log("open panel");
     }
 
     function openFilterAlertsContextPanel() {

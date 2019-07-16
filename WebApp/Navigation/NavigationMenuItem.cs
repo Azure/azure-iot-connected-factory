@@ -10,6 +10,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
         public string Controller { get; set; }
         public bool Selected { get; set; }
         public string Class { get; set; }
+        public string AriaLabel { get; set; }
         public List<NavigationMenuItem> Children { get; set; }
 
         /// <summary>

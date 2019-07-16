@@ -22,12 +22,20 @@
 
 .dropdown {
     border-left: 1px solid @border-dark-gray;
- 
+
     .dropdown-toggle {
         overflow: hidden;
     }
 
     &:hover, &:focus {
+    }
+}
+
+.dropdown-highligth {
+    &:focus,
+    &:hover {
+        filter: brightness(0) invert(1) !important;
+        -webkit-filter: brightness(0) invert(1) !important;
     }
 }
 
@@ -46,7 +54,7 @@
     height: @masthead-height;
     &:hover,
     &:focus {
-        background-color: @masthead-hover-color;
+        background-color: transparent !important;
       }
 }
 
@@ -122,9 +130,9 @@
     width: @masthead-height/2;
     height: 20px;
     float: right;
+    outline: none;
 
-    &:hover,
-    &:focus {
+    &:hover {
         filter: brightness(0) invert(1) !important;
         -webkit-filter: brightness(0) invert(1) !important;
     }
