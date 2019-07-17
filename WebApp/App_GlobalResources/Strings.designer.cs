@@ -19,7 +19,7 @@ namespace GlobalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -88,8 +88,8 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div&gt;Instructions can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
-        /// &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; style=&quot;text-decoration:underline&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846688&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;.
+        ///   Looks up a localized string similar to &lt;div&gt;Instructions can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction link&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
+        /// &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction link&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846688&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;.
         /// </summary>
         public static string AddGatewayBodyPoint1 {
             get {

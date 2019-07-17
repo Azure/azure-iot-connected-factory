@@ -19,7 +19,7 @@
         <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img class="dashboard_children_container_header_filter" src="/Content/img/filter.svg"></a>
     </p>
 </div>
-<div class="dashboard_children_list_header row">
+<div class="dashboard_children_list_header row" aria-label="tableHeader">
     <div class="dashboard_children_list_header_status col-xs-3 col-lg-3 overflow">@Model.ChildrenListHeaderStatus</div>
     <div class="dashboard_children_list_header_location col-xs-4 col-lg-4 overflow">@Model.ChildrenListHeaderLocation</div>
     <div class="dashboard_children_list_header_details col-xs-5 col-lg-5 overflow">@Model.ChildrenListHeaderDetails</div>
@@ -44,7 +44,7 @@
                 {
                     if (child.Visible == true)
                     {
-                         <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" 
+                         <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" aria-label="tableRow"  
                               onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');" onkeydown="if (event.keyCode == 13)openContextPanelFromNode('@child.Name', '@child.SubKey');" tabindex="0">
                             <div id="childrenListListItemStatusText@(i)" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                             <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
@@ -54,7 +54,7 @@
                 }
                 else
                 {
-                    <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" 
+                    <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" aria-label="tableRow"
                          onclick="javascript:gotoChildrenNode('@dashboardUrl');" onkeydown="if (event.keyCode == 13)gotoChildrenNode('@dashboardUrl');" tabindex="0">
                         <div id="childrenListListItemStatusText@(i)" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                         <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>

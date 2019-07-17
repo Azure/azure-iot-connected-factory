@@ -118,17 +118,17 @@
             <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
             <div id="graph1" class="graph_container" tabindex="0" onclick="openRDXExplorerLink(rdxExplorerHourLink);" onkeydown="if (event.keyCode == 13)openRDXExplorerLink(rdxExplorerHourLink);">
                 <div class="dashboard-graph-header-text">@Strings.GraphLastHour</div>
-                <div id="dashboardContextpanelOnehourHistory" class="row"></div>
+                <div id="dashboardContextpanelOnehourHistory" class="row" aria-hidden="true"></div>
             </div>
             <div class="graph_separator"> </div>
             <div id="graph2" class="graph_container" tabindex="0" onclick="openRDXExplorerLink(rdxExplorerDayLink);" onkeydown="if (event.keyCode == 13)openRDXExplorerLink(rdxExplorerDayLink);">
                 <div class="dashboard-graph-header-text">@Strings.GraphLastDay</div>
-                <div id="dashboardContextpanelOnedayHistory" class="row"></div>
+                <div id="dashboardContextpanelOnedayHistory" class="row" aria-hidden="true"></div>
             </div>
             <div class="graph_separator"> </div>
             <div id="graph3" class="graph_container" tabindex="0" onclick="openRDXExplorerLink(rdxExplorerWeekLink);" onkeydown="if (event.keyCode == 13)openRDXExplorerLink(rdxExplorerWeekLink);">
                 <div class="dashboard-graph-header-text">@Strings.GraphLastWeek</div>
-                <div id="dashboardContextpanelOneweekHistory" class="row"></div>
+                <div id="dashboardContextpanelOneweekHistory" class="row" aria-hidden="true"></div>
             </div>
         </div>
     </div>
@@ -1329,7 +1329,7 @@
                                 if ("@Model.ChildrenType" == "@typeof(ContosoOpcUaNode)")
                                 {
                                     if (session.Children[j].Visible == true) {
-                                        childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick = "openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" onkeydown="if(event.keyCode == 13)openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" tabindex="0"> ';
+                                        childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" aria-label="tableRow" onclick = "openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" onkeydown="if(event.keyCode == 13)openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" tabindex="0"> ';
                                         childrenList += '<div id="childrenListListItemStatusText' + j +'" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
                                         childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>'
                                         childrenList += '<div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">' + session.Children[j].Last + ' ' + session.Children[j].Unit + '</div>';
@@ -1337,7 +1337,7 @@
                                     }
                                 }
                                 else {
-                                    childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" onclick="gotoChildrenNode(\''+url+'\')" onkeydown="if(event.keyCode == 13)gotoChildrenNode(\''+url+'\')" tabindex="0">';
+                                    childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" aria-label="tableRow" onclick="gotoChildrenNode(\''+url+'\')" onkeydown="if(event.keyCode == 13)gotoChildrenNode(\''+url+'\')" tabindex="0">';
                                     childrenList += '<div id="childrenListListItemStatusText' + j +'" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
                                     childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>';
                                     childrenList += '<div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">' + session.Children[j].Description + '</div>';
@@ -1616,7 +1616,6 @@
 
     function openFilterContextPanel() {
         updateTopologyListInformation();
-        console.log(topologyListInformation);
         createListItems(topologyListInformation);
 
         $("#allIcon").blur();

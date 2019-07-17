@@ -6886,8 +6886,11 @@ h3,
 h4 {
   font-weight: 500;
 }
+h1 {
+  font-size: 22px;
+}
 h2 {
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 0.4em;
 }
 h3 {
@@ -8313,14 +8316,14 @@ textarea {
   text-align: right;
   font-size: 22px;
   color: #afb9c3;
-  margin-top: 8px;
+  margin-top: 14px;
   margin-right: 24px;
 }
 .path {
   text-align: left;
   font-size: 22px;
   color: #afb9c3;
-  margin-top: 8px;
+  margin-top: 14px !important;
   margin-left: 16px;
 }
 /*
@@ -8686,7 +8689,13 @@ path {
   transition: transform 0.05s linear 0.1s;
 }
 .toggle-state {
-  display: none;
+  display: block;
+  opacity: 0;
+}
+input[type="checkbox"] {
+  margin-top: 2px !important;
+  margin-left: 5px !important;
+  height: 1px;
 }
 .indicator {
   height: 100%;
@@ -8696,11 +8705,8 @@ path {
   transform: translate3d(-75%, 0, 0);
   transition: transform 0.2s cubic-bezier(0.85, 0.05, 0.18, 1.35);
 }
-.toggle-state:checked ~ .active-bg {
-  transform: translate3d(-50%, 0, 0);
-}
 .toggle-state:checked ~ .toggle-inner .indicator {
-  transform: translate3d(25%, 0, 0);
+  transform: translate3d(25%, 0px, 0);
 }
 /* 
  *  Table connect area
