@@ -7530,7 +7530,7 @@ div.selector-container {
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
-  background-color: #121416;
+  background-color: dashboard #121416;
 }
 .dropdown-menu > li > a {
   color: white;
@@ -8102,7 +8102,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #121416 !important;
+  background: #242628 !important;
 }
 .dashboard-contextpanel-button-color {
   color: #ffffff;
@@ -8119,12 +8119,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #121416 !important;
-  color: #ffffff;
-  background: #383B3E;
-}
-.btn.btn-default.btn_dashboard_contextpanel:hover {
-  background: #080808;
+  background: #242628 !important;
 }
 .btn.btn-default.btn_dashboard_contextpanel:hover {
   border: 1px dashed #AFB9C3 !important;
@@ -8134,7 +8129,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #121416 !important;
+  background: #242628 !important;
   color: #ffffff;
   background: #383B3E;
   background: #1B1D1F !important;
@@ -8150,7 +8145,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #121416 !important;
+  background: #242628 !important;
 }
 .btn::after .btn-default.btn_dashboard_contextpanel.disabled:hover {
   border: 1px dashed #AFB9C3 !important;
@@ -8170,7 +8165,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #121416 !important;
+  background: #242628 !important;
   color: #ffffff;
   background: #383B3E;
 }

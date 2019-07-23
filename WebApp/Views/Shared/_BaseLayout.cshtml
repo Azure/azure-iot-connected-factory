@@ -41,29 +41,31 @@
                         <li class="masthead_text overflow">@Strings.MicrosoftAzureIoTSuite - @Strings.DefaultSolutionName</li>
 
                         <li id="language-menu" class="dropdown">
-                            <a href="#" aria-label="dropdown-language-menu" class="dropdown-toggle dropdown-highligth" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a id="language" href="#" aria-label="dropdown-language-menu" class="dropdown-toggle dropdown-highligth" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_language_icon"></span>
                             </a>
-                            <ul class="dropdown-menu" role="menu">
+                            <ul class="dropdown-menu" role="grid" aria-rowcount="@CultureHelper.GetLanguages().Count()">
+                                @{ int i = 0;}
                                 @foreach (var language in CultureHelper.GetLanguages())
                                 {
                                     if (language.IsCurrent)
                                     {
-                                        <li role="presentation" class="active">
-                                            <a>@language.Name</a>
+                                        <li role="row" class="active">
+                                            <a role="gridcell" aria-rowindex="@i">@language.Name</a>
                                         </li>
                                     }
                                     else
                                     {
-                                        <li role="presentation">
-                                            <a href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })">@language.Name</a>
+                                        <li role="row">
+                                            <a role="gridcell" aria-rowindex="@i" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
                                         </li>
                                     }
+                                    i++;
                                 }
                             </ul>
                         </li>
                         <li id="account-menu" class="dropdown">
-                            <a href="#" aria-label="dropdown-account-menu" class="dropdown-toggle masthead_account_container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" aria-label="dropdown-account-menu" class="dropdown-toggle masthead_account_container" tabindex="0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_account_avatar"></span>
                                 <span class="masthead_account">
                                     <span class="masthead_account_name overflow">@PrincipalHelper.GetEmailAddress(User)</span>
@@ -83,14 +85,14 @@
                             </a>
                             <ul class="dropdown-menu masthead_account_menu" role="menu">
                                 <li role="presentation">
-                                    <a href="@Url.Action("SignOut", "Account")" role="menuitem">@Strings.SignOut</a>
+                                    <a href="@Url.Action("SignOut", "Account")" role="menuitem" tabindex="0">@Strings.SignOut</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li role="presentation">
-                                    <a href="https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade" target="_blank" role="menuitem">@Strings.LinkLabelHelpAndSupport</a>
+                                    <a href="https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade" target="_blank" role="menuitem" tabindex="0">@Strings.LinkLabelHelpAndSupport</a>
                                 </li>
                                 <li role="presentation">
-                                    <a href="http://feedback.azure.com/forums/321918-azure-iot" target="_blank" role="menuitem">@Strings.LinkLabelHelpGiveFeedback</a>
+                                    <a href="http://feedback.azure.com/forums/321918-azure-iot" target="_blank" role="menuitem" tabindex="0">@Strings.LinkLabelHelpGiveFeedback</a>
                                 </li>
                             </ul>
                         </li>
@@ -122,6 +124,11 @@
 
         $("#title").text(title);
 
+        function languageChanged() {
+            sessionStorage.setItem("languageChanged", "true");
+            return true;
+        }
+        
         function toggleContextPanelHamburger() {
             if ($('.push_left').length) {
                 $("#dashboardContextPanelLeft").addClass("overlay-close");
@@ -218,6 +225,10 @@
     
                 }).focus(); // focus on the content container
             });
+            if (sessionStorage.getItem("languageChanged") == "true") {
+                $("#language").focus();
+                sessionStorage.setItem("languageChanged", "false");
+            }
         });
 
     </script>

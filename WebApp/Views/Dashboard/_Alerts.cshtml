@@ -16,7 +16,7 @@
     </p>
 </div>
 <div class="dashboard-padding"></div>
-<div id="alertsListContainer" class="dashboard_alerts_list_container scrollbar-inner scroll_only_y row">
+<div id="alertsListContainer" class="dashboard_alerts_list_container scrollbar-inner scroll_only_y row" role="grid" aria-rowcount="@Model.Alerts.Count()">
     <div id="dashboardAlertsList" class="col-xs-12">
         @foreach (var alert in Model.Alerts)
         {
@@ -31,8 +31,8 @@
             }
             var alertDescription = Strings.AlertDetailsUnknown;
             alertDescription = ContosoAlert.GetAlertCauseDescription(alert.Cause);
-            <div >
-                <div class="dashboard_alerts_listitem_container @alertStatusClass row" onclick="openContextPanelFromAlert(@alert.AlertId)" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(@alert.AlertId)" tabindex="0">
+            <div role="row">
+                <div class="dashboard_alerts_listitem_container @alertStatusClass row" role="gridcell" onclick="openContextPanelFromAlert(@alert.AlertId)" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(@alert.AlertId)" tabindex="0">
                     <div class="dashboard_alerts_listitem_source overflow row">@alertDescription</div>
                     <div class="dashboard_alerts_listitem_source_details_container row">
                         <div class="dashboard_alerts_listitem_source_details overflow col-xs-7">

@@ -1295,7 +1295,7 @@
                             var childrenList = '';
                             var updateMap = false;
                             for (j = 0; j < session.Children.length; j++) {
-                                childrenList += '<div >';
+                                childrenList += '<div role="row">';
 
                                 if (session.Children[j].Status == "@ContosoPerformanceStatus.Poor") {
                                     var statusMessage = "@Strings.Error";
@@ -1329,7 +1329,7 @@
                                 if ("@Model.ChildrenType" == "@typeof(ContosoOpcUaNode)")
                                 {
                                     if (session.Children[j].Visible == true) {
-                                        childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" aria-label="tableRow" onclick = "openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" onkeydown="if(event.keyCode == 13)openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" tabindex="0"> ';
+                                        childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" role="gridcell" aria-rowindex="' + j + '" onclick = "openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" onkeydown="if(event.keyCode == 13)openContextPanelFromNode(\'' + session.Children[j].Name + '\',\'' + session.Children[j].SubKey + '\');" tabindex="0"> ';
                                         childrenList += '<div id="childrenListListItemStatusText' + j +'" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
                                         childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>'
                                         childrenList += '<div class="dashboard_children_listitem_details col-xs-5 col-lg-5 overflow">' + session.Children[j].Last + ' ' + session.Children[j].Unit + '</div>';
@@ -1337,7 +1337,7 @@
                                     }
                                 }
                                 else {
-                                    childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" aria-label="tableRow" onclick="gotoChildrenNode(\''+url+'\')" onkeydown="if(event.keyCode == 13)gotoChildrenNode(\''+url+'\')" tabindex="0">';
+                                    childrenList += '<div id="dashboard_children_listitem' + j + '" class="dashboard_children_listitem_container ' + dashboardStatusClass + ' row" role="gridcell" aria-rowindex="' + j + '" onclick="gotoChildrenNode(\''+url+'\')" onkeydown="if(event.keyCode == 13)gotoChildrenNode(\''+url+'\')" tabindex="0">';
                                     childrenList += '<div id="childrenListListItemStatusText' + j +'" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">' + statusMessage + '</div>';
                                     childrenList += '<div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">' + session.Children[j].Name + '</div>';
                                     childrenList += '<div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">' + session.Children[j].Description + '</div>';
@@ -1430,11 +1430,12 @@
                         if ($("#dashboardFilterAlertContextpanel").hasClass('overlay-close') && session.Alerts != undefined) {
                             var alertsList = '';
                             for (var j = 0; j < session.Alerts.length; j++) {
+                                alertsList += '<div role="row">';
                                 // Update the alert list
                                 if (session.Alerts[j].Status == (@((ushort)ContosoAlertStatus.AlertStatusAcknowledged))) {
-                                    alertsList += '<div class="dashboard_alerts_listitem_container alert_status_acknowledged row" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" tabindex="0">';
+                                    alertsList += '<div class="dashboard_alerts_listitem_container alert_status_acknowledged row" role="gridcell" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" tabindex="0">';
                                 } else {
-                                    alertsList += '<div class="dashboard_alerts_listitem_container alert_status_active row" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" tabindex="0">';
+                                    alertsList += '<div class="dashboard_alerts_listitem_container alert_status_active row" role="gridcell" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" tabindex="0">';
                                 }
                                 alertsList += '<div class="dashboard_alerts_listitem_source overflow row">' + getAlertDescription(session.Alerts[j].Cause) + '</div>';
                                 alertsList += '<div class="dashboard_alerts_listitem_source_details_container row">';
@@ -1455,6 +1456,7 @@
                                 alertsList += alertLocation;
                                 alertsList += '</div>';
                                 alertsList += '<div class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">' + session.Alerts[j].UxTime + '</div>';
+                                alertsList += '</div>';
                                 alertsList += '</div>';
                                 alertsList += '</div>';
                             }
