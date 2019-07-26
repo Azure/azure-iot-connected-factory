@@ -112,7 +112,7 @@
             <div class="dashboard_contextpanel_header-big">
                 <div id="dashboardContextpanelGraphHeader" class="dashboard_contextpanel_header_text"></div>
             </div>
-            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeChartContextPanel();" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a autofocus aria-label="closePanel" href="#" class="closebtn" onclick="closeChartContextPanel();" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
             <div id="nodeMsg" class="msg-container"></div>
             <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
@@ -1676,6 +1676,7 @@
                     text: keys[j]
                 }));
                 listObject.listItemDetails[i].selector.selectpicker('refresh');
+                console.log(keys[j]);
             }
 
             //display on the listbox the selected filter
