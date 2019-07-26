@@ -6918,29 +6918,6 @@ main {
   background-color: #121416;
 }
 /* ##### Prefix functions ##### */
-/*
-.display-inline-flex() {
-    display: -webkit-inline-flex;
-    display: -moz-inline-flex;
-    display: -ms-inline-flex;
-    display: -o-inline-flex;
-    display: inline-flex;
-}
-
-::-webkit-input-placeholder { // WebKit browsers 
-    color: @form-textbox-disabled-color;
-    background-color: @form-textbox-disabled-background;
-    border-color: @form-textbox-disabled-border;
-    font-style: italic;
-}
-
-::-moz-placeholder { // Mozilla Firefox 19+ 
-    color: @form-textbox-disabled-color;
-    background-color: @form-textbox-disabled-background;
-    border-color: @form-textbox-disabled-border;
-    font-style: italic;
-}
-    */
 .text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8697,7 +8674,7 @@ input[type="checkbox"] {
   transition: transform 0.2s cubic-bezier(0.85, 0.05, 0.18, 1.35);
 }
 .toggle-state:checked ~ .toggle-inner .indicator {
-  transform: translate3d(25%, 0px, 0);
+  transform: translate3d(25%, 0, 0);
 }
 /* 
  *  Table connect area
