@@ -64,7 +64,14 @@
 }
 
 .toggle-state {
-    display: none;
+    display: block;
+    opacity: 0;
+}
+
+input[type="checkbox"] {
+    margin-top: 2px !important;
+    margin-left: 5px !important;
+    height: 1px;
 }
 
 .indicator {
@@ -77,7 +84,7 @@
 }
 
 .toggle-state:checked ~ .active-bg {
-    transform: translate3d(-50%, 0, 0);
+    //transform: translate3d(-50%, 0, 0);
 }
 
 .toggle-state:checked ~ .toggle-inner .indicator {

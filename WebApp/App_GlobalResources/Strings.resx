@@ -915,8 +915,8 @@ Stack trace:
     <comment>Navigation menu item label.</comment>
   </data>
   <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Instructions can be found &lt;a target="_blank" style="text-decoration:underline" href="https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules"&gt;here&lt;/a&gt;.&lt;/div&gt;
- &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" style="text-decoration:underline" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
+    <value>&lt;div&gt;Instructions can be found &lt;a target="_blank" aria-label="Instruction link" style="text-decoration:underline !important" href="https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules"&gt;here&lt;/a&gt;.&lt;/div&gt;
+ &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" aria-label="Instruction link" style="text-decoration:underline !important" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
     <comment>AddGatewayBodyPoint1</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">

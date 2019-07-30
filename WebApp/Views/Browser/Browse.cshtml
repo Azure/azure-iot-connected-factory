@@ -40,7 +40,7 @@
         <div class="dashboard_contextpanel_header">
             <div class="dashboard_contextpanel_header_text">@Strings.BrowserContextPanelHeaderAttributes</div>
         </div>
-        <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#attributeReadContextPanel').addClass('overlay-close')"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+        <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#attributeReadContextPanel').addClass('overlay-close')" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
         <div class="overlay-content list-group">
             <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeAttribute <span id="attributeRead_variableName">@Strings.NodeVariableName</span></b></div>
             <hr />
@@ -52,7 +52,7 @@
         <div class="dashboard_contextpanel_header">
             <div class="dashboard_contextpanel_header_text">@Strings.BrowserContextPanelHeaderRead</div>
         </div>
-        <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#variableReadContextPanel').addClass('overlay-close')"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+        <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#variableReadContextPanel').addClass('overlay-close')" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
         <div class="overlay-content list-group">
             <div class="list-group-item text-left list-group-item-heading"><b>@Strings.NodeInfo <span id="variableRead_variableName">@Strings.NodeVariableName</span></b></div>
             <hr />
@@ -68,7 +68,7 @@
         <div class="dashboard_contextpanel_header">
             <div id="publishHeader" class="dashboard_contextpanel_header_text">@Strings.BrowserContextPanelHeaderPublish</div>
         </div>
-        <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#variablePublishContextPanel').addClass('overlay-close')"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+        <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#variablePublishContextPanel').addClass('overlay-close')" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
         <div id="waitingForPublishing" class="browser_error_details_container">@Strings.BrowserContextPanelPublishing</div>
         <div id="connectLoader" class="loader"></div>
         <div id="publishBody" class="overlay-content list-group">
@@ -88,7 +88,7 @@
             <div class="dashboard_contextpanel_header">
                 <div class="dashboard_contextpanel_header_text">@Strings.BrowserContextPanelHeaderMethod</div>
             </div>
-            <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#methodCallContextPanel').addClass('overlay-close')"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#methodCallContextPanel').addClass('overlay-close')" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div class="browser_error_details_container">
                 <div class="row browser_error_details_line_header">
                     <span class="glyphicon glyphicon-alert"></span>
@@ -130,7 +130,7 @@
             <div class="dashboard_contextpanel_header">
                 <div class="dashboard_contextpanel_header_text">@Strings.BrowserContextPanelHeaderWrite</div>
             </div>
-            <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#variableWriteContextPanel').addClass('overlay-close')"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#variableWriteContextPanel').addClass('overlay-close')" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div class="browser_error_details_container">
                 <div class="row browser_error_details_line_header">
                     <span class="glyphicon glyphicon-alert"></span>
@@ -174,7 +174,7 @@
         <div class="dashboard_contextpanel_header">
             <div class="dashboard_contextpanel_header_text">Error</div>
         </div>
-        <a aria-label="closePanel" href="#" class="closebtn" onclick="closeErrorPanel()"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+        <a aria-label="closePanel" href="#" class="closebtn" onclick="closeErrorPanel()" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
         <div class="overlay-content">
             <div class="browser_error_contextpanel_container">
                 <div class="browser_error_contextpanel_header">@Strings.BrowserError</div>

@@ -22,12 +22,20 @@
 
 .dropdown {
     border-left: 1px solid @border-dark-gray;
- 
+
     .dropdown-toggle {
         overflow: hidden;
     }
 
     &:hover, &:focus {
+    }
+}
+
+.dropdown-highligth {
+    &:focus,
+    &:hover {
+        filter: brightness(0) invert(1) !important;
+        -webkit-filter: brightness(0) invert(1) !important;
     }
 }
 
@@ -46,7 +54,7 @@
     height: @masthead-height;
     &:hover,
     &:focus {
-        background-color: @masthead-hover-color;
+        background-color: transparent !important;
       }
 }
 
@@ -68,7 +76,8 @@
 
 .dropdown-menu > li > a {
     color: @lightest-gray;
-    &:hover {
+    &:hover,
+    &:focus {
         color: white;
     }
 }
@@ -121,19 +130,20 @@
     width: @masthead-height/2;
     height: 20px;
     float: right;
+    outline: none;
 
     &:hover {
-        filter: brightness(0) invert(1);
-        -webkit-filter: brightness(0) invert(1);
+        filter: brightness(0) invert(1) !important;
+        -webkit-filter: brightness(0) invert(1) !important;
     }
 }
 
 .masthead_text {
     text-align: right;
     color: @text-mainhead-color;
-    font-size: @masthead-suitename-size; 
+    font-size: @masthead-suitename-size;
     color: @text-mainhead-color;
-    margin-top: 8px;
+    margin-top: 14px;
     margin-right: 24px;
 }
 
@@ -142,7 +152,7 @@
     color: @text-mainhead-color;
     font-size: @masthead-suitename-size;
     color: @text-mainhead-color;
-    margin-top: 8px;
+    margin-top: 14px !important;
     margin-left: 16px;
 }
 
@@ -179,7 +189,6 @@
     padding-top: @masthead-height/2 - @masthead-solutionname-size/2 - 2;
     padding-bottom: @masthead-height/2 - @masthead-solutionname-size/2 - 2;
     border-left: 2px solid @masthead-separator-color;
-
 }
 
 .container-fluid {
@@ -190,3 +199,31 @@
 main {
     padding-top: 36px;
 }
+
+.skip {
+    position: absolute;
+    top: 16px !important;
+    left: 200px !important;
+    height: 1px;
+    width: 1px;
+    text-align: left;
+    overflow: hidden;
+    color: @lightest-gray;
+}
+
+a.skip {
+    color: @lightest-gray;
+}
+
+a.skip:active,
+a.skip:focus,
+a.skip:hover {
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    color: white;
+}
+
+

@@ -74,7 +74,7 @@
                 </tbody>
             </table>
             <div class="row browser_browse_disconnect_button">
-                @Html.ActionLink(@Strings.ButtonBack, "Index", "Dashboard", null, new { @class = "btn btn-default btn_browser" })
+                @Html.ActionLink(@Strings.ButtonBack, "Index", "Dashboard", null, new { @class = "btn btn-default btn_browser", @role = "button" })
             </div>
         </div>
         <div id="browserImage" class="browser_image_container  col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -83,7 +83,7 @@
     </div>
 
     <div id="contextpanel" class="overlay">
-        <a aria-label="closePanel" href="#" class="closebtn" onclick="closContextPanel();"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+        <a aria-label="closePanel" href="#" class="closebtn" onclick="closContextPanel();" role="button"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
 
         <div id="errorContextPanel" class="overlay-content">
             <div class="browser_error_contextpanel_container">

@@ -4,25 +4,25 @@
 @using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
 
 @model List<Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation.NavigationMenuItem>
-<nav class="navigation">
-    @foreach (var navigationMenuItem in Model)
-    {
-        var multipleClasses = "navigation_link " + navigationMenuItem.Class;
+    <nav class="navigation">
+        @foreach (var navigationMenuItem in Model)
+        {
+            var multipleClasses = "navigation_link " + navigationMenuItem.Class;
 
-        if (navigationMenuItem.Class == "navigation_link_hamburger")
-        {
-            <div id="hamburger" class="navigation_link @navigationMenuItem.Class"></div>
+            if (navigationMenuItem.Class == "navigation_link_hamburger")
+            {
+                <a id="hamburger" aria-label="@navigationMenuItem.AriaLabel" class="navigation_link @navigationMenuItem.Class" href="#"></a>
+            }
+            else if (navigationMenuItem.Class == "navigation_link_contoso")
+            {
+                <div aria-label="@navigationMenuItem.AriaLabel" class="navigation_link @navigationMenuItem.Class">@navigationMenuItem.Text</div>
+            }
+            else
+            {
+                @Html.ActionLink(navigationMenuItem.Text, navigationMenuItem.Action, navigationMenuItem.Controller, null, new { @class = multipleClasses, @aria_label = navigationMenuItem.AriaLabel })
+            }
         }
-        else if (navigationMenuItem.Class == "navigation_link_contoso")
-        {
-            <div class="navigation_link @navigationMenuItem.Class">@navigationMenuItem.Text</div>
-        }
-        else
-        {
-            @Html.ActionLink(navigationMenuItem.Text, navigationMenuItem.Action, navigationMenuItem.Controller, null, new { @class = multipleClasses })
-        }
-    }
-</nav>
+    </nav>
 
 @foreach (var navigationMenuItem in Model.Where(navigationMenuItem => navigationMenuItem.Selected && navigationMenuItem.Children != null))
 {
@@ -32,7 +32,7 @@
             RouteValueDictionary valueDictionary = null;
             if (childNavigationItem.Selected)
             {
-                <a class="@childNavigationItem.Class">@childNavigationItem.Text</a>
+                <a aria-label="@navigationMenuItem.AriaLabel" class="@childNavigationItem.Class">@childNavigationItem.Text</a>
             }
             else
             {
@@ -41,7 +41,7 @@
                     valueDictionary = new RouteValueDictionary { { "topNode", "" } };
                 }
             }
-            @Html.ActionLink(childNavigationItem.Text, childNavigationItem.Action, childNavigationItem.Controller, valueDictionary, new { @class = childNavigationItem.Class })
+            @Html.ActionLink(childNavigationItem.Text, childNavigationItem.Action, childNavigationItem.Controller, valueDictionary, new { @class = childNavigationItem.Class, @aria_label = navigationMenuItem.AriaLabel })
         }
     </nav>
 }
