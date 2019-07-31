@@ -1630,7 +1630,6 @@
         $(".dashboard_contextpanel_select_filter_button").css({ "margin-left": marginLeft });
 
         setTimeout(function () { $("#filterSelector0").focus() }, 200);
-        console.log("open panel");
     }
 
     function openFilterAlertsContextPanel() {
@@ -1676,7 +1675,6 @@
                     text: keys[j]
                 }));
                 listObject.listItemDetails[i].selector.selectpicker('refresh');
-                console.log(keys[j]);
             }
 
             //display on the listbox the selected filter
