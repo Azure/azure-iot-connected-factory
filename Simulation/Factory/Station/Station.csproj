@@ -1,17 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Station</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Station</PackageId>
-    <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Station.PredefinedNodes.uanodes" />
-    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="0.4.5" />
+    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="1.4.356.27" />
     <None Update="Opc.Ua.Station.Config.xml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
