@@ -36,6 +36,7 @@
     &:hover {
         filter: brightness(0) invert(1) !important;
         -webkit-filter: brightness(0) invert(1) !important;
+        outline: 1px dashed white !important;
     }
 }
 
@@ -52,10 +53,11 @@
 .navbar-inverse .navbar-nav > .open > a {
     color: @text-mainhead-color;
     height: @masthead-height;
+
     &:hover,
     &:focus {
         background-color: transparent !important;
-      }
+    }
 }
 
 .navbar-inverse .navbar-nav > li > a {
@@ -130,9 +132,9 @@
     width: @masthead-height/2;
     height: 20px;
     float: right;
-    outline: none;
-
-    &:hover {
+   
+    &:hover,
+    &:focus {
         filter: brightness(0) invert(1) !important;
         -webkit-filter: brightness(0) invert(1) !important;
     }
