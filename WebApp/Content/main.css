@@ -6957,6 +6957,7 @@ main {
 .navigation_link:focus {
   text-decoration: none;
   color: white;
+  outline: 1px dashed white !important;
 }
 .navigation_link_selected {
   background-color: black;
@@ -8199,6 +8200,7 @@ textarea {
 .dropdown-highligth:hover {
   filter: brightness(0) invert(1) !important;
   -webkit-filter: brightness(0) invert(1) !important;
+  outline: 1px dashed white !important;
 }
 .navbar-header {
   position: initial;
@@ -8278,9 +8280,9 @@ textarea {
   width: 24px;
   height: 20px;
   float: right;
-  outline: none;
 }
-.masthead_language_icon:hover {
+.masthead_language_icon:hover,
+.masthead_language_icon:focus {
   filter: brightness(0) invert(1) !important;
   -webkit-filter: brightness(0) invert(1) !important;
 }
@@ -8482,7 +8484,7 @@ a.skip:hover {
   color: white;
 }
 .overlay .closebtn:focus {
-  outline: none;
+  outline: 1px dashed white !important;
   filter: brightness(0) invert(1) !important;
   -webkit-filter: brightness(0) invert(1) !important;
 }
