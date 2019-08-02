@@ -11,7 +11,7 @@
         </a>
     </div>
     <p id="headerText" class="dashboard_children_container_header_text col-xs-8 col-md-8 col-lg-8 overflow">@Model.ChildrenContainerHeader</p>
-    <a id="allIcon" class="dashboard_children_container_header_text_glyph" href="#" onclick="openFilterContextPanel();">
+    <a id="allIcon" class="dashboard_children_container_header_text_glyph" href="#" onclick="openFilterContextPanel();" role="button">
         <img aria-label="filter" class="dashboard_children_container_header_filter" src="/Content/img/filter.svg">
         @Strings.NoFilterApplied 
     </a>
@@ -19,12 +19,12 @@
         <a id="openFromFiltered" href="javascript:openFilterContextPanel();"><img class="dashboard_children_container_header_filter" src="/Content/img/filter.svg"></a>
     </p>
 </div>
-<div class="dashboard_children_list_header row">
+<div class="dashboard_children_list_header row" aria-label="tableHeader">
     <div class="dashboard_children_list_header_status col-xs-3 col-lg-3 overflow">@Model.ChildrenListHeaderStatus</div>
     <div class="dashboard_children_list_header_location col-xs-4 col-lg-4 overflow">@Model.ChildrenListHeaderLocation</div>
     <div class="dashboard_children_list_header_details col-xs-5 col-lg-5 overflow">@Model.ChildrenListHeaderDetails</div>
 </div>
-<div id="childrenListContainer" class="dashboard_children_list_container scrollbar-inner scroll_only_y row">
+<div id="childrenListContainer" class="dashboard_children_list_container scrollbar-inner scroll_only_y row" role="grid" aria-rowcount="@Model.Children.Count">
     <div id="dashboardChildrenList" class="col-xs-12">
        
         @for (int i = 0; i < Model.Children.Count; i++)
@@ -39,12 +39,13 @@
             }
             RouteValueDictionary valueDictionary = new RouteValueDictionary { { "topNode", child.Key } };
             var dashboardUrl = @Url.Action("Index", "Dashboard", valueDictionary);
-            <div >
+            <div role="row">
                 @if (Model.ChildrenType == typeof(ContosoOpcUaNode))
                 {
                     if (child.Visible == true)
                     {
-                         <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');">
+                         <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" role="gridcell" aria-rowindex="@i"  
+                              onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');" onkeydown="if (event.keyCode == 13)openContextPanelFromNode('@child.Name', '@child.SubKey');" tabindex="0">
                             <div id="childrenListListItemStatusText@(i)" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                             <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
                             <div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">@child.Last @child.Unit</div>
@@ -53,7 +54,8 @@
                 }
                 else
                 {
-                    <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" onclick="javascript:gotoChildrenNode('@dashboardUrl');">
+                    <div id="dashboard_children_listitem@(i)" class="dashboard_children_listitem_container @dashboardStatusClass row" role="gridcell" aria-rowindex="@i"
+                         onclick="javascript:gotoChildrenNode('@dashboardUrl');" onkeydown="if (event.keyCode == 13)gotoChildrenNode('@dashboardUrl');" tabindex="0">
                         <div id="childrenListListItemStatusText@(i)" class="dashboard_children_listitem_status_text col-xs-3 col-lg-3 overflow">@statusMessage</div>
                         <div class="dashboard_children_listitem_location col-xs-4 col-lg-4 overflow">@child.Name</div>
                         <div class="dashboard_children_listitem_details col-xs-4 col-lg-4 overflow">@child.Description</div>

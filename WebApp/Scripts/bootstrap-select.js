@@ -677,8 +677,8 @@
           searchbox +
           actionsbox +
           '<div class="inner ' + classNames.SHOW + '" role="listbox" aria-expanded="false" tabindex="-1">' +
-              '<ul class="dropdown-menu inner ' + (version.major === '4' ? classNames.SHOW : '') + '">' +
-              '</ul>' +
+              '<ul class="dropdown-menu inner ' + (version.major === '4' ? classNames.SHOW : '') + '" role="menu">' +
+            '</ul>' +
           '</div>' +
           donebutton +
           '</div>' +
@@ -957,9 +957,11 @@
        * @param text
        * @param [classes]
        * @param [inline]
+       * @param [index]
+       * @param [count]
        * @returns {string}
        */
-      var generateA = function (text, classes, inline) {
+      var generateA = function (text, classes, inline, index, count) {
         var a = elementTemplates.a.cloneNode(true);
 
         if (text) {
@@ -973,6 +975,9 @@
         if (typeof classes !== 'undefined' & '' !== classes) a.className = classes;
         if (version.major === '4') a.classList.add('dropdown-item');
         if (inline) a.setAttribute('style', inline);
+
+        a.setAttribute("aria-posinset", index);
+        a.setAttribute("aria-setsize", count);
 
         return a;
       };
@@ -1211,7 +1216,7 @@
             optionIcon: icon
           });
 
-          mainElements.push(generateLI(generateA(textElement, 'opt ' + optionClass + optGroupClass, inline), index, '', optID));
+          mainElements.push(generateLI(generateA(textElement, 'opt ' + optionClass + optGroupClass, inline, index+1, $selectOptions.length), index, '', optID));
           mainData.push({
             content: optionContent || text,
             subtext: subtext,
@@ -1270,7 +1275,7 @@
             optionIcon: icon
           });
 
-          mainElements.push(generateLI(generateA(textElement, optionClass, inline), index));
+            mainElements.push(generateLI(generateA(textElement, optionClass, inline, index+1, $selectOptions.length), index));
           mainData.push({
             content: optionContent || text,
             subtext: subtext,
@@ -1455,6 +1460,7 @@
       menu.className = 'dropdown-menu ' + classNames.SHOW;
       menuInner.className = 'inner ' + classNames.SHOW;
       menuInnerInner.className = 'dropdown-menu inner ' + (version.major === '4' ? classNames.SHOW : '');
+      menuInnerInner.setAttribute("role","menu");
       divider.className = classNames.DIVIDER;
       dropdownHeader.className = 'dropdown-header';
 

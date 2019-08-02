@@ -16,25 +16,30 @@
 }
 
 .navigation_link {
-  display: block;
-  width: @navigation-width;
-  height: 48px;
-  font-size: 1.1em;
-  color: @navigation-link-color;
-  text-align: right;
-  line-height: 110px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: middle;
-  background-position: 16px 16px;
-}
+    display: block;
+    width: @navigation-width;
+    height: 48px;
+    font-size: 1.1em;
+    color: @navigation-link-color;
+    text-align: right;
+    line-height: 110px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-position: 16px 16px;
 
-.navigation_link:hover {
-  background-color: @masthead-hover-color;
-  text-decoration: none;
-  color: white;
+    &:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+    &:focus {
+        text-decoration: none;
+        color: white;
+        outline: 1px dashed white !important;
+    }
 }
 
 .navigation_link_selected {
@@ -65,7 +70,8 @@
 .navigation_link_hamburger {
     background-image: url("/Content/img/hamburger.svg");
 
-    &:hover {
+    &:hover,
+    &:focus{
         .icon-replace-fill("../Content/img/hamburger.svg", @text-mainhead-color, @text-hover-color);
     }
 }
@@ -73,7 +79,8 @@
 .navigation_link_home {
     background-image: url("/Content/img/dashboard.svg");
 
-    &:hover {
+    &:hover,
+    &:focus {
         .icon-replace-fill("../Content/img/dashboard.svg", @text-mainhead-color, @text-hover-color);
         font-family: "Selawik Semibold";
     }
@@ -82,7 +89,8 @@
 .navigation_link_browser {
     background-image: url("/Content/img/icon_server.svg");
 
-    &:hover {
+    &:hover,
+    &:focus {
         .icon-replace-fill("../Content/img/icon_server.svg", @text-mainhead-color, @text-hover-color);
         font-family: "Selawik Semibold";
     }
@@ -91,7 +99,8 @@
 .navigation_link_addgateway {
     background-image: url("/Content/img/icon_addserver.svg");
 
-    &:hover {
+    &:hover,
+    &:focus {
         .icon-replace-fill("../Content/img/icon_addserver.svg", @text-mainhead-color, @text-hover-color);
         font-family: "Selawik Semibold";
     }
@@ -100,7 +109,8 @@
 .navigation_link_contoso {
     background-image: url("/Content/img/contosoLogo.svg");
 
-    &:hover {
+    &:hover,
+    &:focus {
         .icon-replace-fill("../Content/img/contosoLogo.svg", @text-mainhead-color, @text-hover-color);
         font-family: "Selawik Semibold";
     }
