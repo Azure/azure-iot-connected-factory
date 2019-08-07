@@ -90,10 +90,9 @@ namespace Opc.Ua.Sample.Simulation
     public class Program
     {
         static Station m_station = null;
-
-        static Session m_sessionAssembly = null;
-        static Session m_sessionTest = null;
-        static Session m_sessionPackaging = null;
+        static SessionHandler m_sessionAssembly = null;
+        static SessionHandler m_sessionTest = null;
+        static SessionHandler m_sessionPackaging = null;
 
         static Object m_mesStatusLock = new Object();
 
@@ -113,8 +112,8 @@ namespace Opc.Ua.Sample.Simulation
         static bool m_doneTest = false;
 
         const int c_updateRate = 1000;
-        const uint c_connectTimeout = 60000;
         const int c_waitTime = 60 * 1000;
+        const int c_connectTimeout = 300 * 1000;
 
         static Timer m_timer = null;
 
@@ -149,21 +148,42 @@ namespace Opc.Ua.Sample.Simulation
                 }
 
                 // connect to all servers.
-                m_sessionAssembly = EndpointConnect(endpoints[c_Assembly], appConfiguration);
-                m_sessionTest = EndpointConnect(endpoints[c_Test], appConfiguration);
-                m_sessionPackaging = EndpointConnect(endpoints[c_Packaging], appConfiguration);
+                m_sessionAssembly = new SessionHandler();
+                m_sessionTest = new SessionHandler();
+                m_sessionPackaging = new SessionHandler();
 
-                if (!CreateMonitoredItem(m_station.StatusNode, m_sessionAssembly, new MonitoredItemNotificationEventHandler(MonitoredItem_AssemblyStation)))
+                DateTime retryTimeout = DateTime.UtcNow + TimeSpan.FromMilliseconds(c_connectTimeout);
+                do
                 {
-                    Trace("Failed to create monitored Item for the assembly station!");
+                    try
+                    {
+                        m_sessionAssembly.EndpointConnect(endpoints[c_Assembly], appConfiguration);
+                        m_sessionTest.EndpointConnect(endpoints[c_Test], appConfiguration);
+                        m_sessionPackaging.EndpointConnect(endpoints[c_Packaging], appConfiguration);
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace("Exception connecting to assembly line: {0}, retry!", ex.Message);
+                    }
+
+                    if (DateTime.UtcNow > retryTimeout)
+                    {
+                        throw new Exception(String.Format("Failed to connect to assembly line for {0} seconds!", c_connectTimeout / 1000));
+                    }
                 }
-                if (!CreateMonitoredItem(m_station.StatusNode, m_sessionTest, new MonitoredItemNotificationEventHandler(MonitoredItem_TestStation)))
+                while (!(m_sessionAssembly.SessionConnected && m_sessionTest.SessionConnected && m_sessionPackaging.SessionConnected));
+
+                if (!CreateMonitoredItem(m_station.StatusNode, m_sessionAssembly.Session, new MonitoredItemNotificationEventHandler(MonitoredItem_AssemblyStation)))
                 {
-                    Trace("Failed to create monitored Item for the test station!");
+                    throw new Exception("Failed to create monitored Item for the assembly station!");
                 }
-                if (!CreateMonitoredItem(m_station.StatusNode, m_sessionPackaging, new MonitoredItemNotificationEventHandler(MonitoredItem_PackagingStation)))
+                if (!CreateMonitoredItem(m_station.StatusNode, m_sessionTest.Session, new MonitoredItemNotificationEventHandler(MonitoredItem_TestStation)))
                 {
-                    Trace("Failed to create monitored Item for the packaging station!");
+                    throw new Exception("Failed to create monitored Item for the test station!");
+                }
+                if (!CreateMonitoredItem(m_station.StatusNode, m_sessionPackaging.Session, new MonitoredItemNotificationEventHandler(MonitoredItem_PackagingStation)))
+                {
+                    throw new Exception("Failed to create monitored Item for the packaging station!");
                 }
 
                 StartAssemblyLine();
@@ -182,7 +202,7 @@ namespace Opc.Ua.Sample.Simulation
                     // wait forever if there is no console, e.g. in docker
                     Thread.Sleep(Timeout.Infinite);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -205,8 +225,8 @@ namespace Opc.Ua.Sample.Simulation
                     {
                         Trace("#{0} Assembly --> Test", m_serialNumber[c_Assembly]);
                         m_serialNumber[c_Test] = m_serialNumber[c_Assembly];
-                        m_sessionTest.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Test]);
-                        m_sessionAssembly.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                        m_sessionTest.Session.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Test]);
+                        m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                         m_doneAssembly = false;
                     }
 
@@ -218,8 +238,8 @@ namespace Opc.Ua.Sample.Simulation
                     {
                         Trace("#{0} Test --> Packaging", m_serialNumber[c_Test]);
                         m_serialNumber[c_Packaging] = m_serialNumber[c_Test];
-                        m_sessionPackaging.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Packaging]);
-                        m_sessionTest.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                        m_sessionPackaging.Session.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Packaging]);
+                        m_sessionTest.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                         m_doneTest = false;
                     }
                 }
@@ -233,30 +253,6 @@ namespace Opc.Ua.Sample.Simulation
                 // reschedule the timer event
                 RestartTimer(c_updateRate);
             }
-        }
-
-        public static Session EndpointConnect(ConfiguredEndpoint endpoint, ApplicationConfiguration appConfiguration)
-        {
-
-            Session session = Session.Create(
-                appConfiguration,
-                endpoint,
-                true,
-                appConfiguration.ApplicationName,
-                c_connectTimeout,
-                new UserIdentity(new AnonymousIdentityToken()),
-                null).Result;
-
-            if (session != null)
-            {
-                session.KeepAlive += new KeepAliveEventHandler((sender, e) => StandardClient_KeepAlive(sender, e, session));
-            }
-            else
-            {
-                Trace("Can not create session!");
-            }
-
-            return session;
         }
 
         public static bool CreateMonitoredItem(NodeId nodeId, Session session, MonitoredItemNotificationEventHandler handler)
@@ -321,18 +317,18 @@ namespace Opc.Ua.Sample.Simulation
                 Trace("<<Assembly line reset!>>");
 
                 // reset assembly line
-                m_sessionAssembly.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
-                m_sessionTest.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
-                m_sessionPackaging.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                m_sessionTest.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                m_sessionPackaging.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
 
                 // update status
-                m_statusAssembly = (StationStatus)m_sessionAssembly.ReadValue(m_station.StatusNode).Value;
-                m_statusTest = (StationStatus)m_sessionTest.ReadValue(m_station.StatusNode).Value;
-                m_statusPackaging = (StationStatus)m_sessionPackaging.ReadValue(m_station.StatusNode).Value;
+                m_statusAssembly = (StationStatus)m_sessionAssembly.Session.ReadValue(m_station.StatusNode).Value;
+                m_statusTest = (StationStatus)m_sessionTest.Session.ReadValue(m_station.StatusNode).Value;
+                m_statusPackaging = (StationStatus)m_sessionPackaging.Session.ReadValue(m_station.StatusNode).Value;
 
                 Trace("#{0} Assemble ", m_serialNumber[c_Assembly]);
                 // start assembly
-                m_sessionAssembly.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Assembly]);
+                m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Assembly]);
             }
         }
 
@@ -357,7 +353,7 @@ namespace Opc.Ua.Sample.Simulation
                                 // build the next product by calling execute with new serial number
                                 m_serialNumber[c_Assembly]++;
                                 Trace("#{0} Assemble ", m_serialNumber[c_Assembly]);
-                                m_sessionAssembly.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Assembly]);
+                                m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Assembly]);
                             }
                             break;
 
@@ -372,7 +368,7 @@ namespace Opc.Ua.Sample.Simulation
                         case StationStatus.Discarded:
                             // product was automatically discarded by the station, reset
                             Trace("#{0} Discarded in Assembly", m_serialNumber[c_Assembly]);
-                            m_sessionAssembly.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                            m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                             break;
 
                         case StationStatus.Fault:
@@ -383,7 +379,7 @@ namespace Opc.Ua.Sample.Simulation
                                 await Task.Delay(c_waitTime);
                                 Trace("<<AssemblyStation: Restart from Fault>>");
 
-                                m_sessionAssembly.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                                m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                             });
                             break;
 
@@ -428,7 +424,7 @@ namespace Opc.Ua.Sample.Simulation
 
                         case StationStatus.Discarded:
                             Trace("#{0} Tested, not Passed, Discarded", m_serialNumber[c_Test]);
-                            m_sessionTest.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                            m_sessionTest.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                             break;
 
                         case StationStatus.Fault:
@@ -441,7 +437,7 @@ namespace Opc.Ua.Sample.Simulation
                                     Trace("<<TestStation: Restart from Fault>>");
 
                                     m_faultTest = false;
-                                    m_sessionTest.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                                    m_sessionTest.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                                 });
                             }
                             break;
@@ -484,12 +480,12 @@ namespace Opc.Ua.Sample.Simulation
                         case StationStatus.Done:
                             Trace("#{0} Packaged", m_serialNumber[c_Packaging]);
                             // last station (packaging) is done, reset so the next product can be built
-                            m_sessionPackaging.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                            m_sessionPackaging.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                             break;
 
                         case StationStatus.Discarded:
                             Trace("#{0} Discarded in Packaging", m_serialNumber[c_Packaging]);
-                            m_sessionPackaging.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                            m_sessionPackaging.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                             break;
 
                         case StationStatus.Fault:
@@ -502,7 +498,7 @@ namespace Opc.Ua.Sample.Simulation
                                     Trace("<<PackagingStation: Restart from Fault>>");
 
                                     m_faultPackaging = false;
-                                    m_sessionPackaging.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                                    m_sessionPackaging.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
                                 });
                             }
                             break;
@@ -529,25 +525,95 @@ namespace Opc.Ua.Sample.Simulation
             m_timer = new Timer(MesLogic, null, dueTime, Timeout.Infinite);
         }
 
-        private static void StandardClient_KeepAlive(Session sender, KeepAliveEventArgs e, Session session)
-        {
-            if (e != null && session != null)
-            {
-                if (!ServiceResult.IsGood(e.Status))
-                {
-                    Trace(String.Format(
-                        "Status: {0}/t/tOutstanding requests: {1}/t/tDefunct requests: {2}",
-                        e.Status,
-                        session.OutstandingRequestCount,
-                        session.DefunctRequestCount));
-                }
-            }
-        }
-
-        private static void Trace(string format, params object[] args)
+        public static void Trace(string format, params object[] args)
         {
             Console.WriteLine(format, args);
             Utils.Trace(format, args);
+        }
+    }
+
+    /// <summary>
+    /// Handles the connection and reconnection of sessions to endpoints.
+    /// </summary>
+    class SessionHandler
+    {
+        const int c_reconnectPeriod = 10000;
+        const uint c_connectTimeout = 60000;
+
+        public Session Session { get; private set; }
+        public bool SessionConnected => Session != null;
+        private SessionReconnectHandler m_reconnectHandler = null;
+
+        public bool EndpointConnect(ConfiguredEndpoint endpoint, ApplicationConfiguration appConfiguration)
+        {
+            if (Session != null)
+            {
+                return true;
+            }
+
+            Session = Session.Create(
+                appConfiguration,
+                endpoint,
+                true,
+                appConfiguration.ApplicationName,
+                c_connectTimeout,
+                new UserIdentity(new AnonymousIdentityToken()),
+                null).Result;
+
+            if (Session != null)
+            {
+                Session.KeepAlive += new KeepAliveEventHandler((sender, e) => StandardClient_KeepAlive(sender, e));
+            }
+            else
+            {
+                Program.Trace("Can not create session!");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void Client_ReconnectComplete(object sender, EventArgs e)
+        {
+            // ignore callbacks from discarded objects.
+            if (!Object.ReferenceEquals(sender, m_reconnectHandler))
+            {
+                return;
+            }
+
+            Session = m_reconnectHandler.Session;
+            m_reconnectHandler.Dispose();
+            m_reconnectHandler = null;
+
+            Program.Trace(String.Format(("--- RECONNECTED ---")));
+        }
+
+        private void StandardClient_KeepAlive(Session sender, KeepAliveEventArgs e)
+        {
+            if (e != null && sender != null)
+            {
+                // ignore callbacks from discarded objects.
+                if (!Object.ReferenceEquals(sender, Session))
+                {
+                    return;
+                }
+
+                if (!ServiceResult.IsGood(e.Status))
+                {
+                    Program.Trace(String.Format(
+                        "Status: {0} Outstanding requests: {1} Defunct requests: {2}",
+                        e.Status,
+                        sender.OutstandingRequestCount,
+                        sender.DefunctRequestCount));
+
+                    if (m_reconnectHandler == null)
+                    {
+                        Program.Trace("--- RECONNECTING ---");
+                        m_reconnectHandler = new SessionReconnectHandler();
+                        m_reconnectHandler.BeginReconnect(sender, c_reconnectPeriod, Client_ReconnectComplete);
+                    }
+                }
+            }
         }
     }
 }

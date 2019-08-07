@@ -12,8 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Opc.Ua.MES.Config.xml;Opc.Ua.MES.Endpoints.xml">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    <None Update="Opc.Ua.MES.Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Opc.Ua.MES.Endpoints.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
