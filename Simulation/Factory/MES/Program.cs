@@ -585,7 +585,7 @@ namespace Opc.Ua.Sample.Simulation
             m_reconnectHandler.Dispose();
             m_reconnectHandler = null;
 
-            Program.Trace(String.Format(("--- RECONNECTED ---")));
+            Program.Trace(String.Format("--- RECONNECTED --- {0}", Session.Endpoint.EndpointUrl));
         }
 
         private void StandardClient_KeepAlive(Session sender, KeepAliveEventArgs e)
@@ -606,9 +606,10 @@ namespace Opc.Ua.Sample.Simulation
                         sender.OutstandingRequestCount,
                         sender.DefunctRequestCount));
 
-                    if (m_reconnectHandler == null)
+                    if (e.Status.StatusCode == StatusCodes.BadNoCommunication &&
+                        m_reconnectHandler == null)
                     {
-                        Program.Trace("--- RECONNECTING ---");
+                        Program.Trace("--- RECONNECTING --- {0}", sender.Endpoint.EndpointUrl);
                         m_reconnectHandler = new SessionReconnectHandler();
                         m_reconnectHandler.BeginReconnect(sender, c_reconnectPeriod, Client_ReconnectComplete);
                     }
