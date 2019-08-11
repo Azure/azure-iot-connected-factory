@@ -100,6 +100,8 @@ namespace Opc.Ua.Sample.Simulation
         static StationStatus m_statusTest = StationStatus.Ready;
         static StationStatus m_statusPackaging = StationStatus.Ready;
 
+        static DateTime m_lastActivity = DateTime.MinValue;
+
         const int c_Assembly = 0;
         const int c_Test = 1;
         const int c_Packaging = 2;
@@ -227,6 +229,7 @@ namespace Opc.Ua.Sample.Simulation
                         m_serialNumber[c_Test] = m_serialNumber[c_Assembly];
                         m_sessionTest.Session.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Test]);
                         m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                        m_lastActivity = DateTime.UtcNow;
                         m_doneAssembly = false;
                     }
 
@@ -240,7 +243,15 @@ namespace Opc.Ua.Sample.Simulation
                         m_serialNumber[c_Packaging] = m_serialNumber[c_Test];
                         m_sessionPackaging.Session.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Packaging]);
                         m_sessionTest.Session.Call(m_station.RootMethodNode, m_station.ResetMethodNode, null);
+                        m_lastActivity = DateTime.UtcNow;
                         m_doneTest = false;
+                    }
+
+                    if (m_lastActivity + TimeSpan.FromMilliseconds(c_connectTimeout) < DateTime.UtcNow)
+                    {
+                        // recover from network / communication outages and restart assembly line
+                        Trace("MES activity timeout - restart assembly line.");
+                        StartAssemblyLine();
                     }
                 }
             }
@@ -329,6 +340,10 @@ namespace Opc.Ua.Sample.Simulation
                 Trace("#{0} Assemble ", m_serialNumber[c_Assembly]);
                 // start assembly
                 m_sessionAssembly.Session.Call(m_station.RootMethodNode, m_station.ExecuteMethodNode, m_serialNumber[c_Assembly]);
+
+                // reset communication timeout
+                m_lastActivity = DateTime.UtcNow;
+
             }
         }
 
