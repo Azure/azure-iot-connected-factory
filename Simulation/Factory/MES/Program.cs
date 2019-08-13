@@ -100,6 +100,7 @@ namespace Opc.Ua.Sample.Simulation
         static StationStatus m_statusTest = StationStatus.Ready;
         static StationStatus m_statusPackaging = StationStatus.Ready;
 
+        static ManualResetEvent m_quitEvent;
         static DateTime m_lastActivity = DateTime.MinValue;
 
         const int c_Assembly = 0;
@@ -193,17 +194,22 @@ namespace Opc.Ua.Sample.Simulation
                 // MESLogic method is executed periodically, with period c_updateRate
                 RestartTimer(c_updateRate);
 
-                Trace("MES started. Press any key to exit.");
+                Trace("MES started. Press Ctrl-C to exit.");
 
+                m_quitEvent = new ManualResetEvent(false);
                 try
                 {
-                    Console.ReadKey(true);
+                    Console.CancelKeyPress += (sender, eArgs) => {
+                        m_quitEvent.Set();
+                        eArgs.Cancel = true;
+                    };
                 }
                 catch
                 {
-                    // wait forever if there is no console, e.g. in docker
-                    Thread.Sleep(Timeout.Infinite);
                 }
+
+                // wait for MES timeout or Ctrl-C
+                m_quitEvent.WaitOne();
 
             }
             catch (Exception ex)
@@ -250,8 +256,8 @@ namespace Opc.Ua.Sample.Simulation
                     if (m_lastActivity + TimeSpan.FromMilliseconds(c_connectTimeout) < DateTime.UtcNow)
                     {
                         // recover from network / communication outages and restart assembly line
-                        Trace("MES activity timeout - restart assembly line.");
-                        StartAssemblyLine();
+                        Trace("MES activity timeout - restart the MES controller.");
+                        m_quitEvent.Set();
                     }
                 }
             }
