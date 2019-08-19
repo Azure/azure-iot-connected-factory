@@ -51,14 +51,14 @@
   <TransportConfigurations/>
 
   <TransportQuotas>
-    <OperationTimeout>600000</OperationTimeout>
+    <OperationTimeout>1200000</OperationTimeout>
     <MaxStringLength>1048576</MaxStringLength>
     <MaxByteStringLength>1048576</MaxByteStringLength>
     <MaxArrayLength>65535</MaxArrayLength>
     <MaxMessageSize>4194304</MaxMessageSize>
     <MaxBufferSize>65535</MaxBufferSize>
-    <ChannelLifetime>300000</ChannelLifetime>
-    <SecurityTokenLifetime>360000000</SecurityTokenLifetime>
+    <ChannelLifetime>600000</ChannelLifetime>
+    <SecurityTokenLifetime>3600000</SecurityTokenLifetime>
   </TransportQuotas>
 
   <ServerConfiguration>
@@ -69,27 +69,11 @@
     <SecurityPolicies>
       <ServerSecurityPolicy>
         <SecurityMode>SignAndEncrypt_3</SecurityMode>
-        <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15</SecurityPolicyUri>
+        <SecurityPolicyUri></SecurityPolicyUri>
       </ServerSecurityPolicy>
       <ServerSecurityPolicy>
         <SecurityMode>Sign_2</SecurityMode>
-        <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256</SecurityPolicyUri>
-      </ServerSecurityPolicy>
-      <ServerSecurityPolicy>
-        <SecurityMode>Sign_2</SecurityMode>
-        <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15</SecurityPolicyUri>
-      </ServerSecurityPolicy>
-      <ServerSecurityPolicy>
-        <SecurityMode>SignAndEncrypt_3</SecurityMode>
-        <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256</SecurityPolicyUri>
-      </ServerSecurityPolicy>
-      <ServerSecurityPolicy>
-        <SecurityMode>Sign_2</SecurityMode>
-        <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256</SecurityPolicyUri>
-      </ServerSecurityPolicy>
-      <ServerSecurityPolicy>
-        <SecurityMode>SignAndEncrypt_3</SecurityMode>
-        <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256</SecurityPolicyUri>
+        <SecurityPolicyUri></SecurityPolicyUri>
       </ServerSecurityPolicy>
     </SecurityPolicies>
 
@@ -125,7 +109,7 @@
     <MaxBrowseContinuationPoints>10</MaxBrowseContinuationPoints>
     <MaxQueryContinuationPoints>10</MaxQueryContinuationPoints>
     <MaxHistoryContinuationPoints>100</MaxHistoryContinuationPoints>
-    <MaxRequestAge>600000</MaxRequestAge>
+    <MaxRequestAge>1800000</MaxRequestAge>
     <MinPublishingInterval>100</MinPublishingInterval>
     <MaxPublishingInterval>3600000</MaxPublishingInterval>
     <PublishingResolution>50</PublishingResolution>
@@ -174,7 +158,7 @@
     <!-- Show Only Security, ServiceResultExceptions, Errors and Trace -->
     <!-- <TraceMasks>519</TraceMasks> -->
     <!-- Show Only Security, Errors and ServiceResultExceptions -->
-    <TraceMasks>523</TraceMasks>
+    <TraceMasks>517</TraceMasks>
   </TraceConfiguration>
 
   <!-- Disables the hi-res clock if the QueryPerformanceCounter does work on a particular machine. -->

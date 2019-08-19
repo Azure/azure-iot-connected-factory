@@ -141,7 +141,7 @@
         },
         "rdxEnvironmentSkuCapacity": {
             "type": "int",
-            "defaultValue": 1,
+            "defaultValue": 2,
             "minValue": 1,
             "maxValue": 10
         },

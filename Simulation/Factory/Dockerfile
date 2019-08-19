@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1-runtime
+FROM microsoft/dotnet:2.1-runtime
 
 COPY . /app/buildOutput
 

@@ -39,7 +39,7 @@ namespace CreateCerts
                 string subjectName = applicationName;
                 List<string> domainNames = null; // not used
                 const ushort keySizeInBits = 2048;
-                DateTime startTime = DateTime.Now;
+                DateTime startTime = DateTime.UtcNow - TimeSpan.FromDays(1);
                 const ushort lifetimeInMonths = 120;
                 const ushort hashSizeInBits = 256;
                 bool isCA = false;
