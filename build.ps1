@@ -2621,7 +2621,7 @@ if ($script:LowCost)
     $script:WebPlanWorkerSize = 0
     $script:WebPlanWorkerCount = 1
     $script:WebPlanAlwaysOn = $false
-    $script:VmSize = "Standard_D1_v2"
+    $script:VmSize = "Standard_D2_v2"
     $script:RdxEnvironmentSkuName = "S1"
     $script:KeyVaultSkuName = "Standard"
 }
@@ -2647,7 +2647,7 @@ else
         $script:WebPlanWorkerCount = 1
         $script:WebPlanAlwaysOn = $true
     }
-    $script:VmSize = "Standard_D1_v2"
+    $script:VmSize = "Standard_D2_v2"
     $script:RdxEnvironmentSkuName = "S1"
     $script:KeyVaultSkuName = "Standard"
 }
