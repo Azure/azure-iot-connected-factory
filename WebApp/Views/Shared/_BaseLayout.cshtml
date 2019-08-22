@@ -44,20 +44,20 @@
                             <a id="language" href="#" aria-label="dropdown-language-menu" class="dropdown-toggle dropdown-highligth" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_language_icon"></span>
                             </a>
-                            <ul class="dropdown-menu" role="grid" aria-rowcount="@CultureHelper.GetLanguages().Count()">
+                            <ul class="dropdown-menu" role="grid" aria-setsize="@CultureHelper.GetLanguages().Count()">
                                 @{ int i = 0;}
                                 @foreach (var language in CultureHelper.GetLanguages())
                                 {
                                     if (language.IsCurrent)
                                     {
                                         <li role="row" class="active">
-                                            <a role="gridcell" aria-rowindex="@i">@language.Name</a>
+                                            <a role="gridcell" aria-posinset="@i">@language.Name</a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li role="row">
-                                            <a role="gridcell" aria-rowindex="@i" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
+                                            <a role="gridcell" aria-posinset="@i" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
                                         </li>
                                     }
                                     i++;

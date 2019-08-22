@@ -88,8 +88,8 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div&gt;Instructions can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction link&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
-        /// &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction link&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://go.microsoft.com/fwlink/p/?linkid=846688&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;.
+        ///   Looks up a localized string similar to &lt;div&gt;Instructions can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction can be found here&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
+        /// &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction for editing assembly line information can be found here link&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://go.microsoft.com/fwlink/p/?lin [rest of string was truncated]&quot;;.
         /// </summary>
         public static string AddGatewayBodyPoint1 {
             get {
