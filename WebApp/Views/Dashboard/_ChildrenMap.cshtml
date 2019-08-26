@@ -13,8 +13,12 @@
 <script src="https://atlas.microsoft.com/sdk/js/atlas.min.js?api-version=1.0"></script>
 
 <div id="map">
-    <button class="dashboard_zoom dashboard_zoom-plus" aria-label="zoomIn" onclick="ZoomIn()"> + </button>
-    <button class="dashboard_zoom dashboard_zoom-minus" aria-label="zoomOut" onclick="ZoomOut()"> - </button>
+    <button class="dashboard_zoom dashboard_zoom-plus" aria-label="zoomIn" onclick="ZoomIn()"> + 
+        <span class="tooltiptext">Zoom In</span>
+    </button>
+    <button class="dashboard_zoom dashboard_zoom-minus " aria-label="zoomOut" onclick="ZoomOut()"> - 
+        <span class="tooltiptext">Zoom Out</span>
+    </button>
 </div>
 
 <script type='text/javascript'>
@@ -96,7 +100,7 @@
         map.setCamera({
             zoom: currZoom + zoomFactor
         });
-    }
+        }
 
 </script>
 
