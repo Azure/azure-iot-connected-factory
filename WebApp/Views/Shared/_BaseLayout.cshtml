@@ -31,7 +31,7 @@
     @Html.AntiForgeryToken();
     <header>
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <a href="#content" class="skip">Skip to content</a>
+            <a href="#pushPanel" class="skip">Skip to content</a>
             <h1 id="content" class="container-fluid">
                 <div id="accountMenu" class="collapse navbar-collapse">
                     <ul class="path overflow">
@@ -205,15 +205,15 @@
             }
         }
 
-        $(document).ready(function () {
-            checkButtonTextLength();
+    $(document).ready(function () {
+        checkButtonTextLength();
 
             // bind a click event to the 'skip' link
             $(".skip").click(function(event){
     
                 // strip the leading hash and declare
                 // the content we're skipping to
-                var skipTo="#"+this.href.split('#')[1];
+                var skipTo = "#pushPanel";
     
                 // Setting 'tabindex' to -1 takes an element out of normal 
                 // tab flow but allows it to be focused via javascript
