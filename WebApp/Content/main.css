@@ -7281,6 +7281,9 @@ div {
 .dashboard_zoom:hover .tooltiptext {
   visibility: visible;
 }
+.dashboard_zoom:focus .tooltiptext {
+  visibility: visible;
+}
 .dashboard_zoom-plus {
   top: 10px;
   right: 10px;
