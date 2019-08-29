@@ -367,13 +367,12 @@
             $("#variableWriteShowResult").show();
 
             var newVal = $("#variableWrite_variableNewData").val();
-            var newValEncoded = $("#variableWrite_variableNewData").text(newVal).html();
             var id = $("#variableWrite_variableId").text();
             $("#variableWriteResult_result").html("@Strings.NodeWriteInProgress");
             $("#variableWriteResult_variableName").text($("#variableWritevariableName").text());
             $.post({
                 url: "/Browser/VariableWriteUpdate",
-                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), jstreeNode: id, newValue: newValEncoded },
+                data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), jstreeNode: id, newValue: newVal },
                 success: function (data) {
                     $("#variableWriteResult_result").html(data);
                     if (data.errorInfo != null) {
