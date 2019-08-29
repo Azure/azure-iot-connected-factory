@@ -51,13 +51,13 @@
                                     if (language.IsCurrent)
                                     {
                                         <li role="row" class="active">
-                                            <a role="gridcell" aria-posinset="@i">@language.Name</a>
+                                            <a role="gridcell" aria-posinset="@i" aria-setsize="@CultureHelper.GetLanguages().Count()">@language.Name</a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li role="row">
-                                            <a role="gridcell" aria-posinset="@i" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
+                                            <a role="gridcell" aria-posinset="@i" aria-setsize="@CultureHelper.GetLanguages().Count()" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
                                         </li>
                                     }
                                     i++;
