@@ -44,8 +44,8 @@
                             <a id="language" href="#" aria-label="dropdown-language-menu" class="dropdown-toggle dropdown-highligth" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_language_icon"></span>
                             </a>
-                            <ul class="dropdown-menu" role="grid" aria-setsize="@CultureHelper.GetLanguages().Count()">
-                                @{ int i = 0;}
+                            <ul class="dropdown-menu" role="grid">
+                                @{ int i = 1;}
                                 @foreach (var language in CultureHelper.GetLanguages())
                                 {
                                     if (language.IsCurrent)
