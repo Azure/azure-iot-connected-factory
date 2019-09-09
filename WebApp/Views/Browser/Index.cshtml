@@ -63,7 +63,7 @@
                                 </td>
                                 <td id="browser_button@(i)" class="table_content">
                                     <label class="label">
-                                        @Html.ActionLink(@Strings.ButtonBrowseNodes, "BrowseNodes", "Browser", new { endpointId = @endpoint.EndpointId, endpointUrl = @endpoint.EndpointUrl, productUri = @endpoint.ProductUri }, new { @class = "btn btn-default btn_browser" })
+                                        @Html.ActionLink(@Strings.ButtonBrowseNodes, "BrowseNodes", "Browser", new { endpointId = @endpoint.EndpointId, endpointUrl = @endpoint.EndpointUrl, productUri = @endpoint.ProductUri }, new { @class = "btn btn-default btn_browser", @role = "button" })
                                     </label>
                                 </td>
                             </tr>

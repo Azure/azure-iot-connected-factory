@@ -31,7 +31,7 @@
     @Html.AntiForgeryToken();
     <header>
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <a href="#content" class="skip">Skip to content</a>
+            <a href="#pushPanel" class="skip">Skip to content</a>
             <h1 id="content" class="container-fluid">
                 <div id="accountMenu" class="collapse navbar-collapse">
                     <ul class="path overflow">
@@ -44,20 +44,20 @@
                             <a id="language" href="#" aria-label="dropdown-language-menu" class="dropdown-toggle dropdown-highligth" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_language_icon"></span>
                             </a>
-                            <ul class="dropdown-menu" role="grid" aria-rowcount="@CultureHelper.GetLanguages().Count()">
-                                @{ int i = 0;}
+                            <ul class="dropdown-menu">
+                                @{ int i = 1;}
                                 @foreach (var language in CultureHelper.GetLanguages())
                                 {
                                     if (language.IsCurrent)
                                     {
                                         <li role="row" class="active">
-                                            <a role="gridcell" aria-rowindex="@i">@language.Name</a>
+                                            <a role="gridcell" aria-posinset="@i" aria-setsize="@CultureHelper.GetLanguages().Count()">@language.Name</a>
                                         </li>
                                     }
                                     else
                                     {
                                         <li role="row">
-                                            <a role="gridcell" aria-rowindex="@i" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
+                                            <a role="gridcell" aria-posinset="@i" aria-setsize="@CultureHelper.GetLanguages().Count()" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
                                         </li>
                                     }
                                     i++;
@@ -205,15 +205,15 @@
             }
         }
 
-        $(document).ready(function () {
-            checkButtonTextLength();
+    $(document).ready(function () {
+        checkButtonTextLength();
 
             // bind a click event to the 'skip' link
             $(".skip").click(function(event){
     
                 // strip the leading hash and declare
                 // the content we're skipping to
-                var skipTo="#"+this.href.split('#')[1];
+                var skipTo = "#pushPanel";
     
                 // Setting 'tabindex' to -1 takes an element out of normal 
                 // tab flow but allows it to be focused via javascript
