@@ -42,6 +42,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             {
                 IEnumerable<SupervisorApiModel> supervisors = RegistryService.ListSupervisors();
                 IEnumerable<ApplicationInfoApiModel> applications = RegistryService.ListApplications();
+                Session["Applications"] = applications;
 
                 if (supervisors != null)
                 {

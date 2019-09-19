@@ -68,7 +68,8 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
             try
             {
                 string supervisorId = Session["supervisorId"].ToString();
-                IEnumerable<ApplicationInfoApiModel> applications = RegistryService.ListApplications();
+                IEnumerable<EndpointInfoApiModel> endpoints = RegistryService.ListEndpoints();
+                IEnumerable<ApplicationInfoApiModel> applications = Session["Applications"] as IEnumerable<ApplicationInfoApiModel>;
 
                 if (applications != null)
                 {
@@ -76,22 +77,21 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                     {
                         if (application.SupervisorId == supervisorId)
                         {
-                            ApplicationRegistrationApiModel applicationRecord = RegistryService.GetApplication(application.ApplicationId);
-
-                            foreach (var elem in applicationRecord.Endpoints)
+                            foreach (var endpoint in endpoints)
                             {
-                                EndpointInfoApiModel endpointModel = RegistryService.GetEndpoint(elem.Id);
-
-                                Endpoint endpointInfo = new Endpoint();
-                                endpointInfo.EndpointId = elem.Id;
-                                endpointInfo.EndpointUrl = elem.Endpoint.Url;
-                                endpointInfo.SecurityMode = elem.Endpoint.SecurityMode != null ? elem.Endpoint.SecurityMode.ToString() : string.Empty;
-                                endpointInfo.SecurityPolicy = elem.Endpoint.SecurityPolicy != null ? elem.Endpoint.SecurityPolicy.Remove(0, elem.Endpoint.SecurityPolicy.IndexOf('#') + 1) : string.Empty;
-                                endpointInfo.SecurityLevel = elem.SecurityLevel;
-                                endpointInfo.ApplicationId = application.ApplicationId;
-                                endpointInfo.ProductUri = application.ProductUri;
-                                endpointInfo.Activated = endpointModel.ActivationState == EndpointActivationState.Activated || endpointModel.ActivationState == EndpointActivationState.ActivatedAndConnected;
-                                endpointList.Add(endpointInfo);
+                                if (endpoint.ApplicationId == application.ApplicationId)
+                                {
+                                    Endpoint endpointInfo = new Endpoint();
+                                    endpointInfo.EndpointId = endpoint.Registration.Id;
+                                    endpointInfo.EndpointUrl = endpoint.Registration.Endpoint.Url;
+                                    endpointInfo.SecurityMode = endpoint.Registration.Endpoint.SecurityMode != null ? endpoint.Registration.Endpoint.SecurityMode.ToString() : string.Empty;
+                                    endpointInfo.SecurityPolicy = endpoint.Registration.Endpoint.SecurityPolicy != null ? endpoint.Registration.Endpoint.SecurityPolicy.Remove(0, endpoint.Registration.Endpoint.SecurityPolicy.IndexOf('#') + 1) : string.Empty;
+                                    endpointInfo.SecurityLevel = endpoint.Registration.SecurityLevel;
+                                    endpointInfo.ApplicationId = application.ApplicationId;
+                                    endpointInfo.ProductUri = application.ProductUri;
+                                    endpointInfo.Activated = endpoint.ActivationState == EndpointActivationState.Activated || endpoint.ActivationState == EndpointActivationState.ActivatedAndConnected;
+                                    endpointList.Add(endpointInfo);
+                                }
                             }
                         }
                     }
