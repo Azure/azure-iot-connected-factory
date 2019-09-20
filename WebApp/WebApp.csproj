@@ -668,6 +668,7 @@
     <Compile Include="Filters\ErrorHandlingFilter.cs" />
     <Compile Include="Helpers\OpcSessionHelper.cs" />
     <Compile Include="IoTHub\MessageProcessor.cs" />
+    <Compile Include="Models\AddGatewayModel.cs" />
     <Compile Include="Models\OpcSessionModel.cs" />
     <Compile Include="Models\DataUpdateModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />

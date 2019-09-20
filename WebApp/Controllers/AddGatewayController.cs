@@ -1,6 +1,8 @@
 ﻿
 using System.Web.Mvc;
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Configuration;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
+using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models;
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 {
@@ -16,7 +18,10 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         [RequirePermission(Permission.AddOpcServer)]
         public ActionResult Index()
         {
-            return View();
+            AddGatewayModel gatewayModel = new AddGatewayModel();
+
+            gatewayModel.IotHubName = ConfigurationProvider.GetConfigurationSettingValue("IotHubEventHubName");
+            return View(gatewayModel);
         }
     }
 }
