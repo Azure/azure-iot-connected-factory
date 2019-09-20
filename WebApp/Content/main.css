@@ -7523,11 +7523,16 @@ div.selector-container {
   color: white !important;
   font-size: 14px !important;
 }
-/*.form-control:focus {
-    border-color: @navigation-background-color;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-}*/
+.dashboard_link {
+  font-size: 14px;
+  font-family: "Selawik";
+  text-decoration: underline !important;
+  color: #AFB9C3 !important;
+}
+.dashboard_link:hover,
+.dashboard_link :focus {
+  color: white !important;
+}
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
