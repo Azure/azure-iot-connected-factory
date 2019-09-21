@@ -1470,7 +1470,8 @@ function StartTwinModule
 
     # Start Twin Module.
     Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Start Docker container for Twin module ...")
-    $vmCommand = "docker run -itd -e PCS_IOTHUB_CONNSTRING=" + '"$IOTHUB_CONNECTIONSTRING" ' + "--name $hostName -h $hostName --network $net --restart always " + '$DOCKER_TWIN_REPO:$DOCKER_TWIN_VERSION'
+    $volumes = "-v $script:DockerRoot/$($script:DockerSharedFolder):/app/$script:DockerSharedFolder "
+    $vmCommand = "docker run -itd $volumes -e PCS_IOTHUB_CONNSTRING="  + '"$IOTHUB_CONNECTIONSTRING" '+ " -e TrustedCertPath=`'/app/Shared/CertificateStores/UA Applications`' " + "--name $hostName -h $hostName --network $net --restart always " + '$DOCKER_TWIN_REPO:$DOCKER_TWIN_VERSION' + " --host" 
     RecordVmCommand -command $vmCommand -startScript
 }
 
@@ -1537,7 +1538,7 @@ function StartGWPublisher
     $volumes += "-v $script:DockerRoot/$script:DockerLogsFolder/$($hostName):/app/$script:DockerLogsFolder "
     $volumes += "-v $script:DockerRoot/$script:DockerConfigFolder/$($hostName):/app/$script:DockerConfigFolder"
 
-    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always " + '$DOCKER_PUBLISHER_REPO:$DOCKER_PUBLISHER_VERSION ' + "$hostName " + '"$IOTHUB_CONNECTIONSTRING" ' + "--pf `'/app/$script:DockerConfigFolder/publishednodes.JSON`' --tp `'/app/Shared/CertificateStores/UA Applications`' --lf `'/app/$script:DockerLogsFolder/$hostName.log.txt`' --si 1 --ms 0 --di 60 --oi 1000 --op 1000 --fd true --tm true --as true --vc true --aa"
+    $vmCommand = "docker run -itd $volumes --name $hostName -h $hostName --network $net --expose $port --restart always " + '$DOCKER_PUBLISHER_REPO:$DOCKER_PUBLISHER_VERSION ' + "$hostName " + '"$IOTHUB_CONNECTIONSTRING" ' + "--pf `'/app/$script:DockerConfigFolder/publishednodes.JSON`' --tp `'/app/Shared/CertificateStores/UA Applications`' --lf `'/app/$script:DockerLogsFolder/$hostName.log.txt`' --si 1 --ms 0 --di 60 --oi 1000 --op 1000 --fd true --tm true --as true --vc true"
     RecordVmCommand -command $vmCommand -startScript
 }
 
@@ -2455,9 +2456,9 @@ $script:DockerSharedFolder = "Shared"
 $script:DockerCertsFolder = "$script:DockerSharedFolder/CertificateStores/UA Applications/certs"
 $script:ContainerRegistryPrefix = ""
 $script:DockerTwinRepo = "mcr.microsoft.com/iotedge/opc-twin"
-$script:DockerTwinVersion = "host-2.0.1"
+$script:DockerTwinVersion = "host-2.5.1"
 $script:DockerPublisherRepo = "mcr.microsoft.com/iotedge/opc-publisher"
-$script:DockerPublisherVersion = "2.3"
+$script:DockerPublisherVersion = "2.5.1"
 # todo remove
 $script:UaSecretBaseName = "UAWebClient"
 # Note: The password can only be changed if it is synced with the password used in CreateCerts.exe

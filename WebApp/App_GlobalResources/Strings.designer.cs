@@ -88,17 +88,115 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div&gt;Instructions can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction can be found here&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules&quot;&gt;here&lt;/a&gt;.&lt;/div&gt;
-        /// &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target=&quot;_blank&quot; aria-label=&quot;Instruction for editing assembly line information can be found here link&quot; style=&quot;text-decoration:underline !important&quot; href=&quot;https://go.microsoft.com/fwlink/p/?lin [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to To connecting your own production line, you first need to purchase an industrial gateway capable of running IoT Edge from one of our partners. See our Azure IoT Device Catalog for a list.
         /// </summary>
-        public static string AddGatewayBodyPoint1 {
+        public static string AddGatewayText1 {
             get {
-                return ResourceManager.GetString("AddGatewayBodyPoint1", resourceCulture);
+                return ResourceManager.GetString("AddGatewayText1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect your own gateway.
+        ///   Looks up a localized string similar to Manual instructions for setting up IoT Edge with the Industrial IoT Edge modules OPC Twin and OPC Publisher can be found.
+        /// </summary>
+        public static string AddGatewayText10 {
+            get {
+                return ResourceManager.GetString("AddGatewayText10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instructions for editing production line information for display on the main page of this Connected Factory can be found.
+        /// </summary>
+        public static string AddGatewayText11 {
+            get {
+                return ResourceManager.GetString("AddGatewayText11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If your machines do not support OPC UA, you need to license OPC UA adapter software from one of our connectivity partners and run it on your gateway. Please reach out to Softing, Iconics, Matrikon, CopaData or PTC..
+        /// </summary>
+        public static string AddGatewayText12 {
+            get {
+                return ResourceManager.GetString("AddGatewayText12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alternatively, you can setup a VM in your on-premises datacenter. For gateway Operating System, we recommend Windows 10 IoT Enterprise LTSC 2019 or Ubuntu Linux 18.04 LTS. A full list of IoT Edge compatible operating systems can be found.
+        /// </summary>
+        public static string AddGatewayText2 {
+            get {
+                return ResourceManager.GetString("AddGatewayText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect your gateway to both the Internet and your production network..
+        /// </summary>
+        public static string AddGatewayText3 {
+            get {
+                return ResourceManager.GetString("AddGatewayText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Then, from your gateway, run the Industrial IoT Gateway Installer from.
+        /// </summary>
+        public static string AddGatewayText4 {
+            get {
+                return ResourceManager.GetString("AddGatewayText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for Windows 10 or download and run it from.
+        /// </summary>
+        public static string AddGatewayText5 {
+            get {
+                return ResourceManager.GetString("AddGatewayText5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for Linux. This will setup IoT Edge and the Industrial IoT Edge modules OPC Twin and OPC Publisher. Your IoT Hub for this Connected Factory is called  .
+        /// </summary>
+        public static string AddGatewayText6 {
+            get {
+                return ResourceManager.GetString("AddGatewayText6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For the network to use with IoT Edge, select your production network..
+        /// </summary>
+        public static string AddGatewayText7 {
+            get {
+                return ResourceManager.GetString("AddGatewayText7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next, click the Browser page of this Connected Factory and your gateway will show up. Enable scanning to find OPC UA-enabled machines on your production network. After a minute or so, refresh the page and any discovered machines will show up when you click the endpoints button next to your gateway name..
+        /// </summary>
+        public static string AddGatewayText8 {
+            get {
+                return ResourceManager.GetString("AddGatewayText8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable browse on the machine endpoint you want to use to connect, browse the OPC UA data nodes and right click a node to publish time-series telemetry for that node into this Connected Factory. The time-series data can then be viewed in the Time Series Insights Explorer accessed through clicking on the graph flyout on the main page of this Connected Factory..
+        /// </summary>
+        public static string AddGatewayText9 {
+            get {
+                return ResourceManager.GetString("AddGatewayText9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect your own production line to this Connected Factory.
         /// </summary>
         public static string AddGatewayTitle {
             get {
@@ -1529,6 +1627,15 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to here.
+        /// </summary>
+        public static string Here {
+            get {
+                return ResourceManager.GetString("Here", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Implicit Read-Only.
         /// </summary>
         public static string ImplicitReadOnlyRole {
@@ -1673,7 +1780,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Gateway.
+        ///   Looks up a localized string similar to Connect production line.
         /// </summary>
         public static string NavigationMenuAddGateway {
             get {
@@ -2267,7 +2374,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect gateway.
+        ///   Looks up a localized string similar to Connect production line.
         /// </summary>
         public static string TitleAddGateway {
             get {

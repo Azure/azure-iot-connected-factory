@@ -911,16 +911,15 @@ Stack trace:
     <comment>Message</comment>
   </data>
   <data name="NavigationMenuAddGateway" xml:space="preserve">
-    <value>Add Gateway</value>
+    <value>Connect production line</value>
     <comment>Navigation menu item label.</comment>
   </data>
-  <data name="AddGatewayBodyPoint1" xml:space="preserve">
-    <value>&lt;div&gt;Instructions can be found &lt;a target="_blank" aria-label="Instruction can be found here" style="text-decoration:underline !important" href="https://docs.microsoft.com/en-us/azure/iot-accelerators/howto-opc-twin-deploy-modules"&gt;here&lt;/a&gt;.&lt;/div&gt;
- &lt;div&gt;Instructions for editing assembly line information can be found &lt;a target="_blank" aria-label="Instruction for editing assembly line information can be found here link" style="text-decoration:underline !important" href="https://go.microsoft.com/fwlink/p/?linkid=846688"&gt;here&lt;/a&gt;.&lt;/div&gt;</value>
-    <comment>AddGatewayBodyPoint1</comment>
+  <data name="AddGatewayText1" xml:space="preserve">
+    <value>To connecting your own production line, you first need to purchase an industrial gateway capable of running IoT Edge from one of our partners. See our Azure IoT Device Catalog for a list</value>
+    <comment>Message</comment>
   </data>
   <data name="AddGatewayTitle" xml:space="preserve">
-    <value>Connect your own gateway</value>
+    <value>Connect your own production line to this Connected Factory</value>
     <comment>Label</comment>
   </data>
   <data name="BrowserContextPanelHeaderAttributes" xml:space="preserve">
@@ -1027,7 +1026,7 @@ Stack trace:
     <comment>Label</comment>
   </data>
   <data name="TitleAddGateway" xml:space="preserve">
-    <value>Connect gateway</value>
+    <value>Connect production line</value>
     <comment>message</comment>
   </data>
   <data name="TitleAddOpcServer" xml:space="preserve">
@@ -1141,5 +1140,43 @@ Stack trace:
   <data name="BrowserErrorInfo" xml:space="preserve">
     <value>ErrorInfo:</value>
     <comment>Label</comment>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>here</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AddGatewayText10" xml:space="preserve">
+    <value>Manual instructions for setting up IoT Edge with the Industrial IoT Edge modules OPC Twin and OPC Publisher can be found</value>
+  </data>
+  <data name="AddGatewayText11" xml:space="preserve">
+    <value>Instructions for editing production line information for display on the main page of this Connected Factory can be found</value>
+  </data>
+  <data name="AddGatewayText12" xml:space="preserve">
+    <value>If your machines do not support OPC UA, you need to license OPC UA adapter software from one of our connectivity partners and run it on your gateway. Please reach out to Softing, Iconics, Matrikon, CopaData or PTC.</value>
+  </data>
+  <data name="AddGatewayText2" xml:space="preserve">
+    <value>Alternatively, you can setup a VM in your on-premises datacenter. For gateway Operating System, we recommend Windows 10 IoT Enterprise LTSC 2019 or Ubuntu Linux 18.04 LTS. A full list of IoT Edge compatible operating systems can be found</value>
+    <comment>Message</comment>
+  </data>
+  <data name="AddGatewayText3" xml:space="preserve">
+    <value>Connect your gateway to both the Internet and your production network.</value>
+  </data>
+  <data name="AddGatewayText4" xml:space="preserve">
+    <value>Then, from your gateway, run the Industrial IoT Gateway Installer from</value>
+  </data>
+  <data name="AddGatewayText5" xml:space="preserve">
+    <value>for Windows 10 or download and run it from</value>
+  </data>
+  <data name="AddGatewayText6" xml:space="preserve">
+    <value>for Linux. This will setup IoT Edge and the Industrial IoT Edge modules OPC Twin and OPC Publisher. Your IoT Hub for this Connected Factory is called  </value>
+  </data>
+  <data name="AddGatewayText7" xml:space="preserve">
+    <value>For the network to use with IoT Edge, select your production network.</value>
+  </data>
+  <data name="AddGatewayText8" xml:space="preserve">
+    <value>Next, click the Browser page of this Connected Factory and your gateway will show up. Enable scanning to find OPC UA-enabled machines on your production network. After a minute or so, refresh the page and any discovered machines will show up when you click the endpoints button next to your gateway name.</value>
+  </data>
+  <data name="AddGatewayText9" xml:space="preserve">
+    <value>Enable browse on the machine endpoint you want to use to connect, browse the OPC UA data nodes and right click a node to publish time-series telemetry for that node into this Connected Factory. The time-series data can then be viewed in the Time Series Insights Explorer accessed through clicking on the graph flyout on the main page of this Connected Factory.</value>
   </data>
 </root>

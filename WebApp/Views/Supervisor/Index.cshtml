@@ -63,7 +63,7 @@
                                 {
                                     <td id="supervisor_button@(i)" class="table_content">
                                         <label class="label">
-                                            @Html.ActionLink(Strings.ButtonEndpoints, "Start", "Browser", new { supervisorId = @supervisor.supervisorModel.Id }, new { @class = "btn btn-default btn_browser", @role = "button" })
+                                            @Html.ActionLink(@Strings.ButtonEndpoints, "Start", "Browser", new { supervisorId = @supervisor.supervisorModel.Id }, new { @class = "dashboard_link" })
                                         </label>
                                     </td>
                                 }

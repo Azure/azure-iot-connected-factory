@@ -610,11 +610,16 @@ div.selector-container {
     font-size: @children-listitem-text-size !important;
 }
 
-/*.form-control:focus {
-    border-color: @navigation-background-color;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-}*/
+.dashboard_link {
+    font-size: @font-size-text;
+    font-family: "Selawik";
+    text-decoration: underline !important;
+    color: @lightest-gray !important;
+
+    &:hover, :focus {
+        color: white !important;
+    }
+}
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
     background-color: dashboard@secondary-color;
