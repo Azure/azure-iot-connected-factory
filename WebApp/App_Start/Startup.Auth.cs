@@ -56,6 +56,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp
                         RedirectToIdentityProvider = context =>
                         {
                             Trace.TraceInformation("ConfigureAuth: RedirectToIdentityProvider - ClientId: {0}", context.ProtocolMessage.ClientId);
+                            context.ProtocolMessage.RedirectUri = context.Request.Scheme + "://" + context.Request.Host.ToString();
                             return Task.FromResult(0);
                         },
                         SecurityTokenReceived = context =>
