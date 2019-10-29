@@ -1,0 +1,95 @@
+﻿@using GlobalResources;
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models
+@using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security
+
+@model OpcSessionModel
+
+
+    <table class="table_container_twin">
+        <thead>
+            <tr>
+                <th class="table_header">@Strings.SupervisorHeaderId</th>
+                <th class="table_header">@Strings.SupervisorHeaderConnStatus</th>
+                <th class="table_header">@Strings.SupervisorScanStatus</th>
+                <th class="table_header">@Strings.TableHeaderScan</th>
+                <th class="table_header">@Strings.TableHeaderPort</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 0;}
+            @{ string toggleLabel = null;}
+            @{ string connectStatus = Strings.supervisorDisconnected;}
+            @if (Model.supervisorList != null)
+            {
+                foreach (var supervisor in Model.supervisorList)
+                {
+                    <tr class="table_ListItem_container">
+                        <td id="supervisor_table_content_id@(i)" class="table_content">
+                            @supervisor.supervisorModel.Id
+                        </td>
+                        @if (@supervisor.supervisorModel.Connected == true)
+                        {
+                            connectStatus = Strings.supervisorConnected;
+                        }
+                        <td id="supervisor_table_content_connStatus@(i)" class="table_content">
+                            @connectStatus
+                        </td>
+                        <td id="supervisor_table_content@(i)" class="table_content">
+                            <label class="label">
+                                <div class="toggle">
+                                    @if (@supervisor.supervisorModel.Discovery.ToString() == "Fast")
+                                    {
+                                        <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" checked="checked" value="@supervisor.supervisorModel.Id" onchange="checkToggle(this, @i)" />
+
+                                        toggleLabel = Strings.ScanToggleOn;
+                                    }
+                                    else
+                                    {
+                                        <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" value="@supervisor.supervisorModel.Id" onchange="checkToggle(this, @i)" />
+
+                                        toggleLabel = Strings.ScanToggleOff;
+                                    }
+                                    <div class="toggle-inner">
+                                        <div class="indicator"></div>
+                                    </div>
+                                    <div class="active-bg"></div>
+                                </div>
+                                <div id="label-text@(i)" class="label-text">@toggleLabel</div>
+                            </label>
+                        </td>
+                        <td>
+                            @if ((@supervisor.supervisorModel.DiscoveryConfig != null) && (@supervisor.supervisorModel.DiscoveryConfig.AddressRangesToScan != "") && (@supervisor.supervisorModel.DiscoveryConfig.AddressRangesToScan != null))
+                            {
+                                <a href="#" id="address@(i)" class="table_content_link" onclick="openPanel(@i)">@supervisor.supervisorModel.DiscoveryConfig.AddressRangesToScan</a>
+
+                            }
+                            else
+                            {
+                                <a href="#" id="address@(i)" class="table_content_link" onclick="openPanel(@i)">@Strings.Default</a>
+                            }
+                        </td>
+                        <td>
+                            @if ((@supervisor.supervisorModel.DiscoveryConfig != null) && (@supervisor.supervisorModel.DiscoveryConfig.PortRangesToScan != "") && (@supervisor.supervisorModel.DiscoveryConfig.PortRangesToScan != null))
+                            {
+                                <a href="#" id="port@(i)" class="table_content_link" onclick="openPanel(@i)">@supervisor.supervisorModel.DiscoveryConfig.PortRangesToScan</a>
+
+                            }
+                            else
+                            {
+                                <a href="#" id="port@(i)" class="table_content_link" onclick="openPanel(@i)">@Strings.Default</a>
+                            }
+                        </td>
+                        @if (supervisor.HasApplication == true)
+                        {
+                            <td id="supervisor_button@(i)" class="table_content">
+                                <label class="label">
+                                    @Html.ActionLink(@Strings.ButtonEndpoints, "Start", "Browser", new { supervisorId = @supervisor.supervisorModel.Id }, new { @class = "dashboard_link" })
+                                </label>
+                            </td>
+                        }
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>

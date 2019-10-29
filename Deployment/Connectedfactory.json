@@ -1001,6 +1001,7 @@
       "properties": {
         "serverFarmId": "[variables('webPlanName')]",
         "siteConfig": {
+          "minTlsVersion": "1.2",
           "AlwaysOn": "[parameters('webPlanAlwaysOn')]"
         }
       },
@@ -1170,7 +1171,8 @@
             "clientAffinityEnabled": false,
             "serverFarmId": "[variables('hostingPlanName')]",
             "siteConfig": {
-                "appSettings": [
+              "minTlsVersion": "1.2",  
+              "appSettings": [
                     {
                         "name": "REMOTE_ENDPOINT",
                         "value": "[concat('https://', reference(variables('publicIPName')).dnsSettings.fqdn)]"

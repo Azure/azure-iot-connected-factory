@@ -23,7 +23,7 @@
                 <tbody>
                     @{ int i = 0;}
                     @{ string toggleLabel = null;}
-                    @if (Model.endpointList != null)
+                    @if (Model.endpointList != null && Model.endpointList.Count != 0)
                     {
                         foreach (var endpoint in Model.endpointList)
                         {
@@ -69,6 +69,12 @@
                             </tr>
                             i++;
                         }
+                    }
+                    else
+                    {
+                        <tr class="table_ListItem_container">
+                            <td>no machines found</td>
+                        </tr>
                     }
                 </tbody>
             </table>
