@@ -56,10 +56,12 @@
                             )
                         </label><br>
                         <input aria-label="addressRange" id="ipAddressMask" type="text" class="form-control" placeholder="IP-address/netmask">
+                        <div id="errorIpRange" hidden>@Strings.InvalidInput</div>
                     </div>
                     <div class="form-group context-panel-data">
                         <label>@Strings.PortRangeLabel</label><br>
                         <input aria-label="portRange" id="portRange" type="text" class="form-control" placeholder="StartPort-EndPort">
+                        <div id="errorPortRange" hidden>@Strings.InvalidInput</div>
                     </div>
                     <hr />
                     <div class="node-contextPanel-button-position">
@@ -122,7 +124,36 @@
     }
 
     function apply() {
+        $("#errorIpRange").hide();
+        $("#errorPortRange").hide();
         setScanSupervisor(supervisors[currentSupervisor].supervisorModel.id, true, supervisors[currentSupervisor]);
+    }
+
+    function isValidIpRange(input) {
+        var isValid = false;
+        var ipAddress = input.substring(0, input.indexOf("/"));
+
+        if (input === "") {
+            isValid = true;
+        }
+        else {
+            isValid = /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/.test(ipAddress);
+        }   
+        return isValid;
+    }
+
+    function isValidPortRange(input) {
+        var isValid = false;
+        var portAddress1 = input.substring(0, input.indexOf("-"));
+        var portAddress2 = input.substring(input.indexOf("-") + 1);
+
+        if (input === "") {
+            isValid = true;
+        } else {
+            isValid = (parseInt(portAddress1) >= 0 && parseInt(portAddress1) <= 65535) &&
+                      (parseInt(portAddress2) >= 0 && parseInt(portAddress2) <= 65535);
+        }
+        return isValid;
     }
  
     function setScanSupervisor(supervisorId, scanStatus, supervisor) {
@@ -144,7 +175,6 @@
 
         } else {
             if (supervisor.supervisorModel.hasOwnProperty('discoveryConfig')) {
-                console.log("DiscoveryConfig")
                 if (supervisor.supervisorModel.discoveryConfig.hasOwnProperty('addressRangesToScan')) {
                     ipMask = supervisor.supervisorModel.discoveryConfig.addressRangesToScan;
                 } else {
@@ -157,6 +187,15 @@
                     portRange = "";
                 }
             }
+        }
+
+        if (isValidIpRange(ipMask) === false) {
+            $("#errorIpRange").show();
+            return;
+        }
+        if (isValidPortRange(portRange) === false) {
+            $("#errorPortRange").show();
+            return;
         }
 
         $.post({

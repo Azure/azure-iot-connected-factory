@@ -1211,4 +1211,8 @@ Stack trace:
   <data name="AddGatewayText9" xml:space="preserve">
     <value>Enable browse on the machine endpoint you want to use to connect, browse the OPC UA data nodes and right click a node to publish time-series telemetry for that node into this Connected Factory. The time-series data can then be viewed in the Time Series Insights Explorer accessed through clicking on the graph flyout on the main page of this Connected Factory.</value>
   </data>
+  <data name="InvalidInput" xml:space="preserve">
+    <value>InvalidInput</value>
+    <comment>Error Message</comment>
+  </data>
 </root>
