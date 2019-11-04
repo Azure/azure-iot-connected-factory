@@ -263,7 +263,7 @@ Function ValidateLocation()
 
 Function GetResourceGroup()
 {
-    $resourceGroup = Find-AzureRmResourceGroup -Tag @{"IotSuiteType" = $script:SuiteType} | ?{$_.Name -eq $script:SuiteName}
+    $resourceGroup = Get-AzureRmResourceGroup -Tag @{"IotSuiteType" = $script:SuiteType} | ?{$_.Name -eq $script:SuiteName}
     if ($resourceGroup -eq $null)
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) No resource group found with name '{0}' and type '{1}'" -f $script:SuiteName, $script:SuiteType)
@@ -355,7 +355,7 @@ Function ValidateResourceName()
     
     # Return name for existing resource if exists
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check if Azure resource: '{0}' (type: '{1}') exists in resource group '{2}'" -f $resourceBaseName, $resourceType, $resourceGroupName)
-    $resources = Find-AzureRmResource -ResourceGroupNameContains $script:ResourceGroupName -ResourceType $resourceType -ResourceNameContains $resourceBaseName
+    $resources = Get-AzureRmResource -ResourceGroupName "*$script:ResourceGroupName*" -ResourceType $resourceType -Name "*$resourceBaseName*"
     if ($resources -ne $null -and $allowNameReuse)
     {
         Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Found the resource. Validating exact naming.")
@@ -784,7 +784,7 @@ Function CreateAadClientSecret()
 {
     $newPassword = RandomPassword
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - New Password: {0}" -f $newPassword)
-    Remove-AzureRmADAppCredential -ApplicationId $script:AadClientId -All -Force -ErrorAction SilentlyContinue
+    Remove-AzureRmADAppCredential -ApplicationId $script:AadClientId -Force -ErrorAction SilentlyContinue
     # create new secret for web app, $secret is converted to PSAD type
     # keep $newPassword to be returned as a string
     $secret = $newPassword
@@ -1760,7 +1760,7 @@ function SimulationUpdate
     # Find VM 
     try 
     {
-        $vmResource = Get-AzureRmResource -ResourceName $script:VmName -ResourceType Microsoft.Compute/virtualMachines -ResourceGroupName $script:ResourceGroupName
+        $vmResource = Get-AzureRmResource -Name $script:VmName -ResourceType Microsoft.Compute/virtualMachines -ResourceGroupName $script:ResourceGroupName
     }
     catch 
     {
@@ -2657,7 +2657,7 @@ else
 DetectIoTHubDNS
 
 # Initialize cloud related variables
-$script:SuiteExists = (Find-AzureRmResourceGroup -Tag @{"IotSuiteType" = $script:SuiteType} | Where-Object {$_.name -eq $script:SuiteName -or $_.ResourceGroupName -eq $script:SuiteName}) -ne $null
+$script:SuiteExists = (Get-AzureRmResourceGroup -Tag @{"IotSuiteType" = $script:SuiteType} | Where-Object {$_.name -eq $script:SuiteName -or $_.ResourceGroupName -eq $script:SuiteName}) -ne $null
 Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Get resource group name for suiteName '{0}' and suiteType '{1}'" -f $script:SuiteName, $script:SuiteType)
 $script:ResourceGroupName = (GetResourceGroup).ResourceGroupName
 Write-Output ("$(Get-Date –f $TIME_STAMP_FORMAT) - Resourcegroup name is '{0}'" -f $script:ResourceGroupName)
@@ -2680,7 +2680,7 @@ if ($script:Command -eq "updatesimulation")
         throw ("Resource group {0} does not exist." -f $script:ResourceGroupName)
     }
     Write-Verbose ("$(Get-Date –f $TIME_STAMP_FORMAT) - Check if VM exists in resource group '{0}'" -f $script:ResourceGroupName)
-    $vmResource = Find-AzureRmResource -ResourceGroupNameContains $script:ResourceGroupName -ResourceType Microsoft.Compute/VirtualMachines -ResourceNameContains $script:ResourceGroupName -ErrorAction SilentlyContinue
+    $vmResource = Get-AzureRmResource -ResourceGroupName "*$script:ResourceGroupName*" -ResourceType Microsoft.Compute/VirtualMachines -Name "*$script:ResourceGroupName*" -ErrorAction SilentlyContinue
     if ($vmResource -eq $null)
     {
         Write-Error ("$(Get-Date –f $TIME_STAMP_FORMAT) - There is no VM '{0}' in resource group '{1}'." -f $script:ResourceGroupName, $script:ResourceGroupName)
@@ -2705,7 +2705,7 @@ if ($script:SuiteExists)
 
     try 
     {
-        $storageResource = Get-AzureRmResource -ResourceName $script:StorageAccount.StorageAccountName -ResourceType Microsoft.´Storage/storageAccounts -ResourceGroupName $script:ResourceGroupName
+        $storageResource = Get-AzureRmResource -Name $script:StorageAccount.StorageAccountName -ResourceType Microsoft.´Storage/storageAccounts -ResourceGroupName $script:ResourceGroupName
         $script:StorageSkuName = $storageResource.Sku.name
         $script:StorageKind = $storageResource.Kind
     }
@@ -2713,14 +2713,14 @@ if ($script:SuiteExists)
 
     try 
     {
-        $iotHubResource = Get-AzureRmResource -ResourceName $script:IoTHubName -ResourceType Microsoft.Devices/IoTHubs -ResourceGroupName $script:ResourceGroupName
+        $iotHubResource = Get-AzureRmResource -Name $script:IoTHubName -ResourceType Microsoft.Devices/IoTHubs -ResourceGroupName $script:ResourceGroupName
         $script:IoTHubSkuName = $iotHubResource.Sku.name
     }
     catch {}
 
     try 
     {
-        $webResource = Get-AzureRmResource -ResourceName $script:WebsiteName -ResourceType Microsoft.Web/sites -ResourceGroupName $script:ResourceGroupName
+        $webResource = Get-AzureRmResource -Name $script:WebsiteName -ResourceType Microsoft.Web/sites -ResourceGroupName $script:ResourceGroupName
         $webPlanResource = Get-AzureRmResource -ResourceId $webResource.Properties.serverFarmId
         $script:WebPlanSkuName = $webPlanResource.sku.name
         $script:WebWorkerSize = $webPlanResource.containerSize
@@ -2730,14 +2730,14 @@ if ($script:SuiteExists)
 
     try 
     {
-        $vmResource = Get-AzureRmResource -ResourceName $script:VmName -ResourceType Microsoft.Compute/virtualMachines -ResourceGroupName $script:ResourceGroupName
+        $vmResource = Get-AzureRmResource -Name $script:VmName -ResourceType Microsoft.Compute/virtualMachines -ResourceGroupName $script:ResourceGroupName
         $script:VmSize = $vmResource.Properties.hardwareProfile.vmSize
     }
     catch {}
 
     try 
     {
-        $rdxResource = Get-AzureRmResource -ResourceName $script:RdxName -ResourceType Microsoft.TimeseriesInsights/environments -ResourceGroupName $script:ResourceGroupName
+        $rdxResource = Get-AzureRmResource -Name $script:RdxName -ResourceType Microsoft.TimeseriesInsights/environments -ResourceGroupName $script:ResourceGroupName
         $script:RdxEnvironmentSkuName = $rdxResource.Sku.name
     }
     catch {}
