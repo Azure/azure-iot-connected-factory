@@ -1141,6 +1141,38 @@ Stack trace:
     <value>ErrorInfo:</value>
     <comment>Label</comment>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+    <comment>Label</comment>
+  </data>
+  <data name="PortRangeLabel" xml:space="preserve">
+    <value>Port range</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ScanHeader" xml:space="preserve">
+    <value>Scan IP address range</value>
+    <comment>Message</comment>
+  </data>
+  <data name="ScanLabel" xml:space="preserve">
+    <value>Mask address range</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ScanMessage1" xml:space="preserve">
+    <value>Enter address range to scan.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="ScanMessage2" xml:space="preserve">
+    <value>To apply default config leave the input field blank and click on apply</value>
+    <comment>Message</comment>
+  </data>
+  <data name="TableHeaderPort" xml:space="preserve">
+    <value>Port Range</value>
+    <comment>Label</comment>
+  </data>
+  <data name="TableHeaderScan" xml:space="preserve">
+    <value>Scan Mask</value>
+    <comment>Label</comment>
+  </data>
   <data name="Here" xml:space="preserve">
     <value>here</value>
     <comment>Label</comment>
@@ -1178,5 +1210,9 @@ Stack trace:
   </data>
   <data name="AddGatewayText9" xml:space="preserve">
     <value>Enable browse on the machine endpoint you want to use to connect, browse the OPC UA data nodes and right click a node to publish time-series telemetry for that node into this Connected Factory. The time-series data can then be viewed in the Time Series Insights Explorer accessed through clicking on the graph flyout on the main page of this Connected Factory.</value>
+  </data>
+  <data name="InvalidInput" xml:space="preserve">
+    <value>InvalidInput</value>
+    <comment>Error Message</comment>
   </data>
 </root>

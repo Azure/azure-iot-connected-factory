@@ -1001,6 +1001,7 @@
       "properties": {
         "serverFarmId": "[variables('webPlanName')]",
         "siteConfig": {
+          "minTlsVersion": "1.2",
           "AlwaysOn": "[parameters('webPlanAlwaysOn')]"
         }
       },
@@ -1169,6 +1170,7 @@
             "enabled": true,
             "clientAffinityEnabled": false,
             "serverFarmId": "[variables('hostingPlanName')]",
+            "minTlsVersion": "1.2",
             "siteConfig": {
                 "appSettings": [
                     {

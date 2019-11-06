@@ -7039,6 +7039,16 @@ main {
   background-color: #1B1D1F;
   padding-bottom: 36px;
 }
+.dashboard_link {
+  font-size: 14px !important;
+  font-family: "Selawik";
+  text-decoration: underline !important;
+  color: #AFB9C3 !important;
+}
+.dashboard_link:hover,
+.dashboard_link :focus {
+  color: white !important;
+}
 /* 
  *  dashboard children list
 */
@@ -7536,7 +7546,7 @@ div.selector-container {
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
-  background-color: dashboard #121416;
+  background-color: #121416;
 }
 .dropdown-menu > li > a {
   color: white;
@@ -8742,6 +8752,14 @@ input[type="checkbox"] {
   font-size: 14px;
   word-wrap: break-word;
   color: white;
+}
+.table_content_link {
+  margin-right: 10px;
+  padding-left: 8px;
+  margin-top: 4px;
+  font-size: 14px;
+  word-wrap: break-word;
+  text-decoration: underline !important;
 }
 .table_ListItem_container {
   padding-top: 0px;

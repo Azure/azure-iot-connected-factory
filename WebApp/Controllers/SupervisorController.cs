@@ -1,26 +1,15 @@
 ﻿using GlobalResources;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Contoso;
-using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Helpers;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Models;
 using Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Security;
-using Newtonsoft.Json;
-using Opc.Ua;
-using Opc.Ua.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 
 namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
 {
     using Microsoft.Azure.IIoT.OpcUa.Api.Registry.Models;
-    using Microsoft.Azure.IIoT.OpcUa.Api.Twin.Models;
     using static Startup;
 
     [OutputCache(CacheProfile = "NoCacheProfile")]
@@ -34,8 +23,21 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         [RequirePermission(Permission.BrowseOpcServer)]
         public ActionResult Index()
         {
-            List<Supervisor> supervisorList = new List<Supervisor>();
             OpcSessionModel sessionModel = new OpcSessionModel();
+
+            sessionModel.supervisorList = GetSupervisors();
+            return View("Index", sessionModel);
+        }
+
+        /// <summary>
+        /// Post form method to set scan option.
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken(Order = 1)]
+        [RequirePermission(Permission.ControlOpcServer)]
+        public List<Supervisor> GetSupervisors()
+        {
+            List<Supervisor> supervisorList = new List<Supervisor>();
             Session["EndpointId"] = null;
 
             try
@@ -70,8 +72,22 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
                 Trace.TraceWarning(errorMessage);
             }
 
-            sessionModel.supervisorList = supervisorList;
-            return View("Index", sessionModel);
+            return supervisorList;
+        }
+
+        /// <summary>
+        /// Post form method to update session model.
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken(Order = 1)]
+        [RequirePermission(Permission.ControlOpcServer)]
+        public ActionResult UpdateModel()
+        {
+            OpcSessionModel sessionModel = new OpcSessionModel();
+
+            sessionModel.supervisorList = GetSupervisors();
+            ModelState.Clear();
+            return PartialView("_SupervisorList", sessionModel);
         }
 
         /// <summary>
@@ -80,9 +96,22 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken(Order = 1)]
         [RequirePermission(Permission.ControlOpcServer)]
-        public void SetScanStatus(string supervisorId, string scanStatus)
+        public void SetScanStatus(string supervisorId, string scanStatus, string ipMask, string portRange)
         {
             SupervisorUpdateApiModel model = new SupervisorUpdateApiModel();
+            model.DiscoveryConfig = new DiscoveryConfigApiModel();
+            model.DiscoveryConfig.AddressRangesToScan = "";
+            model.DiscoveryConfig.PortRangesToScan = "";
+
+
+            if ((ipMask != null) && (ipMask != string.Empty))
+            {
+                model.DiscoveryConfig.AddressRangesToScan = ipMask;
+            }
+            if ((portRange != null) && (portRange != string.Empty))
+            {
+                model.DiscoveryConfig.PortRangesToScan = portRange;
+            }
 
             if (scanStatus == "true")
             {

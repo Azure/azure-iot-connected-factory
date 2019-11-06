@@ -10,69 +10,10 @@
         <div class="browser_connect_header_text overflow">@Strings.SupervisorSelect</div>
     </div>
     <div class="row browser_top_container scrollbar-inner">
-        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-            <table class="table_container_twin">
-                <thead>
-                    <tr>
-                        <th class="table_header">@Strings.SupervisorHeaderId</th>
-                        <th class="table_header">@Strings.SupervisorHeaderConnStatus</th>
-                        <th class="table_header">@Strings.SupervisorScanStatus</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{ int i = 0;}
-                    @{ string toggleLabel = null;}
-                    @{ string connectStatus = Strings.supervisorDisconnected;}
-                    @if (Model.supervisorList != null)
-                    {
-                        foreach (var supervisor in Model.supervisorList)
-                        {
-                            <tr  class="table_ListItem_container">
-                                <td id="supervisor_table_content_id@(i)" class="table_content">
-                                    @supervisor.supervisorModel.Id
-                                </td>
-                                @if (@supervisor.supervisorModel.Connected == true)
-                                {
-                                    connectStatus = Strings.supervisorConnected;
-                                }
-                                <td id="supervisor_table_content_connStatus@(i)" class="table_content">
-                                    @connectStatus
-                                </td>
-                                <td id="supervisor_table_content@(i)" class="table_content">
-                                    <label class="label">
-                                        <div class="toggle">
-                                            @if (@supervisor.supervisorModel.Discovery.ToString() == "Fast")
-                                            {
-                                                <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" checked="checked" value="@supervisor.supervisorModel.Id" onchange="checkToggle(this, @i)" />
-                                                toggleLabel = Strings.ScanToggleOn;
-                                            }
-                                            else
-                                            {
-                                                <input id="toggle@(i)" class="toggle-state" type="checkbox" name="check" value="@supervisor.supervisorModel.Id" onchange="checkToggle(this, @i)" />
-                                                toggleLabel = Strings.ScanToggleOff;
-                                            }
-                                            <div class="toggle-inner">
-                                                <div class="indicator"></div>
-                                            </div>
-                                            <div class="active-bg"></div>
-                                        </div>
-                                        <div id="label-text@(i)" class="label-text">@toggleLabel</div>
-                                    </label>
-                                </td>
-                                @if (supervisor.HasApplication == true)
-                                {
-                                    <td id="supervisor_button@(i)" class="table_content">
-                                        <label class="label">
-                                            @Html.ActionLink(@Strings.ButtonEndpoints, "Start", "Browser", new { supervisorId = @supervisor.supervisorModel.Id }, new { @class = "dashboard_link" })
-                                        </label>
-                                    </td>
-                                }
-                            </tr>
-                            i++;
-                        }
-                    }
-                </tbody>
-            </table>
+        <div id="partial" class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+            @{
+                Html.RenderPartial("_SupervisorList", Model);
+            }
             <div class="row browser_browse_disconnect_button">
                 @Html.ActionLink(@Strings.ButtonBack, "Index", "Dashboard", null, new { @class = "btn btn-default btn_browser", @role = "button" })
             </div>
@@ -92,14 +33,55 @@
             </div>
         </div>
     </div>
+
+    <div id="scanContextPanel" class="overlay">
+        <div class="overlay-scroll scrollbar-macosx">
+            <div class="dashboard_contextpanel_header">
+                <div class="dashboard_contextpanel_header_text">@Strings.ScanHeader</div>
+            </div>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="$('#scanContextPanel').addClass('overlay-close')"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg"></a>
+
+            <div class="overlay-content list-group">
+                <div class="list-group-item text-left list-group-item-heading">
+                    <b>@Strings.ScanMessage1</b>
+                    <br><b>@Strings.ScanMessage2</b>
+                </div>
+                <hr />
+                <div class="list-group-item text-left">
+                    <form class="form-inline" role="form" id="variableWrite">
+                        <div class="form-group context-panel-data">
+                            <label>
+                                @Strings.ScanLabel (
+                                <a style="display:inline" target="_blank" class="dashboard_link" href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing">CIDR notation</a>
+                                )
+                            </label><br>
+                            <input aria-label="addressRange" id="ipAddressMask" type="text" class="form-control" placeholder="IP-address/netmask">
+                            <div id="errorIpRange" hidden>@Strings.InvalidInput</div>
+                        </div>
+                        <div class="form-group context-panel-data">
+                            <label>@Strings.PortRangeLabel</label><br>
+                            <input aria-label="portRange" id="portRange" type="text" class="form-control" placeholder="StartPort-EndPort">
+                            <div id="errorPortRange" hidden>@Strings.InvalidInput</div>
+                        </div>
+                        <hr />
+                        <div class="node-contextPanel-button-position">
+                            <button onclick="apply()" type="button" class="btn btn-default btn_browser_contextpanel">@Strings.FilterApply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         jQuery('.scrollbar-macosx').scrollbar();
         // initialize all context panels to default state closed
         $("#contextpanel").addClass("overlay-close").removeClass("overlay-right-open");
         $("#errorContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
+        $("#scanContextPanel").addClass("overlay-close").removeClass("overlay-right-open");
 
         @if (!PermsChecker.HasPermission(Permission.ControlOpcServer))
         {
@@ -112,48 +94,7 @@
         }
     });
 
-
-    function checkToggle(element, index) {
-        if (element.checked == true) {
-             $("#label-text" + index).html('@Strings.ScanToggleOn');
-        } else {
-            $("#label-text" + index).html('@Strings.ScanToggleOff');
-        }
-
-        setScanSupervisor(element.value, element.checked);
-    }
-
-    function setScanSupervisor(supervisorId, scanStatus) {
-        $.post({
-            url: "/Supervisor/SetScanStatus",
-            data: { __RequestVerificationToken: $('[name=__RequestVerificationToken]').val(), supervisorId: supervisorId, scanStatus: scanStatus },
-            success: function onSuccess(response) {
-            },
-            error: function (response) {
-                console.error("error setting scan status: ", response.d, response.responseText);
-                onFailure(response);
-            },
-            complete: function () {
-            }
-        });
-    }
-
     var title = "@Strings.TitleBrowser";
 
-    function onFailure(response) {
-        $("#contextpanel").html("@Strings.Error");
-        $("#errorContextPanel").show();
-        $("#errorHeader").html(sessionModel.ErrorHeader);
-        $("#errorMessage").html(sessionModel.ErrorMessage);
-        $("#proceedButton").hide();
-        $("#cancelButton").hide();
-        $(".dashboard-cancel-icon").show();
-        $(".dashboard_contextpanel_select_filter_button").css({ "margin-left": marginLeft });
-    }
-
-    function closetContextPanel() {
-        $("#contextpanel").addClass("overlay-close").removeClass("overlay-right-open");
-    }
 </script>
-
 

@@ -1100,6 +1100,7 @@
     <Content Include="Views\Dashboard\_ChildrenMap.cshtml" />
     <Content Include="Views\AddGateway\Index.cshtml" />
     <Content Include="Views\Supervisor\Index.cshtml" />
+    <Content Include="Views\Supervisor\_SupervisorList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

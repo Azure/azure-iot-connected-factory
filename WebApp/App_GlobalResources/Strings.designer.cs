@@ -1375,6 +1375,15 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string Default {
+            get {
+                return ResourceManager.GetString("Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected factory.
         /// </summary>
         public static string DefaultSolutionName {
@@ -1659,6 +1668,15 @@ namespace GlobalResources {
         public static string Information {
             get {
                 return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to InvalidInput.
+        /// </summary>
+        public static string InvalidInput {
+            get {
+                return ResourceManager.GetString("InvalidInput", resourceCulture);
             }
         }
         
@@ -2266,11 +2284,56 @@ namespace GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Port range.
+        /// </summary>
+        public static string PortRangeLabel {
+            get {
+                return ResourceManager.GetString("PortRangeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read-Only.
         /// </summary>
         public static string ReadOnlyRole {
             get {
                 return ResourceManager.GetString("ReadOnlyRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan IP address range.
+        /// </summary>
+        public static string ScanHeader {
+            get {
+                return ResourceManager.GetString("ScanHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mask address range.
+        /// </summary>
+        public static string ScanLabel {
+            get {
+                return ResourceManager.GetString("ScanLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter address range to scan..
+        /// </summary>
+        public static string ScanMessage1 {
+            get {
+                return ResourceManager.GetString("ScanMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To apply default config leave the input field blank and click on apply.
+        /// </summary>
+        public static string ScanMessage2 {
+            get {
+                return ResourceManager.GetString("ScanMessage2", resourceCulture);
             }
         }
         
@@ -2370,6 +2433,24 @@ namespace GlobalResources {
         public static string SupervisorSelect {
             get {
                 return ResourceManager.GetString("SupervisorSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port Range.
+        /// </summary>
+        public static string TableHeaderPort {
+            get {
+                return ResourceManager.GetString("TableHeaderPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan Mask.
+        /// </summary>
+        public static string TableHeaderScan {
+            get {
+                return ResourceManager.GetString("TableHeaderScan", resourceCulture);
             }
         }
         
