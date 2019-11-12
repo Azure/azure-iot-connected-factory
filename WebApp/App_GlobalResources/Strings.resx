@@ -1154,15 +1154,15 @@ Stack trace:
     <comment>Message</comment>
   </data>
   <data name="ScanLabel" xml:space="preserve">
-    <value>Mask address range</value>
+    <value>Address range</value>
     <comment>Label</comment>
   </data>
   <data name="ScanMessage1" xml:space="preserve">
-    <value>Enter address range to scan.</value>
+    <value>Enter an address range to scan.</value>
     <comment>Message</comment>
   </data>
   <data name="ScanMessage2" xml:space="preserve">
-    <value>To apply default config leave the input field blank and click on apply</value>
+    <value>To apply the default config, leave the input field blank and click apply</value>
     <comment>Message</comment>
   </data>
   <data name="TableHeaderPort" xml:space="preserve">

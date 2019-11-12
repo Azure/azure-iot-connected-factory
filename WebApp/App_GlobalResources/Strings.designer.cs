@@ -2311,7 +2311,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mask address range.
+        ///   Looks up a localized string similar to Address range.
         /// </summary>
         public static string ScanLabel {
             get {
@@ -2320,7 +2320,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter address range to scan..
+        ///   Looks up a localized string similar to Enter an address range to scan..
         /// </summary>
         public static string ScanMessage1 {
             get {
@@ -2329,7 +2329,7 @@ namespace GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To apply default config leave the input field blank and click on apply.
+        ///   Looks up a localized string similar to To apply the default config, leave the input field blank and click apply.
         /// </summary>
         public static string ScanMessage2 {
             get {
