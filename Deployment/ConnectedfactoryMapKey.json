@@ -549,7 +549,7 @@
         "iotHubKeyName": "iothubowner",
         "iotHubContainerName": "[parameters('iotHubName')]",
         "iotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('iotHubKeyName'))]",
-        "rdxVersion": "2017-02-28-preview",
+        "rdxVersion": "2017-11-15",
         "rdxCGName": "rdxcg",
         "telemetryCGName": "telemetrycg",
         "rdxIotHubKeyName": "service",
