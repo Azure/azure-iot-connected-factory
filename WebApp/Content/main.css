@@ -7163,6 +7163,7 @@ a {
   font-family: "Selawik";
   padding-top: 15px;
   padding-bottom: 8px;
+  display: inline;
 }
 .dashboard_children_list_header_status {
   padding-left: 15px;
@@ -7271,28 +7272,20 @@ div {
   color: white;
   z-index: 999;
 }
-.tooltiptext {
-  visibility: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  font-size: 20px;
-  width: 80px;
-  height: 20px;
-  font-size: 12px;
-  border-radius: 6px;
-  border: none;
-  background-color: #121416;
-  color: white;
-  z-index: 999;
-  right: 60px;
+.scrollbar-macosx > .scroll-element,
+.scrollbar-macosx > .scroll-element div {
+  background-color: white !important;
 }
-.dashboard_zoom:hover .tooltiptext {
-  visibility: visible;
+.scrollbar-inner > .scroll-element .scroll-bar {
+  background-color: gray !important;
+  opacity: 1 !important;
 }
-.dashboard_zoom:focus .tooltiptext {
-  visibility: visible;
+.scrollbar-inner > .scroll-element .scroll-element_track {
+  background-color: white !important;
+  opacity: 1 !important;
+}
+.tooltip {
+  position: fixed;
 }
 .dashboard_zoom-plus {
   top: 10px;
@@ -7301,6 +7294,9 @@ div {
 .dashboard_zoom-minus {
   top: 60px;
   right: 10px;
+}
+.bootstrap-select .dropdown-menu {
+  height: fit-content;
 }
 /* 
  *  dashboard information area with alerts
@@ -7612,16 +7608,17 @@ div.selector-container {
 .dashboard_contextpanel_select_filter_button,
 .dashboard_contextpanel_select_filter_alert_button {
   position: relative;
-  top: 30px;
+  top: 90px;
 }
 .alert_contextpanel_execute_action_button {
   top: 20px;
   left: 255px;
+  padding-top: 30px;
 }
 .dashboard_contextpanel_clear_filter_button,
 .dashboard_contextpanel_clear_filter_alert_button {
   position: relative;
-  top: 6px;
+  top: 66px;
   left: 255px;
 }
 .alert_contextpanel_timeseries_border {
@@ -7716,6 +7713,23 @@ div.selector-container {
   padding-top: 10px;
   color: #ffffff;
 }
+.background-dropdown {
+  background-color: #121416 !important;
+}
+.float-left {
+  float: left;
+}
+.up {
+  bottom: 0px;
+}
+.dashboard-bottom-space {
+  height: 80px;
+}
+ul#language {
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 /* Large desktop (using definitions from bootstrap)*/
 @media (min-width: 992px) {
   .dashboard_top_container {
@@ -7733,7 +7747,7 @@ div.selector-container {
     background-color: #121416;
   }
   .masthead_text {
-    width: 250px;
+    width: 150px;
   }
 }
 /* Landscape phone to portrait tablet (using definitions from bootstrap)*/
@@ -7745,6 +7759,10 @@ div.selector-container {
   }
   .masthead_text {
     width: 0px;
+    display: none !important;
+  }
+  .up {
+    bottom: 7px;
   }
 }
 /* Landscape phones and down (using definitions from bootstrap)*/
@@ -7795,7 +7813,7 @@ div.selector-container {
 @media (max-height: 850px) {
   .dashboard_contextpanel_select_filter_alert_button {
     position: relative;
-    top: 30px;
+    top: 90px;
   }
   .dashboard_contextpanel_clear_filter_alert_button {
     position: relative;
@@ -8121,7 +8139,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #242628 !important;
+  background: #70787f !important;
 }
 .dashboard-contextpanel-button-color {
   color: #ffffff;
@@ -8138,7 +8156,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #242628 !important;
+  background: #70787f !important;
 }
 .btn.btn-default.btn_dashboard_contextpanel:hover {
   border: 1px dashed #AFB9C3 !important;
@@ -8148,7 +8166,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #242628 !important;
+  background: #70787f !important;
   color: #ffffff;
   background: #383B3E;
   background: #1B1D1F !important;
@@ -8164,7 +8182,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #242628 !important;
+  background: #70787f !important;
 }
 .btn::after .btn-default.btn_dashboard_contextpanel.disabled:hover {
   border: 1px dashed #AFB9C3 !important;
@@ -8184,7 +8202,7 @@ textarea {
   color: white !important;
   font-size: 14px;
   border: 0px;
-  background: #242628 !important;
+  background: #70787f !important;
   color: #ffffff;
   background: #383B3E;
 }
@@ -8200,7 +8218,7 @@ textarea {
   height: 24px;
 }
 .caret {
-  color: #3E4145;
+  color: #AFB9C3;
 }
 /*
     Error styles
@@ -8270,7 +8288,7 @@ textarea {
   height: 48px;
 }
 .navbar-nav > li > .dropdown-menu {
-  background-color: #121416;
+  background-color: #121416 !important;
 }
 .dropdown-menu > li > a {
   color: #AFB9C3;
@@ -8285,12 +8303,12 @@ textarea {
 .dropdown > .masthead_account_container {
   padding-bottom: 0;
   height: 48px;
+  width: 200px !important;
 }
 .masthead_account {
   display: block;
   text-align: right;
   position: relative;
-  float: right;
   font-size: 14px;
 }
 .masthead_account_name {

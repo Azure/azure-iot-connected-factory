@@ -14,6 +14,7 @@
     <script src="~/Scripts/d3.js" charset="utf-8"></script>
     <script src="~/Scripts/c3.js"></script>
     <script src="/signalr/hubs"></script>
+    <script type="text/javascript" src="~/Scripts/StickyTooltip.js"></script>
     <script>'use strict';</script>
 }
 
@@ -43,11 +44,11 @@
                             <div id="image_pushpin@(i)" class="item-point" data-top="@child.ImagePushpin.Top" data-left="@child.ImagePushpin.Left">
                                 @if (Model.ChildrenType == typeof(ContosoOpcUaNode))
                                 {
-                                    <div><a aria-label="pushpin@(i)" class="select" href="#" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');"></a></div>
+                                    <div><a aria-label="@child.Name" class="select" href="#" onclick="javascript:openContextPanelFromNode('@child.Name', '@child.SubKey');"></a></div>
                                 }
                                 else
                                 {
-                                    <div><a aria-label="pushpin@(i)" class="select" href="#" onclick="javascript:gotoChildrenNode('@dashboardUrl');"></a></div>
+                                    <div><a aria-label="@child.Name" class="select" href="#" onclick="javascript:gotoChildrenNode('@dashboardUrl');"></a></div>
                                 }
                                 <div class="dashboard_container_image_text">@child.Name</div>
                             </div>
@@ -95,7 +96,7 @@
         <div class="dashboard_kpi_container col-xs-12 col-sm-12 col-md-4">
             <div class="dashboard_kpi_header row">@Strings.KpiContainerLabel</div>
             <div class="dashboard_kpi_details_group_container row">
-                <div id="kpi1Container" class="dashboard_kpi_details_container col-xs-12 col-sm-6" data-toggle="tooltip" onclick="openChartContextPanel('@Strings.Kpi1Label', '@ContosoPerformanceRelevance.Kpi1');">
+                <div id="kpi1Container" class="dashboard_kpi_details_container col-xs-12 col-sm-6" onclick="openChartContextPanel('@Strings.Kpi1Label', '@ContosoPerformanceRelevance.Kpi1');">
                     <div id="kpi1Label" class="dashboard_kpi_details_header overflow row">@Strings.Kpi1Label</div>
                     <div id="kpi1Chart" class="dashboard_kpi_details_chart_control row"></div>
                 </div>
@@ -112,7 +113,7 @@
             <div class="dashboard_contextpanel_header-big">
                 <div id="dashboardContextpanelGraphHeader" class="dashboard_contextpanel_header_text"></div>
             </div>
-            <a autofocus aria-label="closePanel" href="#" class="closebtn" onclick="closeChartContextPanel();" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a autofocus aria-label="closePanel" href="#" class="closebtn" onclick="closeChartContextPanel();" role="button"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div id="nodeMsgHeader" class="msg-container-header">@Strings.NoDataSeries</div>
             <div id="nodeMsg" class="msg-container"></div>
             <div id="graphHeader" class="graph_header">@Strings.GraphRDXLinkHeader</div>
@@ -138,7 +139,7 @@
             <div class="dashboard_contextpanel_header-big">
                 <div id="alertContextpanelHeader" class="alert_contextpanel_header_text"></div>
             </div>
-            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeAlertContextPanel();" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeAlertContextPanel();" role="button"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             <div class="alert_contextpanel_details_container">
                 <p id="alertDetailAlertId" hidden></p>
                 <div id="alertDetailDescriptionHeader" class="alert_contextpanel_details_label">@Strings.AlertDetailsDescriptionHeader</div>
@@ -206,15 +207,16 @@
             <div class="dashboard_contextpanel_clear_filter_button">
                 <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(topologyListInformation)" value="@Strings.FilterClear">
             </div>
+            <div class="dashboard-bottom-space"></div>
         </div>
     </div>
 
     <div id="dashboardFilterAlertContextpanel" class="overlay">
-        <div class="overlay-scroll scrollbar-macosx">
+        <div class="overlay-scroll scrollbar-inner">
             <div class="dashboard_contextpanel_header">
                 <div class="dashboard_contextpanel_header_text">@Strings.FilterLabel</div>
             </div>
-            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeFilterAlertsPanel()" role="button" ><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
+            <a aria-label="closePanel" href="#" class="closebtn" onclick="closeFilterAlertsPanel()" role="button"><img aria-label="closePanelIcon" class="dashboard-cancel-icon" src="~/Content/img/cancel.svg" hidden></a>
             @for (int i = 0; i < 5; i++)
             {
                 <div class="dashboard_contextpanel_list_container">
@@ -232,6 +234,7 @@
             <div class="dashboard_contextpanel_clear_filter_alert_button">
                 <input class="btn btn-default btn_dashboard_contextpanel" type="submit" onclick="clearFilter(alertListInformation)" value="@Strings.FilterClear">
             </div>
+            <div class="dashboard-bottom-space"></div>
         </div>
     </div>
 </div>
@@ -386,13 +389,8 @@
         return ('@Strings.KpiMinimum: ' + @Model.TopNode.Kpi2PerformanceSetting.Minimum + ', @Strings.KpiTarget: ' + @Model.TopNode.Kpi2PerformanceSetting.Target + ', @Strings.KpiMaximum: ' + @Model.TopNode.Kpi2PerformanceSetting.Maximum);
     }
 
-    $('#kpi1Chart').tooltip({
-        title: Kpi1Tooltip
-    })
-
-    $('#kpi2Chart').tooltip({
-        title: Kpi2Tooltip
-    })
+    stickyTooltip('kpi1Chart', Kpi1Tooltip, "top");
+    stickyTooltip('kpi2Chart', Kpi2Tooltip, "top");
 
     var kpi1 = c3.generate({
         bindto: '#kpi1Chart',
@@ -1427,7 +1425,7 @@
                     var session = sessionUpdate[i];
                     if (session != undefined && session.SessionId != undefined && session.SessionId == "@Model.SessionId" && session.TopNode == "@Model.TopNode.Key") {
                         // Only update if the alerts filter panel is closed.
-                        if ($("#dashboardFilterAlertContextpanel").hasClass('overlay-close') && session.Alerts != undefined) {
+                        if ($("#dashboardFilterAlertContextpanel").hasClass('overlay-close') && session.Alerts != undefined && !$(".tooltip:hover").length) {
                             var alertsList = '';
                             for (var j = 0; j < session.Alerts.length; j++) {
                                 alertsList += '<div role="row">';
@@ -1437,9 +1435,9 @@
                                 } else {
                                     alertsList += '<div class="dashboard_alerts_listitem_container alert_status_active row" role="gridcell" onclick="openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(' + session.Alerts[j].AlertId + ')" tabindex="0">';
                                 }
-                                alertsList += '<div class="dashboard_alerts_listitem_source overflow row">' + getAlertDescription(session.Alerts[j].Cause) + '</div>';
-                                alertsList += '<div class="dashboard_alerts_listitem_source_details_container row">';
-                                alertsList += '<div class="dashboard_alerts_listitem_source_details overflow col-xs-7">';
+                                alertsList += '<div class="dashboard_alerts_listitem_source overflow row" tabindex="0">' + getAlertDescription(session.Alerts[j].Cause) + '</div>';
+                                alertsList += '<div class="dashboard_alerts_listitem_source_details_container row" tabindex="0">';
+                                alertsList += '<div class="dashboard_alerts_listitem_source_details overflow col-xs-7" tabindex="0">';
                                 var detailsIndex = 1;
                                 var alertLocation = session.Alerts[j].TopologyDetails.reduce(function(acc, val) {
                                     var result = acc;
@@ -1455,7 +1453,7 @@
                                 }, '');
                                 alertsList += alertLocation;
                                 alertsList += '</div>';
-                                alertsList += '<div class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">' + session.Alerts[j].UxTime + '</div>';
+                                alertsList += '<div class="dashboard_alerts_listitem_source_details_time overflow col-xs-5" tabindex="0">' + session.Alerts[j].UxTime + '</div>';
                                 alertsList += '</div>';
                                 alertsList += '</div>';
                                 alertsList += '</div>';

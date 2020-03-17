@@ -1069,6 +1069,7 @@
     <Content Include="Scripts\scalize.min.js">
       <DependentUpon>scalize.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\StickyTooltip.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />

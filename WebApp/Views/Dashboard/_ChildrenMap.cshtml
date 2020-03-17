@@ -11,13 +11,12 @@
 <!-- Reference to the Azure Maps SDK -->
 <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/css/atlas.min.css?api-version=1.0" type="text/css" />
 <script src="https://atlas.microsoft.com/sdk/js/atlas.min.js?api-version=1.0"></script>
+<script type="text/javascript" src="~/Scripts/StickyTooltip.js"></script>
 
 <div id="map">
-    <button class="dashboard_zoom dashboard_zoom-plus" aria-label="zoomIn" onclick="ZoomIn()"> + 
-        <span class="tooltiptext">Zoom In</span>
+    <button id="zoomIn" class="dashboard_zoom dashboard_zoom-plus" aria-label="zoomIn" onclick="ZoomIn()"> + 
     </button>
-    <button class="dashboard_zoom dashboard_zoom-minus " aria-label="zoomOut" onclick="ZoomOut()"> - 
-        <span class="tooltiptext">Zoom Out</span>
+    <button id="zoomOut" class="dashboard_zoom dashboard_zoom-minus " aria-label="zoomOut" onclick="ZoomOut()"> - 
     </button>
 </div>
 
@@ -76,15 +75,12 @@
         map.addEventListener('click', "default-pin-layer",
             function (event) {
                 for (index = 0; index < children.length; index++) {
-                    console.log("argument ", arguments);
-                    console.log("event ", event);
                     if (event.features[0].properties.title == children[index].Name) {
                         var dashboardUrl = "Index?TopNode=" + children[index].Key;
                         window.location.assign(dashboardUrl);
                     }
                 }
             });
-
     }
 
     function ZoomIn() {
@@ -100,7 +96,10 @@
         map.setCamera({
             zoom: currZoom + zoomFactor
         });
-        }
+    }
+
+    stickyTooltip('zoomIn', "Zoom In", "left");
+    stickyTooltip('zoomOut', "Zoom Out", "left");
 
 </script>
 
