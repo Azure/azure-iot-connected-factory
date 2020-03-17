@@ -33,10 +33,10 @@
                 var alertDescription = Strings.AlertDetailsUnknown;
                 alertDescription = ContosoAlert.GetAlertCauseDescription(alert.Cause);
                 <div role="row">
-                    <div class="dashboard_alerts_listitem_container @alertStatusClass row" role="gridcell" onclick="openContextPanelFromAlert(@alert.AlertId)" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(@alert.AlertId)" tabindex="0">
-                        <div class="dashboard_alerts_listitem_source overflow row">@alertDescription</div>
-                        <div class="dashboard_alerts_listitem_source_details_container row">
-                            <div class="dashboard_alerts_listitem_source_details overflow col-xs-7">
+                    <div class="dashboard_alerts_listitem_container overflow @alertStatusClass row" role="gridcell" onclick="openContextPanelFromAlert(@alert.AlertId)" onkeydown="if (event.keyCode == 13)openContextPanelFromAlert(@alert.AlertId)" tabindex="0">
+                        <div class="dashboard_alerts_listitem_source overflow row"  tabindex="0">@alertDescription</div>
+                        <div class="dashboard_alerts_listitem_source_details_container row"  tabindex="0">
+                            <div class="dashboard_alerts_listitem_source_details overflow col-xs-7"  tabindex="0">
                                 @{ int i = 0;}
                                 @foreach (var detail in alert.TopologyDetails)
                                 {
@@ -50,7 +50,7 @@
                                     }
                                 }
                             </div>
-                            <div class="dashboard_alerts_listitem_source_details_time overflow col-xs-5">@alert.UxTime</div>
+                            <div class="dashboard_alerts_listitem_source_details_time overflow col-xs-5" tabindex="0">@alert.UxTime</div>
                         </div>
                     </div>
                 </div>
