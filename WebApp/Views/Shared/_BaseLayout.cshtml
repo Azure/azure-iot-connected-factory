@@ -33,18 +33,16 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <a href="#pushPanel" class="skip">Skip to content</a>
             <h1 id="content" class="container-fluid">
-                <div id="accountMenu" class="collapse navbar-collapse">
-                    <ul class="path overflow">
-                        <li id="title"></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                <div id="accountMenu" class="navbar-collapse"> 
+                    <ul class="nav navbar-nav">
+                        <li id="title" class="masthead_text overflow"></li>
                         <li class="masthead_text overflow">@Strings.MicrosoftAzureIoTSuite - @Strings.DefaultSolutionName</li>
 
-                        <li id="language-menu" class="dropdown">
+                        <li id="language-menu" class="nav-item dropdown up float-left">
                             <a id="language" href="#" aria-label="dropdown-language-menu" class="dropdown-toggle dropdown-highligth" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_language_icon"></span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul id="language" class="dropdown-menu">
                                 @{ int i = 1;}
                                 @foreach (var language in CultureHelper.GetLanguages())
                                 {
@@ -56,7 +54,7 @@
                                     }
                                     else
                                     {
-                                        <li role="row">
+                                        <li role="row" class="background-dropdown">
                                             <a role="gridcell" aria-posinset="@i" aria-setsize="@CultureHelper.GetLanguages().Count()" href="@Url.Action("SetCulture", "Culture", new { cultureName = language.CultureName })" onclick="return languageChanged();">@language.Name</a>
                                         </li>
                                     }
@@ -64,7 +62,7 @@
                                 }
                             </ul>
                         </li>
-                        <li id="account-menu" class="dropdown">
+                        <li id="account-menu" class="nav-item dropdown up float-left">
                             <a href="#" aria-label="dropdown-account-menu" class="dropdown-toggle masthead_account_container" tabindex="0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="masthead_account_avatar"></span>
                                 <span class="masthead_account">
@@ -84,14 +82,14 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu masthead_account_menu" role="menu">
-                                <li role="presentation">
+                                <li role="presentation" class="background-dropdown">
                                     <a href="@Url.Action("SignOut", "Account")" role="menuitem" tabindex="0">@Strings.SignOut</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
-                                <li role="presentation">
+                                <li role="presentation" class="background-dropdown">
                                     <a href="https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade" target="_blank" role="menuitem" tabindex="0">@Strings.LinkLabelHelpAndSupport</a>
                                 </li>
-                                <li role="presentation">
+                                <li role="presentation" class="background-dropdown">
                                     <a href="http://feedback.azure.com/forums/321918-azure-iot" target="_blank" role="menuitem" tabindex="0">@Strings.LinkLabelHelpGiveFeedback</a>
                                 </li>
                             </ul>
@@ -159,18 +157,27 @@
             }
         });
 
-        $(document).on('mouseenter', ".overflow", function (event) {
-            var $this = $(this);
-            if (this.offsetWidth < this.scrollWidth && !$this.attr('title')) {
-                $this.tooltip({
-                    title: $this.text(),
-                    placement: "top",
-                    container: 'body'
+         $(document).on('mouseenter focus', ".overflow", function () {
+             $(this).tooltip({ trigger: "manual", title: $(this).text(), placement: "top", html: true, animation: false })
+            .on("mouseenter", function () {
+                var _this = this;
+                $(this).tooltip("show");
+                $(".tooltip").on("mouseleave", function () {
+                    $(_this).tooltip('hide');
                 });
-                $this.tooltip('show');
-            }
-        }).on('mouseleave', ".overflow", function () {
-            $('.tooltip').tooltip('destroy');
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".tooltip:hover").length) {
+                        $(_this).tooltip("hide");
+                    }
+                }, 300);
+            });
+        });
+
+        $('html').on('click', function(e) {
+            $('[data-original-title]').tooltip('hide');
+            $(".tooltip-inner").css('display','none');
         });
 
         function openRDXExplorerLink(url) {

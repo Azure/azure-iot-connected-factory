@@ -174,6 +174,7 @@ a {
         font-family: "Selawik";
         padding-top: 15px;
         padding-bottom: 8px;
+        display: inline;
     }
 
     .dashboard_children_list_header_status {
@@ -300,32 +301,21 @@ a {
         z-index: 999;
     }
 
-.tooltiptext {
-    visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    font-size: 20px;
-    width: 80px;
-    height: 20px;
-    font-size: 12px;
-    border-radius: 6px;
-    border: none;
-    background-color: @background-color;
-    color: white;
-    z-index: 999;
-    right: 60px;
-}
+    .scrollbar-macosx > .scroll-element, .scrollbar-macosx > .scroll-element div {
+        background-color: white !important;
+    }
+    .scrollbar-inner > .scroll-element .scroll-bar {
+        background-color: gray !important;
+        opacity: 1 !important;
+    }
+    .scrollbar-inner > .scroll-element .scroll-element_track {
+        background-color: white !important;
+        opacity: 1 !important;
+    }
 
-.dashboard_zoom:hover .tooltiptext {
-    visibility: visible;
-}
-
-.dashboard_zoom:focus .tooltiptext {
-    visibility: visible;
-}
-
+    .tooltip {
+        position: fixed;
+    }
 
     .dashboard_zoom-plus {
         top: 10px;
@@ -335,6 +325,10 @@ a {
     .dashboard_zoom-minus {
         top: 60px;
         right: 10px;
+    }
+
+    .bootstrap-select .dropdown-menu {
+        height: fit-content;
     }
     /* 
  *  dashboard information area with alerts
@@ -559,12 +553,12 @@ a {
         padding-top: 11px;
     }
 
-.dashboard_contextpanel_list_container {
-    position: relative;
-    margin-top: 30px;
-    margin-left: 24px;
-    font-size: @children-listitem-text-size;
-}
+    .dashboard_contextpanel_list_container {
+        position: relative;
+        margin-top: 30px;
+        margin-left: 24px;
+        font-size: @children-listitem-text-size;
+    }
 
     .bootstrap-select {
         max-width: @contextpanel-right-width - 130px;
@@ -607,33 +601,33 @@ a {
         border-right-width: 1px;
     }
 
-div.selector-container {
-    max-width: @contextpanel-right-width - 130px;
-}
-
-.form-control {
-    height: 24px;
-    background-color: @secondary-color;
-    border-radius: 0px;
-    border: none;
-    color: white !important;
-    font-size: @children-listitem-text-size !important;
-}
-
-.dashboard_link {
-    font-size: @font-size-text;
-    font-family: "Selawik";
-    text-decoration: underline !important;
-    color: @lightest-gray !important;
-
-    &:hover, :focus {
-        color: white !important;
+    div.selector-container {
+        max-width: @contextpanel-right-width - 130px;
     }
-}
 
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-    background-color: @secondary-color;
-}
+    .form-control {
+        height: 24px;
+        background-color: @secondary-color;
+        border-radius: 0px;
+        border: none;
+        color: white !important;
+        font-size: @children-listitem-text-size !important;
+    }
+
+    .dashboard_link {
+        font-size: @font-size-text;
+        font-family: "Selawik";
+        text-decoration: underline !important;
+        color: @lightest-gray !important;
+
+        &:hover, :focus {
+            color: white !important;
+        }
+    }
+
+    .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+        background-color: @secondary-color;
+    }
 
     .dropdown-menu > li > a {
         color: white;
@@ -665,9 +659,9 @@ div.selector-container {
         background-image: none;
     }
 
-.dashboard_contextpanel_select_list select:focus {
-    outline: none;
-}
+    .dashboard_contextpanel_select_list select:focus {
+        outline: none;
+    }
 
     .alert_contextpanel_margin_left {
         margin-left: 30px;
@@ -704,17 +698,18 @@ div.selector-container {
 
     .dashboard_contextpanel_select_filter_button, .dashboard_contextpanel_select_filter_alert_button {
         position: relative;
-        top: 30px;
+        top: 90px;
     }
 
     .alert_contextpanel_execute_action_button {
         top: 20px;
         left: 255px;
+        padding-top: 30px;
     }
 
     .dashboard_contextpanel_clear_filter_button, .dashboard_contextpanel_clear_filter_alert_button {
         position: relative;
-        top: 6px;
+        top: 66px;
         left: 255px;
     }
 
@@ -821,6 +816,28 @@ div.selector-container {
         padding-top: 10px;
         color: @list-header-color;
     }
+
+    .background-dropdown {
+        background-color: #121416 !important;
+    }
+    
+    .float-left {
+        float: left;
+    }
+
+    .up {
+        bottom: 0px;
+    }
+
+    .dashboard-bottom-space {
+        height: 80px;
+    }
+
+    ul#language {
+        max-height: 150px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
     /* Large desktop (using definitions from bootstrap)*/
     @media (min-width: @screen-md) {
         .dashboard_top_container {
@@ -839,7 +856,7 @@ div.selector-container {
         }
 
         .masthead_text {
-            width: 250px;
+            width: 150px;
         }
     }
     /* Landscape phone to portrait tablet (using definitions from bootstrap)*/
@@ -852,6 +869,11 @@ div.selector-container {
 
         .masthead_text {
             width: 0px;
+            display: none !important;
+        }
+
+        .up {
+            bottom: 7px;
         }
     }
     /* Landscape phones and down (using definitions from bootstrap)*/
@@ -913,7 +935,7 @@ div.selector-container {
     @media (max-height: @screen-dim-filter-alert) {
         .dashboard_contextpanel_select_filter_alert_button {
             position: relative;
-            top: 30px;
+            top: 90px;
         }
 
         .dashboard_contextpanel_clear_filter_alert_button {

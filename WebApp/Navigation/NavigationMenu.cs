@@ -57,7 +57,7 @@ namespace Microsoft.Azure.IoTSuite.Connectedfactory.WebApp.Navigation
                     Controller = "AddGateway",
                     Selected = false,
                     Class = "navigation_link_addgateway",
-                    AriaLabel="AddGateway",
+                    AriaLabel="Connect Production Line",
                     MinimumPermission = Permission.AddOpcServer,
                 }
             };
